@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>🐝 SBH Bot Simulation Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --amber:#F0A500; --amber-d:#C07800; --amber-l:#FFF5D6;
+  --dark:#0D0900; --dark-2:#1A1000; --panel:#1E1600;
+  --cream:#FDFBF5; --green:#25D366; --green-d:#1A9E4A;
+  --blue:#1D72C8; --purple:#7C4DCC; --teal:#0D9488;
+  --red:#D94040; --muted:rgba(255,255,255,.4);
+  --border:rgba(255,255,255,.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--dark);color:#fff;min-height:100vh;overflow-x:hidden}
+
+/* ══ NAV TABS ══════════════════════════════ */
+.nav{position:sticky;top:0;z-index:300;background:rgba(13,9,0,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{display:flex;align-items:center;padding:.7rem 1rem;gap:.5rem;overflow-x:auto;scrollbar-width:none}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav-brand{display:flex;align-items:center;gap:.5rem;flex-shrink:0;margin-right:.75rem}
+.nav-bee{width:32px;height:32px;background:var(--amber);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.nav-title{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;white-space:nowrap}
+.tab{padding:.45rem .9rem;border-radius:8px;font-size:.78rem;font-weight:500;cursor:pointer;white-space:nowrap;border:1px solid transparent;transition:all .2s;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif}
+.tab.active{background:var(--amber);color:var(--dark);font-weight:700;border-color:var(--amber)}
+.tab:hover:not(.active){background:rgba(255,255,255,.06);color:#fff;border-color:var(--border)}
+
+/* ══ SECTIONS ══════════════════════════════ */
+.section{display:none;padding:1.25rem 1rem 4rem;max-width:820px;margin:0 auto;animation:fadeUp .4s ease}
+.section.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══ SECTION HEADER ═══════════════════════ */
+.sec-head{margin-bottom:1.5rem}
+.sec-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(240,165,0,.12);border:1px solid rgba(240,165,0,.25);border-radius:99px;padding:.3rem .8rem;font-size:.68rem;font-weight:600;color:var(--amber);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.75rem;font-family:'DM Mono',monospace}
+.sec-title{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;line-height:1.2;margin-bottom:.4rem}
+.sec-sub{font-size:.85rem;color:var(--muted);line-height:1.6}
+
+/* ══ CARDS ═════════════════════════════════ */
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:1.1rem;margin-bottom:.75rem}
+.card-title{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;margin-bottom:.35rem;display:flex;align-items:center;gap:.5rem}
+.card-body{font-size:.82rem;color:rgba(255,255,255,.65);line-height:1.6}
+
+/* ══ SIMULATOR ═════════════════════════════ */
+.sim-wrap{display:grid;grid-template-columns:1fr;gap:1rem}
+@media(min-width:600px){.sim-wrap{grid-template-columns:1fr 1fr}}
+
+.phone-frame{background:#111;border-radius:24px;border:2px solid rgba(255,255,255,.1);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.phone-bar{background:#1A1A1A;padding:.5rem .9rem;display:flex;align-items:center;gap:.5rem}
+.phone-dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.phone-name{font-size:.78rem;font-weight:600;color:#fff}
+.phone-sub{font-size:.65rem;color:rgba(255,255,255,.4);margin-left:auto}
+.chat-area{padding:.85rem;min-height:320px;max-height:420px;overflow-y:auto;display:flex;flex-direction:column;gap:.6rem;background:#0A0A0A;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.1) transparent}
+.bubble{max-width:88%;padding:.65rem .85rem;border-radius:12px;font-size:.78rem;line-height:1.55;animation:bubblePop .25s ease}
+@keyframes bubblePop{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.bubble.bot{background:#1E2D1E;border-radius:2px 12px 12px 12px;align-self:flex-start}
+.bubble.bot b{color:#A8E6B8}
+.bubble.user{background:#1A3A5C;border-radius:12px 12px 2px 12px;align-self:flex-end;text-align:right}
+.bubble.system{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;align-self:center;font-size:.7rem;color:var(--muted);text-align:center;padding:.4rem .75rem;max-width:100%}
+.bubble.insight{background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.2);border-radius:8px;align-self:flex-start;max-width:100%}
+.bubble.insight .ins-label{font-size:.62rem;color:var(--amber);letter-spacing:.08em;text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:.3rem}
+
+.options-area{padding:.75rem .85rem;border-top:1px solid rgba(255,255,255,.06);background:#0D0D0D;display:flex;flex-direction:column;gap:.35rem}
+.opt-btn{padding:.5rem .75rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:.76rem;color:rgba(255,255,255,.8);cursor:pointer;text-align:left;font-family:'DM Sans',sans-serif;transition:all .18s}
+.opt-btn:hover{background:rgba(37,211,102,.12);border-color:rgba(37,211,102,.3);color:#fff}
+.opt-btn.selected{background:rgba(37,211,102,.15);border-color:#25D366;color:#fff}
+.opt-btn:disabled{opacity:.4;cursor:not-allowed}
+
+.typing{display:flex;align-items:center;gap:.3rem;padding:.5rem .75rem;background:#1E2D1E;border-radius:2px 12px 12px 12px;width:fit-content}
+.typing span{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.4);animation:typingDot 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes typingDot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+
+/* Panel kanan — script panel */
+.script-panel{background:var(--dark-2);border-radius:14px;border:1px solid var(--border);overflow:hidden}
+.script-header{padding:.75rem 1rem;background:rgba(255,255,255,.03);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.5rem}
+.script-step-label{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--amber);letter-spacing:.08em;text-transform:uppercase}
+.script-content{padding:.85rem 1rem;font-size:.78rem;color:rgba(255,255,255,.7);line-height:1.7;min-height:200px;max-height:420px;overflow-y:auto}
+.script-content b{color:#fff}
+.script-content .tag{display:inline-block;background:rgba(240,165,0,.12);border:1px solid rgba(240,165,0,.2);border-radius:4px;padding:.05rem .35rem;font-family:'DM Mono',monospace;font-size:.65rem;color:var(--amber);margin:0 .15rem}
+.script-content .note{background:rgba(255,255,255,.04);border-left:3px solid rgba(255,255,255,.15);padding:.5rem .75rem;border-radius:0 6px 6px 0;margin:.5rem 0;font-size:.75rem;color:var(--muted)}
+.script-content .highlight{background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.15);border-radius:6px;padding:.5rem .75rem;margin:.5rem 0}
+
+/* Progress in sim */
+.sim-progress{padding:.5rem .85rem;background:#0D0D0D;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:.6rem}
+.sim-prog-label{font-size:.65rem;color:var(--muted);white-space:nowrap}
+.sim-prog-bar{flex:1;height:3px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden}
+.sim-prog-fill{height:100%;background:linear-gradient(90deg,var(--amber),var(--amber-d));transition:width .4s ease}
+.sim-prog-num{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--amber);white-space:nowrap}
+
+/* ══ SCRIPT SECTION ════════════════════════ */
+.phase-block{margin-bottom:1.25rem}
+.phase-title{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;color:var(--amber);margin-bottom:.65rem;display:flex;align-items:center;gap:.5rem}
+.phase-num{width:22px;height:22px;border-radius:6px;background:rgba(240,165,0,.15);border:1px solid rgba(240,165,0,.3);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:.68rem;color:var(--amber);flex-shrink:0}
+
+.script-box{background:var(--dark-2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:.6rem}
+.script-box-head{display:flex;align-items:center;justify-content:space-between;padding:.55rem .9rem;background:rgba(255,255,255,.03);border-bottom:1px solid var(--border)}
+.script-box-label{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.copy-btn{padding:.25rem .6rem;background:rgba(240,165,0,.1);border:1px solid rgba(240,165,0,.2);border-radius:6px;font-size:.65rem;color:var(--amber);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.copy-btn:hover{background:rgba(240,165,0,.2)}
+.copy-btn.copied{background:rgba(37,211,102,.15);border-color:rgba(37,211,102,.3);color:#25D366}
+.script-box-body{padding:.85rem .9rem;font-size:.8rem;color:rgba(255,255,255,.75);line-height:1.7;white-space:pre-wrap;word-break:break-word}
+.script-box-body b{color:#fff}
+.script-box-body i{color:var(--muted)}
+
+/* ══ SETUP GUIDE ════════════════════════════ */
+.setup-grid{display:grid;grid-template-columns:1fr;gap:.75rem}
+@media(min-width:580px){.setup-grid{grid-template-columns:1fr 1fr}}
+
+.setup-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:transform .2s,box-shadow .2s;cursor:pointer}
+.setup-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.4)}
+.setup-card-head{padding:.9rem 1rem;display:flex;align-items:center;gap:.75rem}
+.setup-card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.setup-card-name{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700}
+.setup-card-tag{font-size:.68rem;color:var(--muted);margin-top:.1rem}
+.setup-card-body{padding:0 1rem 1rem}
+.setup-step{display:flex;gap:.65rem;margin-bottom:.5rem;align-items:flex-start}
+.step-num{width:20px;height:20px;border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:.65rem;font-weight:500;margin-top:.05rem}
+.step-text{font-size:.78rem;color:rgba(255,255,255,.7);line-height:1.5}
+.step-text b{color:#fff}
+
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.75rem 0}
+.pro-item,.con-item{display:flex;align-items:flex-start;gap:.4rem;font-size:.74rem;line-height:1.4;color:rgba(255,255,255,.65)}
+.pro-item::before{content:"✓";color:var(--green);font-weight:700;flex-shrink:0}
+.con-item::before{content:"✗";color:var(--red);font-weight:700;flex-shrink:0}
+
+.difficulty{display:flex;align-items:center;gap:.35rem;margin-top:.65rem;padding:.4rem .7rem;background:rgba(255,255,255,.03);border-radius:8px}
+.diff-label{font-size:.68rem;color:var(--muted)}
+.diff-dots{display:flex;gap:.2rem}
+.diff-dot{width:8px;height:8px;border-radius:50%}
+.diff-dot.filled{background:var(--amber)}
+.diff-dot.empty{background:rgba(255,255,255,.12)}
+.diff-text{font-size:.7rem;color:var(--amber);margin-left:.2rem;font-family:'DM Mono',monospace}
+
+/* ══ BROADCAST TEMPLATES ═══════════════════ */
+.broadcast-tabs{display:flex;gap:.4rem;margin-bottom:1rem;overflow-x:auto;scrollbar-width:none;padding-bottom:.25rem}
+.btab{padding:.35rem .75rem;border-radius:8px;font-size:.74rem;cursor:pointer;white-space:nowrap;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .2s}
+.btab.active{background:rgba(37,211,102,.12);border-color:rgba(37,211,102,.3);color:#25D366}
+
+/* ══ TOAST ═════════════════════════════════ */
+#toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:#1A1A1A;color:var(--amber);padding:.6rem 1.2rem;border-radius:99px;font-size:.78rem;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,.4);opacity:0;transition:opacity .3s;z-index:999;white-space:nowrap;border:1px solid rgba(240,165,0,.3)}
+#toast.show{opacity:1}
+
+/* ══ BADGE ROW ═════════════════════════════ */
+.badge-row{display:flex;flex-wrap:wrap;gap:.4rem;margin:.75rem 0}
+.badge{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .6rem;border-radius:6px;font-size:.68rem;font-weight:600;font-family:'DM Mono',monospace}
+.badge.g{background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.2);color:#25D366}
+.badge.a{background:rgba(240,165,0,.1);border:1px solid rgba(240,165,0,.2);color:var(--amber)}
+.badge.b{background:rgba(29,114,200,.1);border:1px solid rgba(29,114,200,.2);color:#5BA3E8}
+.badge.p{background:rgba(124,77,204,.1);border:1px solid rgba(124,77,204,.2);color:#A97FE8}
+</style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<!-- ══ NAV ══════════════════════════════════════ -->
+<div class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <div class="nav-bee">🐝</div>
+      <div class="nav-title">SBH Bot Hub</div>
+    </div>
+    <button class="tab active" onclick="showTab('sim')">💬 Simulasi Bot</button>
+    <button class="tab" onclick="showTab('script')">📝 Script Lengkap</button>
+    <button class="tab" onclick="showTab('broadcast')">📣 Broadcast</button>
+    <button class="tab" onclick="showTab('setup')">⚙️ Panduan Setup</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     TAB 1: SIMULASI BOT
+════════════════════════════════════════════ -->
+<div id="tab-sim" class="section active">
+  <div class="sec-head">
+    <div class="sec-badge">💬 Live Simulation</div>
+    <h1 class="sec-title">Simulasi Percakapan Bot</h1>
+    <p class="sec-sub">Pilih jalur dan rasakan alur percakapan seperti yang akan dialami user. Panel kanan menampilkan script & catatan implementasi secara real-time.</p>
+  </div>
+
+  <!-- Segment selector -->
+  <div class="badge-row">
+    <div class="badge g" style="cursor:pointer" onclick="startSim('prospek')">👤 Jalur 1 — Prospek Baru</div>
+    <div class="badge b" style="cursor:pointer" onclick="startSim('komunitas')">🌿 Jalur 2 — Komunitas</div>
+    <div class="badge a" style="cursor:pointer" onclick="startSim('reseller')">💼 Jalur 3 — Reseller</div>
+  </div>
+
+  <div class="sim-wrap">
+    <!-- Phone -->
+    <div>
+      <div class="phone-frame">
+        <div class="phone-bar">
+          <div class="phone-dot"></div>
+          <div class="phone-name">🐝 SBH Health Bot</div>
+          <div class="phone-sub" id="sim-status">Pilih jalur ↑</div>
+        </div>
+        <div class="chat-area" id="chat-area">
+          <div class="bubble system">Pilih jalur simulasi di atas untuk memulai 👆</div>
+        </div>
+        <div class="sim-progress">
+          <div class="sim-prog-label">Fase</div>
+          <div class="sim-prog-bar"><div class="sim-prog-fill" id="sim-prog" style="width:0%"></div></div>
+          <div class="sim-prog-num" id="sim-prog-num">0/5</div>
+        </div>
+        <div class="options-area" id="options-area">
+          <div style="font-size:.72rem;color:var(--muted);text-align:center;padding:.25rem">Pilih jalur untuk memulai simulasi</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script panel -->
+    <div class="script-panel">
+      <div class="script-header">
+        <div class="script-step-label" id="panel-label">📋 Script & Catatan</div>
+      </div>
+      <div class="script-content" id="panel-content">
+        <div class="note">Panel ini menampilkan script resmi dan catatan implementasi untuk setiap langkah yang sedang berjalan di simulator.</div>
+        <br>
+        <b>Cara menggunakan:</b><br>
+        1. Pilih jalur simulasi (Prospek / Komunitas / Reseller)<br>
+        2. Klik pilihan jawaban di panel kiri<br>
+        3. Panel ini akan menampilkan script + tips implementasi per fase<br><br>
+        <div class="highlight">💡 Setiap node dalam simulasi memiliki versi script manual (WA Business biasa) dan versi bot (API/platform).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+    <div class="card-title">💡 Tentang Simulasi Ini</div>
+    <div class="card-body">Simulasi menampilkan <b>alur percakapan nyata</b> yang akan dialami user. Setiap pilihan user mempengaruhi pesan berikutnya — persis seperti behavior bot sesungguhnya. Gunakan bersama tab <b>Script Lengkap</b> untuk melihat semua teks yang perlu disiapkan.</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     TAB 2: SCRIPT LENGKAP
+════════════════════════════════════════════ -->
+<div id="tab-script" class="section">
+  <div class="sec-head">
+    <div class="sec-badge">📝 Full Script</div>
+    <h1 class="sec-title">Script Percakapan Lengkap</h1>
+    <p class="sec-sub">Semua teks pesan bot siap copy-paste. Klik tombol salin di setiap blok untuk menyalin langsung ke clipboard.</p>
+  </div>
+
+  <!-- FASE 0 -->
+  <div class="phase-block">
+    <div class="phase-title"><div class="phase-num">0</div> Fase 0 — Entry & Identifikasi</div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">🚀 Pesan Sambutan — Auto-reply pertama</div>
+        <button class="copy-btn" onclick="copyScript(this,'msg0')">Salin</button>
+      </div>
+      <div class="script-box-body" id="msg0">🐝 *Halo! Selamat datang di SBH Health Assistant.*
+
+Tahukah Anda bahwa tubuh Anda mungkin sedang berjuang melawan *inflamasi tersembunyi* — tanpa gejala yang terasa?
+
+Dalam 3 menit, saya akan bantu Anda cek kondisi tubuh secara ilmiah — gratis! 🔬
+
+Sebelum mulai, boleh saya tahu sedikit tentang Anda?
+
+*1️⃣* Saya ingin hidup lebih sehat secara natural
+*2️⃣* Saya sudah tahu manfaat SBH / madu kelulut
+*3️⃣* Saya tertarik sebagai reseller / agen SBH
+
+_Balas angka pilihan Anda 👆_</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">⚙️ Catatan Implementasi</div>
+      </div>
+      <div class="script-box-body" style="font-size:.76rem;color:rgba(255,255,255,.6)"><b>WA Business Manual:</b> Atur sebagai pesan "Away" atau sambutan otomatis di pengaturan WA Business.
+
+<b>Platform Bot:</b> Set sebagai welcome message yang trigger otomatis saat keyword pertama masuk.
+
+<b>Keywords trigger:</b> Halo, Hi, Info, SBH, Madu, Kelulut, 1, 2, 3, Hai, Start
+
+<b>Tips:</b> Buat label kontak per segmen (1/2/3) untuk tracking yang mudah.</div>
+    </div>
+  </div>
+
+  <!-- FASE 1 -->
+  <div class="phase-block">
+    <div class="phase-title"><div class="phase-num">1</div> Fase 1 — Hook & Edukasi (Jalur Prospek Baru)</div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">🎯 Hook Message — Setelah pilih "1"</div>
+        <button class="copy-btn" onclick="copyScript(this,'msg1a')">Salin</button>
+      </div>
+      <div class="script-box-body" id="msg1a">Terima kasih sudah berbagi! 😊
+
+Satu fakta penting sebelum kita mulai 👇
+
+*90% penyakit kronis* — diabetes, jantung, kanker, bahkan Alzheimer — berakar dari SATU hal yang sama:
+
+⚡ *Stres Oksidatif & Inflamasi Kronis*
+
+Yang berbahaya? Kondisi ini *tidak ada gejalanya* — tapi diam-diam merusak sel tubuh Anda setiap hari tanpa disadari.
+
+Kabar baiknya: ada solusi alami yang sudah dibuktikan 1.128+ studi ilmiah 🔬
+
+Mau tahu seberapa besar risiko Anda?
+
+*YA* — Lanjutkan diagnostik saya!
+*INFO* — Jelaskan dulu apa itu stres oksidatif</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">💡 Jawaban "INFO" — Edukasi mikro stres oksidatif</div>
+        <button class="copy-btn" onclick="copyScript(this,'msg1b')">Salin</button>
+      </div>
+      <div class="script-box-body" id="msg1b">📖 *Stres Oksidatif — Si Silent Destroyer*
+
+Bayangkan besi yang berkarat 🔩
+
+Itulah yang terjadi pada sel tubuh Anda saat radikal bebas lebih banyak dari antioksidan yang tersedia.
+
+*Sumber radikal bebas sehari-hari:*
+☁️ Polusi udara
+🍟 Makanan olahan & ultra-proses
+😰 Stres psikologis kronis
+😴 Kurang tidur berkualitas
+💊 Obat-obatan tertentu
+
+*Akibatnya:* Sel rusak → organ melemah → penyakit kronis muncul.
+
+*Solusi alami terbaik?* Antioksidan tinggi — dan SBH (Stingless Bee Honey / Madu Kelulut) adalah salah satu sumber antioksidan tertinggi yang pernah diteliti 🍯
+
+Siap cek kondisi Anda sekarang?
+
+*YA* — Mulai diagnostik!</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">🌿 Hook Jalur Komunitas — Setelah pilih "2"</div>
+        <button class="copy-btn" onclick="copyScript(this,'msg1c')">Salin</button>
+      </div>
+      <div class="script-box-body" id="msg1c">Wah, senang bertemu seseorang yang sudah aware tentang kesehatan natural! 🙌
+
+Karena Anda sudah tahu manfaat SBH, mari kita langsung ke sesuatu yang lebih personal dan spesifik untuk kondisi *Anda* 👇
+
+*Diagnostik Metabolik Personal* — cek seberapa optimal tubuh Anda saat ini dan area mana yang paling perlu dukungan SBH.
+
+Hasilnya: profil metabolik lengkap + protokol konsumsi yang disesuaikan dengan kondisi spesifik Anda.
+
+Hanya 3 menit. Berbasis 1.128+ riset ilmiah 🔬
+
+Siap mulai?
+
+*YA* — Mulai diagnostik personal saya!</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">💼 Hook Jalur Reseller — Setelah pilih "3"</div>
+        <button class="copy-btn" onclick="copyScript(this,'msg1d')">Salin</button>
+      </div>
+      <div class="script-box-body" id="msg1d">Bagus sekali! Anda sedang mempertimbangkan peluang bisnis yang sangat menjanjikan 💼
+
+Sebelum kita bicara bisnis, ada satu langkah penting yang kami rekomendasikan:
+
+*Alami sendiri manfaat SBH terlebih dahulu.*
+
+Reseller terbaik adalah yang *percaya dari pengalaman nyata* — bukan sekadar menjual. Ini yang membuat penjualan terasa natural dan trust terbentuk sendiri.
+
+Jadi mari kita mulai dengan diagnostik personal Anda dulu 👇
+
+Ini juga akan menjadi *tools demonstrasi* yang bisa Anda gunakan saat menawarkan SBH ke calon pelanggan Anda nanti!
+
+*YA* — Saya siap, mulai diagnostik!
+*BISNIS* — Saya ingin info bisnis dulu</div>
+    </div>
+  </div>
+
+  <!-- FASE 2 -->
+  <div class="phase-block">
+    <div class="phase-title"><div class="phase-num">2</div> Fase 2 — Diagnostik (Semua 12 Pertanyaan)</div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">📋 Blok A — Energi & Vitalitas (Q1)</div>
+        <button class="copy-btn" onclick="copyScript(this,'q1')">Salin</button>
+      </div>
+      <div class="script-box-body" id="q1">📊 *Diagnostik Blok A — Energi & Vitalitas*
+━━━━━━━━━━━━━━━━
+*Pertanyaan 1 dari 12:*
+
+Bagaimana level energi Anda sepanjang hari?
+
+_(Pilih yang paling menggambarkan kondisi 30 hari terakhir)_
+
+*1️⃣* Energi penuh & stabil sepanjang hari
+*2️⃣* Ada penurunan di sore hari, perlu kafein
+*3️⃣* Sering lelah tanpa sebab jelas
+*4️⃣* Sangat mudah kelelahan & sulit pulih
+
+---
+💡 _Setelah Anda menjawab, saya akan kirim satu fakta menarik tentang kondisi ini._</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">💡 Insight Q1 — Dikirim otomatis setelah jawab</div>
+        <button class="copy-btn" onclick="copyScript(this,'ins1')">Salin</button>
+      </div>
+      <div class="script-box-body" id="ins1">💡 *Tahukah Anda?*
+
+Kelelahan kronis tanpa sebab jelas adalah sinyal awal *stres oksidatif* — kondisi di mana sel tubuh Anda dipenuhi radikal bebas yang belum ternetralisir.
+
+SBH kaya antioksidan yang bekerja di tingkat seluler — memulihkan keseimbangan energi dari dalam.
+
+_Lanjut ke pertanyaan berikutnya 👇_</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">📋 Blok A — Q2: Kualitas Tidur</div>
+        <button class="copy-btn" onclick="copyScript(this,'q2')">Salin</button>
+      </div>
+      <div class="script-box-body" id="q2">*Pertanyaan 2 dari 12:*
+
+Seberapa nyenyak tidur Anda dalam sebulan terakhir?
+
+*1️⃣* Tidur nyenyak, bangun segar (7-9 jam/malam)
+*2️⃣* Kadang terbangun, tapi masih oke (1-2x/minggu)
+*3️⃣* Sering sulit tidur atau terbangun, bangun lelah
+*4️⃣* Tidur sangat buruk, sudah berbulan-bulan</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">📋 Blok B — Q3 & Q4: Metabolisme</div>
+        <button class="copy-btn" onclick="copyScript(this,'q34')">Salin</button>
+      </div>
+      <div class="script-box-body" id="q34">📊 *Diagnostik Blok B — Metabolisme & Berat Badan*
+━━━━━━━━━━━━━━━━
+*Pertanyaan 3 dari 12:*
+
+Bagaimana kondisi berat badan Anda dalam setahun terakhir?
+
+*1️⃣* Stabil & sesuai target
+*2️⃣* Naik sedikit, masih dalam kendali (1-3kg)
+*3️⃣* Berat sulit turun meski sudah diet
+*4️⃣* Terus naik tanpa kontrol, metabolisme lambat
+
+---
+*Pertanyaan 4 dari 12:*
+
+Seberapa sering Anda craving makanan manis/tepung secara tiba-tiba?
+
+*1️⃣* Jarang — nafsu makan stabil
+*2️⃣* Sesekali, 1-2x per minggu
+*3️⃣* Sering, terutama siang dan sore, sulit ditahan
+*4️⃣* Hampir setiap hari, sangat kuat</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">📋 Blok C — Q5 & Q6: Imun & Inflamasi</div>
+        <button class="copy-btn" onclick="copyScript(this,'q56')">Salin</button>
+      </div>
+      <div class="script-box-body" id="q56">📊 *Diagnostik Blok C — Imun & Inflamasi*
+━━━━━━━━━━━━━━━━
+*Pertanyaan 5 dari 12:*
+
+Seberapa sering Anda sakit (flu, infeksi, radang) dalam setahun?
+
+*1️⃣* Sangat jarang — 0-1x setahun
+*2️⃣* 2-3x setahun, pemulihan biasa
+*3️⃣* 4-6x setahun, tubuh terasa rentan
+*4️⃣* Lebih dari 6x, hampir tiap bulan
+
+---
+*Pertanyaan 6 dari 12:*
+
+Apakah Anda mengalami kondisi ini secara rutin?
+
+*1️⃣* Tidak ada keluhan berarti
+*2️⃣* Kadang nyeri sendi/otot ringan
+*3️⃣* Alergi atau kulit sensitif yang sering kambuh
+*4️⃣* Kombinasi beberapa keluhan di atas</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">📋 Blok D — Q7 & Q8: Otak & Mental</div>
+        <button class="copy-btn" onclick="copyScript(this,'q78')">Salin</button>
+      </div>
+      <div class="script-box-body" id="q78">📊 *Diagnostik Blok D — Otak & Kesehatan Mental*
+━━━━━━━━━━━━━━━━
+*Pertanyaan 7 dari 12:*
+
+Bagaimana kemampuan fokus & konsentrasi Anda?
+
+*1️⃣* Fokus tajam, produktif sepanjang hari
+*2️⃣* Kadang sulit fokus, terutama sore hari
+*3️⃣* Sering brain fog — pikiran terasa berat
+*4️⃣* Sangat sulit konsentrasi, sering lupa
+
+---
+*Pertanyaan 8 dari 12:*
+
+Bagaimana kondisi mood & kestabilan emosi Anda?
+
+*1️⃣* Stabil & positif, mampu kelola stres
+*2️⃣* Kadang mudah tersinggung/cemas saat tekanan
+*3️⃣* Mood sering naik-turun tanpa sebab jelas
+*4️⃣* Sering anxious, sedih, atau overwhelmed</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">📋 Blok E & F — Q9–Q12: Pencernaan & Gaya Hidup</div>
+        <button class="copy-btn" onclick="copyScript(this,'q912')">Salin</button>
+      </div>
+      <div class="script-box-body" id="q912">📊 *Diagnostik Blok E — Pencernaan & Liver*
+━━━━━━━━━━━━━━━━
+*Pertanyaan 9 dari 12:*
+
+Bagaimana kondisi pencernaan Anda?
+
+*1️⃣* Lancar, tidak ada masalah berarti
+*2️⃣* Kadang kembung, terutama setelah makan tertentu
+*3️⃣* Sering kembung, mual, atau tidak nyaman
+*4️⃣* Masalah pencernaan kronis yang signifikan
+
+---
+📊 *Diagnostik Blok F — Gaya Hidup & Eksposur*
+━━━━━━━━━━━━━━━━
+*Pertanyaan 10 dari 12:*
+
+Seberapa besar paparan stres, polusi, makanan olahan setiap hari?
+
+*1️⃣* Minimal — hidup relatif teratur & bersih
+*2️⃣* Sedang — ada beberapa faktor risiko
+*3️⃣* Tinggi — paparan rutin setiap hari
+*4️⃣* Sangat tinggi — hampir semua faktor ada
+
+---
+*Pertanyaan 11 dari 12:*
+
+Seberapa aktif Anda berolahraga atau bergerak fisik?
+
+*1️⃣* Aktif & teratur, 3-5x per minggu
+*2️⃣* Sesekali, 1-2x per minggu
+*3️⃣* Sangat jarang — gaya hidup sedentari
+*4️⃣* Olahraga intens tapi tanpa recovery yang baik
+
+---
+*Pertanyaan 12 dari 12:*
+
+Seberapa besar kesadaran Anda tentang kesehatan natural?
+
+*1️⃣* Sangat sadar — sudah jalankan pola sehat konsisten
+*2️⃣* Cukup sadar — mulai memperhatikan
+*3️⃣* Baru mulai tertarik — ini yang mendorong saya di sini
+*4️⃣* Belum terlalu memikirkan — ingin mulai sekarang
+
+_⏳ Menganalisis jawaban Anda..._</div>
+    </div>
+  </div>
+
+  <!-- FASE 3 -->
+  <div class="phase-block">
+    <div class="phase-title"><div class="phase-num">3</div> Fase 3 — Hasil & Rekomendasi (3 Profil)</div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">🟢 Hasil Profil 1 — Optimal Defender (Skor 0-20)</div>
+        <button class="copy-btn" onclick="copyScript(this,'res1')">Salin</button>
+      </div>
+      <div class="script-box-body" id="res1">🐝 *HASIL DIAGNOSTIK SBH ANDA*
+━━━━━━━━━━━━━━━━━━
+
+👤 *[Nama]*
+📊 Skor Risiko Oksidatif: *XX/100*
+🟢 Profil: *OPTIMAL DEFENDER*
+
+✅ Tubuh Anda dalam kondisi yang cukup baik!
+✅ Sistem imun relatif responsif
+✅ Metabolisme berjalan efisien
+
+⚠️ _Namun stres oksidatif menumpuk diam-diam bahkan pada orang sehat — ini waktu terbaik untuk investasi preventif._
+
+━━━━━━━━━━━━━━━━━━
+🍯 *Protokol SBH yang Direkomendasikan:*
+
+🌅 *Pagi:* 1 sdt SBH + air hangat, perut kosong
+_(maintenance & preventif)_
+
+🌙 *Malam:* ½ sdt SBH sebelum tidur
+_(mempertahankan kualitas tidur)_
+
+📅 *Durasi:* Minimum 3 bulan konsisten
+_(efek anti-aging seluler & preventif jangka panjang)_
+
+━━━━━━━━━━━━━━━━━━
+_Berdasarkan 1.128+ studi ilmiah (2000–2025)_
+
+Apa yang ingin Anda lakukan selanjutnya?
+
+*1️⃣* Ingin tahu lebih dalam tentang SBH 🔬
+*2️⃣* Mau coba / tanya harga SBH 🍯
+*3️⃣* Share hasil ke teman / komunitas 📤
+*4️⃣* Daftarkan saya untuk tracking 30 hari 📅</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">🟡 Hasil Profil 2 — Early Warning (Skor 21-42)</div>
+        <button class="copy-btn" onclick="copyScript(this,'res2')">Salin</button>
+      </div>
+      <div class="script-box-body" id="res2">🐝 *HASIL DIAGNOSTIK SBH ANDA*
+━━━━━━━━━━━━━━━━━━
+
+👤 *[Nama]*
+📊 Skor Risiko Oksidatif: *XX/100*
+🟡 Profil: *EARLY WARNING*
+
+⚠️ Ada sinyal awal yang perlu diperhatikan
+⚠️ Fluktuasi energi → ketidakstabilan metabolisme
+⚠️ Imun & mood mulai terpengaruh
+
+🔴 _Inflamasi kronis sub-klinis mungkin sedang berlangsung tanpa gejala nyata._
+
+━━━━━━━━━━━━━━━━━━
+🍯 *Protokol SBH yang Direkomendasikan:*
+
+🌅 *Pagi:* 1 sdm SBH + air hangat + perasan lemon, perut kosong
+
+🍽️ *Sebelum makan siang:* ½ sdt SBH
+_(stabilisasi gula darah & pencernaan)_
+
+🌙 *Malam:* 1 sdt SBH dalam air hangat
+_(tidur & recovery seluler)_
+
+📅 *Durasi:* 6-8 minggu konsisten
+_Evaluasi perubahan di minggu ke-2 & ke-4_
+
+━━━━━━━━━━━━━━━━━━
+Apa yang ingin Anda lakukan selanjutnya?
+
+*1️⃣* Ingin tahu lebih dalam tentang SBH 🔬
+*2️⃣* Mau coba / tanya harga SBH 🍯
+*3️⃣* Share hasil ke teman / komunitas 📤
+*4️⃣* Daftarkan saya untuk tracking 30 hari 📅</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">🔴 Hasil Profil 3 — Oxidative Overload (Skor 43+)</div>
+        <button class="copy-btn" onclick="copyScript(this,'res3')">Salin</button>
+      </div>
+      <div class="script-box-body" id="res3">🐝 *HASIL DIAGNOSTIK SBH ANDA*
+━━━━━━━━━━━━━━━━━━
+
+👤 *[Nama]*
+📊 Skor Risiko Oksidatif: *XX/100*
+🔴 Profil: *OXIDATIVE OVERLOAD*
+
+🔴 Beban oksidatif Anda cukup tinggi
+🔴 Sistem imun tertekan — pemulihan lambat
+🔴 Risiko metabolik meningkat
+
+⚠️ _Konsultasi dengan tenaga kesehatan dianjurkan bersamaan dengan perubahan gaya hidup._
+
+━━━━━━━━━━━━━━━━━━
+🍯 *Protokol SBH yang Direkomendasikan:*
+
+🌅 *Pagi:* 1½ sdm SBH + air hangat, 30 mnt sebelum sarapan
+
+🍽️ *Sebelum makan siang:* 1 sdt SBH
+
+🌙 *Malam:* 1 sdt SBH + jahe hangat
+_(anti-inflamasi & recovery nokturnal)_
+
+📅 *Durasi:* Minimum 3 bulan konsisten
+_Dengan tracking gejala mingguan_
+
+⚠️ *Penting:* Kombinasikan dengan pola makan anti-inflamasi
+
+━━━━━━━━━━━━━━━━━━
+Apa yang ingin Anda lakukan selanjutnya?
+
+*1️⃣* Ingin tahu lebih dalam tentang SBH 🔬
+*2️⃣* Mau coba / tanya harga SBH 🍯
+*3️⃣* Share hasil ke teman / komunitas 📤
+*4️⃣* Daftarkan saya untuk tracking 30 hari 📅</div>
+    </div>
+  </div>
+
+  <!-- FASE 4 -->
+  <div class="phase-block">
+    <div class="phase-title"><div class="phase-num">4</div> Fase 4 — Follow-Up 30 Hari</div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">📅 Hari 1 — Reminder Mulai</div>
+        <button class="copy-btn" onclick="copyScript(this,'fu1')">Salin</button>
+      </div>
+      <div class="script-box-body" id="fu1">🐝 *Selamat memulai perjalanan SBH Anda, [Nama]!* 🎉
+
+Hari ini adalah Hari 1 dari 30 hari journey Anda.
+
+📌 *Tips Konsumsi Optimal:*
+✅ Konsumsi pagi — perut kosong, sebelum makan
+✅ Suhu air maksimal 40°C — jangan air mendidih
+✅ Langsung atau campur air hangat + lemon
+✅ Konsisten setiap hari — ini kunci utamanya!
+
+💡 *Fakta hari ini:*
+Antioksidan dalam SBH mulai bekerja di tingkat seluler sejak konsumsi pertama. Namun efek yang _terasa_ biasanya muncul di hari 7-14.
+
+Catat kondisi Anda hari ini sebagai baseline:
+_Energi / Tidur / Pencernaan — skala 1-10_
+
+_Saya akan check-in lagi di Hari 3_ 🙌</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">📅 Hari 3 — Check-in Pertama</div>
+        <button class="copy-btn" onclick="copyScript(this,'fu3')">Salin</button>
+      </div>
+      <div class="script-box-body" id="fu3">🌿 *Hari ke-3, [Nama]!*
+
+Sudah 3 hari perjalanan SBH Anda. Bagaimana rasanya?
+
+Apakah ada perubahan kecil yang Anda rasakan?
+
+*1️⃣* ✅ Ya, ada perubahan — tidur/energi membaik
+*2️⃣* ⏳ Belum terasa perubahan
+*3️⃣* ❓ Tidak yakin
+
+_Apapun jawabannya, itu normal!_</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">📅 Hari 7 — Mini Re-check</div>
+        <button class="copy-btn" onclick="copyScript(this,'fu7')">Salin</button>
+      </div>
+      <div class="script-box-body" id="fu7">🎯 *Week 1 Complete! [Nama]* 🏆
+
+Selamat! Anda sudah 7 hari konsisten. Ini pencapaian nyata!
+
+Mari kita mini re-check kondisi Anda:
+
+Dalam 7 hari terakhir, apakah ada perubahan pada:
+
+*1️⃣* Kualitas tidur ✅ Lebih baik / ❌ Belum
+*2️⃣* Level energi pagi ✅ Lebih baik / ❌ Belum
+*3️⃣* Pencernaan ✅ Lebih baik / ❌ Belum
+*4️⃣* Mood & fokus ✅ Lebih baik / ❌ Belum
+
+💡 *Fakta minggu ini:*
+Kadar antioksidan dalam darah mulai meningkat signifikan setelah 7-14 hari konsumsi rutin. Sistem imun mulai mendapat support nyata.
+
+_Lanjutkan! Minggu 2 biasanya lebih terasa 🚀_</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">📅 Hari 14 — Deep Insight</div>
+        <button class="copy-btn" onclick="copyScript(this,'fu14')">Salin</button>
+      </div>
+      <div class="script-box-body" id="fu14">🔬 *2 Minggu SBH — Deep Insight untuk [Nama]*
+
+Di balik layar, inilah yang terjadi di tubuh Anda selama 14 hari ini 👇
+
+*Yang terjadi di tingkat seluler:*
+🛡️ Kadar antioksidan darah meningkat 15-30%
+⚡ Produksi ATP (energi sel) mulai lebih efisien
+🧠 Neuroinflammasi mulai berkurang
+🫁 Mikrobioma usus mulai bergeser ke arah yang lebih sehat
+
+*Yang mungkin sudah Anda rasakan:*
+✅ Tidur lebih nyenyak atau mudah tertidur
+✅ Energi pagi lebih stabil
+✅ Pencernaan lebih lancar
+✅ Mood lebih stabil
+
+*Yang akan datang (minggu 3-4):*
+🎯 Perubahan metabolik mulai terukur
+🎯 Berat badan lebih terstabilkan
+🎯 Imun semakin kuat
+
+_Tetap konsisten — Anda hampir di fase terbaik!_ 💪
+
+Bagaimana kondisi Anda saat ini, [Nama]?</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">📅 Hari 30 — Laporan Akhir & Viral Loop</div>
+        <button class="copy-btn" onclick="copyScript(this,'fu30')">Salin</button>
+      </div>
+      <div class="script-box-body" id="fu30">🏆 *30 HARI SBH JOURNEY — SELAMAT, [Nama]!* 🎉
+
+Anda telah menyelesaikan 30 hari perjalanan kesehatan yang luar biasa!
+
+━━━━━━━━━━━━━━━━━━
+📊 *Laporan Perbandingan:*
+
+Skor Awal (Hari 1): *XX/100*
+Skor Sekarang: *YY/100*
+Perubahan: *↓ ZZ poin* ✅
+
+Area yang paling membaik:
+✅ [Area 1 berdasarkan jawaban awal]
+✅ [Area 2]
+━━━━━━━━━━━━━━━━━━
+
+🌟 *"Konsistensi kecil setiap hari membangun kesehatan besar seumur hidup."*
+
+Apa selanjutnya?
+
+*1️⃣* 📤 Share laporan 30 hari saya ke teman
+*2️⃣* 🔄 Lanjut konsumsi — order berikutnya
+*3️⃣* 💼 Saya tertarik bergabung sebagai reseller
+*4️⃣* 🔁 Ulangi diagnostik — bandingkan skor</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     TAB 3: BROADCAST TEMPLATES
+════════════════════════════════════════════ -->
+<div id="tab-broadcast" class="section">
+  <div class="sec-head">
+    <div class="sec-badge">📣 Broadcast</div>
+    <h1 class="sec-title">Template Pesan Broadcast</h1>
+    <p class="sec-sub">Pesan-pesan ini digunakan untuk menarik orang masuk ke dalam bot flow. Dirancang dengan hook yang kuat agar orang mau merespon dan memulai percakapan.</p>
+  </div>
+
+  <div class="broadcast-tabs">
+    <button class="btab active" onclick="showBtab('b1')">🎯 Hook Utama</button>
+    <button class="btab" onclick="showBtab('b2')">🔬 Edukasi</button>
+    <button class="btab" onclick="showBtab('b3')">💬 Testimoni</button>
+    <button class="btab" onclick="showBtab('b4')">📊 Diagnostik</button>
+    <button class="btab" onclick="showBtab('b5')">🌿 Komunitas</button>
+    <button class="btab" onclick="showBtab('b6')">💼 Reseller</button>
+  </div>
+
+  <!-- B1 -->
+  <div id="btab-b1" class="btab-content">
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">🎯 Broadcast 1 — Hook Stres Oksidatif (Prospek Umum)</div>
+        <button class="copy-btn" onclick="copyScript(this,'bc1')">Salin</button>
+      </div>
+      <div class="script-box-body" id="bc1">Hai [Nama] 👋
+
+Boleh tanya sesuatu yang mungkin belum pernah Anda pikirkan?
+
+*Seberapa yakin Anda bahwa tubuh Anda benar-benar baik-baik saja?*
+
+Bukan sakit yang terasa — tapi kondisi tersembunyi yang 90% orang tidak sadari sampai terlambat.
+
+Namanya: *Stres Oksidatif & Inflamasi Kronis.*
+
+Ini adalah akar dari diabetes, penyakit jantung, kanker, bahkan Alzheimer.
+
+Dan ia tidak punya gejala. Diam-diam. Setiap hari.
+
+---
+🔬 Kami membuat *Diagnostik Kesehatan Gratis* berbasis 1.128+ studi ilmiah untuk cek kondisi Anda.
+
+⏱️ Hanya 3 menit
+💯 Gratis sepenuhnya
+📊 Hasil personal + rekomendasi
+
+*Mau coba?* Balas *"CEK"* 👇</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">🎯 Broadcast 2 — Hook "Tubuh Bicara"</div>
+        <button class="copy-btn" onclick="copyScript(this,'bc2')">Salin</button>
+      </div>
+      <div class="script-box-body" id="bc2">Kalau tubuh Anda bisa bicara, kira-kira apa yang akan ia katakan? 🤔
+
+*"Aku sering lelah padahal tidur cukup..."*
+*"Aku butuh kafein untuk bisa berfungsi normal..."*
+*"Aku mudah sakit, dan lama sembuhnya..."*
+*"Aku susah turun berat badan meski sudah diet..."*
+
+Kalau satu atau lebih dari ini terasa familiar — tubuh Anda sedang mengirim sinyal.
+
+Dan sinyal itu perlu didengar sebelum menjadi masalah serius.
+
+---
+🐝 *SBH Health Diagnostic* — cek kondisi tubuh Anda secara ilmiah.
+
+Gratis. 3 menit. Hasil personal.
+
+Balas *"YA"* untuk mulai 👇</div>
+    </div>
+  </div>
+
+  <!-- B2 -->
+  <div id="btab-b2" class="btab-content" style="display:none">
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">🔬 Broadcast Edukasi 1 — Trehalulose</div>
+        <button class="copy-btn" onclick="copyScript(this,'bc3')">Salin</button>
+      </div>
+      <div class="script-box-body" id="bc3">🍯 *Fakta Sains yang Jarang Diketahui:*
+
+Ada satu gula langka di alam yang:
+✅ Tidak menyebabkan lonjakan gula darah
+✅ Tidak merusak gigi
+✅ Tidak disimpan sebagai lemak
+✅ Mendukung kontrol berat badan
+
+Namanya: *Trehalulose* 🔬
+
+Dan satu-satunya sumber alami terbaik? *Madu Stingless Bee (SBH / Kelulut).*
+
+Ini bukan klaim produk. Ini hasil riset Nature Scientific Reports yang dipublikasi di jurnal internasional.
+
+---
+Penasaran bagaimana SBH bisa relevan untuk kondisi spesifik *Anda*?
+
+Cek dengan diagnostik gratis kami → Balas *"INFO"* 🐝</div>
+    </div>
+
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">🔬 Broadcast Edukasi 2 — Antimikroba</div>
+        <button class="copy-btn" onclick="copyScript(this,'bc4')">Salin</button>
+      </div>
+      <div class="script-box-body" id="bc4">🦠 *Lebih Kuat dari Antibiotik Madu Standar?*
+
+Sebuah meta-analisis ilmiah (Wiley, 2024) menemukan sesuatu mengejutkan:
+
+Lebih dari *90%* sampel Madu Kelulut (SBH) berhasil menghambat bakteri MRSA dan Pseudomonas aeruginosa — dengan konsentrasi yang *lebih rendah* dari MedihoneyTM (standar klinis madu manuka internasional).
+
+Bahkan jamur Candida yang tidak bisa dihambat MedihoneyTM — 53% sampel SBH berhasil menghambatnya.
+
+---
+Ini bukan sekadar "madu yang enak." Ini adalah *superfood antimikroba* yang sudah divalidasi secara klinis.
+
+Mau cek apakah kondisi imun Anda cocok mendapat manfaat ini?
+
+Balas *"CEK"* → diagnostik gratis 3 menit 🐝</div>
+    </div>
+  </div>
+
+  <!-- B3 -->
+  <div id="btab-b3" class="btab-content" style="display:none">
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">💬 Template Broadcast Berbasis Sharing Hasil</div>
+        <button class="copy-btn" onclick="copyScript(this,'bc5')">Salin</button>
+      </div>
+      <div class="script-box-body" id="bc5">🐝 *SBH HEALTH CHECK — Hasil Diagnostik*
+
+👤 [Nama Pengirim]
+📊 Skor Risiko Oksidatif: XX/100
+🏷️ Profil: Early Warning
+🎯 Area Prioritas: Energi & Imun
+
+_"Saya baru coba diagnostik kesehatan gratis ini dan hasilnya cukup eye-opening. Ternyata tubuh saya sudah memberikan sinyal yang selama ini saya abaikan."_
+
+---
+💡 *Tentang SBH (Stingless Bee Honey / Madu Kelulut)*
+
+Superfood tropis yang didukung 1.128+ studi ilmiah. Mengandung trehalulose (Low-GI unik), flavonoid, dan senyawa antimikroba yang terbukti secara klinis.
+
+---
+🔍 *Cek kondisi tubuhmu juga — gratis, 3 menit, berbasis sains.*
+
+Balas *"CEK"* ke nomor ini atau klik link:
+[LINK DIAGNOSTIK]
+
+#SBHHealthCheck #NaturalHealth #MaduKelulut</div>
+    </div>
+  </div>
+
+  <!-- B4 -->
+  <div id="btab-b4" class="btab-content" style="display:none">
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">📊 Broadcast Diagnostik — Untuk Grup Kesehatan</div>
+        <button class="copy-btn" onclick="copyScript(this,'bc6')">Salin</button>
+      </div>
+      <div class="script-box-body" id="bc6">Halo semua! 🌿
+
+Kami baru meluncurkan sesuatu yang mungkin berguna untuk teman-teman di sini 👇
+
+*🔬 SBH Metabolic Diagnostic Tool*
+
+Alat diagnostik berbasis 1.128+ referensi ilmiah (PMC/NCBI, Wiley, Nature, MDPI 2000–2025) untuk mengetahui:
+
+📊 Skor risiko oksidatif personal Anda
+🏷️ Profil metabolik (dari 3 kategori)
+🍯 Protokol konsumsi SBH yang tepat untuk kondisi Anda
+📈 Tracking perubahan selama 30 hari
+
+*Gratis. Anonim. 3 menit.*
+
+Untuk siapa:
+✅ Yang penasaran dengan kondisi kesehatan metaboliknya
+✅ Yang sudah konsumsi SBH dan ingin lebih terstruktur
+✅ Yang ingin mulai hidup sehat secara natural
+
+Balas *"DIAGNOSTIK"* atau DM langsung 🐝</div>
+    </div>
+  </div>
+
+  <!-- B5 -->
+  <div id="btab-b5" class="btab-content" style="display:none">
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">🌿 Broadcast Komunitas — Ajakan Join Journey</div>
+        <button class="copy-btn" onclick="copyScript(this,'bc7')">Salin</button>
+      </div>
+      <div class="script-box-body" id="bc7">🌿 *30-Day SBH Health Journey*
+
+Bergabunglah dengan komunitas yang sedang membuktikan satu hal:
+
+*Perubahan kecil yang konsisten menghasilkan kesehatan yang besar.*
+
+Ini bukan program diet ketat. Bukan suplemen mahal. Bukan gaya hidup yang menyiksa.
+
+Hanya: *1-2 sendok teh SBH setiap hari, selama 30 hari.*
+
+Yang akan Anda dapatkan:
+✅ Diagnostik personal di awal & akhir
+✅ Check-in mingguan dengan insight ilmiah
+✅ Komunitas yang saling support
+✅ Laporan perbandingan skor sebelum & sesudah
+
+*Mulai gratis.* Cukup balas *"JOIN"* 🐝
+
+Perjalanan terbaik dimulai dengan satu langkah kecil hari ini.</div>
+    </div>
+  </div>
+
+  <!-- B6 -->
+  <div id="btab-b6" class="btab-content" style="display:none">
+    <div class="script-box">
+      <div class="script-box-head">
+        <div class="script-box-label">💼 Broadcast Reseller — Rekrut Agen Baru</div>
+        <button class="copy-btn" onclick="copyScript(this,'bc8')">Salin</button>
+      </div>
+      <div class="script-box-body" id="bc8">💼 *Peluang Bisnis yang Dibangun di Atas Sains*
+
+Bukan MLM. Bukan jualan paksa. Bukan hafal script.
+
+Ini adalah bisnis yang dimulai dengan *kepercayaan yang nyata* — karena Anda sendiri yang merasakan manfaatnya.
+
+*SBH (Stingless Bee Honey)* adalah produk dengan:
+
+🔬 Lebih dari 1.128 riset ilmiah yang membuktikan manfaatnya
+📈 Pasar kesehatan natural yang terus bertumbuh
+🎯 Tools diagnostik siap pakai untuk bantu calon pelanggan
+💪 Sistem edukasi yang membuat orang MINTA dibantu, bukan DITAWARI
+
+---
+Yang kami cari: orang yang *percaya pada kesehatan natural* dan ingin membantu orang lain sambil membangun penghasilan.
+
+Interested? Balas *"BISNIS"* untuk info lebih lanjut 🐝</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     TAB 4: PANDUAN SETUP
+════════════════════════════════════════════ -->
+<div id="tab-setup" class="section">
+  <div class="sec-head">
+    <div class="sec-badge">⚙️ Setup Guide</div>
+    <h1 class="sec-title">Panduan Setup per Platform</h1>
+    <p class="sec-sub">Pilih platform yang sesuai dengan kebutuhan dan kemampuan teknis Anda. Setiap opsi memiliki trade-off yang berbeda.</p>
+  </div>
+
+  <div class="setup-grid">
+    <!-- Option 1: Manual -->
+    <div class="setup-card">
+      <div class="setup-card-head">
+        <div class="setup-card-icon" style="background:rgba(37,211,102,.12)">📱</div>
+        <div>
+          <div class="setup-card-name">WA Business Manual</div>
+          <div class="setup-card-tag">Gratis · Langsung pakai</div>
+        </div>
+      </div>
+      <div class="setup-card-body">
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(37,211,102,.1);color:#25D366">1</div>
+          <div class="step-text">Download <b>WhatsApp Business</b> di HP Anda — gratis di Play Store / App Store</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(37,211,102,.1);color:#25D366">2</div>
+          <div class="step-text">Setting → <b>Quick Replies</b> → Masukkan semua script per fase dengan shortcut (contoh: /sambutan, /q1, /hasil1)</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(37,211,102,.1);color:#25D366">3</div>
+          <div class="step-text">Buat <b>Label Kontak</b>: Prospek Baru, Diagnostik, Follow-up D3, Follow-up D7, D14, D30, Closing</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(37,211,102,.1);color:#25D366">4</div>
+          <div class="step-text">Atur <b>Away Message</b> & <b>Greeting Message</b> dengan pesan sambutan Fase 0</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(37,211,102,.1);color:#25D366">5</div>
+          <div class="step-text">Gunakan <b>Broadcast Lists</b> untuk kirim follow-up D3, D7, D14, D30 secara manual per batch</div>
+        </div>
+        <div class="pros-cons">
+          <div class="pro-item">Gratis total</div>
+          <div class="con-item">Harus reply manual</div>
+          <div class="pro-item">Tidak perlu teknis</div>
+          <div class="con-item">Tidak bisa scale besar</div>
+          <div class="pro-item">Bisa mulai hari ini</div>
+          <div class="con-item">Follow-up manual</div>
+        </div>
+        <div class="difficulty">
+          <div class="diff-label">Kesulitan:</div>
+          <div class="diff-dots">
+            <div class="diff-dot filled"></div>
+            <div class="diff-dot empty"></div>
+            <div class="diff-dot empty"></div>
+            <div class="diff-dot empty"></div>
+            <div class="diff-dot empty"></div>
+          </div>
+          <div class="diff-text">Sangat Mudah</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Option 2: WATI -->
+    <div class="setup-card">
+      <div class="setup-card-head">
+        <div class="setup-card-icon" style="background:rgba(29,114,200,.12)">🤖</div>
+        <div>
+          <div class="setup-card-name">WATI / Respond.io</div>
+          <div class="setup-card-tag">Rp 200-500rb/bulan · Semi-otomatis</div>
+        </div>
+      </div>
+      <div class="setup-card-body">
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(29,114,200,.1);color:#5BA3E8">1</div>
+          <div class="step-text">Daftar di <b>wati.io</b> atau <b>respond.io</b> → Hubungkan nomor WA Business API</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(29,114,200,.1);color:#5BA3E8">2</div>
+          <div class="step-text">Buat <b>Chatbot Flow</b> menggunakan drag-and-drop builder → Input semua script dari tab Script Lengkap</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(29,114,200,.1);color:#5BA3E8">3</div>
+          <div class="step-text">Set <b>keyword triggers</b>: CEK, YA, INFO, 1, 2, 3, JOIN, BISNIS → routing ke flow yang sesuai</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(29,114,200,.1);color:#5BA3E8">4</div>
+          <div class="step-text">Buat <b>Sequence Automation</b> untuk D1, D3, D7, D14, D30 follow-up — fully otomatis</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(29,114,200,.1);color:#5BA3E8">5</div>
+          <div class="step-text">Set <b>Tag & Segment</b> otomatis berdasarkan jawaban → CS hanya handle yang siap closing</div>
+        </div>
+        <div class="pros-cons">
+          <div class="pro-item">Semi-otomatis penuh</div>
+          <div class="con-item">Ada biaya bulanan</div>
+          <div class="pro-item">Bisa handle ratusan user</div>
+          <div class="con-item">Perlu setup 1-2 hari</div>
+          <div class="pro-item">Analytics tersedia</div>
+          <div class="con-item">Butuh approval WA API</div>
+        </div>
+        <div class="difficulty">
+          <div class="diff-label">Kesulitan:</div>
+          <div class="diff-dots">
+            <div class="diff-dot filled"></div>
+            <div class="diff-dot filled"></div>
+            <div class="diff-dot filled"></div>
+            <div class="diff-dot empty"></div>
+            <div class="diff-dot empty"></div>
+          </div>
+          <div class="diff-text">Menengah</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Option 3: Kommo -->
+    <div class="setup-card">
+      <div class="setup-card-head">
+        <div class="setup-card-icon" style="background:rgba(124,77,204,.12)">⚡</div>
+        <div>
+          <div class="setup-card-name">Kommo CRM</div>
+          <div class="setup-card-tag">Rp 400-800rb/bulan · CRM + Bot</div>
+        </div>
+      </div>
+      <div class="setup-card-body">
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(124,77,204,.1);color:#A97FE8">1</div>
+          <div class="step-text">Daftar <b>kommo.com</b> → Integrasi WA Business API melalui panel Kommo</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(124,77,204,.1);color:#A97FE8">2</div>
+          <div class="step-text">Buat <b>Salesbot</b> menggunakan visual builder → Map semua pertanyaan diagnostik sebagai kondisi bot</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(124,77,204,.1);color:#A97FE8">3</div>
+          <div class="step-text">Buat <b>Pipeline</b> per fase: Masuk → Diagnostik → Hasil → Follow-up → Closing → Reseller</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(124,77,204,.1);color:#A97FE8">4</div>
+          <div class="step-text">Set <b>Automation Tasks</b>: follow-up D3/7/14/30 otomatis bergerak di pipeline tanpa intervensi manual</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(124,77,204,.1);color:#A97FE8">5</div>
+          <div class="step-text">Dashboard analytics: konversi per fase, skor rata-rata, segmen terbanyak, closing rate</div>
+        </div>
+        <div class="pros-cons">
+          <div class="pro-item">CRM + Bot + Analytics</div>
+          <div class="con-item">Biaya lebih tinggi</div>
+          <div class="pro-item">Pipeline visual lengkap</div>
+          <div class="con-item">Kurva belajar lebih panjang</div>
+          <div class="pro-item">Skala besar & tim</div>
+          <div class="con-item">Perlu koneksi internet stabil</div>
+        </div>
+        <div class="difficulty">
+          <div class="diff-label">Kesulitan:</div>
+          <div class="diff-dots">
+            <div class="diff-dot filled"></div>
+            <div class="diff-dot filled"></div>
+            <div class="diff-dot filled"></div>
+            <div class="diff-dot filled"></div>
+            <div class="diff-dot empty"></div>
+          </div>
+          <div class="diff-text">Menengah-Tinggi</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Option 4: Custom -->
+    <div class="setup-card">
+      <div class="setup-card-head">
+        <div class="setup-card-icon" style="background:rgba(240,165,0,.12)">🛠️</div>
+        <div>
+          <div class="setup-card-name">Custom Bot (Developer)</div>
+          <div class="setup-card-tag">Biaya developer · Fully custom</div>
+        </div>
+      </div>
+      <div class="setup-card-body">
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(240,165,0,.1);color:var(--amber)">1</div>
+          <div class="step-text">Gunakan <b>WA Business API</b> (Meta) + Baileys / Whatsapp-web.js library</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(240,165,0,.1);color:var(--amber)">2</div>
+          <div class="step-text">Integrasikan <b>Diagnostic HTML</b> yang sudah dibuat sebagai webview — skor dikirim otomatis ke WA</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(240,165,0,.1);color:var(--amber)">3</div>
+          <div class="step-text">Database user per nomor WA → simpan skor, profil, dan jawaban untuk personalisasi penuh</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(240,165,0,.1);color:var(--amber)">4</div>
+          <div class="step-text">Scheduler otomatis untuk D1/3/7/14/30 follow-up berdasarkan tanggal mulai per user</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num" style="background:rgba(240,165,0,.1);color:var(--amber)">5</div>
+          <div class="step-text">Re-diagnostik D30: bandingkan skor otomatis, generate laporan progress personal, trigger viral share</div>
+        </div>
+        <div class="pros-cons">
+          <div class="pro-item">Fully automated</div>
+          <div class="con-item">Perlu developer</div>
+          <div class="pro-item">Personalisasi penuh</div>
+          <div class="con-item">Biaya development</div>
+          <div class="pro-item">Scale unlimited</div>
+          <div class="con-item">Waktu development 2-4 minggu</div>
+        </div>
+        <div class="difficulty">
+          <div class="diff-label">Kesulitan:</div>
+          <div class="diff-dots">
+            <div class="diff-dot filled"></div>
+            <div class="diff-dot filled"></div>
+            <div class="diff-dot filled"></div>
+            <div class="diff-dot filled"></div>
+            <div class="diff-dot filled"></div>
+          </div>
+          <div class="diff-text">Perlu Developer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+    <div class="card-title">💡 Rekomendasi Urutan Implementasi</div>
+    <div class="card-body">
+      <b>Fase 1 (Hari ini):</b> Mulai dengan WA Business Manual — validasi script dan flow, pahami respon user nyata.<br><br>
+      <b>Fase 2 (Bulan 1-2):</b> Upgrade ke WATI atau Respond.io saat volume sudah 20+ user/hari — otomasi follow-up.<br><br>
+      <b>Fase 3 (Bulan 3+):</b> Pertimbangkan Kommo jika ada tim CS, atau Custom Bot jika ingin integrasi penuh dengan diagnostic HTML yang sudah dibuat.
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+//  TAB NAVIGATION
+// ═══════════════════════════════════════════
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showBtab(id) {
+  document.querySelectorAll('.btab-content').forEach(b => b.style.display='none');
+  document.querySelectorAll('.btab').forEach(b => b.classList.remove('active'));
+  document.getElementById('btab-'+id).style.display='block';
+  event.target.classList.add('active');
+}
+
+// ═══════════════════════════════════════════
+//  COPY SCRIPT
+// ═══════════════════════════════════════════
+function copyScript(btn, id) {
+  const text = document.getElementById(id).innerText;
+  if(navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => showCopied(btn));
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+    showCopied(btn);
+  }
+}
+
+function showCopied(btn) {
+  btn.textContent = '✓ Tersalin';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = 'Salin'; btn.classList.remove('copied'); }, 2000);
+  const t = document.getElementById('toast');
+  t.textContent = '✅ Script disalin ke clipboard!';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ═══════════════════════════════════════════
+//  SIMULATOR ENGINE
+// ═══════════════════════════════════════════
+const FLOWS = {
+  prospek: [
+    {
+      phase:'Fase 0 — Entry',
+      messages:[
+        {type:'system', text:'👤 Jalur Prospek Baru dimulai'},
+        {type:'bot', text:'🐝 <b>Halo! Selamat datang di SBH Health Assistant.</b><br><br>Tahukah Anda bahwa tubuh Anda mungkin sedang berjuang melawan <b>inflamasi tersembunyi</b> — tanpa gejala yang terasa?<br><br>Dalam 3 menit, saya bantu cek kondisi tubuh Anda secara ilmiah — gratis! 🔬'},
+      ],
+      options:['1️⃣ Ingin hidup lebih sehat','2️⃣ Sudah tahu SBH','3️⃣ Tertarik jadi reseller'],
+      script:'Fase 0 — Sambutan\n\nIni adalah pesan pertama yang user terima. Atur sebagai Greeting Message di WA Business.\n\nTips: Respons harus keluar dalam <30 detik untuk engagement maksimal.',
+      progress:10
+    },
+    {
+      phase:'Fase 1 — Hook',
+      messages:[
+        {type:'user', text:'1️⃣ Ingin hidup lebih sehat'},
+        {type:'bot', text:'Terima kasih! 😊<br><br>Satu fakta penting dulu 👇<br><br><b>90% penyakit kronis</b> — diabetes, jantung, kanker, Alzheimer — berakar dari SATU hal yang sama:<br><br>⚡ <b>Stres Oksidatif & Inflamasi Kronis</b><br><br>Yang berbahaya? Kondisi ini <b>tidak ada gejalanya</b> — tapi diam-diam merusak sel tubuh Anda setiap hari.<br><br>Mau tahu seberapa besar risiko Anda?'},
+      ],
+      options:['YA — Mulai diagnostik!','INFO — Jelaskan dulu'],
+      script:'Fase 1 — Hook Message\n\nQuick Reply shortcut: /hook1\n\nIni adalah momen kritis — user harus merasa cukup penasaran untuk lanjut.\n\nPsikologi: Gunakan FOMO (fear of missing out) — kondisi tersembunyi yang tidak terasa adalah hook terkuat.',
+      progress:25
+    },
+    {
+      phase:'Fase 2 — Diagnostik',
+      messages:[
+        {type:'user', text:'YA — Mulai diagnostik!'},
+        {type:'bot', text:'📊 <b>Diagnostik Blok A — Energi & Vitalitas</b><br>━━━━━━━━━━━━<br><br><b>Pertanyaan 1 dari 12:</b><br><br>Bagaimana level energi Anda sepanjang hari?'},
+      ],
+      options:['1️⃣ Energi penuh & stabil','2️⃣ Ada penurunan sore hari','3️⃣ Sering lelah tanpa sebab','4️⃣ Sangat mudah kelelahan'],
+      script:'Fase 2 — Pertanyaan Diagnostik\n\nQuick Reply: /q1\n\nSetelah user menjawab → kirim INSIGHT sebelum pertanyaan berikutnya.\n\nIni penting: insight membangun koneksi antara kondisi user dan SBH secara logis — bukan langsung jualan.',
+      progress:45
+    },
+    {
+      phase:'Fase 2 — Insight',
+      messages:[
+        {type:'user', text:'3️⃣ Sering lelah tanpa sebab'},
+        {type:'insight', label:'💡 TAHUKAH ANDA', text:'Kelelahan kronis tanpa sebab adalah sinyal awal <b>stres oksidatif</b> — sel tubuh Anda dipenuhi radikal bebas yang belum ternetralisir.<br><br>SBH kaya antioksidan yang bekerja di tingkat seluler untuk memulihkan keseimbangan energi dari dalam.'},
+        {type:'bot', text:'Baik, lanjut ke pertanyaan berikutnya 👇<br><br><b>Pertanyaan 2 dari 12:</b> Seberapa nyenyak tidur Anda dalam sebulan terakhir?'},
+      ],
+      options:['1️⃣ Tidur nyenyak','2️⃣ Kadang terbangun','3️⃣ Sering sulit tidur','4️⃣ Sangat buruk, kronik'],
+      script:'Fase 2 — Insight Edukatif\n\nQuick Reply: /ins1, /ins2, dst.\n\nFormula insight yang efektif:\n1. Validasi kondisi user (empati)\n2. Jelaskan MENGAPA secara sains (edukasi)\n3. Hubungkan dengan SBH (koneksi)\n\nJangan langsung jualan — bangun kepercayaan dulu.',
+      progress:55
+    },
+    {
+      phase:'Fase 3 — Hasil',
+      messages:[
+        {type:'system', text:'⏳ Menghitung skor & menganalisis profil...'},
+        {type:'bot', text:'🐝 <b>HASIL DIAGNOSTIK SBH ANDA</b><br>━━━━━━━━━━━━<br><br>👤 <b>Anda</b><br>📊 Skor Risiko: <b>62/100</b><br>🔴 Profil: <b>OXIDATIVE OVERLOAD</b><br><br>🔴 Beban oksidatif cukup tinggi<br>🔴 Sistem imun tertekan<br>🔴 Risiko metabolik meningkat<br><br>━━━━━━━━━━━━<br>🍯 <b>Protokol SBH:</b><br>🌅 Pagi: 1½ sdm SBH + air hangat<br>🌙 Malam: 1 sdt + jahe hangat<br>📅 Durasi: Min. 3 bulan'},
+      ],
+      options:['1️⃣ Info lebih dalam','2️⃣ Mau coba/tanya harga','3️⃣ Share ke teman','4️⃣ Daftar tracking 30 hari'],
+      script:'Fase 3 — Pengiriman Hasil\n\nQuick Reply: /hasil1 /hasil2 /hasil3\n\nTips KRITIS:\n✅ Selalu sebutkan nama user di hasil\n✅ Tampilkan skor sebagai angka konkret\n✅ Berikan profil dengan dampak emosional\n✅ Protokol harus spesifik — bukan generik\n✅ Pilihan lanjutan harus jelas & mudah\n\nMomen ini adalah puncak kepercayaan — jangan lewatkan dengan CTA yang lemah.',
+      progress:75
+    },
+    {
+      phase:'Fase 4 — Follow-Up',
+      messages:[
+        {type:'user', text:'4️⃣ Daftar tracking 30 hari'},
+        {type:'bot', text:'🎉 <b>Selamat! Anda resmi memulai 30-Day SBH Journey!</b><br><br>Saya akan check-in di:<br>📅 Hari 3 — Perubahan awal<br>📅 Hari 7 — Mini re-check<br>📅 Hari 14 — Deep insight<br>📅 Hari 30 — Laporan lengkap<br><br>Tips hari ini:<br>✅ Konsumsi pagi, perut kosong<br>✅ Air hangat max 40°C<br>✅ Konsisten = kunci utama!'},
+        {type:'system', text:'⏰ Reminder otomatis terjadwal untuk D3, D7, D14, D30'},
+      ],
+      options:['✅ Siap! Sudah mulai hari ini'],
+      script:'Fase 4 — Onboarding Journey\n\nQuick Reply: /journey-start\n\nSetup di WA Business Manual:\n→ Catat tanggal mulai user di catatan kontak\n→ Buat reminder di kalender untuk kirim pesan D3/7/14/30\n→ Label kontak: "Journey-D0"\n\nSetup di Platform Bot (WATI/Kommo):\n→ Trigger automation sequence dari tag "journey-start"\n→ D3, D7, D14, D30 terkirim otomatis',
+      progress:88
+    },
+    {
+      phase:'Fase 5 — Viral Loop',
+      messages:[
+        {type:'system', text:'📅 Hari ke-30 — Laporan Akhir'},
+        {type:'bot', text:'🏆 <b>30 Hari SBH Journey — SELAMAT!</b><br><br>📊 Skor Awal: <b>62/100</b><br>📊 Skor Sekarang: <b>38/100</b><br>📈 Perubahan: <b>↓24 poin ✅</b><br><br>✅ Energi membaik signifikan<br>✅ Kualitas tidur lebih baik<br><br>"Konsistensi kecil setiap hari membangun kesehatan besar seumur hidup." 🐝'},
+        {type:'insight', label:'📤 VIRALKAN', text:'Bantu teman Anda merasakan hal yang sama! Hasil Anda bisa menjadi bukti nyata yang menginspirasi orang lain untuk mulai.'},
+      ],
+      options:['1️⃣ Share hasil ke WA','2️⃣ Lanjut order SBH','3️⃣ Jadi reseller','4️⃣ Ulangi diagnostik'],
+      script:'Fase 5 — Viral Sharing Loop\n\nIni adalah momen paling powerful dalam seluruh flow.\n\nUser yang berhasil merasakan perubahan adalah:\n✅ Testimonial paling authentic\n✅ Referral yang paling dipercaya\n✅ Calon reseller terbaik\n\nFormula viral:\nHasil nyata → Emosi positif → Ingin berbagi → Teman masuk flow → Loop berulang\n\nPastikan pesan share sudah otomatis di-generate dengan data personal user.',
+      progress:100
+    },
+  ],
+  komunitas: [
+    {
+      phase:'Fase 0 — Entry Komunitas',
+      messages:[
+        {type:'system', text:'🌿 Jalur Komunitas Kesehatan'},
+        {type:'bot', text:'🐝 <b>Halo! Selamat datang.</b><br><br>Kami mendeteksi ketertarikan Anda pada kesehatan natural. Bagus sekali! 🙌<br><br>Siapa Anda?'},
+      ],
+      options:['1️⃣ Prospek baru','2️⃣ Sudah tahu SBH ✓','3️⃣ Tertarik jadi reseller'],
+      script:'Jalur Komunitas\n\nUser jalur 2 adalah yang paling warm — mereka sudah aware.\n\nStrategi: Langsung ke nilai lebih dalam — personalisasi & riset spesifik — jangan mulai dari edukasi dasar yang sudah mereka tahu.',
+      progress:15
+    },
+    {
+      phase:'Fase 1 — Deep Dive',
+      messages:[
+        {type:'user', text:'2️⃣ Sudah tahu SBH ✓'},
+        {type:'bot', text:'Luar biasa! Senang bertemu seseorang yang sudah aware 🙌<br><br>Karena Anda sudah tahu SBH, mari kita langsung ke sesuatu yang lebih <b>spesifik untuk Anda</b>:<br><br>📊 <b>Diagnostik Metabolik Personal</b> — cek seberapa optimal tubuh Anda saat ini dan area mana yang paling perlu dukungan SBH.<br><br>Hasilnya: profil + protokol yang disesuaikan kondisi <b>spesifik</b> Anda. Bukan informasi generik.'},
+      ],
+      options:['✅ Mulai diagnostik personal','🔬 Lihat riset terbaru SBH'],
+      script:'Jalur Komunitas — Hook\n\nUser komunitas tidak butuh edukasi dasar — mereka butuh NILAI LEBIH.\n\nBerikan:\n1. Personalisasi yang dalam\n2. Riset terbaru yang belum mereka tahu\n3. Community angle — mereka bisa bantu orang lain\n\nQuick Reply: /hook-komunitas',
+      progress:40
+    },
+    {
+      phase:'Fase 3 — Hasil + Community CTA',
+      messages:[
+        {type:'system', text:'📊 Setelah 12 pertanyaan diagnostik...'},
+        {type:'bot', text:'🐝 <b>Hasil Diagnostik Personal Anda</b><br>━━━━━━━━━━<br>📊 Skor: <b>28/100 — Early Warning</b><br><br>⚠️ Area prioritas: Imun & Metabolisme<br><br>🍯 Protokol SBH spesifik untuk Anda sudah siap.<br><br>Dan satu hal lagi — dengan pengetahuan Anda tentang SBH, Anda bisa menjadi <b>edukator</b> yang membantu komunitas Anda.'},
+      ],
+      options:['🍯 Lihat protokol lengkap','🌿 Bergabung komunitas 30-day','📤 Bagikan ke komunitasku'],
+      script:'Jalur Komunitas — Hasil\n\nCTA utama untuk jalur komunitas: SHARE & COMMUNITY.\n\nMereka lebih termotivasi oleh:\n→ Membantu orang lain\n→ Menjadi referensi di komunitasnya\n→ Eksklusivitas informasi ilmiah\n\nBukan sekadar membeli produk.',
+      progress:80
+    },
+  ],
+  reseller: [
+    {
+      phase:'Fase 0 — Entry Reseller',
+      messages:[
+        {type:'system', text:'💼 Jalur Calon Reseller'},
+        {type:'bot', text:'🐝 <b>Halo! Selamat datang.</b><br><br>Anda tertarik dengan peluang bisnis SBH — pilihan yang sangat menarik! 💼<br><br>Sebelum bicara bisnis, satu hal yang membedakan reseller terbaik kami:<br><br><b>Mereka merasakan sendiri dulu.</b><br><br>Ini tools diagnostik yang sama yang akan Anda gunakan untuk pelanggan Anda. Mari coba.'},
+      ],
+      options:['✅ Ya, saya siap coba dulu','💼 Info bisnis dulu'],
+      script:'Jalur Reseller — Entry\n\nStrategi kunci: Jangan langsung bahas bisnis!\n\nCalon reseller yang merasakan sendiri manfaat SBH akan:\n✅ Menjual dengan lebih authentic\n✅ Lebih sulit di-unfollow\n✅ Konversi 3x lebih tinggi\n✅ Bertahan lebih lama sebagai reseller\n\nDiagnostik adalah tools terbaik untuk mereka.',
+      progress:20
+    },
+    {
+      phase:'Fase 2 — Diagnostik sebagai Demo',
+      messages:[
+        {type:'user', text:'✅ Ya, saya siap coba dulu'},
+        {type:'bot', text:'Keputusan terbaik! 🎯<br><br>Setelah diagnostik ini, Anda akan:<br><br>1️⃣ Merasakan langsung bagaimana sistem ini bekerja<br>2️⃣ Mendapat insight personal tentang kondisi Anda<br>3️⃣ Punya gambaran bagaimana menawarkan ini ke pelanggan<br><br>Mulai 👇'},
+        {type:'system', text:'📋 12 pertanyaan diagnostik berjalan...'},
+      ],
+      options:['▶️ Mulai pertanyaan'],
+      script:'Jalur Reseller — Diagnostik sebagai Demo\n\nFraming yang berbeda: Diagnostik bukan hanya untuk kesehatan mereka — ini adalah DEMO TOOLS bisnis mereka.\n\nSetelah selesai, mereka sudah:\n→ Merasakan flow sebagai user\n→ Punya gambaran cara penggunaannya\n→ Lebih yakin dengan value proposisi SBH',
+      progress:50
+    },
+    {
+      phase:'Fase Bisnis — Onboarding Reseller',
+      messages:[
+        {type:'system', text:'✅ Diagnostik selesai — Beralih ke info bisnis'},
+        {type:'bot', text:'🎯 <b>Sekarang Anda sudah merasakan sendiri!</b><br><br>Bayangkan Anda mengirimkan link diagnostik ini ke 10 teman Anda hari ini...<br><br>Mereka mengisi. Mendapat hasil personal. Merasa terbantu. <b>Kepercayaan terbentuk sendiri.</b><br><br>Itulah model bisnis SBH kami — berbasis edukasi & kepercayaan, bukan tekanan.<br><br>Tertarik mengetahui detailnya?'},
+      ],
+      options:['✅ Ya, saya ingin info bisnis lengkap','🤔 Saya mau konsumsi dulu 30 hari'],
+      script:'Jalur Reseller — Transisi ke Bisnis\n\nMomen ini adalah closing alami — bukan hard sell.\n\nUser sudah:\n✅ Merasakan flow sendiri\n✅ Punya gambaran cara kerjanya\n✅ Emosi positif dari diagnostik\n\nPertanyaan yang efektif: "Bayangkan jika Anda yang mengirimkan ini ke teman Anda..."\n\nQuick Reply: /reseller-onboarding',
+      progress:90
+    },
+  ]
+};
+
+let currentFlow = null;
+let currentStep = 0;
+
+function startSim(segment) {
+  currentFlow = FLOWS[segment];
+  currentStep = 0;
+  document.getElementById('chat-area').innerHTML = '';
+  document.getElementById('sim-status').textContent = segment === 'prospek' ? '👤 Jalur Prospek' : segment === 'komunitas' ? '🌿 Jalur Komunitas' : '💼 Jalur Reseller';
+  renderStep();
+}
+
+function renderStep() {
+  if (!currentFlow || currentStep >= currentFlow.length) return;
+  const step = currentFlow[currentStep];
+  const chat = document.getElementById('chat-area');
+  const opts = document.getElementById('options-area');
+  const prog = document.getElementById('sim-prog');
+  const progNum = document.getElementById('sim-prog-num');
+  const panelLabel = document.getElementById('panel-label');
+  const panelContent = document.getElementById('panel-content');
+
+  // Update progress
+  prog.style.width = step.progress + '%';
+  progNum.textContent = (currentStep+1) + '/' + currentFlow.length;
+
+  // Update panel
+  panelLabel.textContent = '📋 ' + step.phase;
+  panelContent.innerHTML = '<div style="white-space:pre-wrap;font-size:.78rem;line-height:1.7;color:rgba(255,255,255,.7)">' + step.script + '</div>';
+
+  // Show typing indicator
+  const typing = document.createElement('div');
+  typing.className = 'typing';
+  typing.innerHTML = '<span></span><span></span><span></span>';
+  chat.appendChild(typing);
+  chat.scrollTop = chat.scrollHeight;
+
+  setTimeout(() => {
+    chat.removeChild(typing);
+
+    // Render messages
+    step.messages.forEach((msg, i) => {
+      setTimeout(() => {
+        const b = document.createElement('div');
+        if (msg.type === 'insight') {
+          b.className = 'bubble insight';
+          b.innerHTML = '<div class="ins-label">' + msg.label + '</div>' + msg.text;
+        } else {
+          b.className = 'bubble ' + msg.type;
+          b.innerHTML = msg.text;
+        }
+        chat.appendChild(b);
+        chat.scrollTop = chat.scrollHeight;
+      }, i * 300);
+    });
+
+    // Render options
+    setTimeout(() => {
+      opts.innerHTML = '';
+      step.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.textContent = opt;
+        btn.onclick = () => selectOpt(btn, opt, i);
+        opts.appendChild(btn);
+      });
+    }, step.messages.length * 300 + 200);
+
+  }, 900);
+}
+
+function selectOpt(btn, text, idx) {
+  document.querySelectorAll('.opt-btn').forEach(b => { b.disabled = true; b.style.opacity = '.4'; });
+  btn.classList.add('selected');
+  btn.style.opacity = '1';
+
+  const chat = document.getElementById('chat-area');
+  setTimeout(() => {
+    const ub = document.createElement('div');
+    ub.className = 'bubble user';
+    ub.textContent = text;
+    chat.appendChild(ub);
+    chat.scrollTop = chat.scrollHeight;
+
+    currentStep++;
+    if (currentStep < currentFlow.length) {
+      setTimeout(renderStep, 700);
+    } else {
+      const done = document.createElement('div');
+      done.className = 'bubble system';
+      done.innerHTML = '🎉 Simulasi selesai! Coba jalur lain atau buka tab Script Lengkap.';
+      chat.appendChild(done);
+      chat.scrollTop = chat.scrollHeight;
+      document.getElementById('options-area').innerHTML = '<div style="font-size:.72rem;color:var(--muted);text-align:center;padding:.25rem">Simulasi selesai — pilih jalur lain di atas</div>';
+    }
+  }, 200);
+}
+</script>
+</body>
+</html>

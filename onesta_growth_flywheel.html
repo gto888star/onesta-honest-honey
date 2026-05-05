@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>🐝 Onesta Growth Flywheel — End to End System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+:root{
+  --honey:#F5A623;--honey-d:#C4780A;--honey-l:#FFF8E8;
+  --dark:#0A0600;--dark-2:#150E00;--panel:#1C1300;
+  --cream:#FDFAF2;--sage:#3A7D52;--sky:#1A6FB5;
+  --plum:#6B3FA0;--rose:#C0404A;--teal:#0D8C7A;
+  --border:rgba(255,255,255,.07);--muted:rgba(255,255,255,.38);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--dark);color:#fff;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* ══ HERO ══ */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:4rem 1.25rem 2rem;
+  position:relative;overflow:hidden;text-align:center;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%,rgba(245,166,35,.2) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 40% at 90% 90%,rgba(58,125,82,.08) 0%,transparent 60%);
+  pointer-events:none;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(245,166,35,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(245,166,35,.035) 1px,transparent 1px);
+  background-size:44px 44px;pointer-events:none;
+}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:.45rem;
+  background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.22);
+  border-radius:99px;padding:.35rem .9rem;
+  font-size:.68rem;font-weight:600;color:var(--honey);
+  font-family:'DM Mono',monospace;letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:1.5rem;position:relative;
+}
+
+.hero-title{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:clamp(2.4rem,8vw,4.8rem);font-weight:900;
+  line-height:1.08;color:#fff;margin-bottom:.6rem;position:relative;
+}
+.hero-title em{font-style:italic;color:var(--honey)}
+
+.hero-sub{
+  font-size:clamp(.85rem,2.5vw,1rem);color:rgba(255,255,255,.5);
+  max-width:500px;line-height:1.7;margin:0 auto 1.75rem;position:relative;
+}
+
+/* Brand positioning strip */
+.brand-strip{
+  display:flex;flex-wrap:wrap;justify-content:center;
+  gap:.5rem;margin-bottom:2rem;position:relative;
+}
+.brand-pill{
+  display:flex;align-items:center;gap:.35rem;
+  padding:.35rem .8rem;border-radius:8px;
+  font-size:.72rem;font-weight:600;
+  border:1px solid;
+}
+.bp-honest{background:rgba(245,166,35,.1);border-color:rgba(245,166,35,.25);color:var(--honey)}
+.bp-traceable{background:rgba(58,125,82,.1);border-color:rgba(58,125,82,.25);color:#7FD9A0}
+.bp-science{background:rgba(26,111,181,.1);border-color:rgba(26,111,181,.25);color:#7BBFED}
+.bp-natural{background:rgba(13,140,122,.1);border-color:rgba(13,140,122,.25);color:#5FD4C4}
+
+/* Flywheel vis */
+.fw-vis{position:relative;width:min(300px,82vw);height:min(300px,82vw);margin:0 auto 2rem}
+.fw-ring{position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(245,166,35,.12);animation:spin 28s linear infinite}
+.fw-ring-2{inset:18%;border-color:rgba(245,166,35,.07);animation-duration:18s;animation-direction:reverse}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.fw-center{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:26%;height:26%;background:radial-gradient(circle,var(--honey),var(--honey-d));
+  border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:clamp(1.1rem,3.5vw,1.5rem);
+  box-shadow:0 0 40px rgba(245,166,35,.4),0 0 80px rgba(245,166,35,.12);
+  gap:.1rem;
+}
+.fw-center-label{font-size:.45rem;font-weight:700;color:var(--dark);font-family:'DM Mono',monospace;letter-spacing:.05em}
+
+.fw-node{
+  position:absolute;width:clamp(50px,13vw,64px);height:clamp(50px,13vw,64px);
+  border-radius:50%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:.12rem;
+  font-size:clamp(.52rem,1.4vw,.62rem);font-weight:600;text-align:center;
+  cursor:pointer;transition:transform .2s,box-shadow .2s;border:1.5px solid;
+}
+.fw-node:active{transform:translate(-50%,-50%) scale(1.12) !important}
+.fw-node .fe{font-size:clamp(.85rem,2.3vw,1rem)}
+
+.fn1{top:1%;left:50%;transform:translate(-50%,0);background:rgba(58,125,82,.18);border-color:rgba(58,125,82,.45);color:#7FD9A0}
+.fn2{top:21%;right:1%;transform:translate(0,0);background:rgba(245,166,35,.14);border-color:rgba(245,166,35,.38);color:var(--honey)}
+.fn3{bottom:9%;right:5%;transform:translate(0,0);background:rgba(26,111,181,.18);border-color:rgba(26,111,181,.38);color:#7BBFED}
+.fn4{bottom:1%;left:50%;transform:translate(-50%,0);background:rgba(107,63,160,.18);border-color:rgba(107,63,160,.38);color:#C4A3F0}
+.fn5{bottom:9%;left:5%;transform:translate(0,0);background:rgba(13,140,122,.18);border-color:rgba(13,140,122,.38);color:#5FD4C4}
+.fn6{top:21%;left:1%;transform:translate(0,0);background:rgba(192,64,74,.18);border-color:rgba(192,64,74,.38);color:#F08080}
+
+/* ══ NAV ══ */
+.snav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(10,6,0,.95);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.snav-inner{
+  display:flex;align-items:center;padding:.6rem 1rem;gap:.35rem;
+  overflow-x:auto;scrollbar-width:none;
+}
+.snav-inner::-webkit-scrollbar{display:none}
+.nbrand{display:flex;align-items:center;gap:.4rem;flex-shrink:0;margin-right:.5rem}
+.nbee{width:26px;height:26px;background:var(--honey);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.8rem}
+.nname{font-family:'Fraunces',serif;font-size:.78rem;font-weight:700;white-space:nowrap}
+.npill{
+  flex-shrink:0;padding:.35rem .7rem;border-radius:7px;
+  font-size:.7rem;font-weight:500;cursor:pointer;white-space:nowrap;
+  border:1px solid transparent;background:transparent;color:var(--muted);
+  font-family:'DM Sans',sans-serif;transition:all .18s;
+}
+.npill.active{background:var(--honey);color:var(--dark);font-weight:700}
+.npill:active{opacity:.7}
+
+/* ══ SECTION ══ */
+.sec{padding:3rem 1.25rem 1rem;max-width:780px;margin:0 auto}
+.slabel{
+  font-family:'DM Mono',monospace;font-size:.63rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--honey);margin-bottom:.55rem;
+  display:flex;align-items:center;gap:.5rem;
+}
+.slabel::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(245,166,35,.3),transparent)}
+.stitle{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:clamp(1.5rem,5vw,2.1rem);font-weight:800;line-height:1.15;margin-bottom:.45rem;
+}
+.ssub{font-size:.83rem;color:var(--muted);line-height:1.7;margin-bottom:1.6rem}
+
+/* ══ PHASE CARDS ══ */
+.pgrid{display:flex;flex-direction:column;gap:.85rem}
+.pcard{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;cursor:pointer;
+  transition:border-color .2s,box-shadow .2s;
+}
+.pcard:hover{border-color:rgba(245,166,35,.2)}
+.pcard.open .pbody{display:block}
+.phead{display:flex;align-items:center;gap:.75rem;padding:.9rem 1rem}
+.pico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0}
+.pmeta{flex:1;min-width:0}
+.pnum{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.12rem}
+.ptitle{font-family:'Fraunces',serif;font-size:.9rem;font-weight:700;color:#fff;line-height:1.25}
+.ptag{display:inline-block;font-size:.6rem;font-weight:600;padding:.15rem .45rem;border-radius:5px;margin-top:.25rem;font-family:'DM Mono',monospace}
+.pchev{font-size:.68rem;color:var(--muted);transition:transform .25s;flex-shrink:0}
+.pcard.open .pchev{transform:rotate(180deg)}
+.pbody{
+  display:none;padding:0 1rem 1rem;
+  border-top:1px solid var(--border);
+  animation:bIn .2s ease;
+}
+@keyframes bIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+
+/* phase color classes */
+.pc1{border-left:3px solid #3A7D52}
+.pc1 .pico{background:rgba(58,125,82,.18)}
+.pc1 .ptag{background:rgba(58,125,82,.12);color:#7FD9A0;border:1px solid rgba(58,125,82,.25)}
+.pc2{border-left:3px solid var(--honey)}
+.pc2 .pico{background:rgba(245,166,35,.14)}
+.pc2 .ptag{background:rgba(245,166,35,.1);color:var(--honey);border:1px solid rgba(245,166,35,.22)}
+.pc3{border-left:3px solid #1A6FB5}
+.pc3 .pico{background:rgba(26,111,181,.18)}
+.pc3 .ptag{background:rgba(26,111,181,.1);color:#7BBFED;border:1px solid rgba(26,111,181,.22)}
+.pc4{border-left:3px solid #6B3FA0}
+.pc4 .pico{background:rgba(107,63,160,.18)}
+.pc4 .ptag{background:rgba(107,63,160,.1);color:#C4A3F0;border:1px solid rgba(107,63,160,.22)}
+.pc5{border-left:3px solid #0D8C7A}
+.pc5 .pico{background:rgba(13,140,122,.18)}
+.pc5 .ptag{background:rgba(13,140,122,.1);color:#5FD4C4;border:1px solid rgba(13,140,122,.22)}
+.pc6{border-left:3px solid #C0404A}
+.pc6 .pico{background:rgba(192,64,74,.18)}
+.pc6 .ptag{background:rgba(192,64,74,.1);color:#F08080;border:1px solid rgba(192,64,74,.22)}
+
+/* ══ WA THREAD ══ */
+.wa{background:#0B1410;border-radius:12px;padding:.8rem;margin:.65rem 0}
+.wm{max-width:88%;padding:.55rem .75rem;border-radius:10px;font-size:.75rem;line-height:1.6;margin-bottom:.45rem;animation:mp .2s ease}
+@keyframes mp{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.wm.bot{background:#1A2E1E;border-radius:2px 10px 10px 10px;color:rgba(255,255,255,.85)}
+.wm.bot b{color:#A8DEBA}
+.wm.bot em{color:rgba(255,255,255,.5);font-style:italic}
+.wm.user{background:#1A3040;border-radius:10px 10px 2px 10px;margin-left:auto;text-align:right;color:rgba(255,255,255,.85)}
+.wm.sys{background:transparent;color:rgba(255,255,255,.28);font-size:.66rem;text-align:center;font-style:italic;max-width:100%;margin:.2rem 0}
+.wm.ins{background:rgba(245,166,35,.07);border:1px solid rgba(245,166,35,.16);border-radius:8px;max-width:100%;color:rgba(255,255,255,.8)}
+.wm.ins .il{font-size:.6rem;color:var(--honey);font-family:'DM Mono',monospace;letter-spacing:.07em;text-transform:uppercase;margin-bottom:.25rem}
+
+/* ══ STEP LIST ══ */
+.slist{display:flex;flex-direction:column;gap:.45rem;margin:.75rem 0}
+.si{display:flex;gap:.7rem;align-items:flex-start;padding:.6rem .75rem;background:rgba(255,255,255,.03);border-radius:9px;border:1px solid rgba(255,255,255,.05)}
+.sd{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:.63rem;font-weight:500;flex-shrink:0;margin-top:.05rem}
+.sc{flex:1}
+.sn{font-size:.8rem;font-weight:600;color:#fff;margin-bottom:.12rem;line-height:1.3}
+.sdesc{font-size:.73rem;color:rgba(255,255,255,.5);line-height:1.55}
+
+/* ══ PRODUCT GRID ══ */
+.prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.75rem 0}
+@media(min-width:480px){.prod-grid{grid-template-columns:repeat(3,1fr)}}
+.prod-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:.7rem .65rem}
+.prod-name{font-size:.78rem;font-weight:700;color:var(--honey);margin-bottom:.2rem}
+.prod-role{font-size:.65rem;color:rgba(255,255,255,.5);line-height:1.45}
+.prod-for{font-size:.62rem;color:rgba(255,255,255,.35);margin-top:.25rem;font-family:'DM Mono',monospace}
+
+/* ══ SEGMENT CARDS ══ */
+.seg-grid{display:flex;flex-direction:column;gap:.5rem;margin:.75rem 0}
+.seg-card{
+  border-radius:11px;border:1px solid;
+  display:grid;grid-template-columns:160px 1fr 1fr;
+  align-items:center;gap:0;overflow:hidden;
+}
+@media(max-width:480px){
+  /* removed conflicting rule */
+  .seg-col{padding:.4rem 0 !important;border:none !important}
+}
+.seg-card.sa{background:rgba(245,166,35,.07);border-color:rgba(245,166,35,.25)}
+.seg-card.sb{background:rgba(26,111,181,.07);border-color:rgba(26,111,181,.25)}
+.seg-card.sc{background:rgba(58,125,82,.07);border-color:rgba(58,125,82,.25)}
+.seg-card.sd{background:#1E1430 !important;border:1.5px solid rgba(167,113,255,.5) !important}
+.seg-card.se{background:rgba(13,140,122,.07);border-color:rgba(13,140,122,.25)}
+.seg-card.sf{background:rgba(192,64,74,.07);border-color:rgba(192,64,74,.25)}
+.seg-col{padding:.65rem .85rem;align-self:stretch;display:flex;flex-direction:column;justify-content:center}
+.seg-col-mid{border-left:1px solid rgba(255,255,255,.06);border-right:1px solid rgba(255,255,255,.06)}
+.seg-head{font-size:.75rem;font-weight:700;color:#fff;margin-bottom:.15rem;display:flex;align-items:center;gap:.4rem}
+.seg-badge{width:20px;height:20px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:700;flex-shrink:0}
+.sa .seg-badge{background:rgba(245,166,35,.2);color:var(--honey)}
+.sb .seg-badge{background:rgba(26,111,181,.2);color:#7BBFED}
+.sc .seg-badge{background:rgba(58,125,82,.2);color:#7FD9A0}
+.sd .seg-badge{background:rgba(107,63,160,.3);color:#C4A3F0;border:1px solid rgba(107,63,160,.4)}
+.se .seg-badge{background:rgba(13,140,122,.2);color:#5FD4C4}
+.sf .seg-badge{background:rgba(192,64,74,.2);color:#F08080}
+.seg-sub{font-size:.7rem;color:var(--honey);font-family:'DM Mono',monospace;font-weight:500}
+.seg-tag{font-size:.68rem;color:rgba(255,255,255,.45);line-height:1.5}
+.seg-stack-label{font-size:.6rem;color:var(--muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.2rem}
+.seg-stack{font-size:.72rem;font-family:'DM Mono',monospace;line-height:1.6;color:rgba(255,255,255,.8)}
+.seg-stack b{color:var(--honey);font-weight:700}
+.seg-stack .premium{font-size:.65rem;color:rgba(255,255,255,.4);margin-top:.15rem;display:block}
+
+/* ══ SCORE TABLE ══ */
+.score-table{width:100%;border-collapse:collapse;margin:.65rem 0;font-size:.75rem}
+.score-table th{background:var(--panel);color:rgba(255,255,255,.5);padding:.45rem .65rem;text-align:left;font-weight:600;font-size:.68rem;font-family:'DM Mono',monospace;letter-spacing:.07em;text-transform:uppercase}
+.score-table td{padding:.45rem .65rem;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:middle}
+.score-table tr:last-child td{border-bottom:none}
+.score-table tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+.score-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:.4rem}
+
+/* ══ TIMELINE ══ */
+.tl{position:relative;padding-left:1.4rem;margin:.65rem 0}
+.tl::before{content:'';position:absolute;left:.3rem;top:0;bottom:0;width:1.5px;background:linear-gradient(180deg,var(--honey),rgba(245,166,35,.08))}
+.tli{position:relative;margin-bottom:.85rem}
+.tli::before{content:'';position:absolute;left:-1.2rem;top:.32rem;width:8px;height:8px;border-radius:50%;background:var(--honey);box-shadow:0 0 0 2px rgba(245,166,35,.18)}
+.tlp{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--honey);letter-spacing:.07em;text-transform:uppercase;margin-bottom:.18rem}
+.tlt{font-size:.83rem;font-weight:600;color:#fff;margin-bottom:.18rem}
+.tld{font-size:.73rem;color:var(--muted);line-height:1.55}
+
+/* ══ CALLOUT ══ */
+.co{border-radius:10px;padding:.8rem .95rem;margin:.65rem 0;font-size:.78rem;line-height:1.65}
+.co-honey{background:rgba(245,166,35,.07);border:1px solid rgba(245,166,35,.18);color:rgba(255,255,255,.8)}
+.co-honey b{color:var(--honey)}
+.co-sage{background:rgba(58,125,82,.07);border:1px solid rgba(58,125,82,.18);color:rgba(255,255,255,.8)}
+.co-sage b{color:#7FD9A0}
+.co-sky{background:rgba(26,111,181,.07);border:1px solid rgba(26,111,181,.18);color:rgba(255,255,255,.8)}
+.co-sky b{color:#7BBFED}
+.co-red{background:rgba(192,64,74,.07);border:1px solid rgba(192,64,74,.18);color:rgba(255,255,255,.8)}
+.co-red b{color:#F08080}
+
+/* ══ METRIC GRID ══ */
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.65rem 0}
+@media(min-width:440px){.mgrid{grid-template-columns:repeat(3,1fr)}}
+.mc{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:.7rem;text-align:center}
+.mn{font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--honey);display:block;margin-bottom:.18rem}
+.ml{font-size:.63rem;color:var(--muted);line-height:1.4}
+
+/* ══ METABOLIC TYPES ══ */
+.type-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.65rem 0}
+.type-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.7rem}
+.type-name{font-size:.75rem;font-weight:700;color:#fff;margin-bottom:.15rem}
+.type-signal{font-size:.68rem;color:rgba(255,255,255,.45);margin-bottom:.25rem;line-height:1.4}
+.type-stack{font-size:.65rem;font-family:'DM Mono',monospace;color:var(--honey)}
+
+/* ══ FLOW STEPS ══ */
+.flow-steps{display:flex;flex-direction:column;gap:0;margin:.65rem 0}
+.fs{display:flex;gap:.7rem;align-items:stretch;padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.fs:last-child{border-bottom:none}
+.fs-left{display:flex;flex-direction:column;align-items:center;gap:.2rem;flex-shrink:0;width:44px}
+.fs-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:.7rem;flex-shrink:0}
+.fs-line{flex:1;width:1.5px;background:linear-gradient(180deg,rgba(245,166,35,.2),transparent);min-height:16px}
+.fs-content{flex:1;padding-top:.1rem}
+.fs-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.2rem}
+.fs-title{font-size:.82rem;font-weight:600;color:#fff;margin-bottom:.2rem}
+.fs-desc{font-size:.72rem;color:var(--muted);line-height:1.55}
+.fs-tags{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.3rem}
+.ft{font-size:.6rem;padding:.12rem .4rem;border-radius:4px;background:rgba(255,255,255,.05);color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.07);font-family:'DM Mono',monospace}
+
+/* ══ PROGRESS BAR ══ */
+#rp{position:fixed;top:0;left:0;right:0;height:2px;z-index:999;background:linear-gradient(90deg,var(--honey),var(--honey-d));transform-origin:left;transform:scaleX(0);transition:transform .1s linear}
+
+/* ══ REVEAL ══ */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+.rv.vis{opacity:1;transform:translateY(0)}
+
+/* ══ BOTTOM CTA ══ */
+.bcta{background:linear-gradient(135deg,var(--dark-2),#1A1000);border-top:1px solid var(--border);padding:3rem 1.25rem;text-align:center}
+.bcta-title{font-family:'Fraunces',serif;font-size:clamp(1.5rem,5vw,2rem);font-weight:800;margin-bottom:.5rem}
+.bcta-sub{font-size:.83rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.6}
+.bcta-btns{display:flex;flex-direction:column;gap:.5rem;max-width:300px;margin:0 auto}
+.btn1{padding:.9rem;background:linear-gradient(135deg,var(--honey),var(--honey-d));color:var(--dark);font-weight:700;font-size:.88rem;border:none;border-radius:11px;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 4px 20px rgba(245,166,35,.28)}
+.btn1:active{transform:scale(.98)}
+.btn2{padding:.85rem;background:transparent;color:rgba(255,255,255,.55);font-size:.82rem;border:1px solid rgba(255,255,255,.1);border-radius:11px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn2:active{background:rgba(255,255,255,.05)}
+</style>
+</head>
+<body>
+<div id="rp"></div>
+
+<!-- ══ HERO ══════════════════════════════════════════ -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="eyebrow">🐝 Onesta™ · Growth Flywheel · 2025–2026</div>
+
+  <h1 class="hero-title">
+    <em>Honest Honey.</em><br>
+    Intelligent System.
+  </h1>
+
+  <p class="hero-sub">
+    Growth flywheel end-to-end — dari Balance Check™ entry point hingga post-purchase monitoring, subscription, dan viral scale. Dibangun di atas satu filosofi: <em>Body in Balance.</em>
+  </p>
+
+  <div class="brand-strip">
+    <div class="brand-pill bp-honest">🍯 Honest Honey</div>
+    <div class="brand-pill bp-traceable">🔗 Digitally Traceable</div>
+    <div class="brand-pill bp-science">🔬 Science-Backed</div>
+    <div class="brand-pill bp-natural">🌿 Natural Metabolic Stabilizer</div>
+  </div>
+
+  <div class="fw-vis">
+    <div class="fw-ring"></div>
+    <div class="fw-ring fw-ring-2"></div>
+    <div class="fw-center">
+      <span>🐝</span>
+      <span class="fw-center-label">ONESTA</span>
+    </div>
+    <div class="fw-node fn1" onclick="goTo('content')"><span class="fe">📣</span>Content</div>
+    <div class="fw-node fn2" onclick="goTo('conversion')"><span class="fe">⚖️</span>Balance Check</div>
+    <div class="fw-node fn3" onclick="goTo('subscription')"><span class="fe">📦</span>Subscribe</div>
+    <div class="fw-node fn4" onclick="goTo('retention')"><span class="fe">💛</span>Retain</div>
+    <div class="fw-node fn5" onclick="goTo('monitoring')"><span class="fe">📊</span>Monitor</div>
+    <div class="fw-node fn6" onclick="goTo('scale')"><span class="fe">🚀</span>Scale</div>
+  </div>
+</section>
+
+<!-- ══ NAV ════════════════════════════════════════════ -->
+<nav class="snav">
+  <div class="snav-inner">
+    <div class="nbrand"><div class="nbee">🐝</div><div class="nname">Onesta Flywheel</div></div>
+    <button class="npill" onclick="goTo('overview')">🔄 Overview</button>
+    <button class="npill" onclick="goTo('content')">📣 Content</button>
+    <button class="npill" onclick="goTo('conversion')">⚖️ Balance Check</button>
+    <button class="npill" onclick="goTo('subscription')">📦 Subscribe</button>
+    <button class="npill" onclick="goTo('retention')">💛 Retention</button>
+    <button class="npill" onclick="goTo('monitoring')">📊 Monitoring</button>
+    <button class="npill" onclick="goTo('scale')">🚀 Scale</button>
+    <button class="npill" onclick="goTo('products')">🍯 Produk</button>
+  </div>
+</nav>
+
+<!-- ══ OVERVIEW ═══════════════════════════════════════ -->
+<section class="sec rv" id="overview">
+  <div class="slabel">🔄 Big Picture</div>
+  <h2 class="stitle">Onesta Growth Flywheel</h2>
+  <p class="ssub">Satu intelligence, banyak ekspresi — itulah Onesta. Flywheel ini memastikan setiap touchpoint memperkuat filosofi yang sama: <b>Onesta bukan madu biasa. Onesta adalah Natural Metabolic Stabilizer.</b></p>
+
+  <div class="flow-steps">
+    <div class="fs">
+      <div class="fs-left"><div class="fs-num" style="background:rgba(58,125,82,.2);color:#7FD9A0">1</div><div class="fs-line"></div></div>
+      <div class="fs-content">
+        <div class="fs-label" style="color:#7FD9A0">📣 Content</div>
+        <div class="fs-title">Attract & Educate</div>
+        <div class="fs-desc">Hook broadcast yang membangun rasa ingin tahu → Balance Check™ sebagai konten viral → Edukasi mikro per body signal → "Onesta bukan honey. Onesta adalah metabolic stabilizer."</div>
+        <div class="fs-tags"><span class="ft">WA Broadcast</span><span class="ft">Balance Check Link</span><span class="ft">Body Signal Education</span><span class="ft">Honest Honey Story</span></div>
+      </div>
+    </div>
+    <div class="fs">
+      <div class="fs-left"><div class="fs-num" style="background:rgba(245,166,35,.15);color:var(--honey)">2</div><div class="fs-line"></div></div>
+      <div class="fs-content">
+        <div class="fs-label" style="color:var(--honey)">⚖️ Balance Check™</div>
+        <div class="fs-title">Diagnose & Convert</div>
+        <div class="fs-desc">10 pertanyaan → Balance Score 0–100 → 8 Metabolic Types → Variant Stack Recommendation → Ritual Protocol yang sangat personal → Purchase pertama yang sadar & yakin</div>
+        <div class="fs-tags"><span class="ft">Onesta Balance Check™</span><span class="ft">6 Pillar Score</span><span class="ft">8 Metabolic Types</span><span class="ft">Stack Recommendation</span></div>
+      </div>
+    </div>
+    <div class="fs">
+      <div class="fs-left"><div class="fs-num" style="background:rgba(26,111,181,.18);color:#7BBFED">3</div><div class="fs-line"></div></div>
+      <div class="fs-content">
+        <div class="fs-label" style="color:#7BBFED">📦 Subscription</div>
+        <div class="fs-title">Onboard & Ritualize</div>
+        <div class="fs-desc">Post-purchase onboarding → Ritual protocol personal → Paket 1/3/6 bulan → Community "30-Day Balance Journey" → Dari one-time buyer ke ritual harian</div>
+        <div class="fs-tags"><span class="ft">Ritual System</span><span class="ft">Subscription Paket</span><span class="ft">Community Invite</span><span class="ft">Digital Traceability Story</span></div>
+      </div>
+    </div>
+    <div class="fs">
+      <div class="fs-left"><div class="fs-num" style="background:rgba(107,63,160,.18);color:#C4A3F0">4</div><div class="fs-line"></div></div>
+      <div class="fs-content">
+        <div class="fs-label" style="color:#C4A3F0">💛 Retention</div>
+        <div class="fs-title">Engage & Build Belief</div>
+        <div class="fs-desc">Weekly Balance Recheck (setiap 7 hari) → Progress tracking 6 pillars → Komunitas aktif → Belief makin kuat setiap minggu</div>
+        <div class="fs-tags"><span class="ft">Weekly Balance Recheck</span><span class="ft">Every 7 Days</span><span class="ft">Pillar Tracking</span><span class="ft">Community Engine</span></div>
+      </div>
+    </div>
+    <div class="fs">
+      <div class="fs-left"><div class="fs-num" style="background:rgba(13,140,122,.18);color:#5FD4C4">5</div><div class="fs-line"></div></div>
+      <div class="fs-content">
+        <div class="fs-label" style="color:#5FD4C4">📊 Monitoring</div>
+        <div class="fs-title">Measure & Optimize</div>
+        <div class="fs-desc">Balance Score sebelum vs sesudah → NPS per segmen → Churn detection → Analisis pillar lemah → Optimalkan touchpoint yang kurang efektif</div>
+        <div class="fs-tags"><span class="ft">Score Delta</span><span class="ft">NPS D14&D30</span><span class="ft">Churn Prevention</span><span class="ft">Win-back Flow</span></div>
+      </div>
+    </div>
+    <div class="fs">
+      <div class="fs-left"><div class="fs-num" style="background:rgba(192,64,74,.18);color:#F08080">6</div></div>
+      <div class="fs-content">
+        <div class="fs-label" style="color:#F08080">🚀 Scale</div>
+        <div class="fs-title">Amplify & Go Viral</div>
+        <div class="fs-desc">Share Balance Score → Viral metabolic type card → "Cek tubuhmu juga" loop → Reseller dari user terbaik → Onesta Network makin luas</div>
+        <div class="fs-tags"><span class="ft">Viral Balance Card</span><span class="ft">Referral Program</span><span class="ft">Reseller System</span><span class="ft">Onesta Network</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="co co-honey">
+    <b>Core positioning — tidak boleh berubah di setiap touchpoint:</b><br><br>
+    "Onesta is not <em>'honey.'</em><br>
+    Onesta is a <b>Natural Metabolic Stabilizer</b> — stingless bee wellness honey designed to help modern bodies <b>stay in balance</b> through steady energy, low glycemic response, gut support, immune readiness, recovery, and long-term resilience."
+  </div>
+</section>
+
+<!-- ══ FASE 1: CONTENT ════════════════════════════════ -->
+<section class="sec rv" id="content">
+  <div class="slabel">📣 Fase 1</div>
+  <h2 class="stitle">Content & Attraction</h2>
+  <p class="ssub">Entry point ke Onesta ecosystem. Setiap piece of content harus mengkomunikasikan satu pesan: <em>"Tubuhmu memberi sinyal. Saatnya dengarkan."</em></p>
+
+  <div class="pgrid">
+
+    <div class="pcard pc1" onclick="toggle(this)">
+      <div class="phead">
+        <div class="pico">🎯</div>
+        <div class="pmeta">
+          <div class="pnum">Hook Strategy</div>
+          <div class="ptitle">5 Kategori Hook Broadcast</div>
+          <span class="ptag">WA · Status · IG</span>
+        </div>
+        <span class="pchev">▼</span>
+      </div>
+      <div class="pbody">
+        <div class="slist">
+          <div class="si">
+            <div class="sd" style="background:rgba(58,125,82,.18);color:#7FD9A0">H1</div>
+            <div class="sc">
+              <div class="sn">"Tubuh Anda Bicara Diam-Diam"</div>
+              <div class="sdesc">90% orang tidak tahu ada inflamasi tersembunyi di tubuh mereka. Sinyal seperti kelelahan, kembung, brain fog bukan kebetulan. CTA: <b>balas "CEK"</b></div>
+            </div>
+          </div>
+          <div class="si">
+            <div class="sd" style="background:rgba(58,125,82,.18);color:#7FD9A0">H2</div>
+            <div class="sc">
+              <div class="sn">"Bukan Madu Biasa — Natural Metabolic Stabilizer"</div>
+              <div class="sdesc">Trehalulose: satu-satunya gula alami yang tidak melonjak di darah, tidak caries, tidak disimpan sebagai lemak. Hanya ada di SBH. Hanya ada di Onesta.</div>
+            </div>
+          </div>
+          <div class="si">
+            <div class="sd" style="background:rgba(58,125,82,.18);color:#7FD9A0">H3</div>
+            <div class="sc">
+              <div class="sn">"Honest Honey — Digitally Traceable"</div>
+              <div class="sdesc">Setiap botol punya ceritanya. Dari sarang lebah di hutan Indonesia — scan QR code, verifikasi sendiri. Transparansi adalah DNA Onesta.</div>
+            </div>
+          </div>
+          <div class="si">
+            <div class="sd" style="background:rgba(58,125,82,.18);color:#7FD9A0">H4</div>
+            <div class="sc">
+              <div class="sn">"Manuka milik NZ. Onesta milik Indonesia."</div>
+              <div class="sdesc">Indonesia punya Heterotrigona Itama — stingless bee langka yang menghasilkan madu dengan bioactive lebih kuat dari Manuka. Ini warisan Indonesia.</div>
+            </div>
+          </div>
+          <div class="si">
+            <div class="sd" style="background:rgba(58,125,82,.18);color:#7FD9A0">H5</div>
+            <div class="sc">
+              <div class="sn">Share Hasil Balance Check™ (Viral Hook)</div>
+              <div class="sdesc">User yang sudah dapat Balance Score share ke grup → "Cek tubuhmu juga" → viral loop tanpa biaya ads. Ini konten terkuat.</div>
+            </div>
+          </div>
+        </div>
+        <div class="co co-sage">
+          <b>Jadwal broadcast:</b> Senin (body signal hook) · Rabu (sains trehalulose) · Jumat (honest honey story / share hasil user) · Minggu (ritual & komunitas). Konsisten 4x/minggu.
+        </div>
+      </div>
+    </div>
+
+    <div class="pcard pc1" onclick="toggle(this)">
+      <div class="phead">
+        <div class="pico">⚖️</div>
+        <div class="pmeta">
+          <div class="pnum">Core Content Asset</div>
+          <div class="ptitle">Onesta Balance Check™ sebagai Content</div>
+          <span class="ptag">Link Viral · Shareable Result</span>
+        </div>
+        <span class="pchev">▼</span>
+      </div>
+      <div class="pbody">
+        <div class="wa">
+          <div class="wm sys">User terima broadcast / lihat WA Status</div>
+          <div class="wm bot">🐝 Hei!<br><br>Tubuhmu memberi sinyal setiap hari.<br><br>Energi turun tanpa sebab. Kembung setelah makan. Susah fokus. Bangun tidur masih lelah.<br><br>Ini bukan hal normal — ini sinyal metabolik yang bisa dibaca.<br><br><b>Onesta Balance Check™</b> — cek kondisi tubuhmu dalam 1 menit, gratis:<br><br>👉 <b>[link]</b><br><br><em>Tidak perlu login. Hasil langsung personal.</em></div>
+        </div>
+        <div class="co co-honey">
+          <b>Mengapa Balance Check™ adalah content terkuat Onesta:</b> Bukan iklan — tapi alat bantu yang genuinely berguna. User yang mengisi merasakan value sebelum membeli. Hasil yang personal dan bisa dishare = viral engine yang tidak membutuhkan budget ads.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ FASE 2: BALANCE CHECK (CONVERSION) ════════════ -->
+<section class="sec rv" id="conversion">
+  <div class="slabel">⚖️ Fase 2 — Core Engine</div>
+  <h2 class="stitle">Onesta Balance Check™</h2>
+  <p class="ssub">Ini adalah jantung dari seluruh sistem. Bukan diagnostic biasa — ini adalah <em>metabolic mirror</em> yang membangun kepercayaan dari dalam diri user sendiri.</p>
+
+  <div class="co co-sky">
+    <b>Tagline yang digunakan di seluruh touchpoint:</b><br>
+    "Not a quiz. A metabolic mirror." · "Check your balance. Find your ritual." · "Your body is giving signals. Let's read them." · "<b>Balance is the new normal.</b>"
+  </div>
+
+  <div class="pgrid">
+
+    <div class="pcard pc2 open" onclick="toggle(this)">
+      <div class="phead">
+        <div class="pico">🚀</div>
+        <div class="pmeta">
+          <div class="pnum">Entry Point</div>
+          <div class="ptitle">Opening: Bukan Quiz Biasa</div>
+          <span class="ptag">1 Menit · Gratis · Personal</span>
+        </div>
+        <span class="pchev">▼</span>
+      </div>
+      <div class="pbody">
+        <div class="wa">
+          <div class="wm bot"><b>🐝 Onesta Balance Check™</b><br><br>Tubuhmu memberi sinyal setiap hari.<br><br>Energy crash.<br>Cravings.<br>Bloating.<br>Brain fog.<br>Slow recovery.<br>Weak immunity.<br><br><em>Ini bukan keluhan biasa — ini metabolic signals yang bisa dibaca dan direspons.</em><br><br>Let's check your metabolic balance in 1 minute.<br><br>[Start Balance Check]</div>
+          <div class="wm bot"><em>This is not a regular quiz.</em><br><br>This is a metabolic signal check to help you understand:<br>• what feels off<br>• what your body may need<br>• which Onesta ritual fits you best<br><br>[Continue]</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pcard pc2" onclick="toggle(this)">
+      <div class="phead">
+        <div class="pico">❓</div>
+        <div class="pmeta">
+          <div class="pnum">10 Pertanyaan — 6 Pillar</div>
+          <div class="ptitle">Diagnostic Question Flow</div>
+          <span class="ptag">Goal → Age → Signal → Energy → Meal → Gut → Immune → Recovery → Lifestyle → Intent</span>
+        </div>
+        <span class="pchev">▼</span>
+      </div>
+      <div class="pbody">
+        <div class="slist">
+          <div class="si">
+            <div class="sd" style="background:rgba(245,166,35,.15);color:var(--honey)">Q1</div>
+            <div class="sc"><div class="sn">Goal — What do you want to improve most?</div><div class="sdesc">Steady energy · Blood glucose balance · Gut comfort · Immunity · Recovery · Aging gracefully · Fasting support · Kids' wellness</div></div>
+          </div>
+          <div class="si">
+            <div class="sd" style="background:rgba(245,166,35,.15);color:var(--honey)">Q2</div>
+            <div class="sc"><div class="sn">Age Group</div><div class="sdesc">Below 18 · 18–29 · 30–39 · 40–49 · 50–59 · 60+ → menentukan segment routing</div></div>
+          </div>
+          <div class="si">
+            <div class="sd" style="background:rgba(245,166,35,.15);color:var(--honey)">Q3</div>
+            <div class="sc"><div class="sn">Body Signal — Yang paling sering dirasakan</div><div class="sdesc">Afternoon crash · Cravings · Bloating · Easy fatigue · Brain fog · Slow recovery · Mood-energy swing · Not feeling fresh</div></div>
+          </div>
+          <div class="si">
+            <div class="sd" style="background:rgba(245,166,35,.15);color:var(--honey)">Q4</div>
+            <div class="sc"><div class="sn">Energy Rhythm — Stabilitas energi sepanjang hari</div><div class="sdesc">Stable all day → Very unstable (5 pilihan). Affects: Energy Pillar + Blood Glucose Pillar</div></div>
+          </div>
+          <div class="si">
+            <div class="sd" style="background:rgba(245,166,35,.15);color:var(--honey)">Q5</div>
+            <div class="sc"><div class="sn">Meal Response — Setelah makan biasanya merasa</div><div class="sdesc">Normal · Sleepy · Craving more · Bloated · Heavy · Hungry again. Affects: Blood Glucose + Gut Pillar</div></div>
+          </div>
+          <div class="si">
+            <div class="sd" style="background:rgba(245,166,35,.15);color:var(--honey)">Q6</div>
+            <div class="sc"><div class="sn">Gut Signal — Kondisi pencernaan</div><div class="sdesc">Comfortable → Sensitive to food. Affects: Gut Pillar</div></div>
+          </div>
+          <div class="si">
+            <div class="sd" style="background:rgba(245,166,35,.15);color:var(--honey)">Q7</div>
+            <div class="sc"><div class="sn">Immune Signal — Mudah lelah / terpengaruh stres</div><div class="sdesc">Rarely → Very often. Affects: Immune Pillar + Energy Pillar</div></div>
+          </div>
+          <div class="si">
+            <div class="sd" style="background:rgba(245,166,35,.15);color:var(--honey)">Q8</div>
+            <div class="sc"><div class="sn">Recovery Signal — Kecepatan pulih</div><div class="sdesc">Fast → Very slow. Affects: Recovery Pillar + Anti-Decline Pillar</div></div>
+          </div>
+          <div class="si">
+            <div class="sd" style="background:rgba(245,166,35,.15);color:var(--honey)">Q9</div>
+            <div class="sc"><div class="sn">Lifestyle Load</div><div class="sdesc">Active & balanced · Busy but manageable · High stress · Irregular meals · Poor sleep · Sedentary. Affects: semua pillar</div></div>
+          </div>
+          <div class="si">
+            <div class="sd" style="background:rgba(245,166,35,.15);color:var(--honey)">Q10</div>
+            <div class="sc"><div class="sn">Purchase Intent Bridge — Jenis support yang diinginkan</div><div class="sdesc">Daily wellness ritual · Targeted concern · Premium natural superfood · Family wellness · Fasting companion → menentukan stack recommendation</div></div>
+          </div>
+        </div>
+        <div class="co co-honey">
+          <b>Setelah tiap jawaban:</b> Bot kirim micro-insight yang menghubungkan kondisi user dengan mekanisme Onesta secara saintifik. Ini yang membuat user teredukasi tanpa terasa sedang di-pitch.
+        </div>
+      </div>
+    </div>
+
+    <div class="pcard pc2" onclick="toggle(this)">
+      <div class="phead">
+        <div class="pico">📊</div>
+        <div class="pmeta">
+          <div class="pnum">Score System</div>
+          <div class="ptitle">Onesta Balance Score™ — 6 Pillar</div>
+          <span class="ptag">0–100 · 5 Status Level</span>
+        </div>
+        <span class="pchev">▼</span>
+      </div>
+      <div class="pbody">
+        <table class="score-table">
+          <tr><th>Skor</th><th>Status</th><th>Makna</th></tr>
+          <tr><td><span class="score-dot" style="background:#22C55E"></span>85–100</td><td>Balanced</td><td>Rhythm kuat. Pertahankan ritual harian.</td></tr>
+          <tr><td><span class="score-dot" style="background:#84CC16"></span>70–84</td><td>Slightly Off</td><td>Stabil tapi ada sinyal kecil imbalance.</td></tr>
+          <tr><td><span class="score-dot" style="background:var(--honey)"></span>50–69</td><td>Unstable</td><td>Energi, gut, imun, atau recovery perlu dukungan.</td></tr>
+          <tr><td><span class="score-dot" style="background:#F97316"></span>30–49</td><td>Imbalanced</td><td>Multiple signals — tubuh struggling to stabilize.</td></tr>
+          <tr><td><span class="score-dot" style="background:#EF4444"></span>0–29</td><td>Red Zone</td><td>Butuh perhatian gaya hidup + dukungan konsisten.</td></tr>
+        </table>
+        <div style="margin:.65rem 0">
+          <div style="font-size:.72rem;font-weight:600;color:var(--honey);margin-bottom:.4rem;font-family:'DM Mono',monospace;letter-spacing:.06em;text-transform:uppercase">6 Metabolic Balance Pillars</div>
+          <div class="slist">
+            <div class="si"><div class="sd" style="background:rgba(245,166,35,.15);color:var(--honey)">P1</div><div class="sc"><div class="sn">Energy Stability</div><div class="sdesc">Steady atau crash? → Onesta Daily, Fasting, Beeyond</div></div></div>
+            <div class="si"><div class="sd" style="background:rgba(245,166,35,.15);color:var(--honey)">P2</div><div class="sc"><div class="sn">Blood Glucose Rhythm</div><div class="sdesc">Craving, sudden hunger, post-meal sleepiness? → Daily, Diabee, Fasting</div></div></div>
+            <div class="si"><div class="sd" style="background:rgba(245,166,35,.15);color:var(--honey)">P3</div><div class="sc"><div class="sn">Gut Balance</div><div class="sdesc">Bloated, irregular, heavy? → Daily, Junior, Imunisi</div></div></div>
+            <div class="si"><div class="sd" style="background:rgba(245,166,35,.15);color:var(--honey)">P4</div><div class="sc"><div class="sn">Immune Readiness</div><div class="sdesc">Mudah lelah, recover lambat? → Imunisi, Daily, Junior</div></div></div>
+            <div class="si"><div class="sd" style="background:rgba(245,166,35,.15);color:var(--honey)">P5</div><div class="sc"><div class="sn">Recovery & Performance</div><div class="sdesc">Lambat pulih dari exercise/stres? → Beeyond, Daily, Fasting</div></div></div>
+            <div class="si"><div class="sd" style="background:rgba(245,166,35,.15);color:var(--honey)">P6</div><div class="sc"><div class="sn">Anti-Decline / Aging Gracefully</div><div class="sdesc">Brain fog, stamina turun, stiffness? → Daily, Diabee, Imunisi, Lecy, Myrta</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pcard pc2" onclick="toggle(this)">
+      <div class="phead">
+        <div class="pico">🏷️</div>
+        <div class="pmeta">
+          <div class="pnum">8 Metabolic Types — Shareable</div>
+          <div class="ptitle">Identitas yang Membuat Orang Ingin Share</div>
+          <span class="ptag">Viral Engine</span>
+        </div>
+        <span class="pchev">▼</span>
+      </div>
+      <div class="pbody">
+        <div class="type-grid">
+          <div class="type-card"><div class="type-name">🎢 The Rollercoaster Type</div><div class="type-signal">Energy naik-turun, craving, post-meal crash</div><div class="type-stack">Daily + Diabee</div></div>
+          <div class="type-card"><div class="type-name">🌫️ The Foggy Type</div><div class="type-signal">Brain slow, fokus drops, sulit konsentrasi</div><div class="type-stack">Daily + Lecy / Myrta</div></div>
+          <div class="type-card"><div class="type-name">🫧 The Gut-Sensitive Type</div><div class="type-signal">Bloating, heaviness, discomfort setelah makan</div><div class="type-stack">Daily + Imunisi</div></div>
+          <div class="type-card"><div class="type-name">🔋 The Low-Battery Type</div><div class="type-signal">Lelah bahkan setelah istirahat cukup</div><div class="type-stack">Daily + Imunisi</div></div>
+          <div class="type-card"><div class="type-name">⏳ The Slow-Recovery Type</div><div class="type-signal">Tubuh lama bounce back dari aktivitas</div><div class="type-stack">Daily + Beeyond</div></div>
+          <div class="type-card"><div class="type-name">⚡ The Fasting-Crash Type</div><div class="type-signal">Energi drop saat fasting, craving saat break-fast</div><div class="type-stack">Fasting + Daily</div></div>
+          <div class="type-card"><div class="type-name">🌿 The Anti-Decline Type</div><div class="type-signal">Ingin aging gracefully, jaga vitality</div><div class="type-stack">Daily + Diabee + Imunisi / Lecy</div></div>
+          <div class="type-card"><div class="type-name">🌱 The Growing Balance Type</div><div class="type-signal">Anak butuh nourishment harian</div><div class="type-stack">Junior (+ Imunisi)</div></div>
+        </div>
+        <div class="co co-honey">
+          <b>Kekuatan viral dari Metabolic Types:</b> Orang senang berbagi "tipe kepribadian" mereka. "Saya ternyata The Rollercoaster Type!" lebih mudah dishare daripada "Saya butuh madu untuk energi." Ini adalah identitas, bukan sekadar diagnosis.
+        </div>
+      </div>
+    </div>
+
+    <div class="pcard pc2" onclick="toggle(this)">
+      <div class="phead">
+        <div class="pico">🍯</div>
+        <div class="pmeta">
+          <div class="pnum">Result → Recommendation</div>
+          <div class="ptitle">5 Result Cards + Ritual Protocol</div>
+          <span class="ptag">Personal · Actionable · Shareable</span>
+        </div>
+        <span class="pchev">▼</span>
+      </div>
+      <div class="pbody">
+        <div class="wa">
+          <div class="wm sys">Setelah 10 pertanyaan selesai...</div>
+          <div class="wm bot"><b>⚖️ YOUR BALANCE SCORE</b><br>━━━━━━━━━━━━<br>62 / 100<br>Status: <b>Slightly Off Balance</b><br><br>Your body may be functioning, but your daily rhythm shows signs of instability.</div>
+          <div class="wm bot"><b>🎢 Your Metabolic Type:</b><br><b>THE ROLLERCOASTER TYPE</b><br><br>Your energy may go up and down too often.<br>Commonly linked with cravings, post-meal sleepiness, and unstable daily rhythm.</div>
+          <div class="wm bot"><b>🍯 Recommended Onesta Ritual:</b><br><b>Onesta Daily + Onesta Diabee</b><br><br><b>Daily</b> — your everyday metabolic stabilizer<br><b>Diabee</b> — targeted blood glucose rhythm support<br><br>🌅 Morning: 1 spoon Onesta Daily<br>🍽️ After meal: 1 spoon Onesta Diabee<br>📅 Daily: 2 spoons per day</div>
+          <div class="wm bot">What would you like to do next?<br><br><b>1️⃣</b> Buy My Recommended Stack 🛒<br><b>2️⃣</b> Talk to Onesta Advisor 💬<br><b>3️⃣</b> Save My Balance Score 📊<br><b>4️⃣</b> Share My Balance Type 📤<br><b>5️⃣</b> Remind Me to Recheck in 7 Days 🔔</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ PRODUK REFERENCE ════════════════════════════════ -->
+<section class="sec rv" id="products">
+  <div class="slabel">🍯 Produk Onesta™</div>
+  <h2 class="stitle">Variant Stack & Role Map</h2>
+  <p class="ssub">Setiap varian memiliki peran spesifik dalam ekosistem Balance Check. Daily adalah fondasi — semua varian lain melengkapi berdasarkan hasil diagnostik.</p>
+
+  <div class="prod-grid">
+    <div class="prod-card"><div class="prod-name">Daily MF02</div><div class="prod-role">Foundation stabilizer. 2 sdt/hari. Semua orang.</div><div class="prod-for">Foundation Stack</div></div>
+    <div class="prod-card"><div class="prod-name">DiaBee MF02</div><div class="prod-role">Blood glucose rhythm. Low-GI trehalulose.</div><div class="prod-for">Blood Glucose Stack</div></div>
+    <div class="prod-card"><div class="prod-name">Imunisi MF02</div><div class="prod-role">Immune + gut. Flavonoid, propolis, polyphenol.</div><div class="prod-for">Immunity Stack</div></div>
+    <div class="prod-card"><div class="prod-name">Fasting</div><div class="prod-role">IF rhythm stabilizer. Clean break-fast ritual.</div><div class="prod-for">Fasting Stack</div></div>
+    <div class="prod-card"><div class="prod-name">Beeyond</div><div class="prod-role">Performance + recovery. Sport & active.</div><div class="prod-for">Performance Stack</div></div>
+    <div class="prod-card"><div class="prod-name">Junior</div><div class="prod-role">Kids daily wellness. 1 tahun ke atas.</div><div class="prod-for">Kids Stack</div></div>
+    <div class="prod-card"><div class="prod-name">Lecy MF01</div><div class="prod-role">Forest Gold. Geniotrigona Thoracica. Anti-decline premium.</div><div class="prod-for">Anti-Decline Premium</div></div>
+    <div class="prod-card"><div class="prod-name">Myrta MF01</div><div class="prod-role">Botanical. Myrtaceae. Antioksidan premium.</div><div class="prod-for">Anti-Decline Premium</div></div>
+    <div class="prod-card"><div class="prod-name">Mangrove / Cajuputi</div><div class="prod-role">Signature botanical. Taste explorer. Antioxidant.</div><div class="prod-for">Botanical Signature</div></div>
+  </div>
+
+  <div style="margin-top:.75rem">
+    <div style="font-size:.72rem;font-weight:600;color:var(--honey);margin-bottom:.5rem;font-family:'DM Mono',monospace;letter-spacing:.06em;text-transform:uppercase">6 Segment → Stack Map</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin:12px 0">
+
+  <!-- SEG A -->
+  <div style="display:grid;grid-template-columns:160px 1fr 1fr;border-radius:10px;border:1px solid rgba(245,166,35,.3);background:rgba(245,166,35,.07);overflow:hidden">
+    <div style="padding:12px 14px;border-right:1px solid rgba(255,255,255,.06)">
+      <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#fff;margin-bottom:4px">
+        <span style="width:20px;height:20px;border-radius:5px;background:rgba(245,166,35,.25);color:#F5A623;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">A</span>
+        40+ Anti-Decline
+      </div>
+      <div style="font-size:11px;color:#F5A623;font-family:monospace">Aging Gracefully</div>
+    </div>
+    <div style="padding:12px 14px;border-right:1px solid rgba(255,255,255,.06)">
+      <div style="font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Body Signals</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.55);line-height:1.5">Brain fog · Stamina menurun · Imun rentan · Blood glucose · Mood-energy swings</div>
+    </div>
+    <div style="padding:12px 14px">
+      <div style="font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Recommended Stack</div>
+      <div style="font-size:12px;font-family:monospace;color:#F5A623;font-weight:700;line-height:1.5">Daily + Diabee + Imunisi<br><span style="font-size:10px;color:rgba(255,255,255,.35);font-weight:400">Premium: + Lecy / Myrta</span></div>
+    </div>
+  </div>
+
+  <!-- SEG B -->
+  <div style="display:grid;grid-template-columns:160px 1fr 1fr;border-radius:10px;border:1px solid rgba(26,111,181,.3);background:rgba(26,111,181,.07);overflow:hidden">
+    <div style="padding:12px 14px;border-right:1px solid rgba(255,255,255,.06)">
+      <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#fff;margin-bottom:4px">
+        <span style="width:20px;height:20px;border-radius:5px;background:rgba(26,111,181,.25);color:#7BBFED;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">B</span>
+        Below 40 Fit
+      </div>
+      <div style="font-size:11px;color:#7BBFED;font-family:monospace">Fit for Life</div>
+    </div>
+    <div style="padding:12px 14px;border-right:1px solid rgba(255,255,255,.06)">
+      <div style="font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Body Signals</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.55);line-height:1.5">Busy lifestyle · Energy crash · Stress eating · Poor sleep · Bloating · Low focus</div>
+    </div>
+    <div style="padding:12px 14px">
+      <div style="font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Recommended Stack</div>
+      <div style="font-size:12px;font-family:monospace;color:#F5A623;font-weight:700;line-height:1.5">Daily + Fasting<br><span style="font-size:10px;color:rgba(255,255,255,.35);font-weight:400">Active: Daily + Beeyond</span></div>
+    </div>
+  </div>
+
+  <!-- SEG C -->
+  <div style="display:grid;grid-template-columns:160px 1fr 1fr;border-radius:10px;border:1px solid rgba(58,125,82,.3);background:rgba(58,125,82,.07);overflow:hidden">
+    <div style="padding:12px 14px;border-right:1px solid rgba(255,255,255,.06)">
+      <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#fff;margin-bottom:4px">
+        <span style="width:20px;height:20px;border-radius:5px;background:rgba(58,125,82,.25);color:#7FD9A0;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">C</span>
+        Wanita 40+
+      </div>
+      <div style="font-size:11px;color:#7FD9A0;font-family:monospace">Hormonal Balance</div>
+    </div>
+    <div style="padding:12px 14px;border-right:1px solid rgba(255,255,255,.06)">
+      <div style="font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Body Signals</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.55);line-height:1.5">Hormonal rhythm · Mood swing · Fatigue · Cravings · Sleep disturbance · Skin concern</div>
+    </div>
+    <div style="padding:12px 14px">
+      <div style="font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Recommended Stack</div>
+      <div style="font-size:12px;font-family:monospace;color:#F5A623;font-weight:700;line-height:1.5">Daily + Diabee + Imunisi<br><span style="font-size:10px;color:rgba(255,255,255,.35);font-weight:400">Premium: + Myrta / Lecy</span></div>
+    </div>
+  </div>
+
+  <!-- SEG D -->
+  <div style="display:grid;grid-template-columns:160px 1fr 1fr;border-radius:10px;border:1px solid rgba(167,113,255,.4);background:rgba(107,63,160,.12);overflow:hidden">
+    <div style="padding:12px 14px;border-right:1px solid rgba(255,255,255,.06)">
+      <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#fff;margin-bottom:4px">
+        <span style="width:20px;height:20px;border-radius:5px;background:rgba(167,113,255,.3);color:#C4A3F0;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">D</span>
+        Pria 40+
+      </div>
+      <div style="font-size:11px;color:#C4A3F0;font-family:monospace">Vitality & Performance</div>
+    </div>
+    <div style="padding:12px 14px;border-right:1px solid rgba(255,255,255,.06)">
+      <div style="font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Body Signals</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.55);line-height:1.5">Stamina decline · Belly fat · Poor recovery · Blood glucose · Stress load · Brain fog</div>
+    </div>
+    <div style="padding:12px 14px">
+      <div style="font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Recommended Stack</div>
+      <div style="font-size:12px;font-family:monospace;color:#F5A623;font-weight:700;line-height:1.5">Daily + Diabee + Beeyond<br><span style="font-size:10px;color:rgba(255,255,255,.35);font-weight:400">Premium: + Lecy</span></div>
+    </div>
+  </div>
+
+  <!-- SEG E -->
+  <div style="display:grid;grid-template-columns:160px 1fr 1fr;border-radius:10px;border:1px solid rgba(13,140,122,.3);background:rgba(13,140,122,.07);overflow:hidden">
+    <div style="padding:12px 14px;border-right:1px solid rgba(255,255,255,.06)">
+      <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#fff;margin-bottom:4px">
+        <span style="width:20px;height:20px;border-radius:5px;background:rgba(13,140,122,.25);color:#5FD4C4;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">E</span>
+        IF Practitioner
+      </div>
+      <div style="font-size:11px;color:#5FD4C4;font-family:monospace">Fasting Rhythm</div>
+    </div>
+    <div style="padding:12px 14px;border-right:1px solid rgba(255,255,255,.06)">
+      <div style="font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Body Signals</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.55);line-height:1.5">Fasting crash · Cravings · Weak break-fast · Unstable energy · Overeating after fasting</div>
+    </div>
+    <div style="padding:12px 14px">
+      <div style="font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Recommended Stack</div>
+      <div style="font-size:12px;font-family:monospace;color:#F5A623;font-weight:700;line-height:1.5">Fasting + Daily</div>
+    </div>
+  </div>
+
+  <!-- SEG F -->
+  <div style="display:grid;grid-template-columns:160px 1fr 1fr;border-radius:10px;border:1px solid rgba(192,64,74,.3);background:rgba(192,64,74,.07);overflow:hidden">
+    <div style="padding:12px 14px;border-right:1px solid rgba(255,255,255,.06)">
+      <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#fff;margin-bottom:4px">
+        <span style="width:20px;height:20px;border-radius:5px;background:rgba(192,64,74,.25);color:#F08080;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">F</span>
+        Kids 1+
+      </div>
+      <div style="font-size:11px;color:#F08080;font-family:monospace">Growing Balance</div>
+    </div>
+    <div style="padding:12px 14px;border-right:1px solid rgba(255,255,255,.06)">
+      <div style="font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Body Signals</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.55);line-height:1.5">Picky eating · Gut sensitivity · Low appetite · Immune support · Daily nourishment</div>
+    </div>
+    <div style="padding:12px 14px">
+      <div style="font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Recommended Stack</div>
+      <div style="font-size:12px;font-family:monospace;color:#F5A623;font-weight:700;line-height:1.5">Junior<br><span style="font-size:10px;color:rgba(255,255,255,.35);font-weight:400">Optional: + Imunisi</span></div>
+    </div>
+  </div>
+
+</div>
+  </div>
+</section>
+
+<!-- ══ FASE 3: SUBSCRIPTION ═══════════════════════════ -->
+<section class="sec rv" id="subscription">
+  <div class="slabel">📦 Fase 3</div>
+  <h2 class="stitle">Subscription & Ritual Onboarding</h2>
+  <p class="ssub">Dari one-time purchase menjadi daily ritual. Kunci: 48 jam pertama setelah purchase adalah momen paling kritis dalam customer lifetime.</p>
+
+  <div class="pgrid">
+
+    <div class="pcard pc3" onclick="toggle(this)">
+      <div class="phead">
+        <div class="pico">🎉</div>
+        <div class="pmeta">
+          <div class="pnum">Post-Purchase H+0</div>
+          <div class="ptitle">Onboarding Ritual — Dalam 1 Jam</div>
+          <span class="ptag">Personalized · Protocol-Based</span>
+        </div>
+        <span class="pchev">▼</span>
+      </div>
+      <div class="pbody">
+        <div class="wa">
+          <div class="wm sys">Order dikonfirmasi → Bot trigger otomatis</div>
+          <div class="wm bot">🎉 <b>Selamat [Nama]! Onesta Anda dalam perjalanan.</b><br><br>Anda baru saja memilih untuk mendengarkan tubuh Anda — dan itu adalah keputusan terbaik.<br><br>Berdasarkan Balance Score Anda <b>(XX/100 — The Rollercoaster Type)</b>, inilah ritual harian Anda:<br><br>🌅 <b>Pagi:</b> 1 sdm Onesta Daily + air hangat, perut kosong<br>🍽️ <b>Setelah makan siang:</b> 1 sdt Onesta Diabee<br>🌙 <b>Malam:</b> ½ sdt Onesta Daily sebelum tidur<br><br>💡 <b>3 Aturan Emas Onesta:</b><br>✅ Air max 40°C — jangan air mendidih<br>✅ Konsistensi > dosis — setiap hari, tidak perlu banyak<br>✅ Scan QR code botol Anda — lihat dari mana asalnya 🔗<br><br>Check-in pertama: <b>3 hari lagi</b> 🙌</div>
+        </div>
+        <div class="slist">
+          <div class="si">
+            <div class="sd" style="background:rgba(26,111,181,.18);color:#7BBFED">📎</div>
+            <div class="sc"><div class="sn">Kirim PDF Ritual Protocol Personal</div><div class="sdesc">1 halaman — nama user, Balance Score, metabolic type, jadwal konsumsi, dan 3 hal yang akan berubah dalam 7/14/30 hari</div></div>
+          </div>
+          <div class="si">
+            <div class="sd" style="background:rgba(26,111,181,.18);color:#7BBFED">👥</div>
+            <div class="sc"><div class="sn">Invite ke Grup "Onesta 30-Day Balance Journey"</div><div class="sdesc">Bukan grup jualan — grup edukasi, sharing progress, peer support. Rule #1: No hard selling.</div></div>
+          </div>
+          <div class="si">
+            <div class="sd" style="background:rgba(26,111,181,.18);color:#7BBFED">🔗</div>
+            <div class="sc"><div class="sn">Kirim Link Digital Traceability</div><div class="sdesc">"Scan QR code atau masukkan kode produksi — lihat dari sarang mana madu Anda berasal." Ini adalah differentiator kuat Onesta.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pcard pc3" onclick="toggle(this)">
+      <div class="phead">
+        <div class="pico">📦</div>
+        <div class="pmeta">
+          <div class="pnum">Subscription Architecture</div>
+          <div class="ptitle">4 Paket — Dari Coba ke Committed</div>
+          <span class="ptag">MRR Builder</span>
+        </div>
+        <span class="pchev">▼</span>
+      </div>
+      <div class="pbody">
+        <div class="slist">
+          <div class="si"><div class="sd" style="background:rgba(26,111,181,.18);color:#7BBFED">S1</div><div class="sc"><div class="sn">Starter (1 bulan)</div><div class="sdesc">Untuk user baru. Harga normal. Cukup untuk rasakan perubahan awal di minggu 1–2.</div></div></div>
+          <div class="si"><div class="sd" style="background:rgba(26,111,181,.18);color:#7BBFED">S2</div><div class="sc"><div class="sn">Journey (3 bulan) ⭐ Recommended</div><div class="sdesc">Diskon 15%. Cukup untuk perubahan sistemik terukur. Termasuk 2x re-diagnostik. Paling banyak diambil.</div></div></div>
+          <div class="si"><div class="sd" style="background:rgba(26,111,181,.18);color:#7BBFED">S3</div><div class="sc"><div class="sn">Defender (6 bulan)</div><div class="sdesc">Diskon 25%. Full benefit anti-aging & metabolic reset. Termasuk konsultasi protokol + re-diagnostik gratis.</div></div></div>
+          <div class="si"><div class="sd" style="background:rgba(26,111,181,.18);color:#7BBFED">S4</div><div class="sc"><div class="sn">Monthly Auto-Renew</div><div class="sdesc">Kirim reminder H-7 dengan laporan progress Balance Score → user renew karena melihat data nyata, bukan karena dipush.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ FASE 4: RETENTION ══════════════════════════════ -->
+<section class="sec rv" id="retention">
+  <div class="slabel">💛 Fase 4</div>
+  <h2 class="stitle">Retention & Belief Building</h2>
+  <p class="ssub">Sistem ini membuat user tidak mau berhenti — bukan karena terpaksa, tapi karena mereka merasakan sendiri bahwa <em>balance is the new normal.</em></p>
+
+  <div class="pgrid">
+
+    <div class="pcard pc4" onclick="toggle(this)">
+      <div class="phead">
+        <div class="pico">📅</div>
+        <div class="pmeta">
+          <div class="pnum">30-Day Journey</div>
+          <div class="ptitle">Weekly Balance Recheck — Setiap 7 Hari</div>
+          <span class="ptag">Automation · Personal · Science-led</span>
+        </div>
+        <span class="pchev">▼</span>
+      </div>
+      <div class="pbody">
+        <div class="tl">
+          <div class="tli">
+            <div class="tlp">Hari 1 — Onboarding</div>
+            <div class="tlt">Ritual Protocol + Baseline Catat</div>
+            <div class="tld">Catat kondisi awal: energi/tidur/pencernaan skala 1–10. Invite komunitas. Kirim PDF ritual. Cerita digital traceability Onesta.</div>
+          </div>
+          <div class="tli">
+            <div class="tlp">Hari 3 — First Signal Check</div>
+            <div class="tlt">Ada yang berubah?</div>
+            <div class="tld">Respon Ya → validasi + "ini baru hari 3, bayangkan di hari 30." Respon Belum → edukasi tentang akumulatif effect + tips: "pastikan perut kosong saat konsumsi pagi."</div>
+          </div>
+          <div class="tli">
+            <div class="tlp">Hari 7 — Weekly Balance Recheck</div>
+            <div class="tlt">Mini Re-check 4 Pillar + Insight Seluler</div>
+            <div class="tld">Evaluasi: tidur, energi, pencernaan, mood. Kirim fakta: "Apa yang terjadi di sel tubuh Anda di minggu pertama Onesta." Berikan score update.</div>
+          </div>
+          <div class="tli">
+            <div class="tlp">Hari 14 — Deep Insight</div>
+            <div class="tlt">Proses Seluler + Community Highlight</div>
+            <div class="tld">Ceritakan apa yang terjadi di tingkat seluler: antioksidan naik, neuroinflammasi turun, mikrobioma mulai bergeser. Share progress member lain yang sudah 2 minggu.</div>
+          </div>
+          <div class="tli">
+            <div class="tlp">Hari 21 — Pre-Renewal</div>
+            <div class="tlt">Stok Hampir Habis + Upgrade Offer</div>
+            <div class="tld">Kirim data progress sementara. Tawarkan paket Journey (3 bulan) dengan diskon loyal customer. Tunjukkan apa yang menunggu di bulan ke-2 dan ke-3.</div>
+          </div>
+          <div class="tli">
+            <div class="tlp">Hari 28 — Renewal + Reseller Intro</div>
+            <div class="tlt">Konfirmasi Lanjut + Soft Reseller Invite</div>
+            <div class="tld">Untuk yang antusias: "Ada yang ingin Anda ceritakan ke teman atau keluarga? Kami punya cara untuk itu." — intro program Onesta Network.</div>
+          </div>
+          <div class="tli">
+            <div class="tlp">Hari 30 — Re-Diagnostik Penuh</div>
+            <div class="tlt">Isi ulang Balance Check™ → Bandingkan Skor</div>
+            <div class="tld">Generate laporan: Balance Score awal vs sekarang, pillar yang paling membaik, metabolic type apakah berubah. Viral share otomatis generate.</div>
+          </div>
+        </div>
+        <div class="co co-honey">
+          <b>Weekly Balance Recheck:</b> Setiap Senin, bot kirim reminder: "Cek Balance kamu minggu ini?" → 3 pertanyaan cepat (bukan 10) → score update → motivasi lanjut. Ini habit loop yang powerful.
+        </div>
+      </div>
+    </div>
+
+    <div class="pcard pc4" onclick="toggle(this)">
+      <div class="phead">
+        <div class="pico">👥</div>
+        <div class="pmeta">
+          <div class="pnum">Community Engine</div>
+          <div class="ptitle">"Onesta 30-Day Balance Journey" Community</div>
+          <span class="ptag">Retention + Viral + Reseller Pool</span>
+        </div>
+        <span class="pchev">▼</span>
+      </div>
+      <div class="pbody">
+        <div class="slist">
+          <div class="si"><div class="sd" style="background:rgba(107,63,160,.18);color:#C4A3F0">📌</div><div class="sc"><div class="sn">Prinsip Grup: Edukasi & Peer Support — Bukan Jualan</div><div class="sdesc">100% konten sains + sharing progress + honest story. No hard selling. Trust dibangun dari dalam, bukan dipush dari luar.</div></div></div>
+          <div class="si"><div class="sd" style="background:rgba(107,63,160,.18);color:#C4A3F0">📅</div><div class="sc"><div class="sn">Konten Mingguan Terjadwal</div><div class="sdesc">Senin: fakta sains Onesta. Rabu: tips konsumsi optimal. Jumat: sharing Balance Score member. Minggu: cerita dari hutan — honest honey origin.</div></div></div>
+          <div class="si"><div class="sd" style="background:rgba(107,63,160,.18);color:#C4A3F0">🏆</div><div class="sc"><div class="sn">"30-Day Balanced" Badge</div><div class="sdesc">Member yang selesai 30 hari dan share laporan → dapat digital badge "Onesta Balanced" — social proof yang mendorong konsistensi dan viral share.</div></div></div>
+          <div class="si"><div class="sd" style="background:rgba(107,63,160,.18);color:#C4A3F0">🔗</div><div class="sc"><div class="sn">Monthly: Honest Origin Story dari Hendra Suwardi</div><div class="sdesc">Voice note / pesan langsung dari Managing Director — cerita dari hutan, riset terbaru, update produk. Membangun personal brand Onesta yang autentik.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ FASE 5: MONITORING ═════════════════════════════ -->
+<section class="sec rv" id="monitoring">
+  <div class="slabel">📊 Fase 5</div>
+  <h2 class="stitle">Monitoring & Optimization</h2>
+  <p class="ssub">Data dari Balance Check™ adalah aset paling berharga Onesta — setiap skor, setiap pillar, setiap metabolic type adalah insight yang bisa dimonetize melalui personalisasi yang lebih dalam.</p>
+
+  <div class="pgrid">
+
+    <div class="pcard pc5" onclick="toggle(this)">
+      <div class="phead">
+        <div class="pico">📈</div>
+        <div class="pmeta">
+          <div class="pnum">KPI Utama</div>
+          <div class="ptitle">Metrics yang Wajib Dipantau Weekly</div>
+          <span class="ptag">Balance Score as Core Metric</span>
+        </div>
+        <span class="pchev">▼</span>
+      </div>
+      <div class="pbody">
+        <div class="mgrid">
+          <div class="mc"><span class="mn">ΔScore</span><div class="ml">Rata-rata delta Balance Score D0→D30</div></div>
+          <div class="mc"><span class="mn">CVR</span><div class="ml">% Balance Check → Purchase</div></div>
+          <div class="mc"><span class="mn">MRR</span><div class="ml">Monthly Recurring Revenue</div></div>
+          <div class="mc"><span class="mn">NPS</span><div class="ml">Net Promoter Score D14 & D30</div></div>
+          <div class="mc"><span class="mn">VRR</span><div class="ml">Viral Referral Rate per user</div></div>
+          <div class="mc"><span class="mn">D30R</span><div class="ml">% user aktif & renew di hari 30</div></div>
+        </div>
+        <div class="slist">
+          <div class="si"><div class="sd" style="background:rgba(13,140,122,.18);color:#5FD4C4">📊</div><div class="sc"><div class="sn">Balance Score Delta sebagai Product Efficacy Proof</div><div class="sdesc">Rata-rata delta skor per segmen → ini adalah klaim yang bisa dikomunikasikan: "User kami rata-rata meningkat XX poin dalam 30 hari." Data ini = konten marketing paling powerful.</div></div></div>
+          <div class="si"><div class="sd" style="background:rgba(13,140,122,.18);color:#5FD4C4">🔍</div><div class="sc"><div class="sn">Pillar Weakness Analysis per Segmen</div><div class="sdesc">Segmen mana yang paling banyak bermasalah di pillar mana? → Inform konten edukasi + inform produk development + inform broadcast messaging.</div></div></div>
+          <div class="si"><div class="sd" style="background:rgba(13,140,122,.18);color:#5FD4C4">⚠️</div><div class="sc"><div class="sn">Churn Signal: Tidak Respon D7</div><div class="sdesc">→ Kirim pesan berbeda: "Apakah ada yang bisa saya bantu dengan ritual Anda?" Human touch, bukan automation blast.</div></div></div>
+          <div class="si"><div class="sd" style="background:rgba(13,140,122,.18);color:#5FD4C4">🔄</div><div class="sc"><div class="sn">Win-back: D45 Sejak Pembelian Terakhir</div><div class="sdesc">"Hei [Nama]. Bagaimana kondisi tubuhmu sekarang? Balance Score terakhirmu XX/100. Mau re-check?" → Re-entry ke funnel.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ FASE 6: SCALE ══════════════════════════════════ -->
+<section class="sec rv" id="scale">
+  <div class="slabel">🚀 Fase 6</div>
+  <h2 class="stitle">Scale & Viral Growth</h2>
+  <p class="ssub">Onesta memiliki keunggulan yang tidak dimiliki brand lain: <em>digital traceability + metabolic typing + honest positioning</em> — kombinasi ini adalah viral engine yang authentic dan tidak bisa ditiru dengan mudah.</p>
+
+  <div class="pgrid">
+
+    <div class="pcard pc6" onclick="toggle(this)">
+      <div class="phead">
+        <div class="pico">📤</div>
+        <div class="pmeta">
+          <div class="pnum">Viral Mechanism</div>
+          <div class="ptitle">3 Layer Viral Loop</div>
+          <span class="ptag">K-Factor > 1 Target</span>
+        </div>
+        <span class="pchev">▼</span>
+      </div>
+      <div class="pbody">
+        <div class="slist">
+          <div class="si"><div class="sd" style="background:rgba(192,64,74,.18);color:#F08080">V1</div><div class="sc"><div class="sn">Diagnostic Viral (Entry Loop)</div><div class="sdesc">Setiap user mendapat link Balance Check™ untuk dishare. "Coba cek tubuhmu juga — 1 menit, hasilnya mengejutkan." Sederhana, tidak terasa jualan, genuinely useful.</div></div></div>
+          <div class="si"><div class="sd" style="background:rgba(192,64,74,.18);color:#F08080">V2</div><div class="sc"><div class="sn">D30 Report Viral (Result Loop)</div><div class="sdesc">Generate shareable card: "Saya turun dari 62 → 38 Balance Score dalam 30 hari dengan Onesta." + metabolic type + "Cek tubuhmu: [link]" → ini adalah testimonial berbasis data, bukan klaim kosong.</div></div></div>
+          <div class="si"><div class="sd" style="background:rgba(192,64,74,.18);color:#F08080">V3</div><div class="sc"><div class="sn">Honest Origin Story Viral (Brand Loop)</div><div class="sdesc">Cerita dari hutan: Heterotrigona Itama, Geniotrigona Thoracica, proses honest harvest, digital traceability. Ini adalah konten yang dishare bukan karena discount, tapi karena genuinely menarik.</div></div></div>
+        </div>
+        <div class="wa">
+          <div class="wm bot"><b>🐝 Onesta Balance Report — 30 Hari</b><br>━━━━━━━━━━━━<br>👤 [Nama]<br>📊 Balance Score Awal: <b>62/100</b><br>📊 Balance Score Sekarang: <b>38/100</b><br>📈 Perubahan: <b>↑24 poin lebih balanced!</b><br><br>Pillar yang paling membaik:<br>✅ Energy Stability<br>✅ Blood Glucose Rhythm<br>━━━━━━━━━━━━<br><em>"Balance is the new normal."</em><br><br>Cek kondisi tubuhmu: [link]<br>#OnestaBalanceCheck #HonestHoney</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pcard pc6" onclick="toggle(this)">
+      <div class="phead">
+        <div class="pico">💼</div>
+        <div class="pmeta">
+          <div class="pnum">Onesta Network</div>
+          <div class="ptitle">Reseller System — Dari User Terbaik</div>
+          <span class="ptag">Distribution Scale</span>
+        </div>
+        <span class="pchev">▼</span>
+      </div>
+      <div class="pbody">
+        <div class="slist">
+          <div class="si"><div class="sd" style="background:rgba(192,64,74,.18);color:#F08080">R1</div><div class="sc"><div class="sn">Kriteria: NPS 9–10 + 2+ bulan konsumsi + Balance Score membaik</div><div class="sdesc">Mereka sudah punya cerita nyata. Mereka bukan "penjual" — mereka adalah "living proof" yang secara natural akan menceritakan pengalamannya.</div></div></div>
+          <div class="si"><div class="sd" style="background:rgba(192,64,74,.18);color:#F08080">R2</div><div class="sc"><div class="sn">Reseller Kit = Bot Hub + Balance Check Link + Scripts</div><div class="sdesc">Semua tools yang sudah dibuat menjadi senjata reseller. Mereka tidak perlu hard sell — cukup share Balance Check link ke calon pelanggan.</div></div></div>
+          <div class="si"><div class="sd" style="background:rgba(192,64,74,.18);color:#F08080">R3</div><div class="sc"><div class="sn">Onesta Reseller Onboarding — 7 Hari via WA</div><div class="sdesc">D1–3: Produk & science. D4–5: Sistem tools & how to use. D6–7: Simulasi dengan real calon pelanggan. No memorizing scripts — hanya berbagi pengalaman nyata.</div></div></div>
+          <div class="si"><div class="sd" style="background:rgba(192,64,74,.18);color:#F08080">R4</div><div class="sc"><div class="sn">Monthly Reseller Balance Score Report</div><div class="sdesc">Reseller mendapat laporan: berapa banyak user yang masuk melalui link mereka, rata-rata Balance Score improvement, conversion rate. Gamifikasi berbasis data.</div></div></div>
+        </div>
+        <div class="co co-red">
+          <b>Kunci diferensiasi Onesta Network vs MLM biasa:</b> Reseller Onesta diminta untuk <b>merasakan sendiri dulu</b>, bukan langsung jual. Balance Score improvement mereka sendiri adalah pitch terbaik — tidak ada script yang lebih powerful dari pengalaman nyata.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ BOTTOM CTA ══════════════════════════════════════ -->
+<div class="bcta">
+  <h2 class="bcta-title">One Intelligence.<br><em style="color:var(--honey);font-style:italic">Many Expressions.</em></h2>
+  <p class="bcta-sub">Onesta Balance Check™ bukan hanya diagnostic tool — ini adalah growth engine yang mengubah setiap user menjadi educated advocate.<br><br>Dari content → conversion → subscription → retention → scale.</p>
+  <div class="bcta-btns">
+    <button class="btn1" onclick="goTo('top')">↑ Lihat Ulang Flywheel</button>
+    <button class="btn2" onclick="goTo('conversion')">⚖️ Mulai dari Balance Check™</button>
+  </div>
+  <p style="font-size:.65rem;color:rgba(255,255,255,.18);margin-top:1.5rem">
+    Onesta™ · Honest Honey · Natural Metabolic Stabilizer<br>
+    Heterotrigona Itama · Geniotrigona Thoracica · Hutan Indonesia
+  </p>
+</div>
+
+<script>
+// NAV
+function goTo(id){
+  if(id==='top'){window.scrollTo({top:0,behavior:'smooth'});return}
+  const el=document.getElementById(id);
+  if(el){const top=el.getBoundingClientRect().top+window.scrollY-58;window.scrollTo({top,behavior:'smooth'})}
+}
+
+// PHASE TOGGLE
+function toggle(card){card.classList.toggle('open')}
+
+// READING PROGRESS
+window.addEventListener('scroll',()=>{
+  const total=document.body.scrollHeight-window.innerHeight;
+  document.getElementById('rp').style.transform=`scaleX(${window.scrollY/total})`;
+});
+
+// REVEAL
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})
+},{threshold:.06});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

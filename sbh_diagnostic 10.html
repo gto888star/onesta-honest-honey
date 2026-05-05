@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<title>🐝 SBH Health Diagnostic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
+<style>
+  :root {
+    --amber:     #E8A020;
+    --amber-d:   #B87010;
+    --amber-l:   #FFF3D0;
+    --dark:      #1A0F00;
+    --dark-2:    #2C1A00;
+    --mid:       #6B4C1E;
+    --cream:     #FDFAF4;
+    --green:     #3D7A4A;
+    --red:       #C0392B;
+    --blue:      #2563EB;
+    --text:      #2C1A00;
+    --muted:     #7A6040;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Noise texture overlay ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ══ PROGRESS BAR ══ */
+  #progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, var(--amber), var(--amber-d));
+    transition: width .4s ease; z-index: 100;
+    box-shadow: 0 0 12px var(--amber);
+  }
+
+  /* ══ SCREENS ══ */
+  .screen {
+    display: none; position: relative; z-index: 1;
+    min-height: 100vh; padding: 2rem 1rem;
+    animation: fadeUp .5s ease both;
+  }
+  .screen.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .container { width: 100%; max-width: 560px; }
+
+  /* ══ HOOK SCREEN ══ */
+  #screen-hook {
+    background: var(--dark);
+    min-height: 100vh;
+  }
+
+  .hook-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: rgba(232,160,32,.15);
+    border: 1px solid rgba(232,160,32,.3);
+    border-radius: 999px;
+    padding: .35rem 1rem;
+    font-size: .75rem; font-weight: 600;
+    color: var(--amber);
+    letter-spacing: .1em; text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .hook-title {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    font-size: clamp(2.2rem, 6vw, 3.4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 1.2rem;
+  }
+
+  .hook-title span {
+    color: var(--amber);
+    font-style: italic;
+  }
+
+  .hook-sub {
+    font-size: 1.05rem; color: rgba(255,255,255,.65);
+    line-height: 1.7; margin-bottom: 2rem;
+    font-weight: 300;
+  }
+
+  .hook-stats {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px; background: rgba(255,255,255,.08);
+    border-radius: 12px; overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+
+  .stat-box {
+    padding: 1rem .75rem; background: rgba(255,255,255,.04);
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'DM Mono', 'Courier New', Courier, monospace;
+    font-size: 1.5rem; font-weight: 500;
+    color: var(--amber);
+    display: block;
+  }
+  .stat-label { font-size: .7rem; color: rgba(255,255,255,.45); margin-top: .25rem; }
+
+  /* ══ HOOK CARDS ══ */
+  .hook-cards {
+    display: flex; flex-direction: column; gap: .75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .hook-card {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all .2s ease;
+    text-decoration: none;
+  }
+  .hook-card:hover {
+    background: rgba(232,160,32,.1);
+    border-color: rgba(232,160,32,.3);
+    transform: translateX(4px);
+  }
+
+  .hook-card-icon {
+    width: 44px; height: 44px;
+    background: rgba(232,160,32,.15);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; flex-shrink: 0;
+  }
+
+  .hook-card-content { flex: 1; }
+  .hook-card-title { font-size: .9rem; font-weight: 600; color: #fff; }
+  .hook-card-desc { font-size: .78rem; color: rgba(255,255,255,.45); margin-top: .2rem; }
+  .hook-card-arrow { color: var(--amber); font-size: 1.1rem; }
+
+  /* ══ BUTTONS ══ */
+  .btn-primary {
+    width: 100%; padding: 1.05rem;
+    background: linear-gradient(135deg, var(--amber), var(--amber-d));
+    color: var(--dark); font-weight: 700; font-size: 1rem;
+    border: none; border-radius: 12px; cursor: pointer;
+    transition: all .2s ease;
+    box-shadow: 0 4px 20px rgba(232,160,32,.35);
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  }
+  .btn-primary:hover,
+  .btn-primary:active {
+    -webkit-transform: translateY(-2px);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(232,160,32,.5);
+  }
+
+  .btn-ghost {
+    width: 100%; padding: .85rem;
+    background: transparent;
+    color: rgba(255,255,255,.5); font-size: .85rem;
+    border: 1px solid rgba(255,255,255,.12); border-radius: 12px;
+    cursor: pointer; margin-top: .75rem;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    transition: all .2s;
+  }
+  .btn-ghost:hover { color: rgba(255,255,255,.8); border-color: rgba(255,255,255,.25); }
+
+  .btn-next {
+    width: 100%; padding: 1rem;
+    background: var(--dark); color: var(--amber);
+    font-weight: 700; font-size: .95rem;
+    border: 1.5px solid var(--amber); border-radius: 12px;
+    cursor: pointer; margin-top: 1.5rem;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity .3s ease, transform .3s ease, visibility 0s linear .3s;
+  }
+  .btn-next.visible {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity .3s ease, transform .3s ease, visibility 0s;
+  }
+  .btn-next:hover { background: var(--amber); color: var(--dark); }
+
+  /* ══ QUESTION SCREEN ══ */
+  #screen-quiz { background: var(--cream); padding-top: 5rem; }
+
+  .quiz-header { margin-bottom: 2rem; }
+
+  .quiz-step {
+    font-family: 'DM Mono', 'Courier New', Courier, monospace;
+    font-size: .75rem; color: var(--muted);
+    letter-spacing: .1em; text-transform: uppercase;
+    margin-bottom: .75rem;
+  }
+
+  .quiz-block-label {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: var(--amber-l); border-radius: 6px;
+    padding: .3rem .75rem; font-size: .75rem;
+    font-weight: 600; color: var(--amber-d);
+    margin-bottom: 1rem;
+  }
+
+  .quiz-q {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.3rem, 4vw, 1.7rem);
+    font-weight: 700; line-height: 1.35;
+    color: var(--dark); margin-bottom: .5rem;
+  }
+
+  .quiz-hint {
+    font-size: .82rem; color: var(--muted);
+    font-style: italic; margin-bottom: 1.5rem;
+  }
+
+  /* ══ OPTIONS ══ */
+  .options { display: flex; flex-direction: column; gap: .65rem; }
+
+  .option {
+    display: flex; align-items: flex-start; gap: .9rem;
+    padding: .9rem 1.1rem;
+    border: 1.5px solid #E8E0D0;
+    border-radius: 12px; cursor: pointer;
+    transition: all .2s ease;
+    background: #fff;
+  }
+  .option:hover,
+  .option:active {
+    border-color: var(--amber);
+    background: var(--amber-l);
+    -webkit-transform: translateX(3px);
+    transform: translateX(3px);
+  }
+  .option.selected {
+    border-color: var(--amber);
+    background: var(--amber-l);
+  }
+  .option.selected .opt-indicator {
+    background: var(--amber); color: var(--dark);
+    border-color: var(--amber);
+  }
+
+  .opt-indicator {
+    width: 28px; height: 28px; border-radius: 8px;
+    border: 1.5px solid #D0C8B8;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .75rem; font-weight: 700;
+    flex-shrink: 0; transition: all .2s;
+    font-family: 'DM Mono', 'Courier New', Courier, monospace;
+  }
+
+  .opt-text { flex: 1; }
+  .opt-label { font-size: .92rem; font-weight: 500; color: var(--dark); }
+  .opt-sublabel { font-size: .77rem; color: var(--muted); margin-top: .15rem; }
+  .opt-score { font-size: .7rem; font-family: 'DM Mono', 'Courier New', Courier, monospace; color: var(--amber-d); }
+
+  /* ══ INSIGHT CARD ══ */
+  .insight-card {
+    background: var(--dark); border-radius: 14px;
+    padding: 1.25rem; margin-top: 1.25rem;
+    display: none;
+  }
+  .insight-card.show { display: block; animation: fadeUp .4s ease; }
+  .insight-label {
+    font-size: .7rem; color: var(--amber);
+    letter-spacing: .1em; text-transform: uppercase;
+    font-weight: 600; margin-bottom: .5rem;
+  }
+  .insight-text {
+    font-size: .88rem; color: rgba(255,255,255,.8);
+    line-height: 1.6;
+  }
+
+  /* ══ RESULT SCREEN ══ */
+  #screen-result { background: var(--dark); }
+
+  .result-badge {
+    display: inline-block;
+    background: rgba(232,160,32,.15);
+    border: 1px solid rgba(232,160,32,.3);
+    border-radius: 8px;
+    padding: .4rem .9rem;
+    font-size: .72rem; font-weight: 700;
+    color: var(--amber);
+    letter-spacing: .12em; text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+
+  .result-title {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    font-weight: 900; color: #fff;
+    line-height: 1.2; margin-bottom: .75rem;
+  }
+
+  .result-profile {
+    font-size: 1rem; color: rgba(255,255,255,.6);
+    margin-bottom: 2rem; line-height: 1.6;
+  }
+
+  /* Score Meter */
+  .score-meter {
+    background: rgba(255,255,255,.06);
+    border-radius: 14px; padding: 1.5rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .score-top {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 1rem;
+  }
+  .score-label { font-size: .78rem; color: rgba(255,255,255,.5); }
+  .score-num {
+    font-family: 'DM Mono', 'Courier New', Courier, monospace;
+    font-size: 2.2rem; font-weight: 500;
+    color: var(--amber);
+  }
+  .score-max { font-size: .9rem; color: rgba(255,255,255,.3); }
+
+  .meter-track {
+    height: 10px; background: rgba(255,255,255,.1);
+    border-radius: 99px; overflow: hidden;
+    margin-bottom: .75rem;
+  }
+  .meter-fill {
+    height: 100%; border-radius: 99px;
+    transition: width 1.2s cubic-bezier(.4,0,.2,1);
+    background: linear-gradient(90deg, #3D7A4A, #E8A020, #C0392B);
+    background-size: 300% 100%;
+  }
+
+  .meter-zones {
+    display: flex; justify-content: space-between;
+    font-size: .68rem; color: rgba(255,255,255,.35);
+    font-family: 'DM Mono', 'Courier New', Courier, monospace;
+  }
+
+  /* Domain bars */
+  .domain-bars { display: flex; flex-direction: column; gap: .8rem; margin-bottom: 1.75rem; }
+
+  .domain-row { }
+  .domain-top { display: flex; justify-content: space-between; margin-bottom: .3rem; }
+  .domain-name { font-size: .8rem; color: rgba(255,255,255,.7); }
+  .domain-val { font-size: .78rem; font-family: 'DM Mono', 'Courier New', Courier, monospace; color: var(--amber); }
+
+  .domain-track {
+    height: 6px; background: rgba(255,255,255,.08);
+    border-radius: 99px; overflow: hidden;
+  }
+  .domain-fill {
+    height: 100%; border-radius: 99px;
+    background: linear-gradient(90deg, var(--amber), var(--amber-d));
+    transition: width 1s ease .3s;
+  }
+
+  /* Findings */
+  .findings { display: flex; flex-direction: column; gap: .65rem; margin-bottom: 1.75rem; }
+
+  .finding-item {
+    display: flex; align-items: flex-start; gap: .75rem;
+    padding: .9rem 1rem;
+    background: rgba(255,255,255,.04);
+    border-radius: 10px;
+    border-left: 3px solid transparent;
+  }
+  .finding-item.warn { border-left-color: #E8A020; }
+  .finding-item.alert { border-left-color: #C0392B; }
+  .finding-item.good { border-left-color: #3D7A4A; }
+
+  .finding-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: .1rem; }
+  .finding-text { font-size: .84rem; color: rgba(255,255,255,.75); line-height: 1.5; }
+  .finding-text strong { color: #fff; }
+
+  /* Recommendation */
+  .rec-box {
+    background: linear-gradient(135deg, rgba(232,160,32,.12), rgba(184,112,16,.08));
+    border: 1px solid rgba(232,160,32,.25);
+    border-radius: 14px; padding: 1.5rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .rec-title {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    font-size: 1.1rem; color: var(--amber);
+    margin-bottom: .75rem;
+  }
+
+  .rec-protocol { display: flex; flex-direction: column; gap: .6rem; }
+
+  .proto-row {
+    display: flex; align-items: center; gap: .75rem;
+    padding: .6rem .75rem;
+    background: rgba(255,255,255,.04); border-radius: 8px;
+  }
+  .proto-time {
+    font-family: 'DM Mono', 'Courier New', Courier, monospace;
+    font-size: .72rem; color: var(--amber);
+    min-width: 70px;
+  }
+  .proto-desc { font-size: .82rem; color: rgba(255,255,255,.75); }
+
+  /* Share section */
+  .share-section { text-align: center; }
+
+  .share-title {
+    font-size: .85rem; color: rgba(255,255,255,.5);
+    margin-bottom: 1rem;
+  }
+
+  .share-card {
+    background: linear-gradient(135deg, var(--dark-2), #3D2800);
+    border: 1px solid rgba(232,160,32,.2);
+    border-radius: 16px; padding: 1.5rem;
+    margin-bottom: 1.25rem; text-align: left;
+  }
+
+  .share-card-header {
+    display: flex; align-items: center; gap: .75rem;
+    margin-bottom: 1rem;
+  }
+
+  .share-bee { font-size: 2rem; }
+
+  .share-card-title {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    font-size: 1rem; color: #fff; font-weight: 700;
+  }
+  .share-card-sub { font-size: .75rem; color: var(--amber); }
+
+  .share-result-line {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: .6rem 0; border-bottom: 1px solid rgba(255,255,255,.07);
+    font-size: .82rem;
+  }
+  .share-result-line:last-child { border-bottom: none; }
+  .srl-key { color: rgba(255,255,255,.5); }
+  .srl-val { color: #fff; font-weight: 600; }
+
+  .share-cta {
+    font-size: .78rem; color: var(--amber); margin-top: 1rem;
+    font-style: italic; text-align: center;
+  }
+
+  .btn-share-wa {
+    width: 100%; padding: 1rem;
+    background: #25D366; color: #fff;
+    font-weight: 700; font-size: .95rem;
+    border: none; border-radius: 12px; cursor: pointer;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    display: flex; align-items: center; justify-content: center; gap: .6rem;
+    transition: all .2s; margin-bottom: .75rem;
+  }
+  .btn-share-wa:hover { background: #20BA5A; transform: translateY(-1px); }
+
+  .btn-share-copy {
+    width: 100%; padding: .85rem;
+    background: transparent;
+    color: rgba(255,255,255,.6); font-size: .85rem;
+    border: 1px solid rgba(255,255,255,.15); border-radius: 12px;
+    cursor: pointer; margin-bottom: .75rem;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    transition: all .2s;
+  }
+  .btn-share-copy:hover { color: #fff; border-color: rgba(255,255,255,.35); }
+
+  .btn-restart {
+    width: 100%; padding: .85rem;
+    background: transparent;
+    color: var(--amber); font-size: .85rem;
+    border: 1px solid rgba(232,160,32,.3); border-radius: 12px;
+    cursor: pointer;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    transition: all .2s;
+  }
+  .btn-restart:hover { background: rgba(232,160,32,.1); }
+
+  /* ── Hexagon deco ── */
+  .hex-deco {
+    position: absolute;
+    opacity: .04; pointer-events: none;
+    font-size: 12rem; line-height: 1;
+  }
+
+  /* ── Name input ── */
+  .name-input-wrap { margin-bottom: 1.5rem; }
+  .name-label { font-size: .82rem; color: var(--muted); margin-bottom: .5rem; display: block; }
+  .name-input {
+    width: 100%; padding: .85rem 1rem;
+    background: #fff; border: 1.5px solid #E8E0D0;
+    border-radius: 12px; font-size: .95rem;
+    color: var(--dark); font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    outline: none; transition: border-color .2s;
+  }
+  .name-input:focus { border-color: var(--amber); }
+
+  /* ── Toast ── */
+  #toast {
+    position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    background: var(--dark); color: var(--amber);
+    padding: .75rem 1.5rem; border-radius: 99px;
+    font-size: .85rem; font-weight: 600;
+    box-shadow: 0 4px 20px rgba(0,0,0,.3);
+    opacity: 0; transition: opacity .3s; z-index: 999;
+    white-space: nowrap;
+  }
+  #toast.show { opacity: 1; }
+
+  @media (max-width: 400px) {
+    .hook-stats { grid-template-columns: 1fr 1fr 1fr; }
+    .stat-num { font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar" style="width:0%"></div>
+<div id="toast">✅ Disalin!</div>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 0: HOOK
+══════════════════════════════════════════════════ -->
+<div id="screen-hook" class="screen active">
+  <div class="hex-deco" style="top:-2rem;right:-3rem">⬡</div>
+  <div class="container" style="padding-top:4rem;padding-bottom:4rem">
+    <div class="hook-badge">🐝 SBH Health Diagnostic · 2025</div>
+
+    <h1 class="hook-title">
+      Tubuh Anda<br>
+      <span>Bicara Diam-Diam.</span><br>
+      Apakah Anda Mendengar?
+    </h1>
+
+    <p class="hook-sub">
+      90% orang merasa "baik-baik saja" — padahal tubuh mereka sedang berjuang melawan
+      inflamasi tersembunyi, stres oksidatif, dan ketidakseimbangan metabolik.
+      Cek kondisi Anda dalam <strong style="color:#fff">3 menit.</strong>
+    </p>
+
+    <div class="hook-stats">
+      <div class="stat-box">
+        <span class="stat-num">1,128+</span>
+        <div class="stat-label">Studi Ilmiah</div>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">600+</span>
+        <div class="stat-label">Spesies SBH</div>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">8</span>
+        <div class="stat-label">Sistem Tubuh</div>
+      </div>
+    </div>
+
+    <p style="font-size:.78rem;color:rgba(255,255,255,.35);margin-bottom:1rem;text-align:center">
+      Pilih apa yang paling relevan dengan kondisi Anda saat ini:
+    </p>
+
+    <div class="hook-cards">
+      <div class="hook-card" onclick="selectHook('energy', this)" ontouchend="event.preventDefault(); selectHook('energy', this)">
+        <div class="hook-card-icon">⚡</div>
+        <div class="hook-card-content">
+          <div class="hook-card-title">Saya sering lelah & kurang energi</div>
+          <div class="hook-card-desc">Meski sudah tidur cukup, tubuh tetap berat</div>
+        </div>
+        <div class="hook-card-arrow">→</div>
+      </div>
+      <div class="hook-card" onclick="selectHook('metabolism', this)" ontouchend="event.preventDefault(); selectHook('metabolism', this)">
+        <div class="hook-card-icon">⚖️</div>
+        <div class="hook-card-content">
+          <div class="hook-card-title">Berat badan & gula darah susah dikontrol</div>
+          <div class="hook-card-desc">Diet sudah dijaga tapi hasilnya belum memuaskan</div>
+        </div>
+        <div class="hook-card-arrow">→</div>
+      </div>
+      <div class="hook-card" onclick="selectHook('immune', this)" ontouchend="event.preventDefault(); selectHook('immune', this)">
+        <div class="hook-card-icon">🛡️</div>
+        <div class="hook-card-content">
+          <div class="hook-card-title">Imun saya terasa lemah</div>
+          <div class="hook-card-desc">Mudah sakit, sembuh lama, atau alergi sering kambuh</div>
+        </div>
+        <div class="hook-card-arrow">→</div>
+      </div>
+      <div class="hook-card" onclick="selectHook('brain', this)" ontouchend="event.preventDefault(); selectHook('brain', this)">
+        <div class="hook-card-icon">🧠</div>
+        <div class="hook-card-content">
+          <div class="hook-card-title">Fokus & tidur saya terganggu</div>
+          <div class="hook-card-desc">Sulit konsentrasi, mudah lupa, atau tidur tidak nyenyak</div>
+        </div>
+        <div class="hook-card-arrow">→</div>
+      </div>
+      <div class="hook-card" onclick="selectHook('curious', this)" ontouchend="event.preventDefault(); selectHook('curious', this)">
+        <div class="hook-card-icon">🔬</div>
+        <div class="hook-card-content">
+          <div class="hook-card-title">Saya ingin tahu kondisi tubuh saya secara umum</div>
+          <div class="hook-card-desc">Preventif — sebelum masalah muncul</div>
+        </div>
+        <div class="hook-card-arrow">→</div>
+      </div>
+    </div>
+
+    <div class="name-input-wrap">
+      <label class="name-label" style="color:rgba(255,255,255,.5)">Nama Anda (opsional, untuk hasil yang personal)</label>
+      <input type="text" id="user-name" class="name-input" placeholder="Nama Anda..." style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">
+    </div>
+
+    <button class="btn-primary" id="btn-start" onclick="startQuiz()" style="opacity:.5;pointer-events:none">
+      Mulai Diagnostik Saya →
+    </button>
+    <button class="btn-ghost" onclick="startQuiz()">Lewati & langsung mulai</button>
+
+    <p style="font-size:.7rem;color:rgba(255,255,255,.2);text-align:center;margin-top:1.5rem">
+      🔒 Data Anda tidak disimpan. Hasil 100% personal & gratis.
+    </p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 1: QUIZ
+══════════════════════════════════════════════════ -->
+<div id="screen-quiz" class="screen">
+  <div class="container">
+    <div class="quiz-header">
+      <div class="quiz-step" id="quiz-step-label">Blok A · Pertanyaan 1 dari 12</div>
+      <div class="quiz-block-label" id="quiz-block-label">⚡ Energi & Vitalitas</div>
+      <h2 class="quiz-q" id="quiz-question">Pertanyaan...</h2>
+      <p class="quiz-hint" id="quiz-hint"></p>
+    </div>
+
+    <div class="options" id="options-container"></div>
+
+    <div class="insight-card" id="insight-card">
+      <div class="insight-label">💡 Tahukah Anda</div>
+      <div class="insight-text" id="insight-text"></div>
+    </div>
+
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">
+      Lanjut →
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 2: RESULT
+══════════════════════════════════════════════════ -->
+<div id="screen-result" class="screen">
+  <div class="hex-deco" style="bottom:-2rem;left:-3rem">⬡</div>
+  <div class="container" style="padding-top:4rem;padding-bottom:4rem">
+
+    <div class="result-badge" id="result-badge">Profil Metabolik Anda</div>
+
+    <h2 class="result-title" id="result-title">Memuat...</h2>
+    <p class="result-profile" id="result-profile"></p>
+
+    <div class="score-meter">
+      <div class="score-top">
+        <div>
+          <div class="score-label">Skor Risiko Oksidatif Anda</div>
+          <div style="margin-top:.25rem">
+            <span class="score-num" id="score-display">0</span>
+            <span class="score-max">/100</span>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div class="score-label">Kategori</div>
+          <div id="score-category" style="font-size:.9rem;font-weight:600;margin-top:.25rem;color:#fff">—</div>
+        </div>
+      </div>
+      <div class="meter-track">
+        <div class="meter-fill" id="meter-fill" style="width:0%;background-position:0% 0%"></div>
+      </div>
+      <div class="meter-zones">
+        <span>Optimal</span>
+        <span>Waspada</span>
+        <span>Tinggi</span>
+      </div>
+    </div>
+
+    <div class="domain-bars" id="domain-bars"></div>
+
+    <div class="findings" id="findings"></div>
+
+    <div class="rec-box">
+      <div class="rec-title">🍯 Protokol SBH yang Direkomendasikan</div>
+      <div class="rec-protocol" id="rec-protocol"></div>
+    </div>
+
+    <!-- Share Card -->
+    <div class="share-section">
+      <div class="share-title">Bagikan hasil ini · bantu orang di sekitar Anda</div>
+
+      <div class="share-card" id="share-card-preview">
+        <div class="share-card-header">
+          <div class="share-bee">🐝</div>
+          <div>
+            <div class="share-card-title">SBH Health Check</div>
+            <div class="share-card-sub">Stingless Bee Honey Diagnostic</div>
+          </div>
+        </div>
+        <div id="share-card-body"></div>
+        <div class="share-cta">
+          "Cek kondisi tubuhmu juga — gratis, 3 menit, berbasis riset ilmiah 🐝"
+        </div>
+      </div>
+
+      <button class="btn-share-wa" onclick="shareWhatsApp()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Kirim via WhatsApp
+      </button>
+
+      <button class="btn-share-copy" onclick="copyResult()">
+        📋 Salin Teks Hasil
+      </button>
+
+      <button class="btn-restart" onclick="restart()">
+        ↺ Ulangi Diagnostik
+      </button>
+
+      <p style="font-size:.68rem;color:rgba(255,255,255,.2);text-align:center;margin-top:1.5rem">
+        Hasil ini bersifat edukatif, bukan diagnosis medis.<br>
+        Berdasarkan 1,128+ referensi ilmiah (PMC/NCBI, Wiley, Nature, MDPI · 2000–2025)
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════
+//  DATA
+// ════════════════════════════════════════════════
+
+const QUESTIONS = [
+  // ── BLOK A: Energi & Vitalitas ──────────────
+  {
+    block: "A", blockLabel: "⚡ Energi & Vitalitas", domain: "energy",
+    q: "Bagaimana level energi Anda sepanjang hari?",
+    hint: "Jujur dengan diri sendiri — ini tentang rata-rata 30 hari terakhir.",
+    options: [
+      { label: "Energi penuh & stabil", sub: "Tidak ada rasa lelah yang mengganggu", score: 0, letter: "A" },
+      { label: "Cukup baik, tapi ada penurunan di sore hari", sub: "Perlu kafein atau istirahat ekstra", score: 2, letter: "B" },
+      { label: "Sering lelah tanpa sebab jelas", sub: "Bahkan setelah tidur cukup", score: 4, letter: "C" },
+      { label: "Sangat mudah kelelahan & sulit pulih", sub: "Aktivitas ringan sudah menguras tenaga", score: 6, letter: "D" },
+    ],
+    insight: "Kelelahan kronis tanpa sebab jelas seringkali adalah sinyal awal stres oksidatif — kondisi di mana sel tubuh Anda dipenuhi radikal bebas yang belum ternetralisir. SBH kaya antioksidan yang bekerja di tingkat seluler untuk memulihkan keseimbangan ini."
+  },
+  {
+    block: "A", blockLabel: "⚡ Energi & Vitalitas", domain: "energy",
+    q: "Seberapa nyenyak tidur Anda dalam sebulan terakhir?",
+    hint: "Tidur adalah momen utama tubuh melakukan repair — termasuk di otak.",
+    options: [
+      { label: "Tidur nyenyak, bangun segar", sub: "7–9 jam berkualitas setiap malam", score: 0, letter: "A" },
+      { label: "Kadang terbangun, tapi masih oke", sub: "1–2x per minggu", score: 2, letter: "B" },
+      { label: "Sering sulit tidur atau terbangun", sub: "Bangun tetap terasa lelah", score: 4, letter: "C" },
+      { label: "Tidur sangat buruk, kronik", sub: "Sudah berbulan-bulan", score: 6, letter: "D" },
+    ],
+    insight: "Tidur buruk meningkatkan kadar kortisol & inflamasi dalam tubuh. Madu (termasuk SBH) mengandung trehalulose yang mendukung produksi serotonin → melatonin, sehingga mendukung siklus tidur alami."
+  },
+  // ── BLOK B: Metabolisme & Gula Darah ────────
+  {
+    block: "B", blockLabel: "⚖️ Metabolisme & Berat Badan", domain: "metabolism",
+    q: "Bagaimana kondisi berat badan Anda dalam setahun terakhir?",
+    hint: "Perubahan berat badan sering mencerminkan kondisi metabolisme internal.",
+    options: [
+      { label: "Stabil & sesuai target", sub: "Tidak ada perubahan signifikan", score: 0, letter: "A" },
+      { label: "Naik sedikit, masih dalam kendali", sub: "1–3 kg dalam setahun", score: 2, letter: "B" },
+      { label: "Berat sulit turun meski sudah diet", sub: "Usaha keras tapi hasilnya minim", score: 5, letter: "C" },
+      { label: "Terus naik tanpa kontrol jelas", sub: "Metabolisme terasa sangat lambat", score: 7, letter: "D" },
+    ],
+    insight: "Resistensi leptin — hormon rasa kenyang — adalah salah satu akar masalah berat badan kronis. Trehalulose dalam SBH memiliki GI rendah yang membantu menstabilkan insulin dan meningkatkan sensitivitas leptin."
+  },
+  {
+    block: "B", blockLabel: "⚖️ Metabolisme & Berat Badan", domain: "metabolism",
+    q: "Seberapa sering Anda menginginkan makanan manis atau tepung secara tiba-tiba?",
+    hint: "Sugar craving yang intens bisa menjadi tanda ketidakstabilan gula darah.",
+    options: [
+      { label: "Jarang — nafsu makan stabil", sub: "Tidak ada craving yang mengganggu", score: 0, letter: "A" },
+      { label: "Sesekali, masih terkontrol", sub: "1–2x per minggu", score: 2, letter: "B" },
+      { label: "Sering, terutama siang dan sore", sub: "Sulit ditahan", score: 5, letter: "C" },
+      { label: "Hampir setiap hari, sangat kuat", sub: "Terasa seperti kebutuhan, bukan keinginan", score: 7, letter: "D" },
+    ],
+    insight: "Craving gula yang intens adalah tanda klasik fluktuasi gula darah — gula naik cepat lalu drop, memicu keinginan makan manis lagi. Ini siklus yang dapat diputus dengan konsumsi pangan Low-GI seperti SBH."
+  },
+  // ── BLOK C: Imun & Inflamasi ─────────────────
+  {
+    block: "C", blockLabel: "🛡️ Imun & Inflamasi", domain: "immune",
+    q: "Seberapa sering Anda sakit (flu, infeksi, radang tenggorokan) dalam setahun?",
+    hint: "Frekuensi sakit adalah cerminan langsung dari kondisi sistem imun.",
+    options: [
+      { label: "Sangat jarang — 0–1x setahun", sub: "Imun kuat & responsif", score: 0, letter: "A" },
+      { label: "2–3x setahun — masih normal", sub: "Tapi perlu waktu pemulihan cukup lama", score: 2, letter: "B" },
+      { label: "4–6x setahun — cukup sering", sub: "Tubuh terasa rentan", score: 5, letter: "C" },
+      { label: "Lebih dari 6x — hampir tiap bulan", sub: "Selalu ada saja yang menggangu", score: 8, letter: "D" },
+    ],
+    insight: "SBH mengandung defensin-1 (protein imun dari lebah) dan senyawa antimikroba yang terbukti menghambat lebih dari 90% bakteri patogen — bahkan lebih kuat dari MedihoneyTM dalam beberapa studi."
+  },
+  {
+    block: "C", blockLabel: "🛡️ Imun & Inflamasi", domain: "immune",
+    q: "Apakah Anda mengalami kondisi berikut secara rutin?",
+    hint: "Ini adalah tanda-tanda inflamasi kronis yang sering diabaikan.",
+    options: [
+      { label: "Tidak ada keluhan", sub: "Tubuh terasa sehat dan nyaman", score: 0, letter: "A" },
+      { label: "Kadang nyeri sendi atau otot ringan", sub: "Terutama setelah aktivitas", score: 3, letter: "B" },
+      { label: "Alergi atau kulit sensitif yang sering kambuh", sub: "Reaksi berlebih terhadap lingkungan", score: 5, letter: "C" },
+      { label: "Kombinasi beberapa keluhan di atas", sub: "Sudah berlangsung lama", score: 8, letter: "D" },
+    ],
+    insight: "Inflamasi kronis ibarat api kecil yang terus menyala di dalam tubuh — tidak terasa tapi merusak perlahan. Flavonoid quercetin dalam SBH adalah antihistamin alami yang terbukti menghambat pelepasan histamin dan meredam inflamasi sistemik."
+  },
+  // ── BLOK D: Otak & Mental ────────────────────
+  {
+    block: "D", blockLabel: "🧠 Otak & Kesehatan Mental", domain: "brain",
+    q: "Bagaimana kemampuan fokus & konsentrasi Anda belakangan ini?",
+    hint: "Otak mengonsumsi 20% energi tubuh — kualitasnya mencerminkan kondisi metabolisme.",
+    options: [
+      { label: "Fokus tajam, produktif sepanjang hari", sub: "Tidak ada brain fog", score: 0, letter: "A" },
+      { label: "Kadang sulit fokus, tapi masih bisa diatasi", sub: "Terutama di sore hari", score: 2, letter: "B" },
+      { label: "Sering brain fog — pikiran terasa berat", sub: "Sulit memulai atau menyelesaikan tugas", score: 5, letter: "C" },
+      { label: "Sangat sulit berkonsentrasi, sering lupa", sub: "Produktivitas terganggu signifikan", score: 7, letter: "D" },
+    ],
+    insight: "Brain fog sering disebabkan oleh neuroinflammasi — peradangan ringan di otak. Gallic acid dan p-coumaric acid dalam SBH terbukti secara ilmiah melindungi sel neuron dari sinyal apoptotik (kematian sel) dan mengurangi neuroinflammasi."
+  },
+  {
+    block: "D", blockLabel: "🧠 Otak & Kesehatan Mental", domain: "brain",
+    q: "Bagaimana kondisi mood & kestabilan emosi Anda?",
+    hint: "Kesehatan mental dan fisik jauh lebih terhubung dari yang kita sadari.",
+    options: [
+      { label: "Stabil & positif secara keseluruhan", sub: "Mampu mengelola stres dengan baik", score: 0, letter: "A" },
+      { label: "Kadang mudah tersinggung atau cemas", sub: "Terutama saat banyak tekanan", score: 2, letter: "B" },
+      { label: "Mood sering naik-turun tanpa sebab jelas", sub: "Sulit dikendalikan", score: 5, letter: "C" },
+      { label: "Sering merasa anxious, sedih, atau overwhelmed", sub: "Mengganggu kualitas hidup sehari-hari", score: 7, letter: "D" },
+    ],
+    insight: "Gut-brain axis — koneksi usus dan otak — adalah jalur penting kesehatan mental. SBH mendukung ekosistem mikrobioma usus yang sehat, yang pada gilirannya berdampak pada produksi serotonin (90% diproduksi di usus!)."
+  },
+  // ── BLOK E: Pencernaan & Liver ───────────────
+  {
+    block: "E", blockLabel: "🫁 Pencernaan & Liver", domain: "gut",
+    q: "Bagaimana kondisi pencernaan Anda secara umum?",
+    hint: "Usus adalah 'otak kedua' — kondisinya mempengaruhi hampir semua sistem tubuh.",
+    options: [
+      { label: "Lancar, tidak ada masalah berarti", sub: "BAB teratur, tidak kembung", score: 0, letter: "A" },
+      { label: "Kadang kembung atau tidak nyaman", sub: "Terutama setelah makan tertentu", score: 3, letter: "B" },
+      { label: "Sering kembung, mual, atau diare/konstipasi bergantian", sub: "Cukup mengganggu", score: 5, letter: "C" },
+      { label: "Masalah pencernaan kronis yang signifikan", sub: "Sudah berlangsung lama, mempengaruhi kualitas hidup", score: 8, letter: "D" },
+    ],
+    insight: "Asam organik alami dalam SBH menciptakan lingkungan pH rendah di usus yang secara selektif menghambat bakteri patogen sambil mendukung pertumbuhan bakteri baik — fungsi prebiotik alami."
+  },
+  // ── BLOK F: Gaya Hidup & Eksposur ───────────
+  {
+    block: "F", blockLabel: "🌿 Gaya Hidup & Eksposur", domain: "lifestyle",
+    q: "Seberapa besar Anda terpapar stres, polusi, atau makanan olahan setiap hari?",
+    hint: "Faktor eksternal adalah sumber utama pembentukan radikal bebas di tubuh.",
+    options: [
+      { label: "Minimal — hidup relatif teratur & bersih", sub: "Makanan segar, stres terkontrol, lingkungan baik", score: 0, letter: "A" },
+      { label: "Sedang — ada beberapa faktor risiko", sub: "Kadang makan olahan, stres kerja biasa", score: 3, letter: "B" },
+      { label: "Tinggi — paparan rutin setiap hari", sub: "Stres tinggi, udara kurang bersih, makanan olahan sering", score: 5, letter: "C" },
+      { label: "Sangat tinggi — hampir semua faktor ada", sub: "Kurang tidur, stres kronis, lingkungan tidak sehat", score: 8, letter: "D" },
+    ],
+    insight: "Stres oksidatif bukan hanya dari dalam tubuh — polusi udara, makanan ultra-proses, dan stres psikologis semuanya menghasilkan radikal bebas. Antioksidan SBH bekerja sebagai 'tameng' yang menangkap radikal bebas sebelum merusak sel."
+  },
+  {
+    block: "F", blockLabel: "🌿 Gaya Hidup & Eksposur", domain: "lifestyle",
+    q: "Seberapa aktif Anda berolahraga atau bergerak secara fisik?",
+    hint: "Olahraga adalah anti-inflamasi terbaik — tapi over-training tanpa recovery juga berbahaya.",
+    options: [
+      { label: "Aktif & teratur, 3–5x per minggu", sub: "Dengan recovery yang cukup", score: 0, letter: "A" },
+      { label: "Sesekali, 1–2x per minggu", sub: "Tidak konsisten tapi masih bergerak", score: 2, letter: "B" },
+      { label: "Sangat jarang — gaya hidup sedentari", sub: "Banyak duduk, kurang gerak", score: 5, letter: "C" },
+      { label: "Olahraga sangat intens tapi tanpa recovery baik", sub: "Tubuh sering terasa overworked", score: 4, letter: "D" },
+    ],
+    insight: "SBH sebagai pre-workout alami memberikan energi sustained dari trehalulose (Low-GI), sementara kandungan antioksidannya mengurangi oxidative damage dari latihan intensif — mempercepat pemulihan otot."
+  },
+  {
+    block: "F", blockLabel: "🌿 Gaya Hidup & Eksposur", domain: "lifestyle",
+    q: "Seberapa besar kesadaran Anda tentang apa yang Anda konsumsi untuk kesehatan?",
+    hint: "Pertanyaan terakhir — tentang kesiapan dan motivasi Anda.",
+    options: [
+      { label: "Sangat sadar — selalu pilih yang natural & sehat", sub: "Sudah menjalankan pola hidup sehat secara konsisten", score: 0, letter: "A" },
+      { label: "Cukup sadar — mulai memperhatikan", sub: "Ingin berubah tapi belum tahu harus mulai dari mana", score: 1, letter: "B" },
+      { label: "Baru mulai tertarik — ini yang mendorong saya mengisi ini", sub: "Ingin tahu lebih banyak", score: 1, letter: "C" },
+      { label: "Belum terlalu memikirkan — ingin mulai sekarang", sub: "Mencari solusi yang simple & alami", score: 2, letter: "D" },
+    ],
+    insight: "Kesadaran adalah langkah pertama perubahan. Fakta bahwa Anda mengisi diagnostik ini menunjukkan Anda sudah di jalur yang benar. Konsistensi kecil setiap hari — seperti 1 sdt SBH pagi hari — membangun perbedaan besar dalam 3 bulan."
+  }
+];
+
+const PROFILES = [
+  {
+    min: 0, max: 20,
+    badge: "🟢 Profil: Optimal Defender",
+    title: "Tubuh Anda dalam Kondisi Baik — Pertahankan!",
+    profile: "Sistem metabolisme Anda bekerja dengan cukup efisien. Risiko oksidatif Anda tergolong rendah. Ini waktu terbaik untuk investasi preventif sebelum masalah muncul.",
+    category: "Rendah",
+    findings: [
+      { type: "good", icon: "✅", text: "<strong>Energi & metabolisme</strong> berjalan relatif optimal." },
+      { type: "good", icon: "✅", text: "<strong>Imun Anda</strong> cukup responsif terhadap ancaman eksternal." },
+      { type: "warn", icon: "⚠️", text: "<strong>Pencegahan</strong> tetap kunci — stres oksidatif menumpuk diam-diam bahkan pada orang sehat." },
+    ],
+    protocol: [
+      { time: "🌅 Pagi", desc: "1 sdt SBH + air hangat, perut kosong (maintenance & preventif)" },
+      { time: "🌙 Malam", desc: "½ sdt SBH sebelum tidur (mempertahankan kualitas tidur)" },
+      { time: "📅 Durasi", desc: "Konsumsi rutin minimum 3 bulan untuk efek antiaging seluler" },
+    ]
+  },
+  {
+    min: 21, max: 42,
+    badge: "🟡 Profil: Early Warning",
+    title: "Ada Sinyal Awal yang Perlu Diperhatikan",
+    profile: "Tubuh Anda sedang dalam fase kompensasi — masih berfungsi, tapi sudah mulai mengirim sinyal. Ini momen terbaik untuk bertindak sebelum kondisi berkembang menjadi masalah yang lebih serius.",
+    category: "Sedang",
+    findings: [
+      { type: "warn", icon: "⚠️", text: "<strong>Fluktuasi energi</strong> mengindikasikan ketidakstabilan gula darah atau metabolisme yang mulai melambat." },
+      { type: "warn", icon: "⚠️", text: "<strong>Kualitas tidur atau mood</strong> yang terganggu bisa menjadi tanda neuroinflammasi ringan." },
+      { type: "alert", icon: "🔴", text: "<strong>Inflamasi kronis sub-klinis</strong> mungkin sedang berlangsung tanpa gejala nyata." },
+    ],
+    protocol: [
+      { time: "🌅 Pagi", desc: "1 sdm SBH + air hangat + perasan lemon, perut kosong" },
+      { time: "🍽️ Sebelum makan", desc: "½ sdt SBH untuk stabilisasi gula darah & pencernaan" },
+      { time: "🌙 Malam", desc: "1 sdt SBH dalam air hangat untuk tidur & recovery" },
+      { time: "📅 Durasi", desc: "6–8 minggu konsisten, evaluasi perubahan di minggu ke-2 & ke-4" },
+    ]
+  },
+  {
+    min: 43, max: 65,
+    badge: "🔴 Profil: Oxidative Overload",
+    title: "Tubuh Anda Membutuhkan Perhatian Serius",
+    profile: "Skor Anda menunjukkan beban oksidatif yang cukup tinggi. Beberapa sistem tubuh kemungkinan sudah terpengaruh — metabolisme, imun, dan/atau fungsi otak. Perubahan konsisten diperlukan sekarang.",
+    category: "Tinggi",
+    findings: [
+      { type: "alert", icon: "🔴", text: "<strong>Stres oksidatif tinggi</strong> — radikal bebas sudah melampaui kapasitas antioksidan alami tubuh." },
+      { type: "alert", icon: "🔴", text: "<strong>Sistem imun tertekan</strong> — tubuh lebih rentan terhadap infeksi dan pemulihan lebih lambat." },
+      { type: "alert", icon: "🔴", text: "<strong>Risiko metabolik meningkat</strong> — resistensi insulin dan dislipidemia perlu diwaspadai." },
+      { type: "warn", icon: "⚠️", text: "<strong>Konsultasi dengan tenaga kesehatan</strong> dianjurkan bersamaan dengan perubahan gaya hidup." },
+    ],
+    protocol: [
+      { time: "🌅 Pagi", desc: "1½ sdm SBH + air hangat, 30 menit sebelum sarapan" },
+      { time: "🍽️ Sebelum makan siang", desc: "1 sdt SBH untuk kontrol gula darah post-prandial" },
+      { time: "🌙 Malam", desc: "1 sdt SBH + jahe hangat — anti-inflamasi & recovery nokturnal" },
+      { time: "📅 Durasi", desc: "Minimum 3 bulan konsisten, dengan tracking gejala mingguan" },
+      { time: "⚠️ Penting", desc: "Kombinasikan dengan pola makan anti-inflamasi & konsultasi dokter" },
+    ]
+  }
+];
+
+// ════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════
+let currentQ    = 0;
+let selectedOpt = null;
+let scores      = {};  // domain -> total
+let totalScore  = 0;
+let userName    = '';
+let selectedHook = null;
+let answers     = [];
+
+// ════════════════════════════════════════════════
+//  HOOK SELECTION
+// ════════════════════════════════════════════════
+function selectHook(hook, el) {
+  selectedHook = hook;
+  document.getElementById('btn-start').style.opacity   = '1';
+  document.getElementById('btn-start').style.pointerEvents = 'auto';
+  document.querySelectorAll('.hook-card').forEach(c => {
+    c.style.opacity = '.5';
+    c.style.border  = '';
+  });
+  el.style.opacity = '1';
+  el.style.border  = '1.5px solid rgba(232,160,32,.5)';
+}
+
+// ════════════════════════════════════════════════
+//  START
+// ════════════════════════════════════════════════
+function startQuiz() {
+  userName = document.getElementById('user-name').value.trim() || 'Anda';
+  showScreen('screen-quiz');
+  renderQuestion();
+}
+
+// ════════════════════════════════════════════════
+//  RENDER QUESTION
+// ════════════════════════════════════════════════
+function renderQuestion() {
+  const q   = QUESTIONS[currentQ];
+  const tot = QUESTIONS.length;
+  const pct = Math.round((currentQ / tot) * 100);
+
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('quiz-step-label').textContent =
+    `Blok ${q.block} · Pertanyaan ${currentQ + 1} dari ${tot}`;
+  document.getElementById('quiz-block-label').textContent = q.blockLabel;
+  document.getElementById('quiz-question').textContent    = q.q;
+  document.getElementById('quiz-hint').textContent        = q.hint;
+
+  const container = document.getElementById('options-container');
+  container.innerHTML = '';
+  selectedOpt = null;
+
+  q.options.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'option';
+    div.innerHTML = `
+      <div class="opt-indicator">${opt.letter}</div>
+      <div class="opt-text">
+        <div class="opt-label">${opt.label}</div>
+        <div class="opt-sublabel">${opt.sub}</div>
+      </div>`;
+    div.onclick = () => selectOption(i, opt);
+    div.ontouchend = (e) => { e.preventDefault(); selectOption(i, opt); };
+    container.appendChild(div);
+  });
+
+  document.getElementById('insight-card').classList.remove('show');
+  document.getElementById('btn-next').classList.remove('visible');
+
+  // Scroll to top of question
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ════════════════════════════════════════════════
+//  SELECT OPTION
+// ════════════════════════════════════════════════
+function selectOption(idx, opt) {
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  document.querySelectorAll('.option')[idx].classList.add('selected');
+  selectedOpt = opt;
+
+  const q = QUESTIONS[currentQ];
+  document.getElementById('insight-text').textContent = q.insight;
+  document.getElementById('insight-card').classList.add('show');
+
+  const btnNext = document.getElementById('btn-next');
+  btnNext.classList.add('visible');
+
+  // Scroll btn into view on mobile after short delay
+  setTimeout(() => {
+    btnNext.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 350);
+}
+
+// ════════════════════════════════════════════════
+//  NEXT QUESTION
+// ════════════════════════════════════════════════
+function nextQuestion() {
+  if (!selectedOpt) return;
+  const q = QUESTIONS[currentQ];
+
+  // Accumulate
+  if (!scores[q.domain]) scores[q.domain] = 0;
+  scores[q.domain] += selectedOpt.score;
+  totalScore += selectedOpt.score;
+  answers.push({ q: q.q, a: selectedOpt.label, score: selectedOpt.score });
+
+  currentQ++;
+
+  if (currentQ >= QUESTIONS.length) {
+    showResults();
+  } else {
+    renderQuestion();
+  }
+}
+
+// ════════════════════════════════════════════════
+//  SHOW RESULTS
+// ════════════════════════════════════════════════
+function showResults() {
+  document.getElementById('progress-bar').style.width = '100%';
+
+  // Normalize score to /100
+  const maxPossible = QUESTIONS.reduce((s, q) => s + Math.max(...q.options.map(o => o.score)), 0);
+  const normalized  = Math.round((totalScore / maxPossible) * 100);
+
+  // Find profile
+  const profile = PROFILES.find(p => normalized >= p.min && normalized <= p.max) || PROFILES[2];
+
+  showScreen('screen-result');
+
+  // Populate
+  document.getElementById('result-badge').textContent   = profile.badge;
+  document.getElementById('result-title').textContent   =
+    userName !== 'Anda' ? `${userName}, ${profile.title}` : profile.title;
+  document.getElementById('result-profile').textContent = profile.profile;
+  document.getElementById('score-category').textContent = profile.category;
+
+  // Animate score
+  const scoreEl = document.getElementById('score-display');
+  const fill     = document.getElementById('meter-fill');
+  let cur = 0;
+  const interval = setInterval(() => {
+    cur = Math.min(cur + 2, normalized);
+    scoreEl.textContent = cur;
+    if (cur >= normalized) clearInterval(interval);
+  }, 20);
+
+  setTimeout(() => {
+    fill.style.width            = normalized + '%';
+    fill.style.backgroundPosition = (normalized * 2) + '% 0%';
+  }, 100);
+
+  // Domain bars
+  const domainLabels = {
+    energy: '⚡ Energi & Vitalitas',
+    metabolism: '⚖️ Metabolisme',
+    immune: '🛡️ Imun & Inflamasi',
+    brain: '🧠 Otak & Mental',
+    gut: '🫁 Pencernaan',
+    lifestyle: '🌿 Gaya Hidup'
+  };
+  const domainMax = { energy: 12, metabolism: 14, immune: 16, brain: 14, gut: 8, lifestyle: 15 };
+
+  const barsEl = document.getElementById('domain-bars');
+  barsEl.innerHTML = '';
+  Object.entries(scores).forEach(([domain, val]) => {
+    const max = domainMax[domain] || 10;
+    const pct = Math.min(Math.round((val / max) * 100), 100);
+    barsEl.innerHTML += `
+      <div class="domain-row">
+        <div class="domain-top">
+          <div class="domain-name">${domainLabels[domain] || domain}</div>
+          <div class="domain-val">${pct}%</div>
+        </div>
+        <div class="domain-track">
+          <div class="domain-fill" style="width:0%" data-target="${pct}"></div>
+        </div>
+      </div>`;
+  });
+
+  setTimeout(() => {
+    document.querySelectorAll('.domain-fill').forEach(el => {
+      el.style.width = el.dataset.target + '%';
+    });
+  }, 300);
+
+  // Findings
+  const findEl = document.getElementById('findings');
+  findEl.innerHTML = '';
+  profile.findings.forEach(f => {
+    findEl.innerHTML += `
+      <div class="finding-item ${f.type}">
+        <div class="finding-icon">${f.icon}</div>
+        <div class="finding-text">${f.text}</div>
+      </div>`;
+  });
+
+  // Protocol
+  const protEl = document.getElementById('rec-protocol');
+  protEl.innerHTML = '';
+  profile.protocol.forEach(p => {
+    protEl.innerHTML += `
+      <div class="proto-row">
+        <div class="proto-time">${p.time}</div>
+        <div class="proto-desc">${p.desc}</div>
+      </div>`;
+  });
+
+  // Share card
+  const shareBody = document.getElementById('share-card-body');
+  shareBody.innerHTML = `
+    <div class="share-result-line">
+      <span class="srl-key">Nama</span>
+      <span class="srl-val">${userName}</span>
+    </div>
+    <div class="share-result-line">
+      <span class="srl-key">Skor Risiko</span>
+      <span class="srl-val">${normalized}/100 — ${profile.category}</span>
+    </div>
+    <div class="share-result-line">
+      <span class="srl-key">Profil</span>
+      <span class="srl-val">${profile.badge.replace(/[🟢🟡🔴]/g,'').trim()}</span>
+    </div>
+    <div class="share-result-line">
+      <span class="srl-key">Area Prioritas</span>
+      <span class="srl-val">${getTopDomain()}</span>
+    </div>`;
+}
+
+function getTopDomain() {
+  const domainLabels = { energy:'Energi', metabolism:'Metabolisme', immune:'Imun', brain:'Otak', gut:'Pencernaan', lifestyle:'Gaya Hidup' };
+  const domainMax    = { energy:12, metabolism:14, immune:16, brain:14, gut:8, lifestyle:15 };
+  let top = null, topPct = 0;
+  Object.entries(scores).forEach(([d, v]) => {
+    const pct = (v / (domainMax[d] || 10)) * 100;
+    if (pct > topPct) { topPct = pct; top = d; }
+  });
+  return top ? domainLabels[top] : '—';
+}
+
+// ════════════════════════════════════════════════
+//  SHARE
+// ════════════════════════════════════════════════
+function buildShareText() {
+  const maxPossible = QUESTIONS.reduce((s, q) => s + Math.max(...q.options.map(o => o.score)), 0);
+  const normalized  = Math.round((totalScore / maxPossible) * 100);
+  const profile     = PROFILES.find(p => normalized >= p.min && normalized <= p.max) || PROFILES[2];
+
+  return `🐝 *SBH HEALTH CHECK — Hasil Diagnostik*
+
+👤 Nama: ${userName}
+📊 Skor Risiko Oksidatif: ${normalized}/100
+🏷️ Profil: ${profile.badge.replace(/[🟢🟡🔴]/g,'').trim()}
+🎯 Area Prioritas: ${getTopDomain()}
+
+${profile.title}
+
+"${profile.profile.substring(0, 120)}..."
+
+─────────────────────────
+💡 *Tentang SBH (Stingless Bee Honey)*
+Madu lebah tanpa sengat — superfood tropis yang didukung 1.128+ studi ilmiah (PMC/NCBI, Wiley, Nature, MDPI, 2000–2025).
+
+Mengandung: Trehalulose (Low-GI unik), Flavonoid, Asam Fenolik, Defensin-1.
+
+Manfaat tervalidasi: antioksidan, antimikroba, anti-diabetes, neuroprotektif, wound healing, anti-inflamasi.
+
+─────────────────────────
+🔍 Cek kondisi tubuhmu juga — gratis, 3 menit, berbasis sains.
+
+#SBHHealthCheck #StinglessBeeHoney #KelulutHoney #NaturalHealth #MaduKelulut`;
+}
+
+function shareWhatsApp() {
+  const text = encodeURIComponent(buildShareText());
+  window.open(`https://wa.me/?text=${text}`, '_blank');
+}
+
+function copyResult() {
+  const text = buildShareText();
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(showToast);
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast();
+  }
+}
+
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ════════════════════════════════════════════════
+//  UTILS
+// ════════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(id);
+  el.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function restart() {
+  currentQ = 0; selectedOpt = null; scores = {};
+  totalScore = 0; answers = []; selectedHook = null;
+  document.getElementById('progress-bar').style.width = '0%';
+  showScreen('screen-hook');
+}
+</script>
+</body>
+</html>
