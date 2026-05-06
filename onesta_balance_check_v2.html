@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Onesta Balance Check™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Cabinet+Grotesk:wght@400;500;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+:root {
+  --gold:    #C8902A;
+  --gold-l:  #E8B84B;
+  --gold-ll: #F5D48A;
+  --gold-d:  #8A6018;
+  --gold-bg: rgba(200,144,42,.08);
+  --gold-bg-l: rgba(200,144,42,.14);
+  --ink:     #0C0800;
+  --ink-2:   #130E00;
+  --ink-3:   #1A1300;
+  --ink-4:   #211800;
+  --cream:   #F5EDD8;
+  --text:    #EDE4CC;
+  --sub:     rgba(237,228,204,.72);
+  --muted:   rgba(237,228,204,.45);
+  --border:  rgba(200,144,42,.12);
+  --border-l:rgba(200,144,42,.22);
+  --border-ll:rgba(200,144,42,.38);
+  --green:   #3A9E6A;
+  --orange:  #E87A20;
+  --red:     #C84040;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Cabinet Grotesk',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--ink);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* grain */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  opacity:.5;
+}
+
+/* progress line */
+#pline{position:fixed;top:0;left:0;right:0;height:2px;z-index:999;
+  background:linear-gradient(90deg,var(--gold-d),var(--gold-l));
+  transform-origin:left;transform:scaleX(0);transition:transform .4s ease;}
+
+/* ══ SCREENS ══════════════════════════════════ */
+.screen{display:none;position:relative;z-index:1;min-height:100vh;}
+.screen.active{display:flex;flex-direction:column;animation:sIn .45s ease both;}
+@keyframes sIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══ COVER ════════════════════════════════════ */
+#s-cover{
+  align-items:center;justify-content:center;
+  padding:3rem 1.5rem;text-align:center;
+  background:radial-gradient(ellipse 100% 55% at 50% 0%,rgba(200,144,42,.14) 0%,transparent 65%);
+}
+.cover-hex{position:absolute;font-size:18rem;opacity:.02;color:var(--gold);top:-2rem;left:50%;transform:translateX(-50%);pointer-events:none;line-height:1}
+.brand{display:flex;flex-direction:column;align-items:center;gap:.35rem;margin-bottom:2rem;position:relative;}
+.brand-bee{width:54px;height:54px;background:linear-gradient(135deg,var(--gold-l),var(--gold-d));border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.55rem;box-shadow:0 8px 32px rgba(200,144,42,.28),0 2px 8px rgba(0,0,0,.4);margin-bottom:.4rem;}
+.brand-name{font-family:'Playfair Display',Georgia,serif;font-size:1.1rem;font-weight:700;color:var(--gold-l);letter-spacing:.2em;text-transform:uppercase;}
+.brand-tag{font-size:.62rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;font-family:'DM Mono',monospace;}
+
+.cover-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(2.6rem,9vw,4.4rem);font-weight:900;line-height:1.06;color:var(--cream);margin-bottom:.7rem;position:relative;letter-spacing:-.02em;}
+.cover-title em{font-style:italic;color:var(--gold-l);display:block;}
+.cover-tm{font-size:.5rem;vertical-align:super;color:var(--gold);font-style:normal;font-family:'DM Mono',monospace;}
+
+.cover-tagline{font-family:'Playfair Display',serif;font-size:clamp(.95rem,2.8vw,1.1rem);font-style:italic;color:var(--sub);line-height:1.6;margin-bottom:1.75rem;}
+
+.cover-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:.45rem;margin-bottom:2rem;}
+.cpill{display:flex;align-items:center;gap:.35rem;padding:.32rem .75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:99px;font-size:.7rem;color:var(--muted);}
+.cpill .cd{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+
+.btn-start{width:100%;max-width:340px;padding:1.1rem;background:linear-gradient(135deg,var(--gold-l),var(--gold-d));color:var(--ink);font-weight:800;font-size:.95rem;border:none;border-radius:99px;cursor:pointer;font-family:'Cabinet Grotesk',sans-serif;letter-spacing:.04em;box-shadow:0 4px 28px rgba(200,144,42,.32);transition:all .22s;position:relative;}
+.btn-start::after{content:'→';position:absolute;right:1.25rem;top:50%;transform:translateY(-50%);font-size:1rem;}
+.btn-start:active{transform:scale(.98);}
+.cover-note{font-size:.7rem;color:var(--muted);margin-top:.85rem;font-style:italic;}
+
+/* ══ INTRO ════════════════════════════════════ */
+#s-intro{align-items:center;justify-content:center;padding:2.5rem 1.5rem;text-align:center;}
+.intro-icon{font-size:2.6rem;margin-bottom:1.25rem;animation:gPulse 3s ease infinite;}
+@keyframes gPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.intro-title{font-family:'Playfair Display',serif;font-size:clamp(1.55rem,5vw,2.1rem);font-weight:700;color:var(--cream);margin-bottom:.4rem;line-height:1.2;}
+.intro-sub{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:var(--sub);margin-bottom:1.75rem;line-height:1.6;}
+.signal-list{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.75rem;text-align:left;max-width:340px;}
+.signal-item{display:flex;align-items:center;gap:.7rem;padding:.6rem .9rem;background:var(--ink-3);border:1px solid var(--border);border-radius:9px;font-size:.82rem;color:var(--sub);}
+.sdot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;box-shadow:0 0 6px rgba(200,144,42,.5);}
+.intro-promise{background:var(--gold-bg);border:1px solid var(--border-l);border-radius:12px;padding:.95rem 1.1rem;font-size:.82rem;color:var(--sub);line-height:1.7;margin-bottom:1.75rem;max-width:360px;text-align:left;}
+.intro-promise b{color:var(--gold-l);}
+
+/* ══ QUIZ ═════════════════════════════════════ */
+#s-quiz{padding:2rem 1.25rem 2.5rem;justify-content:space-between;min-height:100vh;}
+.quiz-top{}
+.quiz-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem;}
+.quiz-pillar{display:flex;align-items:center;gap:.35rem;padding:.26rem .65rem;background:var(--gold-bg);border:1px solid var(--border);border-radius:6px;font-size:.63rem;color:var(--gold);letter-spacing:.06em;}
+.quiz-num{font-size:.63rem;color:var(--muted);font-family:'DM Mono',monospace;}
+.track{height:2px;background:rgba(200,144,42,.1);border-radius:99px;overflow:hidden;margin-bottom:1.75rem;}
+.track-fill{height:100%;background:linear-gradient(90deg,var(--gold-d),var(--gold-l));border-radius:99px;transition:width .45s cubic-bezier(.4,0,.2,1);}
+.quiz-q{font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.25rem,4vw,1.65rem);font-weight:600;line-height:1.3;color:var(--cream);margin-bottom:.4rem;}
+.quiz-hint{font-family:'Playfair Display',serif;font-style:italic;font-size:.88rem;color:var(--muted);margin-bottom:1.4rem;line-height:1.5;}
+
+.opts{display:flex;flex-direction:column;gap:.5rem;}
+.opt{display:flex;align-items:flex-start;gap:.85rem;padding:.92rem 1rem;background:var(--ink-3);border:1.5px solid rgba(200,144,42,.1);border-radius:12px;cursor:pointer;transition:all .2s;}
+.opt:active,.opt:hover{border-color:var(--gold);background:var(--gold-bg);}
+.opt.sel{border-color:var(--gold);background:var(--gold-bg-l);}
+.opt.sel .okey{background:var(--gold);color:var(--ink);border-color:var(--gold);}
+.okey{width:28px;height:28px;border-radius:7px;border:1px solid rgba(200,144,42,.2);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:var(--gold);flex-shrink:0;transition:all .2s;font-family:'DM Mono',monospace;}
+.otext{flex:1;}
+.olabel{font-size:.9rem;font-weight:500;color:var(--text);line-height:1.3;}
+.osub{font-size:.8rem;color:var(--sub);margin-top:.2rem;line-height:1.45;}
+
+/* insight */
+.insight-card{background:var(--ink-2);border:1px solid var(--border-l);border-radius:12px;padding:.9rem 1rem;margin-top:.85rem;display:none;animation:sIn .3s ease;}
+.insight-card.show{display:block;}
+.ins-label{font-size:.6rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.35rem;font-weight:600;}
+.ins-text{font-size:.82rem;color:var(--sub);line-height:1.65;}
+.ins-text b{color:var(--cream);}
+
+/* next btn */
+.btn-next{width:100%;padding:1rem;background:linear-gradient(135deg,var(--gold-l),var(--gold-d));color:var(--ink);font-weight:800;font-size:.9rem;border:none;border-radius:99px;cursor:pointer;margin-top:1.1rem;font-family:'Cabinet Grotesk',sans-serif;letter-spacing:.04em;box-shadow:0 4px 18px rgba(200,144,42,.22);visibility:hidden;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s,visibility 0s linear .3s;}
+.btn-next.show{visibility:visible;opacity:1;transform:translateY(0);transition:opacity .3s,transform .3s,visibility 0s;}
+.btn-next:active{transform:scale(.98);}
+
+/* ══ CALCULATING ══════════════════════════════ */
+#s-calc{align-items:center;justify-content:center;padding:2rem 1.5rem;text-align:center;}
+.calc-bee{font-size:3rem;margin-bottom:1.25rem;animation:gPulse 1.5s ease infinite;}
+.calc-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--cream);margin-bottom:.4rem;}
+.calc-sub{font-family:'Playfair Display',serif;font-style:italic;font-size:.9rem;color:var(--sub);margin-bottom:1.75rem;}
+.calc-list{display:flex;flex-direction:column;gap:.45rem;width:100%;max-width:300px;text-align:left;}
+.calc-item{display:flex;align-items:center;gap:.65rem;font-size:.8rem;color:var(--muted);opacity:0;animation:sIn .4s ease forwards;}
+.calc-item.done{color:var(--sub);}
+.calc-dot{width:6px;height:6px;border-radius:50%;background:rgba(200,144,42,.25);flex-shrink:0;transition:all .3s;}
+.calc-item.done .calc-dot{background:var(--gold);box-shadow:0 0 8px rgba(200,144,42,.5);}
+
+/* ══ AHA MOMENT (NEW) ═════════════════════════ */
+#s-aha{align-items:center;justify-content:center;padding:2.5rem 1.5rem;text-align:center;}
+.aha-card{background:var(--ink-3);border:1px solid var(--border-ll);border-radius:20px;padding:1.75rem;max-width:400px;width:100%;}
+.aha-eyebrow{font-size:.62rem;color:var(--gold);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.75rem;font-weight:600;}
+.aha-answers{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.25rem;text-align:left;}
+.aha-row{display:flex;align-items:flex-start;gap:.65rem;padding:.55rem .75rem;background:rgba(255,255,255,.03);border-radius:8px;font-size:.78rem;}
+.aha-q{color:var(--muted);flex:1;line-height:1.4;}
+.aha-a{color:var(--gold-l);font-weight:600;font-size:.75rem;text-align:right;min-width:60px;}
+.aha-therefore{background:var(--gold-bg);border:1px solid var(--border-l);border-radius:10px;padding:.85rem 1rem;margin-bottom:1.25rem;}
+.aha-therefore-label{font-size:.62rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem;font-weight:600;}
+.aha-therefore-text{font-size:.88rem;color:var(--cream);line-height:1.55;}
+.aha-type-preview{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--gold-l);margin-bottom:.25rem;}
+.aha-type-science{font-size:.75rem;color:var(--sub);font-style:italic;margin-bottom:1.25rem;}
+
+/* ══ RESULT ═══════════════════════════════════ */
+#s-result{padding:2rem 1.25rem 3.5rem;}
+.r-eyebrow{font-size:.62rem;color:var(--gold);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.65rem;font-weight:600;display:flex;align-items:center;gap:.5rem;}
+.r-eyebrow::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border-l),transparent);}
+
+/* score block */
+.r-score-block{background:var(--ink-3);border:1px solid var(--border-l);border-radius:18px;padding:1.4rem;margin-bottom:1.1rem;}
+.r-score-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:.85rem;}
+.r-score-left{}
+.r-score-label{font-size:.62rem;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.2rem;}
+.r-score-num{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:900;color:var(--gold-l);line-height:1;}
+.r-score-max{font-size:.9rem;color:var(--muted);}
+.r-score-right{text-align:right;}
+.r-zone-label{font-size:.62rem;color:var(--muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.2rem;}
+.r-zone-val{font-size:.88rem;font-weight:700;}
+.r-bar-track{height:5px;background:rgba(200,144,42,.1);border-radius:99px;overflow:hidden;margin-bottom:.55rem;}
+.r-bar-fill{height:100%;border-radius:99px;transition:width 1.3s cubic-bezier(.4,0,.2,1);background:linear-gradient(90deg,#3A9E6A,#E8B84B,#C84040);background-size:300% 100%;}
+.r-zones{display:flex;justify-content:space-between;font-size:.6rem;color:rgba(237,228,204,.28);font-family:'DM Mono',monospace;}
+
+/* type block */
+.r-type-block{background:linear-gradient(135deg,rgba(200,144,42,.1),rgba(140,96,20,.06));border:1px solid var(--border-ll);border-radius:18px;padding:1.35rem;margin-bottom:1.1rem;}
+.r-type-eyebrow{font-size:.6rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.45rem;font-weight:600;}
+.r-type-name{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;color:var(--cream);margin-bottom:.25rem;line-height:1.2;}
+.r-type-science{font-size:.75rem;color:var(--muted);font-style:italic;margin-bottom:.6rem;}
+.r-type-desc{font-size:.84rem;color:var(--sub);line-height:1.65;}
+
+/* insight block — BEFORE product */
+.r-insight-block{background:var(--ink-3);border-left:3px solid var(--gold);border-radius:0 12px 12px 0;padding:1rem 1.1rem;margin-bottom:1.1rem;}
+.r-insight-label{font-size:.6rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.35rem;font-weight:600;}
+.r-insight-text{font-size:.85rem;color:var(--sub);line-height:1.7;}
+.r-insight-text b{color:var(--cream);}
+.r-insight-text em{color:var(--gold-l);font-style:normal;}
+
+/* pillar bars */
+.r-pillars{margin-bottom:1.1rem;}
+.r-pillar-title{font-size:.6rem;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem;}
+.rp-row{margin-bottom:.55rem;}
+.rp-top{display:flex;justify-content:space-between;margin-bottom:.25rem;}
+.rp-name{font-size:.76rem;color:var(--sub);}
+.rp-val{font-size:.72rem;color:var(--gold);font-family:'DM Mono',monospace;}
+.rp-track{height:3px;background:rgba(200,144,42,.08);border-radius:99px;overflow:hidden;}
+.rp-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold-d),var(--gold-l));transition:width .9s ease .2s;}
+
+/* ritual block — AFTER insight */
+.r-ritual-block{background:var(--ink-4);border:1px solid var(--border-l);border-radius:18px;overflow:hidden;margin-bottom:1.1rem;}
+.r-ritual-header{padding:1rem 1.2rem;background:var(--gold-bg);border-bottom:1px solid var(--border);}
+.r-ritual-eyebrow{font-size:.6rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.25rem;font-weight:600;}
+.r-ritual-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--cream);}
+.r-ritual-body{padding:1rem 1.2rem;}
+
+/* time slots */
+.ritual-slots{display:flex;flex-direction:column;gap:.6rem;margin-bottom:.85rem;}
+.rslot{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:.75rem .9rem;}
+.rslot-time{font-size:.62rem;color:var(--gold);font-family:'DM Mono',monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.35rem;font-weight:600;}
+.rslot-action{font-size:.84rem;color:var(--cream);font-weight:600;margin-bottom:.15rem;}
+.rslot-detail{font-size:.76rem;color:var(--sub);line-height:1.55;}
+.rslot-why{font-size:.72rem;color:var(--muted);font-style:italic;margin-top:.2rem;}
+
+/* why onesta — delayed brand */
+.r-why-onesta{background:rgba(200,144,42,.06);border:1px solid var(--border-l);border-radius:12px;padding:.9rem 1rem;margin-top:.85rem;}
+.r-why-label{font-size:.6rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.35rem;font-weight:600;}
+.r-why-text{font-size:.8rem;color:var(--sub);line-height:1.65;}
+.r-why-text b{color:var(--cream);}
+
+/* products */
+.r-products{display:flex;flex-direction:column;gap:.4rem;margin-top:.75rem;}
+.r-prod{display:flex;gap:.65rem;align-items:flex-start;padding:.55rem .7rem;background:rgba(200,144,42,.05);border-radius:8px;border:1px solid rgba(200,144,42,.1);}
+.r-prod-name{font-size:.75rem;font-weight:700;color:var(--gold-l);min-width:70px;font-family:'DM Mono',monospace;}
+.r-prod-desc{font-size:.75rem;color:var(--sub);line-height:1.4;}
+
+/* social share */
+.r-share-block{margin-bottom:1.25rem;}
+.r-share-label{font-size:.72rem;color:var(--muted);text-align:center;margin-bottom:.85rem;font-style:italic;font-family:'Playfair Display',serif;font-size:.88rem;}
+.share-card-preview{background:var(--ink-3);border:1px solid var(--border-l);border-radius:14px;padding:1.1rem;margin-bottom:.85rem;}
+.scp-head{display:flex;align-items:center;gap:.6rem;margin-bottom:.85rem;}
+.scp-bee{width:30px;height:30px;background:linear-gradient(135deg,var(--gold-l),var(--gold-d));border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.9rem;}
+.scp-brand{font-family:'Playfair Display',serif;font-size:.85rem;font-weight:700;color:var(--cream);}
+.scp-tag{font-size:.62rem;color:var(--gold);font-family:'DM Mono',monospace;}
+.scp-line{display:flex;justify-content:space-between;padding:.42rem 0;border-bottom:1px solid rgba(200,144,42,.06);font-size:.8rem;}
+.scp-line:last-child{border-bottom:none;}
+.scp-k{color:var(--muted);}
+.scp-v{color:var(--text);font-weight:600;}
+.scp-cta{font-size:.78rem;color:var(--gold);text-align:center;margin-top:.7rem;font-style:italic;font-family:'Playfair Display',serif;}
+
+/* cta buttons */
+.cta-stack{display:flex;flex-direction:column;gap:.5rem;}
+.btn-primary{width:100%;padding:.95rem;background:linear-gradient(135deg,var(--gold-l),var(--gold-d));color:var(--ink);font-weight:800;font-size:.9rem;border:none;border-radius:99px;cursor:pointer;font-family:'Cabinet Grotesk',sans-serif;box-shadow:0 4px 20px rgba(200,144,42,.25);transition:all .2s;letter-spacing:.03em;}
+.btn-primary:active{transform:scale(.98);}
+.btn-outline{width:100%;padding:.88rem;background:transparent;color:var(--gold);font-size:.85rem;border:1px solid var(--border-l);border-radius:99px;cursor:pointer;font-family:'Cabinet Grotesk',sans-serif;transition:all .2s;font-weight:600;}
+.btn-outline:active{background:var(--gold-bg);}
+.btn-ghost{width:100%;padding:.85rem;background:transparent;color:var(--sub);font-size:.82rem;border:1px solid rgba(200,144,42,.08);border-radius:99px;cursor:pointer;font-family:'Cabinet Grotesk',sans-serif;transition:all .2s;}
+.btn-ghost:active{color:var(--cream);}
+.r-footnote{font-size:.62rem;color:rgba(237,228,204,.2);text-align:center;margin-top:1.25rem;line-height:1.65;font-style:italic;}
+
+/* ══ TOAST ════════════════════════════════════ */
+#toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--ink-3);color:var(--gold-l);padding:.6rem 1.2rem;border-radius:99px;font-size:.75rem;font-weight:600;border:1px solid var(--border-ll);box-shadow:0 4px 20px rgba(0,0,0,.4);opacity:0;transition:opacity .3s;z-index:999;white-space:nowrap;pointer-events:none;}
+#toast.show{opacity:1;}
+</style>
+</head>
+<body>
+<div id="pline"></div>
+<div id="toast"></div>
+
+<!-- ══ COVER ════════════════════════════════════ -->
+<div id="s-cover" class="screen active">
+  <span class="cover-hex">⬡</span>
+  <div class="brand">
+    <div class="brand-bee">🐝</div>
+    <div class="brand-name">Onesta</div>
+    <div class="brand-tag">Natural Metabolic Stabilizer</div>
+  </div>
+  <h1 class="cover-title">Balance<br><em>Check<span class="cover-tm">™</span></em></h1>
+  <p class="cover-tagline">Not a quiz. A metabolic mirror.</p>
+  <div class="cover-pills">
+    <div class="cpill"><div class="cd"></div>Energy</div>
+    <div class="cpill"><div class="cd"></div>Glucose</div>
+    <div class="cpill"><div class="cd"></div>Gut</div>
+    <div class="cpill"><div class="cd"></div>Immune</div>
+    <div class="cpill"><div class="cd"></div>Recovery</div>
+    <div class="cpill"><div class="cd"></div>Anti-Decline</div>
+  </div>
+  <button class="btn-start" onclick="goIntro()">Check My Balance</button>
+  <p class="cover-note">1 menit · Gratis · Hasil personal</p>
+</div>
+
+<!-- ══ INTRO ════════════════════════════════════ -->
+<div id="s-intro" class="screen">
+  <div class="intro-icon">⚖️</div>
+  <h2 class="intro-title">Your body is not weak.</h2>
+  <p class="intro-sub">It might just be unstable.</p>
+  <div class="signal-list">
+    <div class="signal-item"><div class="sdot"></div>Apa sinyal yang tubuhmu kirimkan</div>
+    <div class="signal-item"><div class="sdot"></div>Pola metabolik yang mendasarinya</div>
+    <div class="signal-item"><div class="sdot"></div>Ritual spesifik untuk kondisimu</div>
+  </div>
+  <div class="intro-promise">
+    Ini bukan tentang produk.<br>
+    Ini tentang <b>memahami tubuhmu lebih dalam</b> — dan memberi respons yang tepat, setiap hari.
+  </div>
+  <button class="btn-start" onclick="startQuiz()" style="max-width:300px">Start My Balance Check →</button>
+</div>
+
+<!-- ══ QUIZ ══════════════════════════════════════ -->
+<div id="s-quiz" class="screen">
+  <div class="quiz-top">
+    <div class="quiz-meta">
+      <div class="quiz-pillar" id="q-pillar">⚡ Energy</div>
+      <div class="quiz-num" id="q-num">Q 1 / 10</div>
+    </div>
+    <div class="track"><div class="track-fill" id="track-fill" style="width:0%"></div></div>
+    <h2 class="quiz-q" id="q-text"></h2>
+    <p class="quiz-hint" id="q-hint"></p>
+    <div class="opts" id="q-opts"></div>
+    <div class="insight-card" id="insight-card">
+      <div class="ins-label">🔬 Body Signal Decoded</div>
+      <div class="ins-text" id="ins-text"></div>
+    </div>
+  </div>
+  <div>
+    <button class="btn-next" id="btn-next" onclick="nextQ()">Continue →</button>
+  </div>
+</div>
+
+<!-- ══ CALCULATING ════════════════════════════════ -->
+<div id="s-calc" class="screen">
+  <div class="calc-bee">🐝</div>
+  <h2 class="calc-title">Reading your signals...</h2>
+  <p class="calc-sub">Menganalisis pola metabolikmu</p>
+  <div class="calc-list" id="calc-list"></div>
+</div>
+
+<!-- ══ AHA MOMENT ════════════════════════════════ -->
+<div id="s-aha" class="screen">
+  <div class="aha-card">
+    <div class="aha-eyebrow">Why You Got This Result</div>
+    <div class="aha-answers" id="aha-answers"></div>
+    <div class="aha-therefore">
+      <div class="aha-therefore-label">Therefore →</div>
+      <div class="aha-therefore-text" id="aha-therefore"></div>
+    </div>
+    <div class="aha-type-preview" id="aha-type"></div>
+    <div class="aha-type-science" id="aha-science"></div>
+    <button class="btn-start" onclick="goResult()" style="max-width:100%;width:100%">See My Full Report →</button>
+  </div>
+</div>
+
+<!-- ══ RESULT ═════════════════════════════════════ -->
+<div id="s-result" class="screen">
+  <div class="r-eyebrow">Your Balance Report</div>
+
+  <!-- Score -->
+  <div class="r-score-block">
+    <div class="r-score-top">
+      <div class="r-score-left">
+        <div class="r-score-label">Metabolic Balance Score</div>
+        <div><span class="r-score-num" id="r-score">0</span><span class="r-score-max">/100</span></div>
+      </div>
+      <div class="r-score-right">
+        <div class="r-zone-label">Zone</div>
+        <div class="r-zone-val" id="r-zone"></div>
+      </div>
+    </div>
+    <div class="r-bar-track"><div class="r-bar-fill" id="r-bar" style="width:0%"></div></div>
+    <div class="r-zones"><span>🟢 Stable</span><span>🟡 Shifting</span><span>🟠 Unstable</span><span>🔴 Critical</span></div>
+  </div>
+
+  <!-- Type -->
+  <div class="r-type-block">
+    <div class="r-type-eyebrow">Your Metabolic Type</div>
+    <div class="r-type-name" id="r-type-name"></div>
+    <div class="r-type-science" id="r-type-science"></div>
+    <div class="r-type-desc" id="r-type-desc"></div>
+  </div>
+
+  <!-- INSIGHT FIRST — before product -->
+  <div class="r-insight-block">
+    <div class="r-insight-label">💡 What This Really Means</div>
+    <div class="r-insight-text" id="r-insight"></div>
+  </div>
+
+  <!-- Pillar bars -->
+  <div class="r-pillars">
+    <div class="r-pillar-title">6 Balance Pillars</div>
+    <div id="r-pillars-content"></div>
+  </div>
+
+  <!-- Ritual — SPECIFIC timing + dosage -->
+  <div class="r-ritual-block">
+    <div class="r-ritual-header">
+      <div class="r-ritual-eyebrow">Your Daily Ritual</div>
+      <div class="r-ritual-title" id="r-ritual-title"></div>
+    </div>
+    <div class="r-ritual-body">
+      <div class="ritual-slots" id="r-slots"></div>
+      <!-- Why Onesta — DELAYED brand insertion -->
+      <div class="r-why-onesta">
+        <div class="r-why-label">Why Onesta Works for This</div>
+        <div class="r-why-text" id="r-why"></div>
+        <div class="r-products" id="r-products"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Share -->
+  <div class="r-share-block">
+    <div class="r-share-label">"Balance is the new normal."<br>Bagikan ke temanmu.</div>
+    <div class="share-card-preview">
+      <div class="scp-head">
+        <div class="scp-bee">🐝</div>
+        <div><div class="scp-brand">Onesta Balance Check™</div><div class="scp-tag">Natural Metabolic Stabilizer</div></div>
+      </div>
+      <div id="scp-lines"></div>
+      <div class="scp-cta">"Cek kondisi tubuhmu juga — 1 menit, gratis."</div>
+    </div>
+  </div>
+
+  <!-- CTAs -->
+  <div class="cta-stack">
+    <button class="btn-primary" onclick="orderRitual()">🍯 Mulai Ritual Saya</button>
+    <button class="btn-outline" onclick="shareWA()">📤 Share Hasil via WhatsApp</button>
+    <button class="btn-ghost" onclick="restart()">↺ Weekly Recheck</button>
+  </div>
+
+  <p class="r-footnote">
+    Hasil ini bersifat edukatif, bukan diagnosis medis.<br>
+    Berdasarkan 1,128+ referensi ilmiah · PMC/NCBI · Wiley · Nature · MDPI (2000–2025)<br>
+    Onesta™ · Honest Honey · Heterotrigona Itama · Hutan Indonesia
+  </p>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════
+// 10 QUESTIONS
+// ══════════════════════════════════════════════════
+const QS = [
+  {
+    p:"⚡ Energy",d:"energy",
+    q:"How's your energy throughout the day?",
+    h:"Pikirkan kondisi rata-rata 30 hari terakhir.",
+    opts:[
+      {k:"A",l:"Stabil penuh sepanjang hari",s:"Tidak ada crash atau penurunan",sc:0},
+      {k:"B",l:"Ada penurunan di sore hari",s:"Kadang butuh kafein atau istirahat ekstra",sc:2},
+      {k:"C",l:"Sering lelah tanpa sebab jelas",s:"Bahkan setelah tidur cukup",sc:5},
+      {k:"D",l:"Sangat mudah kelelahan, sulit pulih",s:"Aktivitas ringan pun sudah menguras tenaga",sc:8},
+    ],
+    ins:"Energy crash tanpa sebab adalah tanda <b>stres oksidatif</b> — radikal bebas yang melampaui kapasitas antioksidan tubuh. Ini bukan masalah willpower, ini masalah <em>seluler</em>."
+  },
+  {
+    p:"🩸 Glucose",d:"glucose",
+    q:"After eating, what usually happens?",
+    h:"Respons tubuh setelah makan adalah cermin langsung dari ritme gula darahmu.",
+    opts:[
+      {k:"A",l:"Normal dan nyaman",s:"Tidak ada yang terasa aneh",sc:0},
+      {k:"B",l:"Sedikit ngantuk atau berat",s:"Tapi masih bisa berfungsi normal",sc:2},
+      {k:"C",l:"Sangat ngantuk, craving lagi, atau kembung",s:"Cukup mengganggu",sc:5},
+      {k:"D",l:"Lapar lagi dalam 1-2 jam, mood drop",s:"Siklus yang terasa sulit diputus",sc:8},
+    ],
+    ins:"<b>Post-meal sleepiness dan re-hunger cepat</b> adalah tanda fluktuasi glukosa — insulin spike lalu drop mendadak. Ini yang menciptakan siklus makan-crash-craving yang berulang."
+  },
+  {
+    p:"🩸 Glucose",d:"glucose",
+    q:"How often do you experience strong sugar or carb cravings?",
+    h:"Craving yang intens bukan soal kontrol diri — ini sinyal biokimia.",
+    opts:[
+      {k:"A",l:"Jarang — nafsu makan stabil",s:"Tidak ada craving yang mengganggu",sc:0},
+      {k:"B",l:"Sesekali, bisa dikontrol",s:"1-2x per minggu",sc:2},
+      {k:"C",l:"Sering, terutama siang dan sore",s:"Terasa kuat dan sulit ditahan",sc:5},
+      {k:"D",l:"Hampir setiap hari, sangat intens",s:"Terasa seperti kebutuhan fisik",sc:8},
+    ],
+    ins:"<b>Sugar craving intens</b> adalah respons otak terhadap glukosa darah rendah. Semakin sering ini terjadi, semakin tidak stabil ritme glukosamu — dan semakin sulit berat badan dikontrol."
+  },
+  {
+    p:"🫁 Gut",d:"gut",
+    q:"How does your gut feel on most days?",
+    h:"Usus adalah 'otak kedua' — kondisinya mempengaruhi energi, mood, dan imun.",
+    opts:[
+      {k:"A",l:"Comfortable sepanjang hari",s:"Tidak kembung, BAB teratur",sc:0},
+      {k:"B",l:"Kadang kembung setelah makan tertentu",s:"1-2x per minggu",sc:3},
+      {k:"C",l:"Sering kembung, tidak nyaman, atau tidak teratur",s:"Cukup mengganggu aktivitas",sc:6},
+      {k:"D",l:"Masalah pencernaan kronik",s:"Sudah berlangsung lama, signifikan",sc:9},
+    ],
+    ins:"Gut yang tidak nyaman adalah tanda <b>disbiosis</b> — ketidakseimbangan antara bakteri baik dan jahat. Ini berdampak langsung pada produksi serotonin (90% diproduksi di usus), mood, dan imunitas."
+  },
+  {
+    p:"🛡️ Immune",d:"immune",
+    q:"How often do you get sick or feel run-down?",
+    h:"Frekuensi sakit adalah indikator langsung kekuatan sistem imunmu.",
+    opts:[
+      {k:"A",l:"Sangat jarang — 0-1x setahun",s:"Imun kuat dan responsif",sc:0},
+      {k:"B",l:"2-3x setahun",s:"Masih dalam batas normal",sc:2},
+      {k:"C",l:"4-6x setahun",s:"Tubuh terasa rentan terhadap lingkungan",sc:5},
+      {k:"D",l:"Lebih dari 6x — hampir tiap bulan",s:"Seolah selalu ada saja yang muncul",sc:8},
+    ],
+    ins:"Imun yang lemah kronis menandakan <b>inflammatory load tinggi</b> — tubuh terus-menerus dalam mode 'repair' sehingga tidak punya kapasitas untuk defense. Ini bukan soal vitamin C saja."
+  },
+  {
+    p:"💪 Recovery",d:"recovery",
+    q:"How quickly does your body bounce back after a hard day, workout, or poor sleep?",
+    h:"Kecepatan recovery adalah cerminan efisiensi sistem energi selulermu.",
+    opts:[
+      {k:"A",l:"Cepat — segar lagi keesokan paginya",s:"Recovery baik",sc:0},
+      {k:"B",l:"1-2 hari — masih normal",s:"Dengan istirahat cukup",sc:2},
+      {k:"C",l:"Lebih lambat dari dulu",s:"Terasa ada yang berubah dalam setahun terakhir",sc:5},
+      {k:"D",l:"Sangat lambat, berhari-hari",s:"Tubuh sulit kembali ke kondisi baseline",sc:8},
+    ],
+    ins:"Recovery lambat adalah tanda <b>mitochondrial stress</b> — mitokondria (pabrik energi sel) tidak bekerja optimal. Ini berdampak pada stamina, fokus, dan kemampuan tubuh meregenerasi diri."
+  },
+  {
+    p:"🌿 Anti-Decline",d:"decline",
+    q:"Have you noticed any of these changes recently?",
+    h:"Ini sering dianggap 'normal penuaan' — padahal bisa diintervensi lebih awal.",
+    opts:[
+      {k:"A",l:"Tidak ada perubahan signifikan",s:"Energi dan fokus masih seperti dulu",sc:0},
+      {k:"B",l:"Brain fog atau fokus menurun",s:"Kadang-kadang, terutama siang hari",sc:3},
+      {k:"C",l:"Stamina menurun, mood berubah, recovery lebih lambat",s:"Mulai terasa rutin",sc:6},
+      {k:"D",l:"Kombinasi banyak perubahan, sudah berlangsung lama",s:"Terasa signifikan dalam kehidupan sehari-hari",sc:9},
+    ],
+    ins:"Perubahan ini adalah tanda <b>oxidative aging</b> — kerusakan kumulatif dari radikal bebas yang belum ternetralisir. Ursolic acid dan gallic acid dalam SBH terbukti melindungi sel neuron dari proses ini."
+  },
+  {
+    p:"⚡ Sleep",d:"energy",
+    q:"How has your sleep quality been in the last month?",
+    h:"Tidur adalah momen utama cellular repair — termasuk di otak dan sistem imun.",
+    opts:[
+      {k:"A",l:"Tidur nyenyak, bangun segar",s:"7-9 jam berkualitas, merasa pulih",sc:0},
+      {k:"B",l:"Kadang terbangun, masih bisa berfungsi",s:"1-2x per minggu",sc:2},
+      {k:"C",l:"Sering sulit tidur atau bangun lelah",s:"Hampir setiap hari",sc:5},
+      {k:"D",l:"Tidur sangat buruk, sudah berbulan-bulan",s:"Kronik, mempengaruhi kualitas hidup",sc:8},
+    ],
+    ins:"Tidur buruk meningkatkan <b>kortisol dan inflamasi sistemik</b> — yang kemudian merusak ritme glukosa, imun, dan kemampuan fokus. Ini lingkaran yang saling memperkuat."
+  },
+  {
+    p:"🌿 Lifestyle",d:"lifestyle",
+    q:"What best describes your current daily load?",
+    h:"Lifestyle load adalah sumber utama radikal bebas dari luar tubuh.",
+    opts:[
+      {k:"A",l:"Active and balanced",s:"Makan teratur, stres terkontrol, lingkungan sehat",sc:0},
+      {k:"B",l:"Busy but manageable",s:"Kadang tidak teratur, stres kerja biasa",sc:2},
+      {k:"C",l:"High stress, irregular meals, atau poor sleep",s:"Sudah menjadi pola sehari-hari",sc:5},
+      {k:"D",l:"Hampir semua faktor stres ada",s:"Lingkaran yang sulit diputus",sc:8},
+    ],
+    ins:"Polusi, makanan ultra-proses, stres kronis — semuanya menghasilkan <b>radikal bebas</b> yang melampaui kapasitas antioksidan alami tubuh. Ini yang disebut 'silent oxidative overload'."
+  },
+  {
+    p:"🎯 Intent",d:"intent",
+    q:"What would feel most meaningful to improve first?",
+    h:"Ini membantu kami memprioritaskan ritual yang paling relevan untukmu.",
+    opts:[
+      {k:"A",l:"Steady energy from morning to night",s:"No more crashes, no more dependency on caffeine",sc:0},
+      {k:"B",l:"Better gut and immune resilience",s:"Feel stronger from the inside",sc:1},
+      {k:"C",l:"Mental clarity and long-term vitality",s:"Protect my brain and aging gracefully",sc:0},
+      {k:"D",l:"Weight and metabolic balance",s:"Break the craving-crash cycle",sc:1},
+    ],
+    ins:"Apapun prioritasmu, <b>fondasi metabolik yang stabil</b> adalah titik awal yang sama. Semua sistem tubuh — energi, imun, otak — berjalan di atas ekosistem metabolik yang sama."
+  },
+];
+
+// ══════════════════════════════════════════════════
+// 10 METABOLIC TYPES (VIRAL + SCIENTIFIC)
+// ══════════════════════════════════════════════════
+const TYPES = [
+  {
+    id:"crash-crave",
+    name:"⚡ The Crash & Crave Cycler",
+    science:"Glucose instability + insulin spike-drop pattern",
+    desc:"Energimu naik drastis lalu drop mendadak — biasanya terkait dengan lonjakan insulin yang tidak terkontrol. Tubuhmu sedang terjebak dalam siklus yang sulit diputus sendiri.",
+    insight:"Tubuhmu tidak lemah. Ia sedang bekerja keras merespons fluktuasi glukosa yang tidak stabil. Setiap crash yang kamu rasakan adalah SOS dari sel-sel yang kekurangan energi berkelanjutan — bukan tanda malas atau kurang willpower.",
+    triggers:["Pre-lunch / pre-buka puasa","Sore setelah makan siang","2-3 jam setelah makan besar"],
+    therefore:"Kamu menjawab: energi tidak stabil + craving kuat + respons pasca-makan yang buruk. Pola ini konsisten dengan glucose rhythm disruption — ritme gula darah yang naik-turun terlalu tajam.",
+    slots:[
+      {t:"🌅 Pagi (sebelum makan)",action:"1 sdt Onesta Daily + segelas air hangat",detail:"Minum 20-30 menit sebelum sarapan. Trehalulose mempersiapkan respons glukosa yang lebih gradual.",why:"Pre-loads your glucose response"},
+      {t:"🍽️ Sebelum makan besar",action:"½ sdt Onesta DiaBee + sedikit air",detail:"Terutama sebelum makan siang atau makanan karbohidrat tinggi. Ini 'menekan' spike insulin.",why:"Flattens the post-meal glucose curve"},
+      {t:"⏰ Sore hari (jam 3-4)",action:"1 sdt Onesta Daily langsung",detail:"Saat crash biasa terjadi. Jangan tunggu sampai lapar — ini bukan makan, ini stabilizer.",why:"Prevents the afternoon energy crash"},
+      {t:"🌙 Malam (1 jam sebelum tidur)",action:"½ sdt Onesta Daily + air hangat",detail:"Menstabilkan glukosa malam sehingga tidur lebih nyenyak dan tidak bangun karena lapar.",why:"Supports stable overnight glucose"},
+    ],
+    why:"Trehalulose dalam Onesta adalah satu-satunya gula alami dengan GI sangat rendah yang tidak menyebabkan spike insulin. Berbeda dari madu biasa — ia memperlambat penyerapan glukosa secara signifikan.",
+    products:[{n:"Daily",d:"Foundation stabilizer — trehalulose untuk steady energy"},{n:"DiaBee",d:"Targeted blood glucose rhythm support"}],
+    stack:"Daily + DiaBee",
+    domains:["glucose"]
+  },
+  {
+    id:"low-battery",
+    name:"🔋 The Low-Battery Drifter",
+    science:"Suboptimal cellular energy production (mitochondrial stress)",
+    desc:"Kamu lelah bahkan setelah istirahat cukup. Ini bukan masalah tidur — ini masalah efisiensi produksi energi di tingkat sel.",
+    insight:"Tubuhmu tidak malas. Mitokondria — pabrik energi dalam setiap sel — sedang bekerja tidak optimal. Ini bisa disebabkan stres oksidatif kronis yang menumpuk selama bertahun-tahun tanpa antioksidan yang cukup.",
+    triggers:["Pagi hari setelah bangun","Mid-morning sekitar jam 10","Setelah aktivitas yang tidak seharusnya melelahkan"],
+    therefore:"Kamu menjawab: kelelahan kronik + recovery lambat + tidur tidak restoratif. Pola ini menunjukkan sistem energi seluler yang tidak efisien — bukan sekadar kurang tidur.",
+    slots:[
+      {t:"🌅 Pagi (perut kosong)",action:"1 sdm Onesta Daily + air hangat + perasan lemon",detail:"Protokol 'morning activation' — diminum 30 menit sebelum makan untuk absorpsi maksimal.",why:"Activates cellular energy production"},
+      {t:"🕙 Mid-morning (jam 10)",action:"½ sdt Onesta Imunisi langsung",detail:"Saat gelombang kelelahan pertama biasa datang. Flavonoid mendukung mitokondria.",why:"Sustains energy through the morning"},
+      {t:"🍽️ Setelah makan siang",action:"½ sdt Onesta Daily + air",detail:"Mencegah post-lunch slump yang biasa dialami oleh tipe ini.",why:"Prevents the afternoon energy drop"},
+      {t:"🌙 Sebelum tidur",action:"1 sdt Onesta Imunisi + air hangat",detail:"Mendukung repair proses malam — tidur yang lebih restoratif.",why:"Enhances overnight cellular recovery"},
+    ],
+    why:"Antioksidan dalam Onesta — khususnya flavonoid dan polyphenol — melindungi mitokondria dari kerusakan oksidatif. Ini bukan caffeine replacement, ini cellular energy restoration.",
+    products:[{n:"Daily",d:"Cellular stabilizer — foundation untuk semua tipe"},{n:"Imunisi",d:"Immune + energy support — flavonoid & polyphenol tinggi"}],
+    stack:"Daily + Imunisi",
+    domains:["energy","immune"]
+  },
+  {
+    id:"foggy",
+    name:"🌫️ The Foggy Thinker",
+    science:"Neuroinflammation + disrupted brain glucose metabolism",
+    desc:"Otak terasa berat, fokus sering drop di tengah hari. Bukan karena kamu kurang cerdas — ini tanda neuroinflammasi yang mempengaruhi fungsi kognitif.",
+    insight:"Brain fog bukan kelemahan mental. Ia adalah tanda nyata bahwa sistem neuroprotektif otakmu sedang overwhelmed. Neuron butuh lingkungan anti-inflamasi untuk bekerja optimal — dan itu bisa dipulihkan.",
+    triggers:["Mid-morning setelah memulai kerja","Setelah meeting panjang","Sore hari jam 2-3"],
+    therefore:"Kamu menjawab: fokus dan konsentrasi menurun + anti-decline signals + recovery lambat. Pola ini konsisten dengan neuroinflammasi ringan yang mengganggu transmisi sinyal antar neuron.",
+    slots:[
+      {t:"🌅 Pagi (perut kosong)",action:"1 sdm Onesta Daily + air hangat",detail:"Rutinitas pagi yang tidak boleh dilangkahi — fondasi stabilitas kognitif sepanjang hari.",why:"Sets the neuroprotective baseline"},
+      {t:"☕ Ganti kafein pagi dengan",action:"1 sdt Onesta Lecy atau Myrta langsung",detail:"Lecy (Geniotrigona Thoracica) mengandung senyawa neuroprotektif tertinggi. Coba ganti atau kurangi kopi dengan ini.",why:"Natural brain clarity without caffeine spike"},
+      {t:"🧠 Saat brain fog datang",action:"½ sdt Onesta Daily langsung di lidah",detail:"Trehalulose memberikan glucose ke otak secara gradual — persis yang dibutuhkan saat fokus drop.",why:"Immediate brain fuel without the crash"},
+      {t:"🌙 Malam",action:"1 sdt Onesta Lecy + air hangat",detail:"Senyawa anti-decline bekerja selama tidur untuk neural repair dan memory consolidation.",why:"Supports overnight brain restoration"},
+    ],
+    why:"Ursolic acid, p-coumaric acid, dan gallic acid dalam Onesta Lecy terbukti (PMC/NCBI 2023) melindungi neuron dari apoptosis dan mengurangi neuroinflammasi — di tingkat molekuler.",
+    products:[{n:"Daily",d:"Foundation metabolic stabilizer"},{n:"Lecy",d:"Forest Gold — Geniotrigona Thoracica, neuroprotective premium"}],
+    stack:"Daily + Lecy",
+    domains:["decline"]
+  },
+  {
+    id:"gut-sensitive",
+    name:"🫧 The Gut-Sensitive System",
+    science:"Gut microbiome imbalance + intestinal permeability",
+    desc:"Perut tidak pernah benar-benar nyaman — bloating, ketidaknyamanan, atau pola BAB yang tidak konsisten. Ini bukan sekadar masalah makan — ini ekosistem mikrobioma.",
+    insight:"Ususmu bukan hanya pencernaan. Ia adalah pusat produksi serotonin (90% dibuat di sini), rumah dari 70% sistem imun, dan jembatan langsung ke otak via gut-brain axis. Ketika usus tidak seimbang, semuanya terpengaruh.",
+    triggers:["Setelah makan makanan olahan atau berlemak","Ketika stres tinggi","Pagi hari saat bangun"],
+    therefore:"Kamu menjawab: gut discomfort kronik + imun rentan + sering terasa 'tidak fit'. Pola ini menunjukkan dysbiosis — ketidakseimbangan mikrobioma yang berdampak sistemik.",
+    slots:[
+      {t:"🌅 Pagi (perut kosong)",action:"1 sdm Onesta Daily + segelas air hangat",detail:"Perut kosong adalah waktu terbaik — asam organik Onesta menyiapkan lingkungan pH usus sebelum makan.",why:"Prepares gut pH for optimal digestion"},
+      {t:"🍽️ 15 menit sebelum makan",action:"½ sdt Onesta Imunisi + sedikit air",detail:"Prebiotik alami Onesta mempersiapkan enzim pencernaan dan menstimulasi bakteri baik sebelum makanan masuk.",why:"Activates digestive enzymes + probiotic support"},
+      {t:"🌆 Sore — jika kembung",action:"½ sdt Onesta Daily langsung",detail:"Anti-inflamasi natural Onesta meredakan peradangan mukosa usus yang menyebabkan kembung.",why:"Soothes intestinal inflammation"},
+      {t:"🌙 Malam",action:"½ sdt Onesta Imunisi + air hangat",detail:"Malam adalah waktu gut repair — dukung dengan prebiotik untuk regenerasi lapisan usus.",why:"Supports overnight gut microbiome restoration"},
+    ],
+    why:"Asam organik alami Onesta menciptakan lingkungan pH rendah yang secara selektif menghambat patogen sambil mendukung Lactobacillus dan Bifidobacterium. Ini prebiotik alami yang tidak ada di madu biasa.",
+    products:[{n:"Daily",d:"Foundation + natural prebiotik"},{n:"Imunisi",d:"Gut + immune support — propolis & flavonoid"}],
+    stack:"Daily + Imunisi",
+    domains:["gut"]
+  },
+  {
+    id:"slow-recovery",
+    name:"⏳ The Slow-Recovery Body",
+    science:"Elevated oxidative damage + impaired cellular repair mechanisms",
+    desc:"Tubuhmu butuh waktu lebih lama untuk kembali ke kondisi normal setelah aktivitas fisik, stres, atau kurang tidur. Ini tanda oxidative damage yang menumpuk.",
+    insight:"Recovery lambat bukan tanda usia atau kelemahan. Ini tanda bahwa antioksidan alami tubuhmu tidak cukup melindungi sel dari kerusakan — dan kerusakan itu menumpuk lebih cepat dari perbaikannya.",
+    triggers:["Setelah workout","Setelah minggu kerja yang padat","Setelah tidur tidak cukup 1-2 malam"],
+    therefore:"Kamu menjawab: recovery lambat + energi tidak konsisten + perubahan fisik terasa lebih lama pulih. Pola ini menunjukkan elevated oxidative stress yang menghambat cellular repair.",
+    slots:[
+      {t:"🌅 Pagi (sebelum aktivitas)",action:"1 sdm Onesta Daily + air hangat",detail:"Pre-loads antioxidant defense sebelum hari dimulai.",why:"Prepares cellular antioxidant capacity"},
+      {t:"🏃 Pre-workout atau pre-aktivitas",action:"1 sdt Onesta Beeyond + air",detail:"30 menit sebelum latihan. Trehalulose sebagai sustained energy, antioksidan sebagai cell protection.",why:"Reduces exercise-induced oxidative damage"},
+      {t:"💪 Post-workout (dalam 30 menit)",action:"1 sdm Onesta Daily + air atau smoothie dingin",detail:"Window of opportunity — setelah latihan adalah waktu absorpsi terbaik untuk recovery.",why:"Accelerates muscle and cellular repair"},
+      {t:"🌙 Malam",action:"1 sdt Onesta Beeyond + air hangat",detail:"Mendukung repair proses malam — protein synthesis dan anti-inflammatory recovery.",why:"Maximizes overnight recovery window"},
+    ],
+    why:"Onesta Beeyond diformulasikan untuk performance dan recovery — antioksidannya mengurangi DOMS (Delayed Onset Muscle Soreness) dan mempercepat clearance laktat pasca latihan.",
+    products:[{n:"Daily",d:"Cellular antioxidant foundation"},{n:"Beeyond",d:"Performance + recovery — sport & active lifestyle"}],
+    stack:"Daily + Beeyond",
+    domains:["recovery"]
+  },
+  {
+    id:"fasting-crash",
+    name:"⚡ The Fasting-Crash Pattern",
+    science:"Circadian glucose dysregulation + fasting stress response",
+    desc:"Energi drop saat puasa, craving intens saat buka, atau overeating setelah periode puasa. Ritme puasamu belum tersinkronisasi dengan metabolisme tubuh.",
+    insight:"Masalahmu bukan willpower saat puasa. Tubuhmu belum punya 'sistem jembatan' yang stabil antara periode puasa dan makan. Ini bisa diperbaiki dengan transisi yang tepat — bukan dengan menahan lebih keras.",
+    triggers:["Jam 10-11 saat puasa","15-30 menit sebelum buka","Satu jam setelah buka"],
+    therefore:"Kamu menjawab: energy drop saat puasa + craving kuat saat break-fast + overeating tendency. Pola ini adalah fasting stress response — tubuh bereaksi berlebihan karena transisi yang tidak mulus.",
+    slots:[
+      {t:"🌅 Sebelum mulai puasa",action:"1 sdt Onesta Fasting + segelas air",detail:"Ini adalah 'fondasi' puasamu. Trehalulose memberikan sustained energy yang tidak spike insulin.",why:"Creates a stable energy bridge for fasting"},
+      {t:"⏰ Mid-fasting (jika diperlukan)",action:"Setetes Onesta Fasting di air putih",detail:"Micro-dose yang tidak membatalkan puasa (cek dengan panduan agama masing-masing). Membantu menstabilkan glukosa.",why:"Maintains glucose stability mid-fast"},
+      {t:"🍽️ Break-fast — SEBELUM makan",action:"1 sdt Onesta Daily + air hangat dulu",detail:"Jangan langsung makan besar. Minum ini 5-10 menit sebelum makan pertama untuk 'membuka' sistem pencernaan dengan lembut.",why:"Prevents the break-fast insulin spike"},
+      {t:"🌙 Malam setelah makan",action:"½ sdt Onesta DiaBee + air",detail:"Menstabilkan glukosa malam — mencegah night cravings dan mendukung tidur yang restoratif.",why:"Controls overnight glucose and stops night cravings"},
+    ],
+    why:"Onesta Fasting dirancang khusus untuk ritme puasa — stabilisator energi yang bekerja tanpa memicu insulin response yang besar, sambil menyediakan antioksidan yang justru meningkat kebutuhannya saat puasa.",
+    products:[{n:"Fasting",d:"Fasting rhythm stabilizer — clean energy transition"},{n:"Daily",d:"Foundation + break-fast support"},{n:"DiaBee",d:"Post-meal glucose control"}],
+    stack:"Fasting + Daily + DiaBee",
+    domains:["glucose","energy"]
+  },
+  {
+    id:"anti-decline",
+    name:"🌿 The Anti-Decline Defender",
+    science:"Oxidative aging + systemic inflammation + declining metabolic flexibility",
+    desc:"Kamu merasakan kombinasi perubahan yang lambat tapi pasti — stamina, fokus, recovery. Ini adalah oxidative aging yang bisa diintervensi dengan konsisten.",
+    insight:"Penuaan bukan nasib — ia adalah laju kerusakan vs laju perbaikan. Saat ini kerusakan sedang sedikit lebih cepat dari perbaikan. Tapi ini bisa dibalik dengan konsistensi yang tepat, bukan dengan 'obat ajaib'.",
+    triggers:["Sepanjang hari, terutama sore","Setelah aktivitas yang dulu terasa ringan","Saat melihat foto diri beberapa tahun lalu"],
+    therefore:"Kamu menjawab: penurunan stamina + brain fog + recovery lambat + perubahan mood. Kombinasi ini menunjukkan systemic oxidative aging yang mempengaruhi multiple systems sekaligus.",
+    slots:[
+      {t:"🌅 Pagi (perut kosong, 30 menit)",action:"1 sdm Onesta Daily + air hangat + perasan lemon",detail:"Protokol anti-aging pagi yang konsisten. Jangan diganti, jangan dilewati.",why:"Sets the anti-inflammatory foundation for the day"},
+      {t:"🍽️ Setelah makan siang",action:"1 sdt Onesta DiaBee + air",detail:"Mencegah post-lunch inflammation cascade yang mempercepat aging.",why:"Reduces post-meal inflammatory response"},
+      {t:"🌆 Sore",action:"½ sdt Onesta Lecy atau Myrta langsung",detail:"Premium anti-decline support — Geniotrigona Thoracica untuk neuroprotection dan cellular defense.",why:"Cellular anti-aging at the molecular level"},
+      {t:"🌙 Malam (wajib)",action:"1 sdt Onesta Imunisi + air hangat",detail:"Malam adalah golden window untuk cellular repair. Imunisi mendukung proses ini secara komprehensif.",why:"Maximizes overnight repair and regeneration"},
+    ],
+    why:"Kombinasi Daily + DiaBee + Imunisi + Lecy menyasar 4 mekanisme aging sekaligus: oxidative stress, glucose dysregulation, immune decline, dan neuroinflammation. Ini yang dilakukan protokol anti-aging berbasis data.",
+    products:[{n:"Daily",d:"Foundation metabolic stabilizer"},{n:"DiaBee",d:"Glucose + metabolic support"},{n:"Imunisi",d:"Immune system defense"},{n:"Lecy",d:"Premium neuroprotective + anti-aging"}],
+    stack:"Daily + DiaBee + Imunisi + Lecy",
+    domains:["decline","energy"]
+  },
+  {
+    id:"night-craver",
+    name:"🌙 The Night Craver",
+    science:"Circadian rhythm misalignment + late-night cortisol demand",
+    desc:"Malam tiba-tiba lapar, craving manis atau asin, sulit tidur kalau belum makan. Ini adalah circadian rhythm yang sedang tidak sinkron dengan metabolisme tubuh.",
+    insight:"Night craving bukan kelemahan. Ini adalah sinyal bahwa ritme sirkadian tubuhmu sedang misaligned dengan pola makan — dan tubuh mencari energi di waktu yang seharusnya untuk repair, bukan konsumsi.",
+    triggers:["Jam 8-10 malam","Setelah menonton TV atau scrolling HP","Saat stres atau deadline"],
+    therefore:"Kamu menjawab: craving malam + tidur tidak nyenyak + energi tidak konsisten. Pola ini menunjukkan glucose demand yang datang di waktu yang salah — biasanya dipicu cortisol atau circadian disruption.",
+    slots:[
+      {t:"🌅 Pagi",action:"1 sdm Onesta Daily + air hangat",detail:"Membangun steady energy dari pagi untuk mencegah compensatory craving malam.",why:"Prevents the evening energy debt"},
+      {t:"🍽️ Makan malam (sebelum makan)",action:"½ sdt Onesta Daily + air hangat",detail:"Makan malam yang stabil secara glukosa mengurangi kemungkinan night craving.",why:"Stabilizes post-dinner glucose"},
+      {t:"🌙 Jam 8-9 malam (saat craving datang)",action:"1 sdt Onesta Daily + air hangat + opsional: kayu manis",detail:"Ganti snack malam dengan ini. Trehalulose memberikan rasa 'cukup' tanpa spike glukosa yang mengganggu tidur.",why:"Satisfies the craving without disrupting sleep"},
+      {t:"💤 Sebelum tidur",action:"½ sdt Onesta Imunisi + chamomile tea",detail:"Mendukung produksi melatonin alami dan immune repair selama tidur.",why:"Promotes natural sleep + overnight repair"},
+    ],
+    why:"Trehalulose dalam Onesta adalah pengganti sempurna untuk night snacking — memberikan rasa 'kenyang dan cukup' tanpa lonjakan insulin yang akan mengganggu tidur dan metabolisme malam.",
+    products:[{n:"Daily",d:"Foundation + night stabilizer"},{n:"Imunisi",d:"Sleep support + overnight immune repair"}],
+    stack:"Daily + Imunisi",
+    domains:["glucose","energy"]
+  },
+  {
+    id:"stress-feeder",
+    name:"🧠 The Stress Feeder",
+    science:"Cortisol-driven eating behavior + HPA axis dysregulation",
+    desc:"Makan karena stres, bukan karena lapar. Craving muncul saat tekanan tinggi. Ini adalah HPA axis (sistem stres) yang sedang overdrive dan mencari 'pelarian' melalui makanan.",
+    insight:"Emotional eating bukan kelemahan karakter. Cortisol yang tinggi secara biologis meningkatkan nafsu makan dan craving terhadap makanan tinggi gula dan lemak — ini adalah respons survival yang terprogramkan. Bukan salahmu.",
+    triggers:["Saat deadline atau tekanan kerja","Setelah konflik atau ketegangan","Late afternoon / early evening"],
+    therefore:"Kamu menjawab: stres tinggi + craving terpicu emosi + energi tidak stabil. Pola ini menunjukkan cortisol-driven metabolic disruption — stres yang secara langsung mengganggu ritme metabolik.",
+    slots:[
+      {t:"🌅 Pagi",action:"1 sdm Onesta Daily + air hangat",detail:"Fondasi harian yang menurunkan baseline inflammatory load — termasuk cortisol reaktif.",why:"Builds cortisol resilience"},
+      {t:"😰 Saat stres muncul (sebelum craving)",action:"1 sdt Onesta Daily langsung + tarik napas dalam",detail:"Intervensi sebelum emotional eating terjadi. Trehalulose memberikan signal 'cukup' ke otak.",why:"Interrupts the stress-eating trigger loop"},
+      {t:"🍽️ Saat makan (dalam kondisi stres)",action:"½ sdt Onesta DiaBee sebelum makan",detail:"Mencegah overeating yang dipicu cortisol dengan menstabilkan glukosa sebelum makanan masuk.",why:"Prevents cortisol-induced overeating"},
+      {t:"🌙 Malam dekompresi",action:"1 sdt Onesta Imunisi + teh hangat",detail:"Ritual malam yang membantu sistem saraf keluar dari mode 'fight-or-flight'.",why:"Activates parasympathetic recovery"},
+    ],
+    why:"Flavonoid dan antioksidan dalam Onesta terbukti memiliki efek adaptogenik ringan — membantu tubuh merespon stres lebih proporsional dan mengurangi cortisol reaktif yang memicu emotional eating.",
+    products:[{n:"Daily",d:"Foundation + cortisol buffer"},{n:"DiaBee",d:"Stress-eating prevention"},{n:"Imunisi",d:"Nervous system support + recovery"}],
+    stack:"Daily + DiaBee + Imunisi",
+    domains:["glucose","lifestyle"]
+  },
+  {
+    id:"stable-performer",
+    name:"🧬 The Stable Performer",
+    science:"Balanced glucose variability + metabolic flexibility",
+    desc:"Energimu relatif stabil, craving minimal, recovery cukup baik. Kamu berada di zona yang baik — tapi metabolic stability butuh konsistensi untuk dipertahankan.",
+    insight:"Berada di zona stabil bukan berarti selesai. Metabolic balance adalah kondisi dinamis yang membutuhkan 'perawatan' aktif. Justru saat ini adalah waktu terbaik untuk membangun fondasi yang kuat sebelum tekanan hidup meningkat.",
+    triggers:["Saat perubahan rutinitas besar","Saat traveling atau jetlag","Saat ada stres signifikan"],
+    therefore:"Kamu menjawab: kondisi yang relatif baik di semua area. Ini Stable Performer Zone — kondisi yang ingin dicapai oleh semua tipe lainnya. Tugasmu sekarang adalah mempertahankannya.",
+    slots:[
+      {t:"🌅 Pagi (setiap hari)",action:"1 sdt Onesta Daily + air hangat",detail:"Ritual harian yang tidak boleh diskip — bahkan saat merasa baik-baik saja.",why:"Maintains your metabolic baseline"},
+      {t:"🍽️ Sebelum makan besar",action:"Opsional: ½ sdt Onesta Daily",detail:"Terutama saat makan di luar atau makanan tidak biasa.",why:"Protects against occasional glucose spikes"},
+      {t:"💪 Post-workout",action:"½ sdt Onesta Daily atau Beeyond",detail:"Menjaga recovery tetap optimal — jangan tunggu sampai merasakan penurunan.",why:"Maintains recovery efficiency"},
+      {t:"🌙 Malam",action:"½ sdt Onesta Daily",detail:"Preventive — melindungi overnight repair process.",why:"Preserves your stable metabolic state"},
+    ],
+    why:"Untuk Stable Performer, Onesta Daily adalah 'insurance policy' metabolik harian. Mencegah penurunan yang tidak terasa lebih mudah dari memulihkan kondisi yang sudah drop.",
+    products:[{n:"Daily",d:"Foundation maintenance stabilizer"}],
+    stack:"Daily",
+    domains:[]
+  },
+];
+
+// ══════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════
+let qIdx=0, scores={}, totalScore=0, selOpt=null, answers=[], result=null;
+
+// ══════════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════════
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function prog(pct){document.getElementById('pline').style.transform=`scaleX(${pct/100})`;}
+
+function goIntro(){show('s-intro');prog(8);}
+function startQuiz(){show('s-quiz');qIdx=0;scores={};totalScore=0;selOpt=null;answers=[];prog(12);renderQ();}
+function goResult(){show('s-result');renderResult();}
+function restart(){show('s-cover');prog(0);}
+
+// ══════════════════════════════════════════════════
+// QUIZ
+// ══════════════════════════════════════════════════
+function renderQ(){
+  const q=QS[qIdx];
+  const pct=12+(qIdx/QS.length)*68;
+  prog(pct);
+  document.getElementById('track-fill').style.width=((qIdx/QS.length)*100)+'%';
+  document.getElementById('q-pillar').textContent=q.p;
+  document.getElementById('q-num').textContent='Q '+(qIdx+1)+' / '+QS.length;
+  document.getElementById('q-text').textContent=q.q;
+  document.getElementById('q-hint').textContent=q.h;
+  const opts=document.getElementById('q-opts');
+  opts.innerHTML='';
+  selOpt=null;
+  q.opts.forEach((opt,i)=>{
+    const div=document.createElement('div');
+    div.className='opt';
+    div.innerHTML=`<div class="okey">${opt.k}</div><div class="otext"><div class="olabel">${opt.l}</div><div class="osub">${opt.s}</div></div>`;
+    div.onclick=()=>pickOpt(div,opt,q);
+    div.ontouchend=(e)=>{e.preventDefault();pickOpt(div,opt,q);};
+    opts.appendChild(div);
+  });
+  document.getElementById('insight-card').classList.remove('show');
+  const btn=document.getElementById('btn-next');
+  btn.classList.remove('show');
+}
+
+function pickOpt(el,opt,q){
+  document.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
+  selOpt=opt;
+  document.getElementById('ins-text').innerHTML=q.ins;
+  document.getElementById('insight-card').classList.add('show');
+  const btn=document.getElementById('btn-next');
+  btn.classList.add('show');
+  setTimeout(()=>btn.scrollIntoView({behavior:'smooth',block:'nearest'}),350);
+}
+
+function nextQ(){
+  if(!selOpt)return;
+  const q=QS[qIdx];
+  scores[q.d]=(scores[q.d]||0)+selOpt.sc;
+  totalScore+=selOpt.sc;
+  answers.push({q:q.q,a:selOpt.l,domain:q.d});
+  qIdx++;
+  if(qIdx>=QS.length) showCalc();
+  else renderQ();
+}
+
+// ══════════════════════════════════════════════════
+// CALCULATING
+// ══════════════════════════════════════════════════
+function showCalc(){
+  show('s-calc');prog(85);
+  const pillars=['⚡ Energy Stability','🩸 Blood Glucose Rhythm','🫁 Gut Balance','🛡️ Immune Readiness','💪 Recovery & Performance','🌿 Anti-Decline Defense'];
+  const list=document.getElementById('calc-list');
+  list.innerHTML='';
+  pillars.forEach((p,i)=>{
+    const div=document.createElement('div');
+    div.className='calc-item';
+    div.style.animationDelay=(i*.22)+'s';
+    div.innerHTML=`<div class="calc-dot"></div>${p}`;
+    list.appendChild(div);
+    setTimeout(()=>div.classList.add('done'),600+i*220+200);
+  });
+  // Detect type before showing aha
+  result=buildResult();
+  setTimeout(()=>{prog(90);showAha();},600+pillars.length*220+800);
+}
+
+// ══════════════════════════════════════════════════
+// AHA MOMENT — NEW: show WHY before result
+// ══════════════════════════════════════════════════
+function showAha(){
+  show('s-aha');
+  // Show key answers
+  const keyAnswers=answers.filter(a=>['glucose','energy','gut','immune','recovery','decline'].includes(a.domain)).slice(0,4);
+  const ahaCont=document.getElementById('aha-answers');
+  ahaCont.innerHTML='';
+  keyAnswers.forEach(a=>{
+    ahaCont.innerHTML+=`<div class="aha-row"><div class="aha-q">${a.q}</div><div class="aha-a">${a.a.split(',')[0].substring(0,30)}...</div></div>`;
+  });
+  document.getElementById('aha-therefore').textContent=result.type.therefore;
+  document.getElementById('aha-type').textContent=result.type.name;
+  document.getElementById('aha-science').textContent='Science: '+result.type.science;
+}
+
+// ══════════════════════════════════════════════════
+// RESULT
+// ══════════════════════════════════════════════════
+function buildResult(){
+  const maxRaw=QS.reduce((s,q)=>s+Math.max(...q.opts.map(o=>o.sc)),0);
+  const bal=Math.round(100-(totalScore/maxRaw)*100);
+  const type=detectType();
+  const zones=[
+    {min:80,max:100,z:'🟢 Stable Zone',c:'#4CAF82'},
+    {min:60,max:79,z:'🟡 Shifting Zone',c:'#E8C030'},
+    {min:40,max:59,z:'🟠 Unstable Zone',c:'#E87A20'},
+    {min:0,max:39,z:'🔴 Critical Zone',c:'#C84040'},
+  ];
+  const zone=zones.find(z=>bal>=z.min&&bal<=z.max)||zones[3];
+  return{bal,type,zone};
+}
+
+function detectType(){
+  const dmx={energy:16,glucose:16,gut:9,immune:8,recovery:8,decline:9,lifestyle:8};
+  let top='energy',topP=0;
+  Object.entries(scores).forEach(([d,v])=>{
+    if(!dmx[d])return;
+    const p=(v/dmx[d])*100;
+    if(p>topP){topP=p;top=d;}
+  });
+  // Priority rules
+  if((scores.glucose||0)>=10&&(scores.energy||0)>=5){
+    const isLateNight=answers.some(a=>a.domain==='energy'&&a.a.toLowerCase().includes('malam'));
+    return isLateNight?TYPES[7]:TYPES[5]; // night-craver or fasting-crash
+  }
+  if((scores.decline||0)>=12)return TYPES[6]; // anti-decline
+  if((scores.lifestyle||0)>=10)return TYPES[8]; // stress-feeder
+  if(totalScore<=8)return TYPES[9]; // stable performer
+  const map={
+    glucose:TYPES[0],energy:TYPES[1],decline:TYPES[2],
+    gut:TYPES[3],recovery:TYPES[4],immune:TYPES[1],
+    lifestyle:TYPES[8]
+  };
+  return map[top]||TYPES[0];
+}
+
+function renderResult(){
+  if(!result)result=buildResult();
+  prog(100);
+  const{bal,type,zone}=result;
+
+  // Score animation
+  const scoreEl=document.getElementById('r-score');
+  let cur=0;
+  const iv=setInterval(()=>{cur=Math.min(cur+2,bal);scoreEl.textContent=cur;if(cur>=bal)clearInterval(iv);},16);
+
+  setTimeout(()=>{
+    document.getElementById('r-bar').style.width=bal+'%';
+    document.getElementById('r-bar').style.backgroundPosition=((100-bal)*2)+'% 0%';
+  },100);
+
+  document.getElementById('r-zone').textContent=zone.z;
+  document.getElementById('r-zone').style.color=zone.c;
+  document.getElementById('r-type-name').textContent=type.name;
+  document.getElementById('r-type-science').textContent='📐 '+type.science;
+  document.getElementById('r-type-desc').textContent=type.desc;
+  document.getElementById('r-insight').innerHTML=type.insight;
+
+  // Pillars
+  const pdefs=[{k:'energy',l:'⚡ Energy Stability',mx:16},{k:'glucose',l:'🩸 Glucose Rhythm',mx:16},{k:'gut',l:'🫁 Gut Balance',mx:9},{k:'immune',l:'🛡️ Immunity',mx:8},{k:'recovery',l:'💪 Recovery',mx:8},{k:'decline',l:'🌿 Anti-Decline',mx:9}];
+  const pc=document.getElementById('r-pillars-content');
+  pc.innerHTML='';
+  pdefs.forEach(p=>{
+    const pct=Math.min(Math.round(100-((scores[p.k]||0)/p.mx)*100),100);
+    pc.innerHTML+=`<div class="rp-row"><div class="rp-top"><div class="rp-name">${p.l}</div><div class="rp-val">${pct}%</div></div><div class="rp-track"><div class="rp-fill" style="width:0%" data-w="${pct}"></div></div></div>`;
+  });
+  setTimeout(()=>document.querySelectorAll('.rp-fill').forEach(el=>el.style.width=el.dataset.w+'%'),300);
+
+  // Ritual
+  document.getElementById('r-ritual-title').textContent=type.stack+' Protocol';
+  const slots=document.getElementById('r-slots');
+  slots.innerHTML='';
+  type.slots.forEach(s=>{
+    slots.innerHTML+=`<div class="rslot"><div class="rslot-time">${s.t}</div><div class="rslot-action">${s.action}</div><div class="rslot-detail">${s.detail}</div><div class="rslot-why">→ ${s.why}</div></div>`;
+  });
+
+  // Why Onesta — DELAYED brand
+  document.getElementById('r-why').textContent=type.why;
+  const prods=document.getElementById('r-products');
+  prods.innerHTML='';
+  type.products.forEach(p=>{
+    prods.innerHTML+=`<div class="r-prod"><div class="r-prod-name">${p.n}</div><div class="r-prod-desc">${p.d}</div></div>`;
+  });
+
+  // Share card
+  const lines=document.getElementById('scp-lines');
+  lines.innerHTML=`
+    <div class="scp-line"><span class="scp-k">Balance Score</span><span class="scp-v">${bal}/100 — ${zone.z}</span></div>
+    <div class="scp-line"><span class="scp-k">Metabolic Type</span><span class="scp-v">${type.name}</span></div>
+    <div class="scp-line"><span class="scp-k">My Ritual</span><span class="scp-v">${type.stack}</span></div>`;
+}
+
+// ══════════════════════════════════════════════════
+// ACTIONS
+// ══════════════════════════════════════════════════
+function orderRitual(){
+  const waNum='6281234567890';
+  const msg=result?`Halo Onesta! Saya baru selesai Balance Check™ dan mendapat hasil:\n\nBalance Score: ${result.bal}/100\nType: ${result.type.name}\nRitual: ${result.type.stack}\n\nBoleh info cara order ritual saya?`:'Halo Onesta! Saya tertarik memulai ritual. Boleh info lebih lanjut?';
+  window.open(`https://wa.me/${waNum}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+function shareWA(){
+  if(!result)return;
+  const txt=`🐝 *Onesta Balance Check™*\n\n📊 Balance Score: *${result.bal}/100*\n🏷️ *${result.type.name}*\n\n"${result.type.insight.substring(0,120)}..."\n\n🍯 Ritual saya: *${result.type.stack}*\n\n_"Balance is the new normal."_\n\nCek kondisi tubuhmu juga → 1 menit, gratis:\nhttps://onesta.co.id/balance`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(txt)}`,'_blank');
+}
+
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2400);
+}
+</script>
+</body>
+</html>
