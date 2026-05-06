@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Onesta — Enterprise Business Workflow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+:root {
+  --bg:      #07060A;
+  --bg2:     #0D0B12;
+  --bg3:     #13111A;
+  --bg4:     #191622;
+  --surface: #1F1C2A;
+  --gold:    #D4A843;
+  --gold-l:  #F0C968;
+  --gold-d:  #9A7520;
+  --gold-bg: rgba(212,168,67,.07);
+  --sales:   #E85D5D;
+  --sales-l: rgba(232,93,93,.12);
+  --mkt:     #E8A030;
+  --mkt-l:   rgba(232,160,48,.12);
+  --ops:     #4AAEA0;
+  --ops-l:   rgba(74,174,160,.12);
+  --it:      #7B6CF0;
+  --it-l:    rgba(123,108,240,.12);
+  --fin:     #5BAF6A;
+  --fin-l:   rgba(91,175,106,.12);
+  --auto:    #C87BE8;
+  --auto-l:  rgba(200,123,232,.12);
+  --text:    #E8E4F0;
+  --sub:     rgba(232,228,240,.6);
+  --muted:   rgba(232,228,240,.35);
+  --border:  rgba(255,255,255,.07);
+  --border-l:rgba(255,255,255,.12);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Space Grotesk',-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* grain */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");opacity:.6;}
+
+/* ══ NAV ══════════════════════════════════════════ */
+.nav{position:sticky;top:0;z-index:200;background:rgba(7,6,10,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-inner{display:flex;align-items:center;padding:.7rem 1.25rem;gap:.4rem;overflow-x:auto;scrollbar-width:none;}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav-brand{display:flex;align-items:center;gap:.5rem;flex-shrink:0;margin-right:.75rem;}
+.nav-logo{width:30px;height:30px;background:linear-gradient(135deg,var(--gold-l),var(--gold-d));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem;}
+.nav-title{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;white-space:nowrap;color:var(--text);}
+.nav-sep{width:1px;height:16px;background:var(--border);flex-shrink:0;margin:0 .25rem;}
+.ntab{flex-shrink:0;padding:.38rem .75rem;border-radius:7px;font-size:.72rem;font-weight:500;cursor:pointer;white-space:nowrap;border:none;background:transparent;color:var(--muted);font-family:'Space Grotesk',sans-serif;transition:all .18s;}
+.ntab.active,.ntab:hover{color:var(--text);background:rgba(255,255,255,.07);}
+.ntab.active{font-weight:700;}
+
+/* Function color tabs */
+.ntab[data-fn="sales"].active{color:var(--sales);background:var(--sales-l);}
+.ntab[data-fn="mkt"].active{color:var(--mkt);background:var(--mkt-l);}
+.ntab[data-fn="ops"].active{color:var(--ops);background:var(--ops-l);}
+.ntab[data-fn="it"].active{color:var(--it);background:var(--it-l);}
+.ntab[data-fn="fin"].active{color:var(--fin);background:var(--fin-l);}
+.ntab[data-fn="auto"].active{color:var(--auto);background:var(--auto-l);}
+
+/* ══ SECTIONS ══════════════════════════════════════ */
+.section{display:none;padding:1.5rem 1.25rem 4rem;max-width:900px;margin:0 auto;animation:fadeUp .4s ease both;position:relative;z-index:1;}
+.section.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══ HERO HEADER ═══════════════════════════════════ */
+.hero-header{padding:3rem 1.25rem 2rem;text-align:center;position:relative;z-index:1;
+  background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(212,168,67,.1) 0%,transparent 65%);}
+.hero-badge{display:inline-flex;align-items:center;gap:.45rem;background:rgba(212,168,67,.1);border:1px solid rgba(212,168,67,.2);border-radius:99px;padding:.32rem .85rem;font-size:.65rem;font-weight:600;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.25rem;font-family:'DM Mono',monospace;}
+.hero-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,6vw,3rem);font-weight:800;line-height:1.1;color:var(--text);margin-bottom:.5rem;letter-spacing:-.02em;}
+.hero-title span{color:var(--gold);}
+.hero-sub{font-size:.88rem;color:var(--sub);line-height:1.7;max-width:560px;margin:0 auto 2rem;}
+
+/* Function pills */
+.fn-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem;margin-bottom:1.5rem;}
+.fn-pill{display:flex;align-items:center;gap:.35rem;padding:.3rem .75rem;border-radius:8px;font-size:.7rem;font-weight:600;cursor:pointer;border:1px solid;transition:all .2s;font-family:'Space Grotesk',sans-serif;}
+.fn-pill.sales{background:var(--sales-l);border-color:rgba(232,93,93,.3);color:var(--sales);}
+.fn-pill.mkt{background:var(--mkt-l);border-color:rgba(232,160,48,.3);color:var(--mkt);}
+.fn-pill.ops{background:var(--ops-l);border-color:rgba(74,174,160,.3);color:var(--ops);}
+.fn-pill.it{background:var(--it-l);border-color:rgba(123,108,240,.3);color:var(--it);}
+.fn-pill.fin{background:var(--fin-l);border-color:rgba(91,175,106,.3);color:var(--fin);}
+.fn-pill.auto{background:var(--auto-l);border-color:rgba(200,123,232,.3);color:var(--auto);}
+
+/* ══ SECTION HEADER ════════════════════════════════ */
+.sec-head{margin-bottom:1.5rem;}
+.sec-fn-badge{display:inline-flex;align-items:center;gap:.4rem;padding:.28rem .7rem;border-radius:6px;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.65rem;font-family:'DM Mono',monospace;border:1px solid;}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(1.3rem,4vw,1.8rem);font-weight:800;line-height:1.15;margin-bottom:.4rem;letter-spacing:-.01em;}
+.sec-sub{font-size:.84rem;color:var(--sub);line-height:1.7;}
+
+/* ══ FLOW DIAGRAM ══════════════════════════════════ */
+.flow-diagram{display:flex;flex-direction:column;gap:0;margin:1.5rem 0;}
+
+.flow-stage{display:flex;align-items:stretch;gap:.85rem;padding:.85rem 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.flow-stage:last-child{border-bottom:none;}
+
+.flow-left{display:flex;flex-direction:column;align-items:center;gap:.2rem;flex-shrink:0;width:48px;}
+.flow-num{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:.72rem;font-weight:500;flex-shrink:0;}
+.flow-connector{flex:1;width:1.5px;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.03));min-height:16px;}
+
+.flow-content{flex:1;padding-top:.1rem;}
+.flow-stage-label{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem;}
+.flow-stage-title{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:.25rem;line-height:1.25;}
+.flow-stage-desc{font-size:.78rem;color:var(--sub);line-height:1.6;}
+.flow-tags{display:flex;flex-wrap:wrap;gap:.28rem;margin-top:.4rem;}
+.ftag{font-size:.6rem;padding:.12rem .42rem;border-radius:5px;background:rgba(255,255,255,.05);color:var(--muted);border:1px solid rgba(255,255,255,.07);font-family:'DM Mono',monospace;}
+
+/* ══ TOOL CARDS ════════════════════════════════════ */
+.tools-grid{display:flex;flex-direction:column;gap:.5rem;margin:1rem 0;}
+.tool-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:.85rem 1rem;display:flex;align-items:flex-start;gap:.85rem;transition:border-color .2s;}
+.tool-card:hover{border-color:var(--border-l);}
+.tool-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.tool-info{flex:1;}
+.tool-name{font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.12rem;}
+.tool-role{font-size:.75rem;color:var(--sub);line-height:1.45;}
+.tool-badge{flex-shrink:0;align-self:flex-start;}
+.tbadge{font-size:.58rem;padding:.18rem .5rem;border-radius:5px;font-weight:700;font-family:'DM Mono',monospace;border:1px solid;}
+.tb-live{background:rgba(91,175,106,.1);border-color:rgba(91,175,106,.25);color:var(--fin);}
+.tb-new{background:rgba(212,168,67,.1);border-color:rgba(212,168,67,.25);color:var(--gold);}
+.tb-planned{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1);color:var(--muted);}
+
+/* ══ AUTOMATION MATRIX ═════════════════════════════ */
+.auto-matrix{margin:1rem 0;}
+.am-row{display:flex;gap:.5rem;margin-bottom:.5rem;align-items:stretch;}
+.am-trigger{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.75rem .9rem;}
+.am-arrow{display:flex;align-items:center;color:var(--muted);font-size:.8rem;flex-shrink:0;padding:0 .1rem;}
+.am-action{flex:2;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.75rem .9rem;}
+.am-result{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.75rem .9rem;}
+.am-label{font-size:.55rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem;font-family:'DM Mono',monospace;font-weight:600;}
+.am-text{font-size:.75rem;color:var(--sub);line-height:1.4;}
+.am-text b{color:var(--text);}
+
+@media(max-width:520px){
+  .am-row{flex-direction:column;}
+  .am-arrow{transform:rotate(90deg);justify-content:center;}
+  .am-result{flex:1;}
+}
+
+/* ══ KPI CARDS ═════════════════════════════════════ */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:1rem 0;}
+@media(min-width:500px){.kpi-grid{grid-template-columns:repeat(3,1fr);}}
+.kpi-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:.85rem;text-align:center;}
+.kpi-num{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;display:block;margin-bottom:.2rem;}
+.kpi-label{font-size:.65rem;color:var(--muted);line-height:1.4;}
+
+/* ══ RISK TABLE ════════════════════════════════════ */
+.risk-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.76rem;}
+.risk-table th{background:rgba(255,255,255,.04);color:var(--muted);padding:.45rem .7rem;text-align:left;font-size:.62rem;font-family:'DM Mono',monospace;letter-spacing:.07em;text-transform:uppercase;border-bottom:1px solid var(--border);}
+.risk-table td{padding:.5rem .7rem;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;color:var(--sub);line-height:1.45;}
+.risk-table tr:last-child td{border-bottom:none;}
+.risk-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:.4rem;}
+
+/* ══ CALLOUT ═══════════════════════════════════════ */
+.callout{border-radius:10px;padding:.85rem 1rem;margin:.85rem 0;font-size:.8rem;line-height:1.65;}
+.co-gold{background:rgba(212,168,67,.07);border:1px solid rgba(212,168,67,.18);color:rgba(232,228,240,.75);}
+.co-gold b{color:var(--gold-l);}
+.co-auto{background:var(--auto-l);border:1px solid rgba(200,123,232,.2);color:rgba(232,228,240,.75);}
+.co-auto b{color:var(--auto);}
+
+/* ══ INTEGRATION MAP ═══════════════════════════════ */
+.int-map{display:flex;flex-direction:column;gap:.5rem;margin:1rem 0;}
+.int-row{display:flex;align-items:center;gap:.5rem;padding:.7rem .9rem;background:var(--bg3);border:1px solid var(--border);border-radius:10px;}
+.int-from{font-size:.75rem;font-weight:600;color:var(--text);min-width:100px;flex-shrink:0;}
+.int-flow{display:flex;align-items:center;gap:.35rem;flex:1;flex-wrap:wrap;}
+.int-arrow{color:var(--muted);font-size:.75rem;flex-shrink:0;}
+.int-app{font-size:.68rem;padding:.18rem .5rem;border-radius:6px;font-family:'DM Mono',monospace;font-weight:500;border:1px solid;white-space:nowrap;}
+.int-result{font-size:.72rem;color:var(--sub);margin-left:auto;text-align:right;min-width:80px;line-height:1.4;}
+
+/* ══ DIVIDER ═══════════════════════════════════════ */
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);margin:1.5rem 0;}
+
+/* ══ FLYWHEEL OVERVIEW ═════════════════════════════ */
+.fw-overview{display:flex;flex-direction:column;gap:0;margin:1rem 0;}
+.fw-row{display:grid;grid-template-columns:auto 1fr auto;gap:.75rem;align-items:center;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.fw-row:last-child{border-bottom:none;}
+.fw-fn{width:72px;flex-shrink:0;}
+.fw-fn-badge{display:inline-block;padding:.28rem .55rem;border-radius:6px;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-family:'DM Mono',monospace;border:1px solid;white-space:nowrap;}
+.fw-flow{display:flex;flex-direction:column;gap:.15rem;}
+.fw-title{font-size:.82rem;font-weight:600;color:var(--text);line-height:1.25;}
+.fw-apps{font-size:.68rem;color:var(--muted);font-family:'DM Mono',monospace;}
+.fw-output{text-align:right;}
+.fw-kpi{font-size:.68rem;color:var(--sub);line-height:1.4;}
+.fw-kpi b{color:var(--text);}
+
+/* ══ TOAST ═════════════════════════════════════════ */
+#toast{position:fixed;bottom:1.25rem;left:50%;transform:translateX(-50%);background:var(--surface);color:var(--gold);padding:.55rem 1.1rem;border-radius:99px;font-size:.75rem;font-weight:600;border:1px solid rgba(212,168,67,.25);box-shadow:0 4px 20px rgba(0,0,0,.4);opacity:0;transition:opacity .3s;z-index:999;white-space:nowrap;pointer-events:none;}
+#toast.show{opacity:1;}
+</style>
+</head>
+<body>
+<div id="toast"></div>
+
+<!-- ══ NAV ══════════════════════════════════════════ -->
+<div class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <div class="nav-logo">🐝</div>
+      <div class="nav-title">Onesta Enterprise</div>
+    </div>
+    <div class="nav-sep"></div>
+    <button class="ntab active" onclick="showSec('overview',this)">🔄 Overview</button>
+    <button class="ntab" data-fn="sales" onclick="showSec('sales',this)">🎯 Sales</button>
+    <button class="ntab" data-fn="mkt" onclick="showSec('mkt',this)">📣 Marketing</button>
+    <button class="ntab" data-fn="ops" onclick="showSec('ops',this)">⚙️ Operations</button>
+    <button class="ntab" data-fn="it" onclick="showSec('it',this)">💻 IT</button>
+    <button class="ntab" data-fn="fin" onclick="showSec('fin',this)">💰 Finance</button>
+    <button class="ntab" data-fn="auto" onclick="showSec('auto',this)">🤖 Automation</button>
+    <button class="ntab" onclick="showSec('risk',this)">🛡️ Risk</button>
+  </div>
+</div>
+
+<!-- ══ HERO ══════════════════════════════════════════ -->
+<div class="hero-header">
+  <div class="hero-badge">🐝 Onesta™ · Enterprise Blueprint · 2025</div>
+  <h1 class="hero-title">Business Workflow<br><span>Architecture</span></h1>
+  <p class="hero-sub">Light-asset, automation-first enterprise model. Multi-app orchestration across Sales, Marketing, Operations, IT & Finance — built for scale, control, and risk visibility.</p>
+  <div class="fn-pills">
+    <div class="fn-pill sales" onclick="showSec('sales',null)">🎯 Sales</div>
+    <div class="fn-pill mkt" onclick="showSec('mkt',null)">📣 Marketing</div>
+    <div class="fn-pill ops" onclick="showSec('ops',null)">⚙️ Operations</div>
+    <div class="fn-pill it" onclick="showSec('it',null)">💻 IT</div>
+    <div class="fn-pill fin" onclick="showSec('fin',null)">💰 Finance</div>
+    <div class="fn-pill auto" onclick="showSec('auto',null)">🤖 Automation</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     OVERVIEW
+══════════════════════════════════════════════════ -->
+<div id="sec-overview" class="section active">
+  <div class="sec-head">
+    <div class="sec-title">Helicopter View</div>
+    <p class="sec-sub">End-to-end enterprise workflow Onesta — dari first touch hingga recurring revenue, fully orchestrated across 5 business functions dan 15+ integrated tools.</p>
+  </div>
+
+  <div class="callout co-gold">
+    <b>Design Principle:</b> Light-asset model — Onesta tidak memiliki warehouse, tidak punya team besar, tidak bergantung pada satu platform. Semua fungsi dijalankan melalui orchestrasi tool yang tepat, dengan otomasi sebagai backbone operasional.
+  </div>
+
+  <!-- Full flywheel overview -->
+  <div class="fw-overview">
+    <div class="fw-row">
+      <div class="fw-fn"><div class="fw-fn-badge" style="background:var(--mkt-l);border-color:rgba(232,160,48,.3);color:var(--mkt)">Marketing</div></div>
+      <div class="fw-flow">
+        <div class="fw-title">Attract → Educate → Diagnostic</div>
+        <div class="fw-apps">GA4 · WA Broadcast · Balance Check™ · GitHub Pages</div>
+      </div>
+      <div class="fw-output"><div class="fw-kpi">Output:<br><b>Qualified Leads</b></div></div>
+    </div>
+    <div class="fw-row">
+      <div class="fw-fn"><div class="fw-fn-badge" style="background:var(--sales-l);border-color:rgba(232,93,93,.3);color:var(--sales)">Sales</div></div>
+      <div class="fw-flow">
+        <div class="fw-title">Convert → Order → Payment</div>
+        <div class="fw-apps">Chatrigo · WooWA · Onesta Store · Midtrans</div>
+      </div>
+      <div class="fw-output"><div class="fw-kpi">Output:<br><b>Confirmed Orders</b></div></div>
+    </div>
+    <div class="fw-row">
+      <div class="fw-fn"><div class="fw-fn-badge" style="background:var(--ops-l);border-color:rgba(74,174,160,.3);color:var(--ops)">Operations</div></div>
+      <div class="fw-flow">
+        <div class="fw-title">Fulfillment → Shipping → Delivery</div>
+        <div class="fw-apps">Jubelio · Biteship · WooWA · Onesta Store</div>
+      </div>
+      <div class="fw-output"><div class="fw-kpi">Output:<br><b>Delivered Product</b></div></div>
+    </div>
+    <div class="fw-row">
+      <div class="fw-fn"><div class="fw-fn-badge" style="background:var(--auto-l);border-color:rgba(200,123,232,.3);color:var(--auto)">Retention</div></div>
+      <div class="fw-flow">
+        <div class="fw-title">Onboard → Journey → Re-diagnose</div>
+        <div class="fw-apps">Chatrigo · WooWA · Zoho Mail · Balance Check™</div>
+      </div>
+      <div class="fw-output"><div class="fw-kpi">Output:<br><b>Subscription & LTV</b></div></div>
+    </div>
+    <div class="fw-row">
+      <div class="fw-fn"><div class="fw-fn-badge" style="background:var(--fin-l);border-color:rgba(91,175,106,.3);color:var(--fin)">Finance</div></div>
+      <div class="fw-flow">
+        <div class="fw-title">Revenue Rec → COGS → Reporting</div>
+        <div class="fw-apps">Accurate GL · Jubelio · Midtrans · Onesta Report</div>
+      </div>
+      <div class="fw-output"><div class="fw-kpi">Output:<br><b>P&L Visibility</b></div></div>
+    </div>
+    <div class="fw-row">
+      <div class="fw-fn"><div class="fw-fn-badge" style="background:var(--it-l);border-color:rgba(123,108,240,.3);color:var(--it)">IT</div></div>
+      <div class="fw-flow">
+        <div class="fw-title">Platform · Security · Uptime · Dev</div>
+        <div class="fw-apps">Next.js · Laravel · MySQL · Vercel · Apache</div>
+      </div>
+      <div class="fw-output"><div class="fw-kpi">Output:<br><b>System Reliability</b></div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Master app stack -->
+  <div class="sec-head" style="margin-top:0">
+    <div class="sec-title" style="font-size:1.1rem">Master Tool Stack</div>
+  </div>
+
+  <div class="int-map">
+    <div class="int-row">
+      <div class="int-from" style="color:var(--mkt)">📣 Marketing</div>
+      <div class="int-flow">
+        <div class="int-app" style="background:var(--mkt-l);border-color:rgba(232,160,48,.25);color:var(--mkt)">Balance Check™</div>
+        <div class="int-arrow">→</div>
+        <div class="int-app" style="background:var(--mkt-l);border-color:rgba(232,160,48,.25);color:var(--mkt)">GA4</div>
+        <div class="int-arrow">→</div>
+        <div class="int-app" style="background:var(--mkt-l);border-color:rgba(232,160,48,.25);color:var(--mkt)">WA Broadcast</div>
+        <div class="int-arrow">→</div>
+        <div class="int-app" style="background:var(--mkt-l);border-color:rgba(232,160,48,.25);color:var(--mkt)">GSC</div>
+      </div>
+    </div>
+    <div class="int-row">
+      <div class="int-from" style="color:var(--sales)">🎯 Sales</div>
+      <div class="int-flow">
+        <div class="int-app" style="background:var(--sales-l);border-color:rgba(232,93,93,.25);color:var(--sales)">Chatrigo</div>
+        <div class="int-arrow">→</div>
+        <div class="int-app" style="background:var(--sales-l);border-color:rgba(232,93,93,.25);color:var(--sales)">Onesta Store</div>
+        <div class="int-arrow">→</div>
+        <div class="int-app" style="background:var(--sales-l);border-color:rgba(232,93,93,.25);color:var(--sales)">Midtrans</div>
+        <div class="int-arrow">→</div>
+        <div class="int-app" style="background:var(--sales-l);border-color:rgba(232,93,93,.25);color:var(--sales)">WooWA</div>
+      </div>
+    </div>
+    <div class="int-row">
+      <div class="int-from" style="color:var(--ops)">⚙️ Ops</div>
+      <div class="int-flow">
+        <div class="int-app" style="background:var(--ops-l);border-color:rgba(74,174,160,.25);color:var(--ops)">Jubelio</div>
+        <div class="int-arrow">→</div>
+        <div class="int-app" style="background:var(--ops-l);border-color:rgba(74,174,160,.25);color:var(--ops)">Biteship</div>
+        <div class="int-arrow">→</div>
+        <div class="int-app" style="background:var(--ops-l);border-color:rgba(74,174,160,.25);color:var(--ops)">WooWA notify</div>
+        <div class="int-arrow">→</div>
+        <div class="int-app" style="background:var(--ops-l);border-color:rgba(74,174,160,.25);color:var(--ops)">Accurate GL</div>
+      </div>
+    </div>
+    <div class="int-row">
+      <div class="int-from" style="color:var(--auto)">🤖 Retention</div>
+      <div class="int-flow">
+        <div class="int-app" style="background:var(--auto-l);border-color:rgba(200,123,232,.25);color:var(--auto)">Chatrigo</div>
+        <div class="int-arrow">→</div>
+        <div class="int-app" style="background:var(--auto-l);border-color:rgba(200,123,232,.25);color:var(--auto)">Zoho Mail</div>
+        <div class="int-arrow">→</div>
+        <div class="int-app" style="background:var(--auto-l);border-color:rgba(200,123,232,.25);color:var(--auto)">Balance Check™</div>
+        <div class="int-arrow">→</div>
+        <div class="int-app" style="background:var(--auto-l);border-color:rgba(200,123,232,.25);color:var(--auto)">WooWA</div>
+      </div>
+    </div>
+    <div class="int-row">
+      <div class="int-from" style="color:var(--fin)">💰 Finance</div>
+      <div class="int-flow">
+        <div class="int-app" style="background:var(--fin-l);border-color:rgba(91,175,106,.25);color:var(--fin)">Midtrans</div>
+        <div class="int-arrow">→</div>
+        <div class="int-app" style="background:var(--fin-l);border-color:rgba(91,175,106,.25);color:var(--fin)">Accurate GL</div>
+        <div class="int-arrow">→</div>
+        <div class="int-app" style="background:var(--fin-l);border-color:rgba(91,175,106,.25);color:var(--fin)">Jubelio</div>
+        <div class="int-arrow">→</div>
+        <div class="int-app" style="background:var(--fin-l);border-color:rgba(91,175,106,.25);color:var(--fin)">Onesta Report</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SALES
+══════════════════════════════════════════════════ -->
+<div id="sec-sales" class="section">
+  <div class="sec-head">
+    <div class="sec-fn-badge" style="background:var(--sales-l);border-color:rgba(232,93,93,.3);color:var(--sales)">🎯 Sales Function</div>
+    <div class="sec-title">Conversion & Revenue</div>
+    <p class="sec-sub">Dari qualified lead hingga confirmed order — fully automated dengan human touch hanya di titik-titik yang benar-benar membutuhkan intervensi.</p>
+  </div>
+
+  <div class="flow-diagram">
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--sales-l);color:var(--sales)">1</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--sales)">Entry Point</div>
+        <div class="flow-stage-title">Lead masuk via Balance Check™</div>
+        <div class="flow-stage-desc">User menyelesaikan 10-pertanyaan diagnostic → dapat Metabolic Type + Balance Score → sistem otomatis routing berdasarkan score dan tipe ke pipeline yang tepat.</div>
+        <div class="flow-tags"><span class="ftag">Balance Check™</span><span class="ftag">Auto-routing</span><span class="ftag">Score-based segmentation</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--sales-l);color:var(--sales)">2</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--sales)">Qualification</div>
+        <div class="flow-stage-title">Chatrigo bot — 3-jalur segmentasi</div>
+        <div class="flow-stage-desc">Bot Chatrigo mengidentifikasi: Prospek Baru / Komunitas / Calon Reseller (Onesta Buddies). Setiap jalur mendapat conversational flow berbeda. Human CS hanya aktif jika bot tidak bisa menyelesaikan.</div>
+        <div class="flow-tags"><span class="ftag">Chatrigo</span><span class="ftag">3-segment routing</span><span class="ftag">Bot-first</span><span class="ftag">Human escalation</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--sales-l);color:var(--sales)">3</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--sales)">Soft Offer</div>
+        <div class="flow-stage-title">Ritual recommendation → Paket offer</div>
+        <div class="flow-stage-desc">Berdasarkan Metabolic Type, bot menyajikan ritual stack yang personal — Starter / Journey / Defender. Framing adalah "ritual" bukan "produk". CTA ke Onesta Store atau WA order.</div>
+        <div class="flow-tags"><span class="ftag">Personal ritual offer</span><span class="ftag">3 paket bundle</span><span class="ftag">Onesta Store</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--sales-l);color:var(--sales)">4</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--sales)">Checkout</div>
+        <div class="flow-stage-title">Onesta Store → Midtrans payment</div>
+        <div class="flow-stage-desc">Checkout di onesta.co.id dengan Midtrans sebagai payment gateway. Mendukung transfer bank, e-wallet, QRIS, dan kartu kredit. Konfirmasi otomatis tanpa intervensi manual.</div>
+        <div class="flow-tags"><span class="ftag">onesta.co.id</span><span class="ftag">Midtrans</span><span class="ftag">Auto-confirm</span><span class="ftag">Multi-payment</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--sales-l);color:var(--sales)">5</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--sales)">Post-Order</div>
+        <div class="flow-stage-title">WooWA notifikasi → Journey onboarding trigger</div>
+        <div class="flow-stage-desc">Setelah payment confirmed: WooWA kirim notifikasi order ke customer via WA. Sistem trigger otomatis memulai 30-Day Journey sequence di Chatrigo. Jubelio menerima order untuk fulfillment.</div>
+        <div class="flow-tags"><span class="ftag">WooWA</span><span class="ftag">Chatrigo sequence</span><span class="ftag">Jubelio sync</span><span class="ftag">Auto-onboard</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--sales-l);color:var(--sales)">6</div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--sales)">Onesta Buddies</div>
+        <div class="flow-stage-title">Reseller pipeline — parallel track</div>
+        <div class="flow-stage-desc">User dengan NPS tinggi (D30 completion) diundang ke Onesta Buddies program. Mereka mendapat akses tool kit (Balance Check link, bot hub, script WA) dan komisi per konversi yang mereka bawa.</div>
+        <div class="flow-tags"><span class="ftag">Reseller pipeline</span><span class="ftag">Tool kit sharing</span><span class="ftag">Commission tracking</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div style="font-size:.72rem;font-weight:700;color:var(--sub);margin-bottom:.65rem;text-transform:uppercase;letter-spacing:.08em">Sales Tools</div>
+  <div class="tools-grid">
+    <div class="tool-card"><div class="tool-icon" style="background:var(--sales-l)">🤖</div><div class="tool-info"><div class="tool-name">Chatrigo</div><div class="tool-role">WA conversational bot — lead qualification, offer, 30-day journey sequence</div></div><div class="tool-badge"><span class="tbadge tb-live">Live</span></div></div>
+    <div class="tool-card"><div class="tool-icon" style="background:var(--sales-l)">🏪</div><div class="tool-info"><div class="tool-name">Onesta Store (onesta.co.id)</div><div class="tool-role">Next.js 15 storefront — checkout, order management, customer portal</div></div><div class="tool-badge"><span class="tbadge tb-live">Live</span></div></div>
+    <div class="tool-card"><div class="tool-icon" style="background:var(--sales-l)">💳</div><div class="tool-info"><div class="tool-name">Midtrans</div><div class="tool-role">Payment gateway — transfer, e-wallet, QRIS, kartu kredit</div></div><div class="tool-badge"><span class="tbadge tb-live">Live</span></div></div>
+    <div class="tool-card"><div class="tool-icon" style="background:var(--sales-l)">📱</div><div class="tool-info"><div class="tool-name">WooWA</div><div class="tool-role">WA transactional notification — order confirm, payment, shipping update</div></div><div class="tool-badge"><span class="tbadge tb-live">Live</span></div></div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--sales)">CVR</span><div class="kpi-label">Diagnostic → Purchase conversion rate</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--sales)">AOV</span><div class="kpi-label">Average order value per transaction</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--sales)">CAC</span><div class="kpi-label">Cost per acquired customer</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--sales)">LTV</span><div class="kpi-label">Lifetime value per customer</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--sales)">RR</span><div class="kpi-label">Renewal rate month-over-month</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--sales)">BDR</span><div class="kpi-label">Buddies-driven revenue %</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     MARKETING
+══════════════════════════════════════════════════ -->
+<div id="sec-mkt" class="section">
+  <div class="sec-head">
+    <div class="sec-fn-badge" style="background:var(--mkt-l);border-color:rgba(232,160,48,.3);color:var(--mkt)">📣 Marketing Function</div>
+    <div class="sec-title">Attract, Educate & Convert</div>
+    <p class="sec-sub">Marketing Onesta berjalan di atas satu prinsip: <em>Balance Check™ adalah konten terbaik</em> — bukan iklan, bukan promo. Diagnostic yang viral adalah growth engine utama.</p>
+  </div>
+
+  <div class="flow-diagram">
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--mkt-l);color:var(--mkt)">1</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--mkt)">Awareness</div>
+        <div class="flow-stage-title">Organic content + WA broadcast</div>
+        <div class="flow-stage-desc">5 kategori hook broadcast mingguan: Body Signal Hook · Trehalulose Science · Honest Honey Origin · Metabolic Type Reveal · User Result Share. Jadwal konsisten 4x/minggu tanpa paid ads.</div>
+        <div class="flow-tags"><span class="ftag">WA Broadcast</span><span class="ftag">Hook content</span><span class="ftag">Organic-first</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--mkt-l);color:var(--mkt)">2</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--mkt)">Diagnostic Funnel</div>
+        <div class="flow-stage-title">Balance Check™ sebagai lead magnet utama</div>
+        <div class="flow-stage-desc">Link diagnostic dishare melalui WA, IG bio, dan QR code di packaging. Setiap user yang mengisi meninggalkan data profil metabolik. GA4 tracking per source untuk attribution yang akurat.</div>
+        <div class="flow-tags"><span class="ftag">Balance Check™</span><span class="ftag">GitHub Pages hosting</span><span class="ftag">GA4 tracking</span><span class="ftag">QR Code</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--mkt-l);color:var(--mkt)">3</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--mkt)">Viral Loop</div>
+        <div class="flow-stage-title">Shareable result → organic referral</div>
+        <div class="flow-stage-desc">Setiap hasil Balance Check™ menghasilkan shareable card (metabolic type + score) dengan CTA "Cek tubuhmu juga". D30 Report dengan delta score adalah konten viral terkuat — testimonial berbasis data.</div>
+        <div class="flow-tags"><span class="ftag">Viral share card</span><span class="ftag">D30 progress report</span><span class="ftag">Zero ad spend</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--mkt-l);color:var(--mkt)">4</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--mkt)">SEO & Discovery</div>
+        <div class="flow-stage-title">Google Search Console + onesta.co.id</div>
+        <div class="flow-stage-desc">Landing page di onesta.co.id dioptimalkan untuk search intent: "madu kelulut manfaat", "natural metabolic stabilizer", "stingless bee honey Indonesia". GSC monitoring untuk keyword performance.</div>
+        <div class="flow-tags"><span class="ftag">Google Search Console</span><span class="ftag">SEO landing page</span><span class="ftag">Content marketing</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--mkt-l);color:var(--mkt)">5</div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--mkt)">Analytics</div>
+        <div class="flow-stage-title">GA4 — attribution per channel</div>
+        <div class="flow-stage-desc">GA4 event tracking di setiap touchpoint: diagnostic start, question answered, result viewed, CTA clicked, order completed. Full funnel visibility untuk optimize marketing spend dan content strategy.</div>
+        <div class="flow-tags"><span class="ftag">GA4</span><span class="ftag">Full funnel tracking</span><span class="ftag">Attribution model</span><span class="ftag">Conversion events</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div style="font-size:.72rem;font-weight:700;color:var(--sub);margin-bottom:.65rem;text-transform:uppercase;letter-spacing:.08em">Marketing Stack</div>
+  <div class="tools-grid">
+    <div class="tool-card"><div class="tool-icon" style="background:var(--mkt-l)">⚖️</div><div class="tool-info"><div class="tool-name">Balance Check™ V2</div><div class="tool-role">10 Metabolic Types · viral share · diagnostic-to-conversion engine</div></div><div class="tool-badge"><span class="tbadge tb-new">New</span></div></div>
+    <div class="tool-card"><div class="tool-icon" style="background:var(--mkt-l)">📊</div><div class="tool-info"><div class="tool-name">Google Analytics 4</div><div class="tool-role">Full funnel tracking, conversion attribution, audience segmentation</div></div><div class="tool-badge"><span class="tbadge tb-live">Live</span></div></div>
+    <div class="tool-card"><div class="tool-icon" style="background:var(--mkt-l)">🔍</div><div class="tool-info"><div class="tool-name">Google Search Console</div><div class="tool-role">SEO monitoring, keyword ranking, click-through optimization</div></div><div class="tool-badge"><span class="tbadge tb-live">Live</span></div></div>
+    <div class="tool-card"><div class="tool-icon" style="background:var(--mkt-l)">🔗</div><div class="tool-info"><div class="tool-name">GitHub Pages + Bit.ly</div><div class="tool-role">Static tool hosting + link shortener + QR code generation</div></div><div class="tool-badge"><span class="tbadge tb-live">Live</span></div></div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--mkt)">MAU</span><div class="kpi-label">Monthly active diagnostics</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--mkt)">VRR</span><div class="kpi-label">Viral referral rate per user</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--mkt)">CPL</span><div class="kpi-label">Cost per qualified lead</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--mkt)">D2C%</span><div class="kpi-label">Diagnostic to conversion %</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--mkt)">ORS</span><div class="kpi-label">Organic referral share</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--mkt)">NPS</span><div class="kpi-label">Net promoter score D30</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     OPERATIONS
+══════════════════════════════════════════════════ -->
+<div id="sec-ops" class="section">
+  <div class="sec-head">
+    <div class="sec-fn-badge" style="background:var(--ops-l);border-color:rgba(74,174,160,.3);color:var(--ops)">⚙️ Operations Function</div>
+    <div class="sec-title">Fulfillment & Customer Journey</div>
+    <p class="sec-sub">Operations Onesta dirancang zero-touch untuk transaksi standar. Setiap order berjalan melalui pipeline otomatis dari confirmed payment hingga delivered product dan 30-day journey activation.</p>
+  </div>
+
+  <div class="flow-diagram">
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--ops-l);color:var(--ops)">1</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--ops)">Order Received</div>
+        <div class="flow-stage-title">Midtrans webhook → Jubelio sync</div>
+        <div class="flow-stage-desc">Payment confirmed di Midtrans memicu webhook ke Onesta Store backend (Laravel). Order otomatis masuk ke Jubelio untuk inventory deduction dan fulfillment queue. Tidak ada input manual.</div>
+        <div class="flow-tags"><span class="ftag">Midtrans webhook</span><span class="ftag">Jubelio auto-sync</span><span class="ftag">Zero manual input</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--ops-l);color:var(--ops)">2</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--ops)">Inventory Check</div>
+        <div class="flow-stage-title">Jubelio — real-time stock management</div>
+        <div class="flow-stage-desc">Jubelio mengelola inventory secara real-time lintas channel. Stok di bawah threshold otomatis trigger reorder alert. Laporan inventory sync ke Accurate GL untuk pencatatan COGS.</div>
+        <div class="flow-tags"><span class="ftag">Jubelio</span><span class="ftag">Real-time stock</span><span class="ftag">Auto reorder alert</span><span class="ftag">COGS sync</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--ops-l);color:var(--ops)">3</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--ops)">Shipping</div>
+        <div class="flow-stage-title">Biteship — multi-kurir otomatis</div>
+        <div class="flow-stage-desc">Biteship mengelola multi-kurir (JNE, J&T, SiCepat, dll) dengan rate comparison otomatis. AWB generation, pickup scheduling, dan tracking integration ke Onesta Store customer portal.</div>
+        <div class="flow-tags"><span class="ftag">Biteship</span><span class="ftag">Multi-kurir</span><span class="ftag">Auto AWB</span><span class="ftag">Live tracking</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--ops-l);color:var(--ops)">4</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--ops)">Customer Notification</div>
+        <div class="flow-stage-title">WooWA — automated status updates</div>
+        <div class="flow-stage-desc">WooWA mengirim notifikasi WA otomatis di setiap milestone: Order Confirmed → Processing → Shipped (+ no resi) → Out for Delivery → Delivered. Customer selalu ter-update tanpa CS intervention.</div>
+        <div class="flow-tags"><span class="ftag">WooWA</span><span class="ftag">5 status milestones</span><span class="ftag">Auto WA notify</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--ops-l);color:var(--ops)">5</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--ops)">Delivery Confirmed</div>
+        <div class="flow-stage-title">Journey activation → D1 onboarding</div>
+        <div class="flow-stage-desc">Status "Delivered" memicu Chatrigo sequence D1: Ritual protocol personal, 3 Golden Rules, invite komunitas, QR traceability story. Ini adalah "moment of delight" pertama setelah produk di tangan.</div>
+        <div class="flow-tags"><span class="ftag">Delivery trigger</span><span class="ftag">Chatrigo D1</span><span class="ftag">Ritual protocol</span><span class="ftag">Delight moment</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--ops-l);color:var(--ops)">6</div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--ops)">Returns & Exceptions</div>
+        <div class="flow-stage-title">Exception handling — human escalation</div>
+        <div class="flow-stage-desc">Kasus di luar SOP (komplain, retur, kerusakan) otomatis di-flag ke CS team via dashboard Onesta Store. SLA response maksimal 4 jam. Setiap kasus direkam untuk quality improvement.</div>
+        <div class="flow-tags"><span class="ftag">Exception flagging</span><span class="ftag">CS dashboard</span><span class="ftag">4-hour SLA</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div style="font-size:.72rem;font-weight:700;color:var(--sub);margin-bottom:.65rem;text-transform:uppercase;letter-spacing:.08em">Operations Stack</div>
+  <div class="tools-grid">
+    <div class="tool-card"><div class="tool-icon" style="background:var(--ops-l)">📦</div><div class="tool-info"><div class="tool-name">Jubelio</div><div class="tool-role">Inventory & order management — real-time stock, multi-channel sync, COGS reporting</div></div><div class="tool-badge"><span class="tbadge tb-live">Live</span></div></div>
+    <div class="tool-card"><div class="tool-icon" style="background:var(--ops-l)">🚚</div><div class="tool-info"><div class="tool-name">Biteship</div><div class="tool-role">Shipping API — multi-kurir, rate comparison, AWB, tracking integration</div></div><div class="tool-badge"><span class="tbadge tb-live">Live</span></div></div>
+    <div class="tool-card"><div class="tool-icon" style="background:var(--ops-l)">📱</div><div class="tool-info"><div class="tool-name">WooWA</div><div class="tool-role">WA notification — transactional updates, delivery milestones</div></div><div class="tool-badge"><span class="tbadge tb-live">Live</span></div></div>
+    <div class="tool-card"><div class="tool-icon" style="background:var(--ops-l)">🤖</div><div class="tool-info"><div class="tool-name">Chatrigo</div><div class="tool-role">Post-delivery journey — D1 onboarding, 30-day ritual sequence, retention</div></div><div class="tool-badge"><span class="tbadge tb-new">Activate</span></div></div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--ops)">OFR</span><div class="kpi-label">Order fulfillment rate</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--ops)">SLA</span><div class="kpi-label">Avg delivery time (days)</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--ops)">D1%</span><div class="kpi-label">D1 onboarding activation rate</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--ops)">RTN</span><div class="kpi-label">Return & complaint rate</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--ops)">STK</span><div class="kpi-label">Stockout incidents / month</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--ops)">D30</span><div class="kpi-label">30-day journey completion %</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     IT
+══════════════════════════════════════════════════ -->
+<div id="sec-it" class="section">
+  <div class="sec-head">
+    <div class="sec-fn-badge" style="background:var(--it-l);border-color:rgba(123,108,240,.3);color:var(--it)">💻 IT Function</div>
+    <div class="sec-title">Platform, Security & Reliability</div>
+    <p class="sec-sub">IT Onesta dibangun di atas arsitektur yang sudah production-grade. Fokus IT adalah memastikan uptime, integrasi antar sistem berjalan mulus, dan data customer terlindungi.</p>
+  </div>
+
+  <div class="flow-diagram">
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--it-l);color:var(--it)">1</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--it)">Core Platform</div>
+        <div class="flow-stage-title">Onesta Store — Next.js 15 + Laravel 10</div>
+        <div class="flow-stage-desc">Frontend Next.js 15 (onesta.co.id) + Backend Laravel 10 (API + webhook handler). MySQL 8 database. Alma Linux 9.4 OS, Apache 2.4, 8 Cores CPU, 16GB RAM, 400GB SSD. Dev environment terpisah di Vercel.</div>
+        <div class="flow-tags"><span class="ftag">Next.js 15</span><span class="ftag">Laravel 10</span><span class="ftag">MySQL 8</span><span class="ftag">Alma Linux</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--it-l);color:var(--it)">2</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--it)">Integration Hub</div>
+        <div class="flow-stage-title">Webhook orchestration — semua third-party</div>
+        <div class="flow-stage-desc">Laravel backend sebagai integration hub: menerima webhook dari Midtrans → forward ke Jubelio → trigger WooWA → update GA4 events. Setiap integrasi punya error handling dan retry logic.</div>
+        <div class="flow-tags"><span class="ftag">Webhook hub</span><span class="ftag">Error handling</span><span class="ftag">Retry logic</span><span class="ftag">Event log</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--it-l);color:var(--it)">3</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--it)">Diagnostic Tools</div>
+        <div class="flow-stage-title">Balance Check™ + Bot Hub — GitHub Pages</div>
+        <div class="flow-stage-desc">Semua diagnostic tools (Balance Check V2, Growth Flywheel, Bot Hub) di-host di GitHub Pages sebagai static files — zero server cost, globally distributed CDN, 99.9% uptime otomatis.</div>
+        <div class="flow-tags"><span class="ftag">GitHub Pages</span><span class="ftag">Static hosting</span><span class="ftag">Zero server cost</span><span class="ftag">CDN global</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--it-l);color:var(--it)">4</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--it)">Reporting System</div>
+        <div class="flow-stage-title">Onesta Report — React + Laravel 12</div>
+        <div class="flow-stage-desc">report.onesta.co.id — internal dashboard untuk manajemen. Data dari Jubelio (inventory + order) disajikan dalam laporan real-time. Finance, ops, dan management bisa akses data dari satu tempat.</div>
+        <div class="flow-tags"><span class="ftag">report.onesta.co.id</span><span class="ftag">React + Laravel 12</span><span class="ftag">Jubelio data source</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--it-l);color:var(--it)">5</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--it)">Security</div>
+        <div class="flow-stage-title">HTTPS + data protection layer</div>
+        <div class="flow-stage-desc">Semua komunikasi via HTTPS. Payment data tidak menyentuh server Onesta (Midtrans PCI-DSS compliant). Customer data di MySQL dengan encryption at rest. API keys di environment variables, tidak di code.</div>
+        <div class="flow-tags"><span class="ftag">HTTPS enforced</span><span class="ftag">PCI-DSS via Midtrans</span><span class="ftag">Data encryption</span><span class="ftag">Env variables</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--it-l);color:var(--it)">6</div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--it)">Future Roadmap</div>
+        <div class="flow-stage-title">Balance Score API — data moat Onesta</div>
+        <div class="flow-stage-desc">Jangka menengah: Balance Check hasil diagnostik tersimpan di database per user → tracking score trend → personalisasi semakin dalam → data ini menjadi competitive moat yang tidak bisa ditiru.</div>
+        <div class="flow-tags"><span class="ftag">Balance Score API</span><span class="ftag">User data persistence</span><span class="ftag">Trend analytics</span><span class="ftag">Future moat</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div style="font-size:.72rem;font-weight:700;color:var(--sub);margin-bottom:.65rem;text-transform:uppercase;letter-spacing:.08em">IT Infrastructure</div>
+  <div class="tools-grid">
+    <div class="tool-card"><div class="tool-icon" style="background:var(--it-l)">🏪</div><div class="tool-info"><div class="tool-name">Onesta Store (Prod + Dev)</div><div class="tool-role">onesta.co.id · dashboard.onesta.co.id · frontdevstore · backdevstore</div></div><div class="tool-badge"><span class="tbadge tb-live">Live</span></div></div>
+    <div class="tool-card"><div class="tool-icon" style="background:var(--it-l)">📊</div><div class="tool-info"><div class="tool-name">Onesta Report</div><div class="tool-role">report.onesta.co.id · React + Inertia.js + Laravel 12 · Jubelio data</div></div><div class="tool-badge"><span class="tbadge tb-live">Live</span></div></div>
+    <div class="tool-card"><div class="tool-icon" style="background:var(--it-l)">📧</div><div class="tool-info"><div class="tool-name">Zoho Mail</div><div class="tool-role">Transactional email — order confirm, journey touchpoints, CS response</div></div><div class="tool-badge"><span class="tbadge tb-live">Live</span></div></div>
+    <div class="tool-card"><div class="tool-icon" style="background:var(--it-l)">🌐</div><div class="tool-info"><div class="tool-name">GitHub Pages</div><div class="tool-role">Static tool hosting — Balance Check, Flywheel, Bot Hub, Panduan</div></div><div class="tool-badge"><span class="tbadge tb-live">Live</span></div></div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--it)">99.9%</span><div class="kpi-label">Platform uptime target</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--it)">API</span><div class="kpi-label">Webhook success rate</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--it)">TTFB</span><div class="kpi-label">Time to first byte (ms)</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--it)">&lt;2s</span><div class="kpi-label">Page load target mobile</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--it)">0</span><div class="kpi-label">Data breach incidents</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--it)">DEV</span><div class="kpi-label">Deploy frequency / week</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     FINANCE
+══════════════════════════════════════════════════ -->
+<div id="sec-fin" class="section">
+  <div class="sec-head">
+    <div class="sec-fn-badge" style="background:var(--fin-l);border-color:rgba(91,175,106,.3);color:var(--fin)">💰 Finance Function</div>
+    <div class="sec-title">Revenue, COGS & Reporting</div>
+    <p class="sec-sub">Finance Onesta didesain untuk automated reconciliation — setiap transaksi dari Midtrans mengalir otomatis ke Accurate GL, memberikan P&L visibility real-time tanpa manual entry.</p>
+  </div>
+
+  <div class="flow-diagram">
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--fin-l);color:var(--fin)">1</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--fin)">Revenue Recognition</div>
+        <div class="flow-stage-title">Midtrans → Accurate GL auto-journal</div>
+        <div class="flow-stage-desc">Setiap payment confirmed di Midtrans otomatis membuat jurnal penjualan di Accurate GL. Revenue diakui pada saat delivery confirmed (bukan payment) sesuai standar akuntansi. Tidak ada manual entry.</div>
+        <div class="flow-tags"><span class="ftag">Midtrans</span><span class="ftag">Accurate GL</span><span class="ftag">Auto-journal</span><span class="ftag">Accrual basis</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--fin-l);color:var(--fin)">2</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--fin)">COGS</div>
+        <div class="flow-stage-title">Jubelio → COGS per SKU → Accurate GL</div>
+        <div class="flow-stage-desc">Jubelio mencatat setiap unit keluar dengan HPP (Harga Pokok Penjualan) per SKU. Data ini sync ke Accurate GL untuk COGS calculation otomatis. Gross margin visible per produk, per channel, per periode.</div>
+        <div class="flow-tags"><span class="ftag">Jubelio COGS</span><span class="ftag">Per-SKU margin</span><span class="ftag">Auto sync</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--fin-l);color:var(--fin)">3</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--fin)">Opex Tracking</div>
+        <div class="flow-stage-title">Tool subscription cost management</div>
+        <div class="flow-stage-desc">Semua subscription tools (Chatrigo, WooWA, Biteship, Jubelio, dll) dicatat sebagai opex di Accurate GL dengan kategorisasi per fungsi. Monthly SaaS spend dashboard untuk cost control.</div>
+        <div class="flow-tags"><span class="ftag">SaaS opex tracking</span><span class="ftag">Cost by function</span><span class="ftag">Accurate GL</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--fin-l);color:var(--fin)">4</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--fin)">Reporting</div>
+        <div class="flow-stage-title">Onesta Report + Accurate GL — P&L real-time</div>
+        <div class="flow-stage-desc">Management dashboard di report.onesta.co.id menampilkan: Revenue, COGS, Gross Margin, Opex, EBITDA per periode. Data dari Jubelio + Accurate GL disajikan dalam satu view untuk keputusan yang cepat.</div>
+        <div class="flow-tags"><span class="ftag">P&L dashboard</span><span class="ftag">Real-time</span><span class="ftag">Per channel view</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--fin-l);color:var(--fin)">5</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--fin)">Cash Flow</div>
+        <div class="flow-stage-title">Subscription MRR model — predictable revenue</div>
+        <div class="flow-stage-desc">Model subscription (1/3/6 bulan) menciptakan MRR yang predictable untuk cash flow planning. Accurate GL tracking: AR aging, payment terms per paket, dan subscription renewal forecast.</div>
+        <div class="flow-tags"><span class="ftag">MRR tracking</span><span class="ftag">Subscription model</span><span class="ftag">AR aging</span><span class="ftag">Cash forecast</span></div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:var(--fin-l);color:var(--fin)">6</div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--fin)">Compliance</div>
+        <div class="flow-stage-title">Tax, audit trail & financial control</div>
+        <div class="flow-stage-desc">Accurate GL menyimpan audit trail lengkap untuk setiap transaksi. PPN tracking otomatis dari Midtrans. Laporan keuangan siap audit dengan dokumen source dari Midtrans + Jubelio sebagai pendukung.</div>
+        <div class="flow-tags"><span class="ftag">Audit trail</span><span class="ftag">PPN auto-calc</span><span class="ftag">Compliance-ready</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div style="font-size:.72rem;font-weight:700;color:var(--sub);margin-bottom:.65rem;text-transform:uppercase;letter-spacing:.08em">Finance Stack</div>
+  <div class="tools-grid">
+    <div class="tool-card"><div class="tool-icon" style="background:var(--fin-l)">📒</div><div class="tool-info"><div class="tool-name">Accurate GL</div><div class="tool-role">Core accounting — journal, P&L, balance sheet, tax, audit trail</div></div><div class="tool-badge"><span class="tbadge tb-live">Live</span></div></div>
+    <div class="tool-card"><div class="tool-icon" style="background:var(--fin-l)">💳</div><div class="tool-info"><div class="tool-name">Midtrans</div><div class="tool-role">Payment data source — settlement report, PPN, reconciliation</div></div><div class="tool-badge"><span class="tbadge tb-live">Live</span></div></div>
+    <div class="tool-card"><div class="tool-icon" style="background:var(--fin-l)">📦</div><div class="tool-info"><div class="tool-name">Jubelio</div><div class="tool-role">Inventory & COGS data — HPP per SKU, stock value, channel margin</div></div><div class="tool-badge"><span class="tbadge tb-live">Live</span></div></div>
+    <div class="tool-card"><div class="tool-icon" style="background:var(--fin-l)">📊</div><div class="tool-info"><div class="tool-name">Onesta Report</div><div class="tool-role">Management dashboard — P&L, margin, MRR, opex per function</div></div><div class="tool-badge"><span class="tbadge tb-live">Live</span></div></div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--fin)">MRR</span><div class="kpi-label">Monthly recurring revenue</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--fin)">GM%</span><div class="kpi-label">Gross margin per SKU</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--fin)">OPEX</span><div class="kpi-label">SaaS opex / revenue ratio</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--fin)">EBITDA</span><div class="kpi-label">Monthly operating profit</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--fin)">DPO</span><div class="kpi-label">Days payable outstanding</div></div>
+    <div class="kpi-card"><span class="kpi-num" style="color:var(--fin)">AR</span><div class="kpi-label">AR aging — 0 overdue target</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     AUTOMATION
+══════════════════════════════════════════════════ -->
+<div id="sec-auto" class="section">
+  <div class="sec-head">
+    <div class="sec-fn-badge" style="background:var(--auto-l);border-color:rgba(200,123,232,.3);color:var(--auto)">🤖 Automation Matrix</div>
+    <div class="sec-title">24/7 Orchestration</div>
+    <p class="sec-sub">Peta lengkap otomasi lintas fungsi — setiap trigger, aksi, dan output yang berjalan tanpa intervensi manusia. Ini adalah backbone operasional Onesta.</p>
+  </div>
+
+  <div class="callout co-auto">
+    <b>Prinsip Otomasi Onesta:</b> Manusia hanya terlibat di 3 titik: (1) Exception handling, (2) Strategic decision, (3) High-value personal touch. Semua standar proses berjalan otomatis 24/7.
+  </div>
+
+  <div style="font-size:.72rem;font-weight:700;color:var(--sub);margin:.85rem 0 .5rem;text-transform:uppercase;letter-spacing:.08em">Marketing Automation</div>
+  <div class="auto-matrix">
+    <div class="am-row">
+      <div class="am-trigger"><div class="am-label">Trigger</div><div class="am-text"><b>User klik link Balance Check™</b></div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-action"><div class="am-label">Action</div><div class="am-text">GA4 event log → diagnostic flow → Chatrigo routing by score</div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-result"><div class="am-label">Output</div><div class="am-text"><b>Segmented lead</b></div></div>
+    </div>
+    <div class="am-row">
+      <div class="am-trigger"><div class="am-label">Trigger</div><div class="am-text"><b>User share Balance Score</b></div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-action"><div class="am-label">Action</div><div class="am-text">Auto-generate shareable card → WA share → viral referral tracking</div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-result"><div class="am-label">Output</div><div class="am-text"><b>Organic new lead</b></div></div>
+    </div>
+  </div>
+
+  <div style="font-size:.72rem;font-weight:700;color:var(--sub);margin:.85rem 0 .5rem;text-transform:uppercase;letter-spacing:.08em">Sales Automation</div>
+  <div class="auto-matrix">
+    <div class="am-row">
+      <div class="am-trigger"><div class="am-label">Trigger</div><div class="am-text"><b>Payment confirmed (Midtrans)</b></div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-action"><div class="am-label">Action</div><div class="am-text">Webhook → Jubelio order sync → WooWA confirm WA → Chatrigo D1 queue</div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-result"><div class="am-label">Output</div><div class="am-text"><b>Order + journey started</b></div></div>
+    </div>
+    <div class="am-row">
+      <div class="am-trigger"><div class="am-label">Trigger</div><div class="am-text"><b>D21 — stok hampir habis</b></div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-action"><div class="am-label">Action</div><div class="am-text">Chatrigo kirim progress report + renewal offer + diskon loyal customer</div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-result"><div class="am-label">Output</div><div class="am-text"><b>Renewal order</b></div></div>
+    </div>
+  </div>
+
+  <div style="font-size:.72rem;font-weight:700;color:var(--sub);margin:.85rem 0 .5rem;text-transform:uppercase;letter-spacing:.08em">Operations Automation</div>
+  <div class="auto-matrix">
+    <div class="am-row">
+      <div class="am-trigger"><div class="am-label">Trigger</div><div class="am-text"><b>Order ready to ship</b></div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-action"><div class="am-label">Action</div><div class="am-text">Biteship AWB generate → kurir pickup → WooWA kirim resi ke customer</div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-result"><div class="am-label">Output</div><div class="am-text"><b>Customer informed</b></div></div>
+    </div>
+    <div class="am-row">
+      <div class="am-trigger"><div class="am-label">Trigger</div><div class="am-text"><b>Status: Delivered</b></div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-action"><div class="am-label">Action</div><div class="am-text">WooWA delivery confirm → Chatrigo D1 activate → Zoho welcome email</div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-result"><div class="am-label">Output</div><div class="am-text"><b>Journey activated</b></div></div>
+    </div>
+  </div>
+
+  <div style="font-size:.72rem;font-weight:700;color:var(--sub);margin:.85rem 0 .5rem;text-transform:uppercase;letter-spacing:.08em">Retention Automation</div>
+  <div class="auto-matrix">
+    <div class="am-row">
+      <div class="am-trigger"><div class="am-label">Trigger</div><div class="am-text"><b>Weekly (every 7 days)</b></div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-action"><div class="am-label">Action</div><div class="am-text">Chatrigo Weekly Balance Recheck → 3 quick questions → score update + insight</div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-result"><div class="am-label">Output</div><div class="am-text"><b>Belief strengthened</b></div></div>
+    </div>
+    <div class="am-row">
+      <div class="am-trigger"><div class="am-label">Trigger</div><div class="am-text"><b>D30 completed</b></div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-action"><div class="am-label">Action</div><div class="am-text">Re-diagnostik → delta score report → viral share → Buddies soft invite</div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-result"><div class="am-label">Output</div><div class="am-text"><b>Renew + viral loop</b></div></div>
+    </div>
+    <div class="am-row">
+      <div class="am-trigger"><div class="am-label">Trigger</div><div class="am-text"><b>No response D7</b></div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-action"><div class="am-label">Action</div><div class="am-text">Churn signal → Chatrigo human escalation flag → CS personal touch</div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-result"><div class="am-label">Output</div><div class="am-text"><b>Churn prevented</b></div></div>
+    </div>
+  </div>
+
+  <div style="font-size:.72rem;font-weight:700;color:var(--sub);margin:.85rem 0 .5rem;text-transform:uppercase;letter-spacing:.08em">Finance Automation</div>
+  <div class="auto-matrix">
+    <div class="am-row">
+      <div class="am-trigger"><div class="am-label">Trigger</div><div class="am-text"><b>Daily settlement (Midtrans)</b></div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-action"><div class="am-label">Action</div><div class="am-text">Auto-journal ke Accurate GL → COGS dari Jubelio → P&L update</div></div>
+      <div class="am-arrow">→</div>
+      <div class="am-result"><div class="am-label">Output</div><div class="am-text"><b>Real-time P&L</b></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     RISK & CONTROL
+══════════════════════════════════════════════════ -->
+<div id="sec-risk" class="section">
+  <div class="sec-head">
+    <div class="sec-fn-badge" style="background:rgba(232,93,93,.1);border-color:rgba(232,93,93,.25);color:#E85D5D">🛡️ Risk & Control</div>
+    <div class="sec-title">Enterprise Risk Register</div>
+    <p class="sec-sub">Light-asset model mengurangi banyak risiko operasional — tapi menciptakan risiko baru di area integrasi, data, dan platform dependency. Ini adalah risk register yang harus dipantau.</p>
+  </div>
+
+  <table class="risk-table">
+    <tr><th>Area</th><th>Risk</th><th>Level</th><th>Control</th></tr>
+    <tr>
+      <td style="color:var(--mkt)">Marketing</td>
+      <td>Platform dependency — jika WA policy berubah, broadcast terdampak</td>
+      <td><span class="risk-dot" style="background:#E87A20"></span>Medium</td>
+      <td>Diversifikasi channel: email (Zoho), IG, web organic sebagai backup</td>
+    </tr>
+    <tr>
+      <td style="color:var(--sales)">Sales</td>
+      <td>Bot Chatrigo down → conversion terhenti</td>
+      <td><span class="risk-dot" style="background:#E85D5D"></span>High</td>
+      <td>Fallback ke WA Business manual + CS team. SLA bot recovery &lt;2 jam</td>
+    </tr>
+    <tr>
+      <td style="color:var(--sales)">Sales</td>
+      <td>Midtrans outage → payment failure</td>
+      <td><span class="risk-dot" style="background:#E85D5D"></span>High</td>
+      <td>Monitor Midtrans status page. Alternatif: manual transfer sementara + CS guide</td>
+    </tr>
+    <tr>
+      <td style="color:var(--ops)">Operations</td>
+      <td>Jubelio sync failure → oversell / stock discrepancy</td>
+      <td><span class="risk-dot" style="background:#E85D5D"></span>High</td>
+      <td>Daily inventory reconciliation manual. Buffer stock minimum 10% di atas forecast</td>
+    </tr>
+    <tr>
+      <td style="color:var(--ops)">Operations</td>
+      <td>Biteship API down → shipping delay</td>
+      <td><span class="risk-dot" style="background:#E87A20"></span>Medium</td>
+      <td>Fallback ke booking kurir manual. Customer WA proactive notification</td>
+    </tr>
+    <tr>
+      <td style="color:var(--it)">IT</td>
+      <td>Server down → onesta.co.id tidak bisa diakses</td>
+      <td><span class="risk-dot" style="background:#E85D5D"></span>High</td>
+      <td>Monitoring 24/7. Dev environment di Vercel sebagai hot standby. Backup harian</td>
+    </tr>
+    <tr>
+      <td style="color:var(--it)">IT</td>
+      <td>Data breach — customer data exposed</td>
+      <td><span class="risk-dot" style="background:#E85D5D"></span>Critical</td>
+      <td>HTTPS enforced, data encryption, API keys di env vars, regular security audit</td>
+    </tr>
+    <tr>
+      <td style="color:var(--fin)">Finance</td>
+      <td>Accurate GL sync failure → incorrect P&L</td>
+      <td><span class="risk-dot" style="background:#E87A20"></span>Medium</td>
+      <td>Weekly manual reconciliation. Midtrans settlement report sebagai source of truth</td>
+    </tr>
+    <tr>
+      <td style="color:var(--auto)">Retention</td>
+      <td>Chatrigo sequence error → wrong message ke wrong user</td>
+      <td><span class="risk-dot" style="background:#E87A20"></span>Medium</td>
+      <td>Test sequence sebelum deploy. Monitoring first 24 jam setiap campaign baru</td>
+    </tr>
+    <tr>
+      <td style="color:var(--muted)">Platform</td>
+      <td>Key tool price increase → opex blow-up</td>
+      <td><span class="risk-dot" style="background:#4AAEA0"></span>Low</td>
+      <td>Annual contract review. Identify alternative tools per kategori sebagai backup vendor</td>
+    </tr>
+  </table>
+
+  <div class="divider"></div>
+
+  <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:.85rem">Control Framework</div>
+
+  <div class="flow-diagram">
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:rgba(212,168,67,.15);color:var(--gold)">D</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--gold)">Daily Controls</div>
+        <div class="flow-stage-title">Operasional monitoring harian</div>
+        <div class="flow-stage-desc">Cek: Midtrans settlement vs Accurate GL · Jubelio stock level · Chatrigo sequence aktif · WooWA delivery rate · Server uptime status.</div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:rgba(212,168,67,.15);color:var(--gold)">W</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--gold)">Weekly Controls</div>
+        <div class="flow-stage-title">Business performance review</div>
+        <div class="flow-stage-desc">Review: CVR diagnostic → order · D30 completion rate · Gross margin per SKU · Churn signals · NPS score · Opex vs budget.</div>
+      </div>
+    </div>
+    <div class="flow-stage">
+      <div class="flow-left"><div class="flow-num" style="background:rgba(212,168,67,.15);color:var(--gold)">M</div></div>
+      <div class="flow-content">
+        <div class="flow-stage-label" style="color:var(--gold)">Monthly Controls</div>
+        <div class="flow-stage-title">Strategic & financial review</div>
+        <div class="flow-stage-desc">Review: P&L full · MRR growth · LTV:CAC ratio · Tool stack ROI · Risk register update · Roadmap progress · Onesta Buddies performance.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout co-gold">
+    <b>Light-Asset Advantage for Risk:</b> Karena Onesta tidak punya warehouse sendiri, tidak punya delivery fleet, dan tidak punya server on-premise — sebagian besar operational risk di-transfer ke vendor (Jubelio, Biteship, hosting provider). Fokus risk management adalah pada <b>integration reliability</b> dan <b>data integrity</b>.
+  </div>
+</div>
+
+<script>
+function showSec(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.ntab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  else {
+    document.querySelectorAll('.ntab').forEach(t => {
+      if (t.textContent.toLowerCase().includes(id.slice(0,3))) t.classList.add('active');
+    });
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2300);
+}
+</script>
+</body>
+</html>
