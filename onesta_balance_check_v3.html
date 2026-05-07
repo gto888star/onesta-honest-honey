@@ -305,7 +305,7 @@ body::before{
     <div class="cpill"><div class="cd"></div>Pencernaan</div>
     <div class="cpill"><div class="cd"></div>Imunitas</div>
     <div class="cpill"><div class="cd"></div>Recovery</div>
-    <div class="cpill"><div class="cd"></div>Anti-Penuaan</div>
+    <div class="cpill"><div class="cd"></div>Malam & Stres</div>
   </div>
   <!-- User Form -->
   <div class="user-form">
@@ -688,17 +688,16 @@ const QS = [
     ins:"Tidur buruk meningkatkan <b>kortisol dan inflamasi sistemik</b> — yang kemudian merusak ritme glukosa, imun, dan kemampuan fokus. Ini lingkaran yang saling memperkuat."
   },
   {
-    p:"🌿 Gaya Hidup",d:"lifestyle",
-    q:"Mana yang paling menggambarkan beban hidupmu sehari-hari?",
-    h:"Gaya hidup adalah sumber utama radikal bebas dari luar tubuh.",
+    p:"🌙 Malam & Stres",d:"night_stress",
+    q:"Apa yang biasa terjadi di malam hari?",
+    h:"Pola malam adalah cermin dari ritme sirkadian dan respons stres tubuhmu.",
     opts:[
-      {k:"A",l:"Aktif dan seimbang",s:"Makan teratur, stres terkontrol",sc:0},
-      {k:"B",l:"Sibuk tapi masih bisa dikelola",s:"Kadang tidak teratur, stres kerja biasa",sc:2},
-      {k:"C",l:"Stres tinggi, makan tidak teratur, atau tidur buruk",s:"Sudah menjadi pola sehari-hari",sc:5},
-      {k:"D",l:"Hampir semua faktor stres ada bersamaan",s:"Lingkaran yang sulit diputus",sc:8},
+      {k:"A",l:"Tidur nyenyak, tidak ada gangguan",s:"Bangun segar dan berenergi",sc:0},
+      {k:"B",l:"Kadang terbangun, masih bisa tidur lagi",s:"1-2x per minggu, masih oke",sc:2},
+      {k:"C",l:"Sering lapar atau craving sebelum tidur",s:"Sulit tidur tanpa ngemil dulu",sc:6},
+      {k:"D",l:"Stres atau overthinking, pikiran tidak bisa berhenti",s:"Tidur jadi sulit, badan tegang",sc:6},
     ],
-    ins:"Polusi, makanan ultra-proses, stres kronis — semuanya menghasilkan <b>radikal bebas</b> yang melampaui kapasitas antioksidan alami tubuh. Inilah yang disebut 'silent oxidative overload'."
-  },
+    ins:"Pola malam yang terganggu — baik karena <b>lapar sirkadian</b> maupun <b>kortisol stres</b> — adalah sinyal bahwa ritme metabolik tubuhmu perlu distabilkan dari dalam.",
   {
     p:"🎯 Prioritas",d:"intent",
     q:"Apa yang paling ingin kamu perbaiki terlebih dahulu?",
@@ -708,6 +707,7 @@ const QS = [
       {k:"B",l:"Pencernaan dan imunitas yang lebih kuat",s:"Merasa kuat dari dalam",sc:1},
       {k:"C",l:"Kejernihan pikiran dan vitalitas jangka panjang",s:"Melindungi otak dan menua dengan baik",sc:0},
       {k:"D",l:"Keseimbangan berat badan dan metabolisme",s:"Memutus siklus craving-crash",sc:1},
+      {k:"E",l:"Mendukung ritme puasa / intermittent fasting",s:"Energi stabil saat puasa, buka yang tepat",sc:0},
     ],
     ins:"Apapun prioritasmu, <b>fondasi metabolik yang stabil</b> adalah titik awal yang sama. Semua sistem tubuh — energi, imun, otak — berjalan di atas ekosistem metabolik yang sama."
   },
@@ -1091,50 +1091,85 @@ function buildResult(){
 }
 
 function detectType(){
-  const dmx={energy:16,glucose:16,gut:9,immune:8,recovery:8,decline:9,lifestyle:8};
-  let top='energy',topP=0;
-  Object.entries(scores).forEach(([d,v])=>{
-    if(!dmx[d])return;
-    const p=(v/dmx[d])*100;
-    if(p>topP){topP=p;top=d;}
+  // Domain max — updated with night_stress replacing lifestyle
+  const dmx={energy:16,glucose:16,gut:9,immune:8,recovery:8,decline:9,night_stress:6};
+
+  // ── STEP 1: Per-pillar % scores ─────────────────────────────
+  const pct={};
+  Object.entries(dmx).forEach(([d,mx])=>{
+    pct[d]=mx>0 ? Math.min(((scores[d]||0)/mx)*100, 100) : 0;
   });
 
-  // Stable performer — skor rendah semua area
-  if(totalScore<=8) return TYPES[9];
+  // ── STEP 2: Find top domain ──────────────────────────────────
+  let top='energy', topP=0;
+  Object.entries(pct).forEach(([d,p])=>{ if(p>topP){topP=p;top=d;} });
 
-  // Anti-decline — penurunan signifikan
-  if((scores.decline||0)>=12) return TYPES[6];
+  const ns = scores.night_stress||0;
+  const gl = scores.glucose||0;
+  const en = scores.energy||0;
+  const dc = scores.decline||0;
+  const gt = scores.gut||0;
+  const im = scores.immune||0;
+  const rc = scores.recovery||0;
 
-  // Stress feeder — lifestyle & glucose tinggi bersamaan
-  if((scores.lifestyle||0)>=10 && (scores.glucose||0)>=8) return TYPES[8];
+  // ── STEP 3: Stable Performer — ALL pillars low ───────────────
+  const maxPillar = Math.max(...Object.values(pct));
+  if(maxPillar < 30) return TYPES[9];  // No pillar above 30% → stable
 
-  // Fasting crash — HANYA jika ada jawaban eksplisit terkait puasa
-  const hasFastingSignal = answers.some(a =>
+  // ── STEP 4: Multi-pillar check → Penjaga Vitalitas ──────────
+  const highPillars = Object.entries(pct).filter(([d,p])=>p>=60 && d!=='night_stress').length;
+  if(highPillars >= 3) return TYPES[6];
+
+  // ── STEP 5: Special triggers (order matters!) ────────────────
+
+  // Type 7 — Si Lapar Malam: night_stress C option (craving) + glucose tinggi
+  const hasNightCraving = answers.some(a=>
+    a.domain==='night_stress' &&
+    (a.a.includes('lapar') || a.a.includes('craving') || a.a.includes('ngemil'))
+  );
+  if(hasNightCraving && gl>=6) return TYPES[7];
+
+  // Type 8 — Si Makan Karena Stres: night_stress D option (stress) + glucose
+  const hasStressEating = answers.some(a=>
+    a.domain==='night_stress' &&
+    (a.a.includes('Stres') || a.a.includes('overthinking') || a.a.includes('pikiran'))
+  );
+  if(hasStressEating && gl>=4) return TYPES[8];
+
+  // Type 6 — Si Penjaga Vitalitas: decline tinggi + energy tinggi
+  if(dc>=6 && en>=8) return TYPES[6];
+
+  // Type 5 — Si Crash Saat Puasa: fasting keyword di jawaban manapun
+  const hasFasting = answers.some(a=>
     a.a.toLowerCase().includes('puasa') ||
     a.a.toLowerCase().includes('fasting') ||
+    a.a.toLowerCase().includes('intermittent') ||
     a.a.toLowerCase().includes('buka') ||
     a.a.toLowerCase().includes('sahur')
   );
-  if(hasFastingSignal && (scores.glucose||0)>=8) return TYPES[5];
+  if(hasFasting && gl>=4) return TYPES[5];
 
-  // Night craver — jawaban terkait malam + craving
-  const hasNightSignal = answers.some(a =>
-    a.domain==='energy' &&
-    (a.a.toLowerCase().includes('tidur') || a.a.toLowerCase().includes('malam'))
-  );
-  if(hasNightSignal && (scores.glucose||0)>=8) return TYPES[7];
+  // Type 2 — Si Perut Sensitif: gut + immune combo
+  if(gt>=6 && im>=5) return TYPES[2];
 
-  // Tipe berdasarkan pillar tertinggi
+  // ── STEP 6: Single-pillar dominant ─────────────────────────
+  // Jika satu pillar ≥ 70% max-nya → direct trigger (fix Issue 1)
+  if(pct.recovery>=70) return TYPES[4];  // Si Lambat Pulih
+  if(pct.gut>=70) return TYPES[2];       // Si Perut Sensitif
+  if(pct.immune>=70) return TYPES[3];    // Si Baterai Lemah
+  if(pct.decline>=70) return TYPES[1];   // Si Pikiran Berkabut
+
+  // ── STEP 7: Top domain map ───────────────────────────────────
   const map={
-    glucose:  TYPES[0],
-    energy:   TYPES[1],
-    decline:  TYPES[2],
-    gut:      TYPES[3],
-    recovery: TYPES[4],
-    immune:   TYPES[1],
-    lifestyle: TYPES[8]
+    glucose:     TYPES[0],  // Si Naik-Turun
+    decline:     TYPES[1],  // Si Pikiran Berkabut
+    gut:         TYPES[2],  // Si Perut Sensitif
+    immune:      TYPES[3],  // Si Baterai Lemah
+    recovery:    TYPES[4],  // Si Lambat Pulih
+    energy:      TYPES[3],  // Si Baterai Lemah (energy dom → low battery)
+    night_stress:TYPES[7],  // Si Lapar Malam (fallback)
   };
-  return map[top]||TYPES[0];
+  return map[top] || TYPES[0];
 }
 
 function renderResult(){
