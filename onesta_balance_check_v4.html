@@ -387,7 +387,7 @@ body::before{
     <p class="quiz-hint" id="q-hint"></p>
     <div class="opts" id="q-opts"></div>
     <div class="insight-card" id="insight-card">
-      <div class="ins-label">🔬 Sinyal Tubuh Terdekode</div>
+      <div class="ins-label" id="q-decoded-label">🔬 Sinyal Tubuh Terdekode</div>
       <div class="ins-text" id="ins-text"></div>
     </div>
   </div>
@@ -397,7 +397,7 @@ body::before{
 <!-- ══ CALC ══════════════════════════════════════════ -->
 <div id="s-calc" class="screen">
   <div class="calc-bee">🐝</div>
-  <h2 class="calc-title">Membaca sinyal tubuhmu...</h2>
+  <h2 class="calc-title" id="calc-title">Membaca sinyal tubuhmu...</h2>
   <p class="calc-sub">Menganalisis 6 balance pillars</p>
   <div class="calc-list" id="calc-list"></div>
 </div>
@@ -405,11 +405,11 @@ body::before{
 <!-- ══ AHA MOMENT ════════════════════════════════════ -->
 <div id="s-aha" class="screen">
   <div class="aha-card">
-    <div class="aha-eyebrow">Mengapa Kamu Dapat Hasil Ini</div>
-    <h3 class="aha-title">Ini yang tubuhmu ceritakan...</h3>
+    <div class="aha-eyebrow" id="aha-title">Mengapa Kamu Dapat Hasil Ini</div>
+    <h3 class="aha-title" id="aha-subtitle">Ini yang tubuhmu ceritakan...</h3>
 
     <!-- Context label for first-time users -->
-    <div style="font-size:.73rem;color:var(--muted);line-height:1.55;margin-bottom:.75rem;font-style:italic;">
+    <div id="aha-body" style="font-size:.73rem;color:var(--muted);line-height:1.55;margin-bottom:.75rem;font-style:italic;">
       Berikut sinyal-sinyal yang kamu laporkan tadi — inilah yang membentuk profil metabolikmu.
     </div>
 
@@ -417,18 +417,18 @@ body::before{
 
     <!-- User intent block -->
     <div id="aha-intent-block" style="display:none;background:rgba(200,144,42,.06);border:1px solid rgba(200,144,42,.2);border-radius:10px;padding:.75rem 1rem;margin-bottom:.65rem;">
-      <div style="font-size:.6rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.25rem;font-weight:700;">Yang Kamu Inginkan →</div>
+      <div id="aha-want-label" style="font-size:.6rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.25rem;font-weight:700;" id="aha-want-label">Yang Kamu Inginkan →</div>
       <div id="aha-intent-text" style="font-size:.85rem;color:var(--cream);font-weight:600;line-height:1.45;"></div>
     </div>
 
     <div class="aha-therefore">
-      <div class="aha-therefore-label">Kesimpulan →</div>
+      <div class="aha-therefore-label" id="aha-conc-label">Kesimpulan →</div>
       <div class="aha-therefore-text" id="aha-therefore"></div>
     </div>
 
     <div class="aha-type-preview" id="aha-type"></div>
     <div class="aha-type-science" id="aha-science"></div>
-    <button class="btn-start" onclick="goResult()" style="max-width:100%;width:100%">Lihat Laporan Lengkap →</button>
+    <button class="btn-start" onclick="goResult()" style="max-width:100%;width:100%" id="aha-btn">Lihat Laporan Lengkap →</button>
   </div>
 </div>
 
@@ -449,13 +449,13 @@ body::before{
       </div>
     </div>
     <div class="r-bar-track"><div class="r-bar-fill" id="r-bar" style="width:0%"></div></div>
-    <div class="r-zones"><span>🟢 Seimbang</span><span>🟡 Goyah</span><span>🟠 Tidak Stabil</span><span>🔴 Kritis</span></div>
+    <div class="r-zones"><span id="zone-0">🟢 Seimbang</span><span id="zone-1">🟡 Goyah</span><span id="zone-2">🟠 Tidak Stabil</span><span id="zone-3">🔴 Kritis</span></div>
   </div>
 
   <!-- Type -->
   <div class="r-type-block" id="r-type-block">
     <span class="r-type-emoji" id="r-type-emoji"></span>
-    <div class="r-type-eyebrow">Tipe Metabolik Kamu</div>
+    <div class="r-type-eyebrow" id="r-type-label">Tipe Metabolik Kamu</div>
     <div class="r-type-name" id="r-type-name"></div>
     <div class="r-type-en" id="r-type-en"></div>
     <div class="r-type-tagline" id="r-type-tagline"></div>
@@ -464,7 +464,7 @@ body::before{
 
   <!-- Insight FIRST -->
   <div class="r-insight-block">
-    <div class="r-insight-label">💡 Apa Artinya Ini</div>
+    <div class="r-insight-label" id="r-ins-label">💡 Apa Artinya Ini</div>
     <div class="r-insight-text" id="r-insight"></div>
   </div>
 
@@ -479,7 +479,7 @@ body::before{
       <div class="pl-item"><div class="pl-dot" style="background:#C84040"></div><span data-id="0–24% Prioritas utama" data-en="0–24% Top priority">0–24% Prioritas utama</span></div>
     </div>
     <div style="font-size:.72rem;color:var(--muted);font-style:italic;margin-bottom:.75rem;">
-      💡 <b style="color:var(--sub);font-style:normal;">% lebih tinggi = lebih seimbang.</b> Tap setiap pillar untuk memahami artinya.
+      <span id="pillar-hint-text">💡 <b style="color:var(--sub);font-style:normal;">% lebih tinggi = lebih seimbang.</b> Tap setiap pillar untuk memahami artinya.</span>
     </div>
     <div id="r-pillars-content"></div>
   </div>
@@ -487,7 +487,7 @@ body::before{
   <!-- Ritual + Product Cards -->
   <div class="r-ritual-block">
     <div class="r-ritual-header">
-      <div class="r-ritual-eyebrow">Ritual Harianmu</div>
+      <div class="r-ritual-eyebrow" id="r-ritual-eyebrow">Ritual Harianmu</div>
       <div class="r-ritual-title" id="r-ritual-title"></div>
     </div>
     <div class="r-ritual-body">
@@ -495,12 +495,12 @@ body::before{
 
       <!-- PRODUCT CARDS - NEW! -->
       <div class="prod-section">
-        <div class="prod-section-label">Produk yang Direkomendasikan Untukmu</div>
+        <div class="prod-section-label" id="r-prod-header">Produk yang Direkomendasikan Untukmu</div>
         <div class="prod-cards" id="r-prod-cards"></div>
       </div>
 
       <div class="r-why-onesta">
-        <div class="r-why-label">Mengapa Onesta Bekerja untuk Kondisi Ini</div>
+        <div class="r-why-label" id="r-why-header">Mengapa Onesta Bekerja untuk Kondisi Ini</div>
         <div class="r-why-text" id="r-why"></div>
       </div>
     </div>
@@ -508,14 +508,14 @@ body::before{
 
   <!-- Share -->
   <div class="r-share-block">
-    <div class="r-share-label">"Balance is the new normal."<br>Bagikan ke temanmu yang butuh ini.</div>
+    <div class="r-share-label">"Balance is the new normal."<br id="share-subtitle">Bagikan ke temanmu yang butuh ini.</div>
     <div class="share-preview">
       <div class="sp-head">
         <div class="sp-bee">🐝</div>
         <div><div class="sp-brand">Onesta Balance Check™</div><div class="sp-tag">Natural Metabolic Stabilizer</div></div>
       </div>
       <div id="scp-lines"></div>
-      <div class="sp-cta">"Cek kondisi tubuhmu juga — 1 menit, gratis, hasil personal."</div>
+      <div class="sp-cta" id="share-cta-text">"Cek kondisi tubuhmu juga — 1 menit, gratis, hasil personal."</div>
     </div>
   </div>
 
@@ -1108,6 +1108,8 @@ function nextQ(){
 // CALC
 // ══════════════════════════════════════
 function showCalc(){
+  const ct = document.getElementById('calc-title');
+  if(ct) ct.textContent = LANG[currentLang].calcTitle;
   show('s-calc');prog(85);
   const pillars=['⚡ Stabilitas Energi','🩸 Ritme Gula Darah','🫁 Keseimbangan Usus','🛡️ Kesiapan Imunitas','💪 Recovery & Performa','🌿 Anti-Penuaan'];
   const list=document.getElementById('calc-list');
@@ -1202,15 +1204,21 @@ function showAha(){
   document.getElementById('aha-type').textContent = type.emoji + ' ' + typeName;
   document.getElementById('aha-science').textContent = 'Science: ' + type.science;
 
-  // Update AHA static labels for language
+  // Update ALL AHA static labels for language
   const setT = (id,v) => { const e=document.getElementById(id); if(e) e.textContent=v; };
-  const L = LANG[currentLang];
-  setT('aha-title', L.ahaTitle);
-  setT('aha-subtitle', L.ahaSubtitle);
-  setT('aha-body', L.ahaBody);
-  setT('aha-want-label', L.ahaWant);
-  setT('aha-conc-label', L.ahaConc);
-  setT('aha-btn', L.ahaBtn);
+  const setH2 = (id,v) => { const e=document.getElementById(id); if(e) e.innerHTML=v; };
+  const LL = LANG[currentLang];
+  setT('aha-title', LL.ahaTitle);
+  setT('aha-subtitle', LL.ahaSubtitle);
+  setT('aha-body', LL.ahaBody);
+  setT('aha-want-label', LL.ahaWant);
+  setT('aha-conc-label', LL.ahaConc);
+  setT('aha-btn', LL.ahaBtn);
+  // Result type label
+  setT('r-type-label', LL.resultTypeLabel);
+  // Pillar hint
+  const ph = document.getElementById('pillar-hint-text');
+  if(ph) ph.innerHTML = '💡 <b style="color:var(--sub);font-style:normal;">'+LL.pillarHint+'</b> '+LL.pillarHintSub;
 }
 
 // ══════════════════════════════════════
@@ -1399,7 +1407,18 @@ function renderResult(){
   // Update all language-sensitive labels in result
   const RL = LANG[currentLang];
   const setTx=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  setTx('r-type-label', RL.resultTypeLabel);
+  setTx('r-ins-label', RL.resultInsLabel);
+  setTx('r-ritual-eyebrow', RL.ritualHeader);
+  setTx('r-prod-header', RL.productsHeader);
+  setTx('r-why-header', RL.whyHeader);
+  setTx('share-subtitle', RL.shareSubtitle);
+  setTx('share-cta-text', RL.shareCard.cta);
   setTx('cta-order', RL.ctaOrder);
+  setTx('cta-recheck', RL.ctaRecheck);
+  // Zone labels
+  const zLabels = RL.zoneLabels;
+  ['zone-0','zone-1','zone-2','zone-3'].forEach((id,i)=>setTx(id, zLabels[i]));
   setTx('cta-share', RL.ctaShare);
   setTx('cta-recheck', RL.ctaRecheck);
   // Pillar legend spans
