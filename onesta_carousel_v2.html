@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onesta — Ada Apa Dengan Balance? Series</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#A86800;--goldl:#C8841A;--goldxl:#E8B84B;--goldd:#7A4E00;
+  --bg:#FAF6EF;--bg2:#F5EFE4;--bg3:#EDE5D4;--white:#FFFFFF;
+  --ink:#2C1A00;--sub:rgba(44,26,0,.65);--muted:rgba(44,26,0,.38);
+  --border:rgba(168,104,0,.16);--borderl:rgba(168,104,0,.28);
+  --green:#1A7A44;--teal:#0A8070;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg3);color:var(--ink);min-height:100vh}
+
+.nav{position:sticky;top:0;z-index:100;background:rgba(250,246,239,.96);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--border);
+  padding:.65rem .9rem;display:flex;gap:.4rem;align-items:center;overflow-x:auto}
+.nav::-webkit-scrollbar{display:none}
+.nav-brand{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--gold);
+  letter-spacing:.15em;white-space:nowrap;margin-right:.4rem;flex-shrink:0}
+.eb{padding:.28rem .75rem;border-radius:6px;font-size:.62rem;font-family:'DM Mono',monospace;
+  letter-spacing:.04em;white-space:nowrap;flex-shrink:0;background:transparent;
+  border:1px solid var(--border);color:var(--muted);cursor:pointer;transition:all .2s}
+.eb.on{background:var(--gold);color:#fff;border-color:var(--gold);font-weight:600}
+
+.series{display:none}
+.series.on{display:block;animation:fi .3s ease}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.ep-hdr{padding:1.2rem .9rem .5rem;text-align:center}
+.ep-tag{font-family:'DM Mono',monospace;font-size:.54rem;color:var(--gold);
+  letter-spacing:.18em;margin-bottom:.25rem}
+.ep-ttl{font-family:'Playfair Display',serif;font-size:clamp(1.15rem,3.5vw,1.6rem);
+  font-weight:700;color:var(--ink)}
+.ep-sub{font-size:.72rem;color:var(--muted);margin-top:.2rem;font-style:italic}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));
+  gap:.9rem;padding:.7rem .9rem 2.5rem;max-width:1400px;margin:0 auto}
+
+.s{aspect-ratio:1/1;border-radius:14px;overflow:hidden;position:relative;
+  cursor:pointer;transition:transform .25s,box-shadow .25s;
+  box-shadow:0 2px 12px rgba(44,26,0,.09)}
+.s:hover{transform:scale(1.015);box-shadow:0 8px 28px rgba(44,26,0,.16)}
+.si{width:100%;height:100%;display:flex;flex-direction:column;padding:1.4rem 1.35rem;position:relative;z-index:2}
+
+/* backgrounds */
+.bw{background:#fff;border:1px solid var(--border)}
+.bc{background:var(--bg);border:1px solid var(--border)}
+.bw2{background:var(--bg2);border:1px solid var(--border)}
+.bg{background:linear-gradient(145deg,#FFF8EC,#FFEFD0);border:1px solid rgba(168,104,0,.22)}
+.bgr{background:linear-gradient(145deg,#F0FAF4,#DDF5E8);border:1px solid rgba(26,122,68,.18)}
+.bdk{background:linear-gradient(145deg,#2C1A00,#4A2C08)}
+
+/* typography */
+.n{font-family:'DM Mono',monospace;font-size:.53rem;color:var(--muted);letter-spacing:.1em;margin-bottom:auto}
+.ey{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.42rem;color:var(--gold)}
+.tt{font-family:'Playfair Display',serif;font-size:clamp(1rem,2.8vw,1.48rem);font-weight:700;line-height:1.2;margin-bottom:.55rem;color:var(--ink)}
+.tt em{font-style:italic;color:var(--goldl)}
+.bd{font-size:clamp(.7rem,1.75vw,.84rem);line-height:1.65;color:var(--sub)}
+.bd strong{color:var(--ink);font-weight:600}
+.ft{margin-top:auto;font-family:'DM Mono',monospace;font-size:.5rem;color:var(--muted);letter-spacing:.08em}
+
+.ln{width:26px;height:2px;background:var(--gold);margin-bottom:.6rem}
+.dt{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:.44rem}
+.qm{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,7vw,4.5rem);
+  font-weight:900;color:var(--gold);opacity:.1;line-height:.8;margin-bottom:-.5rem}
+
+.sl{display:flex;flex-direction:column;gap:.4rem;margin:.25rem 0}
+.si2{display:flex;gap:.5rem;align-items:flex-start;font-size:clamp(.68rem,1.7vw,.82rem);color:var(--sub);line-height:1.5}
+.si2 strong{color:var(--ink)}
+
+.hb{background:rgba(168,104,0,.07);border:1px solid rgba(168,104,0,.18);
+  border-left:3px solid var(--gold);border-radius:0 9px 9px 0;
+  padding:.6rem .8rem;font-size:clamp(.68rem,1.7vw,.82rem);line-height:1.6;color:var(--sub)}
+.hb strong{color:var(--ink)}
+.hbg{background:rgba(26,122,68,.06);border-color:rgba(26,122,68,.18);border-left-color:var(--green)}
+
+.stats{display:flex;gap:.5rem;margin:.45rem 0}
+.st{flex:1;background:rgba(168,104,0,.07);border:1px solid var(--border);
+  border-radius:9px;padding:.55rem .4rem;text-align:center}
+.sn{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,3.5vw,1.9rem);
+  font-weight:700;color:var(--goldl);line-height:1}
+.sl2{font-size:.56rem;color:var(--muted);margin-top:.18rem;font-family:'DM Mono',monospace}
+
+.ctab{background:var(--gold);border-radius:9px;padding:.7rem .9rem;text-align:center;
+  font-size:clamp(.7rem,1.75vw,.84rem);font-weight:600;color:#fff;letter-spacing:.03em;margin-top:.55rem}
+
+.bc2{display:flex;flex-direction:column;align-items:center;text-align:center;flex:1;justify-content:center}
+.bee2{font-size:clamp(1.6rem,4.5vw,2.5rem);margin-bottom:.35rem}
+.bname{font-family:'Playfair Display',serif;font-size:clamp(1.3rem,3.8vw,2rem);
+  font-weight:900;color:var(--ink);letter-spacing:.06em}
+.btag{font-family:'DM Mono',monospace;font-size:.54rem;color:var(--gold);letter-spacing:.12em;margin:.18rem 0}
+
+/* dark slide overrides */
+.bdk .n,.bdk .ft{color:rgba(245,239,228,.35)}
+.bdk .ey{color:var(--goldxl)}
+.bdk .tt{color:#F5EFE4}
+.bdk .tt em{color:var(--goldxl)}
+.bdk .bd{color:rgba(245,239,228,.7)}
+.bdk .bd strong{color:#F5EFE4}
+.bdk .hb{background:rgba(232,184,75,.09);border-color:rgba(232,184,75,.25);border-left-color:var(--goldxl)}
+.bdk .hb strong{color:#F5EFE4}
+.bdk .ctab{background:var(--goldxl);color:var(--ink)}
+.bdk .dt{background:var(--goldxl)}
+.bdk .si2{color:rgba(245,239,228,.7)}
+.bdk .si2 strong{color:#F5EFE4}
+.bdk .bname{color:#F5EFE4}
+.bdk .btag{color:var(--goldxl)}
+.bdk .ln{background:var(--goldxl)}
+
+/* type mini */
+.tm{display:flex;flex-direction:column;gap:.5rem;flex:1}
+.tc{background:rgba(168,104,0,.07);border:1px solid var(--border);border-radius:8px;padding:.48rem .6rem}
+.te{font-size:.95rem}
+.tn{font-size:.78rem;font-weight:600;color:var(--ink)}
+.td{font-size:.68rem;color:var(--sub);line-height:1.42;font-style:italic}
+.div{height:1px;background:var(--border)}
+
+/* ritual slot */
+.slot{background:rgba(168,104,0,.06);border:1px solid var(--border);border-radius:8px;padding:.5rem .65rem;margin-bottom:.38rem}
+.slot-t{font-family:'DM Mono',monospace;font-size:.54rem;color:var(--gold);letter-spacing:.06em;margin-bottom:.18rem}
+.slot-a{font-size:.8rem;font-weight:600;color:var(--ink)}
+.slot-d{font-size:.7rem;color:var(--sub);line-height:1.4}
+
+.hint{text-align:center;padding:.85rem;font-size:.68rem;color:var(--muted);font-family:'DM Mono',monospace}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">🐝 ONESTA</div>
+  <button class="eb on" onclick="show(1,this)">Ep.1 — Recognition</button>
+  <button class="eb" onclick="show(2,this)">Ep.2 — Science</button>
+  <button class="eb" onclick="show(3,this)">Ep.3 — Tipe Metabolik</button>
+  <button class="eb" onclick="show(4,this)">Ep.4 — Ritual</button>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     EP 1 · ADA APA DENGAN BALANCE?
+     Recognition & Reframing · 10 slides
+═══════════════════════════════════════════ -->
+<div class="series on" id="ep1">
+<div class="ep-hdr">
+  <div class="ep-tag">Episode 1 · 10 Slides</div>
+  <div class="ep-ttl">Ada Apa Dengan Balance?</div>
+  <div class="ep-sub">Recognition & Reframing — buat orang ngangguk dan share</div>
+</div>
+<div class="grid">
+
+<div class="s bg"><div class="si">
+  <div class="n">01 / 10</div>
+  <div class="bc2">
+    <div class="bee2">🐝</div>
+    <div class="ey">Ada Apa Dengan</div>
+    <div style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,6.5vw,3.5rem);font-weight:900;color:var(--ink);line-height:1.02;margin-bottom:.6rem">Balance?</div>
+    <div class="bd" style="font-style:italic;color:var(--muted);text-align:center">"Bukan sakit.<br>Tapi juga… nggak<br>benar-benar sehat."</div>
+  </div>
+  <div class="ft" style="text-align:center">ONESTA · NATURAL METABOLIC STABILIZER</div>
+</div></div>
+
+<div class="s bw"><div class="si">
+  <div class="n">02 / 10</div>
+  <div class="ln"></div>
+  <div class="tt">Pernah ngerasa...</div>
+  <div class="sl">
+    <div class="si2"><div class="dt"></div><span>Bangun tidur… tapi <strong>sudah capek</strong></span></div>
+    <div class="si2"><div class="dt"></div><span>Makan… tapi <strong>cepat lapar lagi</strong></span></div>
+    <div class="si2"><div class="dt"></div><span>Kerja… tapi <strong>susah fokus</strong></span></div>
+    <div class="si2"><div class="dt"></div><span>Istirahat… tapi <strong>nggak benar-benar pulih</strong></span></div>
+    <div class="si2"><div class="dt"></div><span>Dulu kuat sampai malam. Sekarang <strong>jam 3 sore sudah habis.</strong></span></div>
+  </div>
+  <div class="bd" style="margin-top:.55rem;font-style:italic;color:var(--muted)">Ini bukan kebetulan.</div>
+</div></div>
+
+<div class="s bg"><div class="si">
+  <div class="n">03 / 10</div>
+  <div class="qm">"</div>
+  <div style="font-family:'Playfair Display',serif;font-size:clamp(1.1rem,3vw,1.55rem);font-weight:700;color:var(--ink);line-height:1.3;margin-bottom:.6rem">
+    Bukan sakit.<br>Tapi juga…<br>nggak benar-benar<br><em style="color:var(--goldl)">sehat.</em>
+  </div>
+  <div class="bd">Dokter bilang semua normal.<br>Tapi <strong>kamu tahu ada yang berbeda.</strong></div>
+  <div class="hb" style="margin-top:auto">Itu bukan imajinasi.<br><strong>Itu sinyal tubuhmu.</strong></div>
+</div></div>
+
+<div class="s bc"><div class="si">
+  <div class="n">04 / 10</div>
+  <div class="ey">Kenapa ini terjadi?</div>
+  <div class="tt">Modern life.<br><em>Modern imbalance.</em></div>
+  <div class="sl">
+    <div class="si2"><div class="dt"></div><span>Stress jadi <strong>normal</strong></span></div>
+    <div class="si2"><div class="dt"></div><span>Kurang tidur jadi <strong>kebiasaan</strong></span></div>
+    <div class="si2"><div class="dt"></div><span>Makanan ultra-processed jadi <strong>pilihan utama</strong></span></div>
+    <div class="si2"><div class="dt"></div><span>Suplemen datang dan <strong>pergi tanpa hasil</strong></span></div>
+  </div>
+  <div class="bd" style="margin-top:.5rem;font-style:italic;color:var(--muted)">Kita pikir solusinya tambah nutrisi.<br>Tambah vitamin. Tambah suplemen.</div>
+</div></div>
+
+<div class="s bw"><div class="si">
+  <div class="n">05 / 10</div>
+  <div class="ey">Paradigma baru</div>
+  
+  <div style="font-family:'Playfair Display',serif;font-size:clamp(1.2rem,3.3vw,1.75rem);font-weight:700;color:var(--ink);margin-bottom:.7rem;line-height:1.2">
+    Masalahnya bukan kurang.<br>Masalahnya:<br><em style="color:var(--goldl)">tidak seimbang.</em>
+  </div>
+  <div class="bd">Sebelum nutrisi bekerja.<br>Sebelum suplemen bekerja.<br>Sebelum program apapun bekerja.<br><br><strong>Tubuh harus stabil dulu.</strong></div>
+</div></div>
+
+<div class="s bw2"><div class="si">
+  <div class="n">06 / 10</div>
+  <div class="ey">Kalau balance terganggu...</div>
+  <div class="sl" style="gap:.48rem">
+    <div class="si2"><div class="dt"></div><span><strong>Semangat pagi,</strong> lemas siang. Bukan karena kurang tidur.</span></div>
+    <div class="si2"><div class="dt"></div><span><strong>Hal kecil terasa berat.</strong> Bukan karena kamu lemah.</span></div>
+    <div class="si2"><div class="dt"></div><span><strong>Di tengah meeting,</strong> pikiran tiba-tiba kosong.</span></div>
+    <div class="si2"><div class="dt"></div><span><strong>Sudah makan,</strong> tapi 2 jam kemudian lapar lagi.</span></div>
+  </div>
+  <div class="hb" style="margin-top:.55rem">Bukan kamu yang bermasalah.<br><strong>Ritme tubuhmu yang perlu distabilkan.</strong></div>
+</div></div>
+
+<div class="s bc"><div class="si">
+  <div class="n">07 / 10</div>
+  <div class="ey">Semua berawal dari satu titik</div>
+  <div style="font-family:'Playfair Display',serif;font-size:clamp(1.5rem,4.2vw,2.4rem);font-weight:900;color:var(--goldl);margin:.3rem 0;line-height:1.08">Metabolic<br>Balance.</div>
+  <div class="bd">Tubuh kita bekerja dengan <strong>ritme, sinyal, dan keseimbangan.</strong><br><br>Kalau ritme ini terganggu — satu per satu sistem mulai terpengaruh.</div>
+  <div class="hb" style="margin-top:auto"><strong>Kabar baiknya:</strong> ritme ini bisa distabilkan kembali.</div>
+</div></div>
+
+<div class="s bg"><div class="si">
+  <div class="n">08 / 10</div>
+  <div class="ey">Yang sebenarnya dibutuhkan</div>
+  <div class="tt">Bukan suplemen baru.<br>Bukan diet ekstrem.<br><em>Tapi Stabilizer.</em></div>
+  <div class="bd">Sesuatu yang bantu tubuh kamu:</div>
+  <div class="sl" style="margin-top:.3rem">
+    <div class="si2"><div class="dt"></div><span>Kembali ke <strong>ritme alami</strong></span></div>
+    <div class="si2"><div class="dt"></div><span>Menjaga <strong>konsistensi energi</strong></span></div>
+    <div class="si2"><div class="dt"></div><span>Bekerja <strong>sebagaimana mestinya</strong></span></div>
+  </div>
+</div></div>
+
+<div class="s bw"><div class="si">
+  <div class="n">09 / 10</div>
+  <div class="bc2">
+    <div class="ey">The new mindset</div>
+    <div style="font-family:'Playfair Display',serif;font-size:clamp(1.5rem,4.5vw,2.6rem);font-weight:700;color:var(--ink);line-height:1.15;margin-bottom:.65rem;text-align:center">
+      <em style="color:var(--goldl)">Balance</em><br>is the<br>new normal.
+    </div>
+    <div class="bd" style="text-align:center">Bukan tentang boosting.<br>Bukan tentang detox.<br>Tapi tentang <strong>menjaga stabilitas</strong> setiap hari.</div>
+  </div>
+</div></div>
+
+<div class="s bdk"><div class="si">
+  <div class="n">10 / 10</div>
+  <div class="bc2">
+    <div class="bee2">🐝</div>
+    <div class="bname">Onesta</div>
+    <div class="btag" style="margin-bottom:.9rem">NATURAL METABOLIC STABILIZER</div>
+    <div class="bd" style="text-align:center;margin-bottom:.75rem">Tidak tahu dari mana mulai?<br><strong>Cek kondisi tubuhmu dulu.</strong><br><span style="font-style:italic;color:rgba(245,239,228,.45)">Kurang dari 3 menit. Gratis. Personal.</span></div>
+    <div class="ctab">Ada Apa Dengan Balance-mu? →</div>
+  </div>
+  <div class="ft" style="text-align:center">tinyurl.com/onesta-check-v4</div>
+</div></div>
+
+</div></div>
+
+<!-- ═══════════════════════════════════════════
+     EP 2 · KENAPA TUBUHMU BUTUH STABILIZER?
+     Science & Belief Building · 10 slides
+═══════════════════════════════════════════ -->
+<div class="series" id="ep2">
+<div class="ep-hdr">
+  <div class="ep-tag">Episode 2 · 10 Slides</div>
+  <div class="ep-ttl">Kenapa Tubuhmu Butuh Stabilizer?</div>
+  <div class="ep-sub">Science & Belief Building — membangun kepercayaan berbasis logika</div>
+</div>
+<div class="grid">
+
+<div class="s bg"><div class="si">
+  <div class="n">01 / 10</div>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+    <div class="ey">Episode 2</div>
+    <div style="font-family:'Playfair Display',serif;font-size:clamp(1.2rem,3.5vw,1.85rem);font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:.65rem">
+      Kenapa tubuhmu<br>butuh <em style="color:var(--goldl)">stabilizer</em>?<br><span style="font-size:.6em;color:var(--muted);font-weight:400">Bukan suplemen biasa.</span>
+    </div>
+    <div class="bd">Jawabannya ada di dalam tubuhmu — di tingkat sel, hormon, dan ritme biologis yang selama ini bekerja tanpa kamu sadari.</div>
+  </div>
+</div></div>
+
+<div class="s bw"><div class="si">
+  <div class="n">02 / 10</div>
+  <div class="ey">Aktor utama: Insulin</div>
+  <div class="tt">Setiap kali kamu makan —<br><em>insulin bekerja.</em></div>
+  <div class="bd">Kalau gula darah naik terlalu cepat → insulin panik → gula drop drastis → tubuh minta energi lagi.<br><br><strong>Siklus naik-turun yang tidak pernah berhenti.</strong></div>
+  <div class="hb" style="margin-top:.5rem">Ini yang disebut <strong>"Insulin spike-drop pattern"</strong><br><span style="font-size:.85em;color:var(--muted)">Bukan sakit. Tapi sangat menguras energi.</span></div>
+</div></div>
+
+<div class="s bc"><div class="si">
+  <div class="n">03 / 10</div>
+  <div class="ey">Aktor kedua: Cortisol</div>
+  <div class="tt">Stress bukan hanya<br><em>perasaan.</em></div>
+  <div class="bd">Stress → cortisol naik → insulin terganggu → energi tidak stabil → susah fokus → mood berubah → imun melemah.<br><br><strong>Satu efek domino yang panjang.</strong></div>
+  <div class="hb" style="margin-top:.5rem">Makanya stress bikin kamu tiba-tiba lapar.<br><strong>Bukan karena kurang willpower. Tapi karena hormonnya memang meminta itu.</strong><br><br>Dan kalau dibiarkan… pelan-pelan menuju <strong>metabolic disorder</strong> — lalu ke <em>chronic diseases.</em></div>
+</div></div>
+
+<div class="s bw2"><div class="si">
+  <div class="n">04 / 10</div>
+  <div class="ey">Yang sering dilupakan</div>
+  <div class="tt">Sistem Pencernaan:<br><em>"otak keduamu".</em></div>
+  <div class="bd" style="margin-bottom:.5rem">90% serotonin — yang mempengaruhi mood dan fokus — diproduksi di sistem pencernaan.<br><br>Kalau pencernaan tidak seimbang:</div>
+  <div class="sl">
+    <div class="si2"><div class="dt"></div><span>Mood <strong>mudah berubah</strong></span></div>
+    <div class="si2"><div class="dt"></div><span>Fokus <strong>sulit dipertahankan</strong></span></div>
+    <div class="si2"><div class="dt"></div><span>Energi terasa <strong>bocor tanpa sebab</strong></span></div>
+  </div>
+  <div class="bd" style="margin-top:.4rem;color:var(--muted);font-size:.7rem;font-style:italic">Nature Reviews Neuroscience — gut-brain axis</div>
+</div></div>
+
+<div class="s bg"><div class="si">
+  <div class="n">05 / 10</div>
+  <div class="ey">Solusi dari alam Indonesia</div>
+  <div style="font-family:'Playfair Display',serif;font-size:clamp(1.5rem,4.2vw,2.3rem);font-weight:900;color:var(--goldl);margin:.3rem 0;line-height:1.08">Trehalulose.</div>
+  <div class="bd" style="margin-bottom:.5rem">Komponen energi alami yang dominan di <strong>stingless bee honey Indonesia.</strong></div>
+  <div class="sl">
+    <div class="si2"><div class="dt"></div><span>Glycemic index <strong>jauh lebih rendah</strong> dari madu biasa</span></div>
+    <div class="si2"><div class="dt"></div><span>Energi dilepas <strong>perlahan dan stabil</strong></span></div>
+    <div class="si2"><div class="dt"></div><span>Tubuh <strong>tidak panik</strong> — tidak ada spike, tidak ada crash</span></div>
+  </div>
+  <div class="bd" style="margin-top:.4rem;color:var(--muted);font-size:.7rem;font-style:italic">Food Research International, 2021</div>
+</div></div>
+
+<div class="s bw"><div class="si">
+  <div class="n">06 / 10</div>
+  <div class="ey">Apa artinya untuk tubuhmu?</div>
+  <div style="font-family:'Playfair Display',serif;font-size:clamp(1rem,2.6vw,1.38rem);font-weight:700;color:var(--ink);margin:.3rem 0 .65rem;line-height:1.25">
+    Tubuh tidak panik.<br>Tubuh tetap tenang.<br><em style="color:var(--goldl)">Tubuh tetap seimbang.</em>
+  </div>
+  <div class="sl">
+    <div class="si2"><div class="dt"></div><span>Energi <strong>stabil dari pagi sampai malam</strong></span></div>
+    <div class="si2"><div class="dt"></div><span>Craving <strong>berkurang secara alami</strong></span></div>
+    <div class="si2"><div class="dt"></div><span>Fokus <strong>lebih mudah dipertahankan</strong></span></div>
+    <div class="si2"><div class="dt"></div><span>Recovery <strong>lebih cepat</strong></span></div>
+  </div>
+  <div class="bd" style="margin-top:.5rem;color:var(--muted);font-style:italic">Dan karena ini alami — tidak ada efek samping.</div>
+</div></div>
+
+<div class="s bgr"><div class="si">
+  <div class="n">07 / 10</div>
+  <div class="ey" style="color:var(--green)">Bukan honey biasa</div>
+  <div class="tt">Ini adalah<br><em style="color:var(--green)">living honey.</em></div>
+  <div class="bd" style="margin-bottom:.45rem">Kaya akan bioaktif alami:</div>
+  <div class="sl">
+    <div class="si2"><div class="dt" style="background:var(--green)"></div><span><strong>Prebiotics</strong> — dukung gut & metabolisme</span></div>
+    <div class="si2"><div class="dt" style="background:var(--green)"></div><span><strong>Antioxidants</strong> — lawan stress oksidatif</span></div>
+    <div class="si2"><div class="dt" style="background:var(--green)"></div><span><strong>Anti-inflammatory</strong> — redakan peradangan</span></div>
+    <div class="si2"><div class="dt" style="background:var(--green)"></div><span><strong>Propolis</strong> — perkuat pertahanan tubuh</span></div>
+  </div>
+  <div class="hb hbg" style="margin-top:.5rem">Ancient superfood.<br><strong>Divalidasi modern research.</strong></div>
+</div></div>
+
+<div class="s bg"><div class="si">
+  <div class="n">08 / 10</div>
+  <div class="ey">Sesederhana ini</div>
+  <div style="font-family:'Playfair Display',serif;font-size:clamp(2rem,5.5vw,3.2rem);font-weight:900;color:var(--goldl);line-height:1;margin:.3rem 0">2 sdt.<br><span style="font-size:.52em;color:var(--ink)">Setiap hari.</span></div>
+  <div class="bd" style="margin:.6rem 0">Balance bukan dilakukan sesekali.<br><strong>Balance dijaga setiap hari.</strong></div>
+  <div class="sl">
+    <div class="si2"><div class="dt"></div><span>🌅 Pagi — sebelum makan</span></div>
+    <div class="si2"><div class="dt"></div><span>🍽️ Sebelum makan besar</span></div>
+  </div>
+</div></div>
+
+<div class="s bw2"><div class="si">
+  <div class="n">09 / 10</div>
+  <div class="ey">Lebih dari sekadar kamu</div>
+  <div class="tt">Setiap tetes Onesta<br><em>melindungi lebih.</em></div>
+  <div class="sl" style="margin-bottom:.5rem">
+    <div class="si2"><div class="dt"></div><span>Mendukung <strong>peternak & komunitas lokal</strong></span></div>
+    <div class="si2"><div class="dt"></div><span>Menjaga <strong>keberlanjutan hutan Indonesia</strong></span></div>
+    <div class="si2"><div class="dt"></div><span>Membantu <strong>penyerbukan ekosistem</strong></span></div>
+  </div>
+  <div class="hb">Ini bukan hanya tentang tubuhmu.<br><strong>Ini tentang tubuh, komunitas, dan Indonesia.</strong></div>
+  <div class="bd" style="margin-top:.4rem;color:var(--muted);font-size:.7rem;font-style:italic">Setiap botol bisa di-trace dari hive ke tanganmu. 🔍</div>
+</div></div>
+
+<div class="s bdk"><div class="si">
+  <div class="n">10 / 10</div>
+  <div class="bc2">
+    <div style="font-family:'Playfair Display',serif;font-size:clamp(1rem,2.8vw,1.4rem);font-weight:700;color:#F5EFE4;margin-bottom:.35rem">Sekarang kamu tahu <em style="color:var(--goldxl)">kenapa.</em></div>
+    <div class="bd" style="text-align:center;margin-bottom:.75rem">Pertanyaan berikutnya:<br><strong>Tipe imbalance mana yang ada di tubuhmu?</strong></div>
+    <div class="ctab" style="margin-bottom:.4rem">Cek kondisi tubuhmu →</div>
+    <div style="font-size:.7rem;color:rgba(245,239,228,.4);font-style:italic">Episode 3: Kenali tipe metabolikmu ↓</div>
+  </div>
+</div></div>
+
+</div></div>
+
+<!-- ═══════════════════════════════════════════
+     EP 3 · KENALI TIPE METABOLIKMU
+     Personalization & Curiosity · 8 slides
+═══════════════════════════════════════════ -->
+<div class="series" id="ep3">
+<div class="ep-hdr">
+  <div class="ep-tag">Episode 3 · 8 Slides</div>
+  <div class="ep-ttl">Kenali Tipe Metabolikmu</div>
+  <div class="ep-sub">Personalization & Curiosity — buat orang penasaran dan mau coba quiz</div>
+</div>
+<div class="grid">
+
+<div class="s bg"><div class="si">
+  <div class="n">01 / 08</div>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+    <div class="ey">Episode 3</div>
+    <div class="tt">Imbalance itu <em>tidak sama</em> untuk setiap orang.</div>
+    <div class="bd" style="margin-bottom:.55rem">Kamu dan temanmu mungkin sama-sama merasa "tidak oke" — tapi sinyalnya berbeda. Ritualnya berbeda. Solusinya berbeda.</div>
+    <div class="hb">Ada <strong>10 tipe metabolik</strong> yang berbeda.<br>Yang mana kamu?</div>
+  </div>
+</div></div>
+
+<div class="s bw"><div class="si">
+  <div class="n">02 / 08</div>
+  <div style="font-size:1.8rem;margin-bottom:.25rem">🎢</div>
+  <div style="font-family:'DM Mono',monospace;font-size:.56rem;color:var(--gold);letter-spacing:.1em;margin-bottom:.25rem">TIPE 1</div>
+  <div style="font-family:'Playfair Display',serif;font-size:clamp(1.2rem,3.5vw,1.75rem);font-weight:700;color:var(--ink);margin-bottom:.4rem">Si Naik-Turun</div>
+  <div class="bd" style="font-style:italic;color:var(--muted);margin-bottom:.55rem">"Habis makan ngantuk, terus lapar lagi."</div>
+  <div class="sl">
+    <div class="si2"><div class="dt"></div><span>Energi crash setelah makan</span></div>
+    <div class="si2"><div class="dt"></div><span>Craving gula atau karbohidrat intens</span></div>
+    <div class="si2"><div class="dt"></div><span>Mood ikut naik-turun sepanjang hari</span></div>
+  </div>
+  <div style="margin-top:auto;font-family:'DM Mono',monospace;font-size:.56rem;color:var(--gold)">Ritual: Onesta Daily → stabilkan ritme glukosa</div>
+</div></div>
+
+<div class="s bc"><div class="si">
+  <div class="n">03 / 08</div>
+  <div class="tm">
+    <div class="tc"><div class="te">🔋</div><div class="tn">Si Baterai Lemah</div><div class="td">"Sudah tidur 8 jam, bangun masih capek."</div></div>
+    <div class="div"></div>
+    <div class="tc"><div class="te">🌫️</div><div class="tn">Si Pikiran Berkabut</div><div class="td">"Ada di meeting, tapi pikiran entah ke mana. Fokus hilang di tengah hari."</div></div>
+    <div class="div"></div>
+    <div class="tc"><div class="te">🫧</div><div class="tn">Si Perut Sensitif</div><div class="td">"Perut nggak pernah benar-benar nyaman. Kembung, berat, sensitif."</div></div>
+  </div>
+</div></div>
+
+<div class="s bw2"><div class="si">
+  <div class="n">04 / 08</div>
+  <div class="tm">
+    <div class="tc"><div class="te">🐢</div><div class="tn">Si Lambat Pulih</div><div class="td">"Semua orang sudah segar, aku masih dalam proses recovery."</div></div>
+    <div class="div"></div>
+    <div class="tc"><div class="te">💥</div><div class="tn">Si Crash Saat Puasa</div><div class="td">"Mulai IF kuat, tapi crash di tengah jalan. Buka puasa jadi binge."</div></div>
+    <div class="div"></div>
+    <div class="tc"><div class="te">🛡️</div><div class="tn">Si Penjaga Vitalitas</div><div class="td">"Mulai kerasa berbeda. Ingin jaga kondisi sebelum terlambat."</div></div>
+  </div>
+</div></div>
+
+<div class="s bg"><div class="si">
+  <div class="n">05 / 08</div>
+  <div class="tm">
+    <div class="tc"><div class="te">🌙</div><div class="tn">Si Lapar Malam</div><div class="td">"Jam 10 malam… perut minta sesuatu lagi. Susah tidur tanpa ngemil."</div></div>
+    <div class="div"></div>
+    <div class="tc"><div class="te">😤</div><div class="tn">Si Makan Karena Stres</div><div class="td">"Deadline datang, tangan langsung ke snack. Bukan lapar — tapi butuh sesuatu."</div></div>
+    <div class="div"></div>
+    <div class="tc" style="border-color:rgba(26,122,68,.2);background:rgba(26,122,68,.06)">
+      <div class="te">🏆</div><div class="tn" style="color:var(--green)">Si Performa Stabil</div>
+      <div class="td">"Kondisi sudah baik — tinggal jaga dan explore lebih jauh."</div>
+    </div>
+  </div>
+</div></div>
+
+<div class="s bw"><div class="si">
+  <div class="n">06 / 08</div>
+  <div class="bc2">
+    <div style="font-family:'Playfair Display',serif;font-size:clamp(1.4rem,4vw,2.2rem);font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:.7rem;text-align:center">
+      Kamu tipe<br><em style="color:var(--goldl)">yang mana?</em>
+    </div>
+    <div class="bd" style="text-align:center;margin-bottom:.75rem">Mungkin kamu campuran beberapa tipe.<br>Mungkin kamu belum tahu sama sekali.<br><br><strong>Itulah fungsi quiz ini.</strong></div>
+    <div style="font-size:.78rem;color:var(--muted);font-style:italic;text-align:center">10 pertanyaan · &lt; 3 menit · Hasil personal</div>
+  </div>
+</div></div>
+
+<div class="s bg"><div class="si">
+  <div class="n">07 / 08</div>
+  <div class="ey">Bukan quiz biasa</div>
+  <div class="tt"><em>"Ada Apa Dengan Balance?"</em></div>
+  <div class="bd" style="margin-bottom:.5rem">Ini adalah <strong>cermin metabolik tubuhmu.</strong></div>
+  <div class="sl">
+    <div class="si2"><div class="dt"></div><span>10 pertanyaan → baca <strong>6 balance pillars</strong></span></div>
+    <div class="si2"><div class="dt"></div><span>Balance Score <strong>0–100</strong> yang personal</span></div>
+    <div class="si2"><div class="dt"></div><span>Tipe metabolik <strong>spesifik untuk kamu</strong></span></div>
+    <div class="si2"><div class="dt"></div><span>Ritual harian yang <strong>sudah dipersonalisasi</strong></span></div>
+  </div>
+  <div class="bd" style="margin-top:.4rem;color:var(--muted);font-style:italic">Gratis. Di bawah 3 menit. Hasil langsung ke WhatsApp.</div>
+</div></div>
+
+<div class="s bdk"><div class="si">
+  <div class="n">08 / 08</div>
+  <div class="bc2">
+    <div class="bee2">🐝</div>
+    <div class="bname">Onesta</div>
+    <div class="btag" style="margin-bottom:.75rem">NATURAL METABOLIC STABILIZER</div>
+    <div class="tt" style="font-size:clamp(.95rem,2.6vw,1.3rem);text-align:center;margin-bottom:.65rem">Cek tipe metabolikmu.<br><em>Gratis. &lt; 3 menit.</em></div>
+    <div class="ctab">Ada Apa Dengan Balance-mu? →</div>
+    <div class="ft" style="text-align:center;margin-top:.6rem">tinyurl.com/onesta-check-v4</div>
+  </div>
+</div></div>
+
+</div></div>
+
+<!-- ═══════════════════════════════════════════
+     EP 4 · MULAI DARI DUA SENDOK
+     Ritual & Social Proof · 8 slides
+═══════════════════════════════════════════ -->
+<div class="series" id="ep4">
+<div class="ep-hdr">
+  <div class="ep-tag">Episode 4 · 8 Slides</div>
+  <div class="ep-ttl">Mulai dari Dua Sendok</div>
+  <div class="ep-sub">Ritual & Social Proof — mendorong first purchase dan sharing</div>
+</div>
+<div class="grid">
+
+<div class="s bg"><div class="si">
+  <div class="n">01 / 08</div>
+  <div class="bc2">
+    <div style="font-family:'Playfair Display',serif;font-size:clamp(2rem,5.5vw,3.2rem);font-weight:900;color:var(--goldl);line-height:1;margin-bottom:.5rem">2 sdt.<br><span style="font-size:.5em;color:var(--ink)">Setiap hari.</span></div>
+    <div class="bd" style="text-align:center">Sesederhana itu.<br>Karena <strong>konsistensi kecil yang stabil</strong><br>adalah fondasi kesehatan jangka panjang.</div>
+  </div>
+  <div class="ft" style="text-align:center">ONESTA · MULAI DARI DINI</div>
+</div></div>
+
+<div class="s bw"><div class="si">
+  <div class="n">02 / 08</div>
+  <div class="ey">Ritual pagi yang mengubah segalanya</div>
+  <div class="slot">
+    <div class="slot-t">🌅 SETIAP PAGI — 20 MENIT SEBELUM MAKAN</div>
+    <div class="slot-a">1 sendok teh Onesta Daily</div>
+    <div class="slot-d">Larutkan dalam air hangat atau konsumsi langsung. Trehalulose mempersiapkan respons glukosa yang lebih gradual untuk sarapan.</div>
+  </div>
+  <div class="slot">
+    <div class="slot-t">🍽️ SEBELUM MAKAN BESAR</div>
+    <div class="slot-a">1 sendok teh Onesta Daily</div>
+    <div class="slot-d">Bantu tubuh merespons lonjakan gula secara lebih tenang. Efek paling terasa saat makan siang.</div>
+  </div>
+  <div class="hb" style="margin-top:.4rem"><strong>Total: 2 sendok teh sehari.</strong><br>Tidak lebih rumit dari itu.</div>
+</div></div>
+
+<div class="s bc"><div class="si">
+  <div class="n">03 / 08</div>
+  <div class="ey">Yang mulai terasa setelah rutin...</div>
+  <div class="sl" style="gap:.5rem">
+    <div class="si2"><div class="dt"></div><span><strong>Minggu 1–2:</strong> Energi sore mulai lebih stabil. Crash berkurang.</span></div>
+    <div class="si2"><div class="dt"></div><span><strong>Minggu 3–4:</strong> Craving mulai menurun. Fokus lebih mudah dipertahankan.</span></div>
+    <div class="si2"><div class="dt"></div><span><strong>Bulan 2:</strong> Pola tidur membaik. Recovery lebih cepat.</span></div>
+    <div class="si2"><div class="dt"></div><span><strong>Bulan 3+:</strong> Ritme tubuh stabil. Ini yang disebut balance.</span></div>
+  </div>
+  <div class="bd" style="margin-top:.5rem;color:var(--muted);font-style:italic">Setiap orang berbeda — tapi polanya sama.</div>
+</div></div>
+
+<div class="s bw2"><div class="si">
+  <div class="n">04 / 08</div>
+  <div class="ey">Yang mereka rasakan</div>
+  <div class="hb" style="margin-bottom:.45rem">
+    <div style="font-size:.68rem;color:var(--muted);margin-bottom:.2rem">🎢 Si Naik-Turun · Score 62/100</div>
+    <div style="font-style:italic">"Saya kira itu normal. Ternyata ada nama dan solusinya."</div>
+  </div>
+  <div class="hb" style="margin-bottom:.45rem">
+    <div style="font-size:.68rem;color:var(--muted);margin-bottom:.2rem">🔋 Si Baterai Lemah · Score 58/100</div>
+    <div style="font-style:italic">"Baru tahu kalau capek saya itu bukan malas — itu metabolik."</div>
+  </div>
+  <div class="hb">
+    <div style="font-size:.68rem;color:var(--muted);margin-bottom:.2rem">🏆 Si Performa Stabil · Score 84/100</div>
+    <div style="font-style:italic">"Senang tahu kondisi saya baik. Sekarang tahu cara jaga."</div>
+  </div>
+</div></div>
+
+<div class="s bg"><div class="si">
+  <div class="n">05 / 08</div>
+  <div class="ey">Bukan honey biasa — ini terbukti</div>
+  <div class="stats">
+    <div class="st"><div class="sn">&lt;5%</div><div class="sl2">Global supply stingless bee honey</div></div>
+    <div class="st"><div class="sn">2</div><div class="sl2">Spesies langka Heterotrigona</div></div>
+  </div>
+  <div class="stats">
+    <div class="st"><div class="sn">✓</div><div class="sl2">Halal & NKV certified</div></div>
+    <div class="st"><div class="sn">QR</div><div class="sl2">Traceable hive to bottle</div></div>
+  </div>
+  <div class="hb" style="margin-top:.45rem">Honey pertama di Indonesia yang bisa kamu <strong>trace langsung dari hive ke tanganmu.</strong></div>
+</div></div>
+
+<div class="s bgr"><div class="si">
+  <div class="n">06 / 08</div>
+  <div class="ey" style="color:var(--green)">Lebih dari sekadar kamu</div>
+  <div class="tt" style="color:var(--ink)">Setiap pembelian<br><em style="color:var(--green)">melindungi lebih.</em></div>
+  <div class="sl">
+    <div class="si2"><div class="dt" style="background:var(--green)"></div><span>Mendukung <strong>peternak & komunitas lokal</strong> Indonesia</span></div>
+    <div class="si2"><div class="dt" style="background:var(--green)"></div><span>Menjaga <strong>hutan & ekosistem Indonesia</strong></span></div>
+    <div class="si2"><div class="dt" style="background:var(--green)"></div><span>Lebah sebagai <strong>penyerbuk 80% tanaman pangan</strong></span></div>
+  </div>
+  <div class="hb hbg" style="margin-top:.5rem">Melindungi lebah = melindungi <strong>80% pangan kita.</strong><br>Setiap pembelian adalah kontribusi nyata.</div>
+</div></div>
+
+<div class="s bw"><div class="si">
+  <div class="n">07 / 08</div>
+  <div class="bc2">
+    <div style="font-family:'Playfair Display',serif;font-size:clamp(1.2rem,3.5vw,2rem);font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:.65rem;text-align:center">
+      Tag temanmu yang sering bilang:<br><em style="color:var(--goldl)">"Aku nggak sakit,<br>tapi nggak oke juga."</em>
+    </div>
+    <div class="bd" style="text-align:center">Mungkin mereka butuh tahu<br><strong>ada apa dengan balance mereka.</strong></div>
+  </div>
+</div></div>
+
+<div class="s bdk"><div class="si">
+  <div class="n">08 / 08</div>
+  <div class="bc2">
+    <div class="bee2">🐝</div>
+    <div class="bname">Onesta</div>
+    <div class="btag" style="margin-bottom:.85rem">NATURAL METABOLIC STABILIZER</div>
+    <div class="tt" style="font-size:clamp(.9rem,2.5vw,1.2rem);text-align:center;margin-bottom:.25rem">
+      <em>Balance is the new normal.</em>
+    </div>
+    <div class="bd" style="text-align:center;margin-bottom:.75rem">Mulai ritual harianmu.<br><strong>Dua sendok. Setiap hari.</strong></div>
+    <div class="ctab">Mulai Ritual Saya →</div>
+    <div class="ft" style="text-align:center;margin-top:.55rem">onesta.co.id · tinyurl.com/onesta-check-v4</div>
+  </div>
+</div></div>
+
+</div></div>
+
+<div class="hint">🐝 Onesta — Ada Apa Dengan Balance? · 4 Episode · 36 Slides · Klik kanan → Save Image untuk download</div>
+
+<script>
+function show(n,btn){
+  document.querySelectorAll('.series').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.eb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('ep'+n).classList.add('on');
+  btn.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
