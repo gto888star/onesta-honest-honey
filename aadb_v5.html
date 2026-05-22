@@ -736,6 +736,7 @@ const TYPES = {
 // ══════════════════════════════════════════════════════
 let qIdx=0, scores={}, totalScore=0, selOpt=null, answers=[], result=null;
 let userName='', userWA='', buddyRef='';
+let resultViewedAt=null, shareClicked=false;
 
 // ══════════════════════════════════════════════════════
 // BUDDY REF
@@ -879,8 +880,9 @@ function showCalc(){
     setTimeout(()=>div.classList.add('done'),600+i*220+200);
   });
   result=buildResult();
+  shareClicked=false;
   setTimeout(()=>{prog(90);showAha();},600+pillars.length*220+800);
-  setTimeout(()=>logToSheets(false),600+pillars.length*220+1200);
+  setTimeout(()=>{resultViewedAt=Date.now();logToSheets(false);},600+pillars.length*220+1200);
 }
 
 // ══════════════════════════════════════════════════════
@@ -1181,6 +1183,7 @@ function logToSheets(converted){
     });
     const primaryProd=result.type.products[0]?(PRODUCTS[result.type.products[0]]?PRODUCTS[result.type.products[0]].name:''):'';
     const optionalProd=result.type.products[1]?(PRODUCTS[result.type.products[1]]?PRODUCTS[result.type.products[1]].name:''):'';
+    const timeOnResult=resultViewedAt?Math.round((Date.now()-resultViewedAt)/1000):0;
     const payload={
       timestamp:    new Date().toLocaleString('id-ID'),
       nama:         userName||'',
@@ -1210,6 +1213,8 @@ function logToSheets(converted){
       pct_immune:   pillarPct.immune+'%',
       pct_recovery: pillarPct.recovery+'%',
       pct_decline:  pillarPct.decline+'%',
+      share_clicked:shareClicked?'true':'false',
+      time_on_result:timeOnResult+'s',
     };
     fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
   } catch(err){
@@ -1233,6 +1238,8 @@ function orderRitual(){
 
 function shareWA(){
   if(!result) return;
+  shareClicked=true;
+  logToSheets(false);
   const refLine=buddyRef?`\n🤝 via: ${buddyRef}`:'';
   const txt=`🐝 *Onesta — Ada Apa Dengan Balance?*\n\n📊 Balance Score: *${result.bal}/100*\n🏷️ *${result.type.emoji} ${result.type.name}*\n\n${result.type.tagline}\n\n🍯 Ritual saya: *${result.type.stack}*${refLine}\n\n_"Balance is the new normal."_\n\nCek kondisi tubuhmu → gratis, hasil personal:\nhttps://tinyurl.com/onesta-aadb-v5`;
   window.open(`https://wa.me/?text=${encodeURIComponent(txt)}`,'_blank');
