@@ -159,10 +159,17 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 .rp-definition{display:none;font-size:.75rem;color:var(--sub);line-height:1.6;padding:.55rem .65rem;background:rgba(168,104,0,.04);border-radius:8px;margin-top:.3rem;border-left:2px solid rgba(200,144,42,.25);}
 .rp-definition.open{display:block;animation:sIn .25s ease;}
 .rp-definition b{color:var(--cream);}
-.pillar-legend{margin-bottom:.75rem;padding:.55rem .7rem;background:rgba(168,104,0,.04);border-radius:8px;border:1px solid rgba(168,104,0,.05);}
-.gradient-bar-wrap{display:flex;flex-direction:column;gap:.4rem;width:100%;}
-.gradient-bar{height:8px;border-radius:99px;background:linear-gradient(90deg,#C84040,#E87A20,#E8C030,#4CAF82);width:100%;}
-.gradient-labels{display:flex;justify-content:space-between;font-size:.6rem;font-family:'DM Mono',monospace;font-weight:600;}
+.pillar-legend{margin-bottom:.75rem;padding:.75rem .7rem;background:rgba(168,104,0,.04);border-radius:8px;border:1px solid rgba(168,104,0,.05);}
+.zone-scale{display:flex;flex-direction:column;width:100%;gap:0;}
+.zone-labels-top{display:flex;justify-content:space-between;font-size:.6rem;font-weight:700;font-family:'DM Mono',monospace;padding:0 0 .2rem 0;position:relative;height:1.2rem;}
+.zone-label-top{position:absolute;transform:translateX(-50%);text-align:center;line-height:1;}
+.zone-bar-wrap{position:relative;height:12px;}
+.zone-bar{height:8px;border-radius:99px;background:linear-gradient(90deg,#C84040 0%,#E87820 30%,#E87A20 45%,#E8C030 60%,#4CAF82 100%);width:100%;margin-top:2px;}
+.zone-marker{position:absolute;top:-4px;width:16px;height:16px;border-radius:50%;background:var(--cream);border:2.5px solid var(--gold);transform:translateX(-50%);box-shadow:0 2px 6px rgba(0,0,0,.3);transition:left 1s ease;}
+.zone-labels-bottom{display:flex;justify-content:space-between;font-size:.6rem;font-weight:700;font-family:'DM Mono',monospace;padding:.2rem 0 0 0;position:relative;height:1.2rem;}
+.zone-label-bottom{position:absolute;transform:translateX(-50%);text-align:center;line-height:1;}
+.zone-numbers{display:flex;justify-content:space-between;font-size:.58rem;color:var(--muted);font-family:'DM Mono',monospace;padding:.15rem 0 0 0;position:relative;height:1rem;}
+.zone-number{position:absolute;transform:translateX(-50%);}
 /* RITUAL */
 .r-ritual-block{background:var(--ink-4);border:1px solid var(--border-l);border-radius:18px;overflow:hidden;margin-bottom:1.1rem;}
 .r-ritual-header{padding:1rem 1.2rem;background:var(--gold-bg);border-bottom:1px solid var(--border);}
@@ -337,7 +344,7 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
     <div class="r-score-top">
       <div>
         <div class="r-score-label">Metabolic Balance Score</div>
-        <div><span class="r-score-num" id="r-score">0</span><span class="r-score-max">/100</span></div>
+        <div><span class="r-score-num" id="r-score">0</span></div>
       </div>
       <div>
         <div class="r-zone-label">Status</div>
@@ -362,13 +369,27 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
   <div class="r-pillars">
     <div class="r-pillar-title">6 Balance Pillars</div>
     <div class="pillar-legend">
-      <div class="gradient-bar-wrap">
-        <div class="gradient-bar"></div>
-        <div class="gradient-labels">
-          <span style="color:#C84040">Prioritas</span>
-          <span style="color:#E87A20">Perhatian</span>
-          <span style="color:#E8C030">Stabil</span>
-          <span style="color:#4CAF82">Optimal</span>
+      <div class="zone-scale">
+        <div class="zone-labels-top">
+          <div class="zone-label-top" style="left:38%;color:#E87A20">Perhatian</div>
+          <div class="zone-label-top" style="left:72%;color:#E8C030">Stabil</div>
+        </div>
+        <div class="zone-bar-wrap">
+          <div class="zone-bar"></div>
+          <div class="zone-marker" id="zone-marker" style="left:0%"></div>
+        </div>
+        <div class="zone-labels-bottom">
+          <div class="zone-label-bottom" style="left:0%;color:#C84040">Prioritas</div>
+          <div class="zone-label-bottom" style="left:52%;color:#E87820">Dukungan</div>
+          <div class="zone-label-bottom" style="left:100%;color:#4CAF82">Optimal</div>
+        </div>
+        <div class="zone-numbers">
+          <div class="zone-number" style="left:0%">25</div>
+          <div class="zone-number" style="left:29%">44</div>
+          <div class="zone-number" style="left:45%">54</div>
+          <div class="zone-number" style="left:60%">64</div>
+          <div class="zone-number" style="left:78%">76</div>
+          <div class="zone-number" style="left:100%">90</div>
         </div>
       </div>
     </div>
@@ -806,7 +827,7 @@ function validateAndStart(){
 // ══════════════════════════════════════════════════════
 function goIntro(){
   const titleEl=document.getElementById('intro-title');
-  if(titleEl&&userName) titleEl.innerHTML='Halo <b>'+userName+'</b> — siap kenali kondisimu?';
+  if(titleEl&&userName) titleEl.innerHTML='Halo <b>'+userName+'</b>, sudah siap dengarkan tubuhmu bicara?';
   show('s-intro');
   prog(8);
 }
@@ -1054,6 +1075,10 @@ function renderResult(){
   document.getElementById('r-zone').style.color=zone.c;
   setTimeout(()=>{
     document.getElementById('r-bar').style.width=bal+'%';
+    // Animate zone marker - map score 25-90 to 0-100%
+    const markerPct=Math.round(((bal-25)/(90-25))*100);
+    const marker=document.getElementById('zone-marker');
+    if(marker) marker.style.left=Math.min(Math.max(markerPct,0),100)+'%';
   },400);
 
   // Type block
