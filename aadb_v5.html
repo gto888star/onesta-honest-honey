@@ -1241,7 +1241,7 @@ function shareWA(){
   shareClicked=true;
   logToSheets(false);
   const refLine=buddyRef?`\n🤝 via: ${buddyRef}`:'';
-  const txt=`🐝 *Onesta — Ada Apa Dengan Balance?*\n\n📊 Balance Score: *${result.bal}/100*\n🏷️ *${result.type.emoji} ${result.type.name}*\n\n${result.type.tagline}\n\n🍯 Ritual saya: *${result.type.stack}*${refLine}\n\n_"Balance is the new normal."_\n\nCek kondisi tubuhmu → gratis, hasil personal:\nhttps://tinyurl.com/onesta-aadb-v5`;
+  const txt=`🐝 *Onesta — Ada Apa Dengan Balance?*\n\n📊 Balance Score: *${result.bal}/100*\n🏷️ *${result.type.emoji} ${result.type.name}*\n\n${result.type.tagline}\n\n🍯 Ritual saya: *${result.type.stack}*${refLine}\n\n_"Balance is the new normal."_\n\nCek kondisi tubuhmu → gratis, hasil personal:\nhttps://tinyurl.com/Balance-V6`;
   window.open(`https://wa.me/?text=${encodeURIComponent(txt)}`,'_blank');
 }
 
