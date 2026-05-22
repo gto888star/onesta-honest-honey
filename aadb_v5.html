@@ -52,6 +52,9 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 .form-error{font-size:.68rem;color:#F08080;display:none;padding:.2rem .1rem;}
 .form-error.show{display:block;}
 .cover-note{font-size:.7rem;color:var(--muted);margin-top:.85rem;font-style:italic;}
+.brand-bottom{display:flex;flex-direction:column;align-items:center;gap:.35rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border);}
+.brand-logo{width:80px;height:auto;opacity:.85;}
+.brand-fallback .brand-name{font-family:'Playfair Display',Georgia,serif;font-size:1.15rem;font-weight:700;color:var(--gold-l);letter-spacing:.2em;text-transform:uppercase;}
 /* INTRO */
 #s-intro{align-items:center;justify-content:center;padding:2.5rem 1.5rem;text-align:center;}
 .intro-icon{font-size:2.8rem;margin-bottom:1.25rem;animation:gPulse 3s ease infinite;}
@@ -156,9 +159,10 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 .rp-definition{display:none;font-size:.75rem;color:var(--sub);line-height:1.6;padding:.55rem .65rem;background:rgba(168,104,0,.04);border-radius:8px;margin-top:.3rem;border-left:2px solid rgba(200,144,42,.25);}
 .rp-definition.open{display:block;animation:sIn .25s ease;}
 .rp-definition b{color:var(--cream);}
-.pillar-legend{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.75rem;padding:.55rem .7rem;background:rgba(168,104,0,.04);border-radius:8px;border:1px solid rgba(168,104,0,.05);}
-.pl-item{display:flex;align-items:center;gap:.28rem;font-size:.62rem;color:var(--muted);}
-.pl-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.pillar-legend{margin-bottom:.75rem;padding:.55rem .7rem;background:rgba(168,104,0,.04);border-radius:8px;border:1px solid rgba(168,104,0,.05);}
+.gradient-bar-wrap{display:flex;flex-direction:column;gap:.4rem;width:100%;}
+.gradient-bar{height:8px;border-radius:99px;background:linear-gradient(90deg,#C84040,#E87A20,#E8C030,#4CAF82);width:100%;}
+.gradient-labels{display:flex;justify-content:space-between;font-size:.6rem;font-family:'DM Mono',monospace;font-weight:600;}
 /* RITUAL */
 .r-ritual-block{background:var(--ink-4);border:1px solid var(--border-l);border-radius:18px;overflow:hidden;margin-bottom:1.1rem;}
 .r-ritual-header{padding:1rem 1.2rem;background:var(--gold-bg);border-bottom:1px solid var(--border);}
@@ -227,11 +231,6 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 <!-- COVER -->
 <div id="s-cover" class="screen active">
   <span class="cover-hex">⬡</span>
-  <div class="brand">
-    <div class="brand-bee">🐝</div>
-    <div class="brand-name">Onesta</div>
-    <div class="brand-tag">Honest Honey · Natural Metabolic Stabilizer</div>
-  </div>
   <h1 class="cover-title">Ada Apa Dengan<br><em>Balance<span class="cover-tm">?</span></em></h1>
   <p class="cover-tagline">Bukan kuis biasa. Cermin metabolik tubuhmu.</p>
   <div class="cover-pills">
@@ -256,13 +255,20 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
   </div>
   <button class="btn-start" onclick="validateAndStart()">Cek Keseimbangan Saya</button>
   <p class="cover-note">Kurang dari 3 menit · Gratis · Hasil dikirim ke WhatsApp kamu</p>
+  <div class="brand-bottom">
+    <img class="brand-logo" src="https://gto888star.github.io/onesta-honest-honey/image/onesta_logo_light.jpg" alt="Onesta" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <div class="brand-fallback" style="display:none">
+      <div class="brand-name">Onesta</div>
+    </div>
+    <div class="brand-tag">Honest Honey · Natural Metabolic Stabilizer</div>
+  </div>
 </div>
 
 <!-- INTRO -->
 <div id="s-intro" class="screen">
   <div class="intro-icon">⚖️</div>
-  <h2 class="intro-title" id="intro-title">Tubuhmu tidak lemah.</h2>
-  <p class="intro-sub">Mungkin hanya belum seimbang.</p>
+  <h2 class="intro-title" id="intro-title">Seberapa <strong style="color:var(--gold-l)">Balance</strong> tubuhmu hari ini?</h2>
+  <p class="intro-sub">Ini bukan health-check.<br>Ini Balance-check —<br>kenali kondisimu sebelum<br>tubuhmu yang mengingatkan.</p>
   <div class="signal-list">
     <div class="sitem"><div class="sdot"></div>Sinyal apa yang tubuhmu kirimkan hari ini</div>
     <div class="sitem"><div class="sdot"></div>Pola metabolik yang mendasarinya</div>
@@ -288,7 +294,7 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
     <p class="quiz-hint" id="q-hint"></p>
     <div class="opts" id="q-opts"></div>
     <div class="insight-card" id="insight-card">
-      <div class="ins-label">🔬 Sinyal Tubuh Terdekode</div>
+      <div class="ins-label">💡 Yang Tubuhmu Sampaikan</div>
       <div class="ins-text" id="ins-text"></div>
     </div>
   </div>
@@ -356,10 +362,15 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
   <div class="r-pillars">
     <div class="r-pillar-title">6 Balance Pillars</div>
     <div class="pillar-legend">
-      <div class="pl-item"><div class="pl-dot" style="background:#4CAF82"></div><span>75–100% Terjaga</span></div>
-      <div class="pl-item"><div class="pl-dot" style="background:#E8C030"></div><span>50–74% Perlu perhatian</span></div>
-      <div class="pl-item"><div class="pl-dot" style="background:#E87A20"></div><span>25–49% Perlu dukungan</span></div>
-      <div class="pl-item"><div class="pl-dot" style="background:#C84040"></div><span>0–24% Prioritas utama</span></div>
+      <div class="gradient-bar-wrap">
+        <div class="gradient-bar"></div>
+        <div class="gradient-labels">
+          <span style="color:#C84040">Prioritas</span>
+          <span style="color:#E87A20">Perhatian</span>
+          <span style="color:#E8C030">Stabil</span>
+          <span style="color:#4CAF82">Optimal</span>
+        </div>
+      </div>
     </div>
     <div style="font-size:.72rem;color:var(--muted);font-style:italic;margin-bottom:.75rem;">💡 <b style="color:var(--sub);font-style:normal;">% lebih tinggi = lebih seimbang.</b> Tap setiap pillar untuk memahami artinya.</div>
     <div id="r-pillars-content"></div>
@@ -421,7 +432,7 @@ const PRODUCTS = {
   "Beeyond":{emoji:"💪",name:"BEEYOND",tagline:"Performa & Recovery Aktif",desc:"Untuk gaya hidup aktif dan olahraga. Mendukung recovery lebih cepat pasca aktivitas.",img:"https://gto888star.github.io/onesta-honest-honey/image/Screenshot_20260507_100417_Chrome.jpg",url:"https://onesta.co.id/products/beeyond"},
   "Signature":{emoji:"🌿",name:"SIGNATURE BOTANICAL",tagline:"Jelajahi Taste Botanical Nusantara",desc:"Koleksi varian botanical premium Onesta. Untuk kamu yang sudah seimbang dan ingin explore lebih.",img:"",url:"https://onesta.co.id"},
   "Lecy":{emoji:"🌿",name:"LECY MF01",tagline:"Forest Gold Premium",desc:"Geniotrigona Thoracica — neuroprotektif & anti-decline. Ultra-premium untuk vitalitas jangka panjang.",img:"https://gto888star.github.io/onesta-honest-honey/image/Screenshot_20260507_064651_Chrome.jpg",url:"https://onesta.co.id/products/lecy-mf01"},
-  "Myrta":{emoji:"🌸",name:"MYRTA MF01",tagline:"Botanical Premium Wellness",desc:"Myrtaceae family. Antioksidan tinggi untuk premium daily support dan anti-penuaan.",img:"https://gto888star.github.io/onesta-honest-honey/image/Screenshot_20260507_063216_Chrome.jpg",url:"https://onesta.co.id/products/myrta-mf01"}
+  "Myrta":{emoji:"🌸",name:"MYRTA MF01",tagline:"Botanical Premium Wellness",desc:"Myrtaceae family. Antioksidan tinggi untuk premium daily support dan proteksi seluler.",img:"https://gto888star.github.io/onesta-honest-honey/image/Screenshot_20260507_063216_Chrome.jpg",url:"https://onesta.co.id/products/myrta-mf01"}
 };
 
 // ══════════════════════════════════════════════════════
@@ -501,7 +512,7 @@ const QS = [
     ins:"Recovery lambat adalah tanda <b>mitochondrial stress</b> — mitokondria (pabrik energi sel) tidak bekerja optimal. Ini berdampak pada stamina, fokus, dan kemampuan tubuh meregenerasi diri."
   },
   {
-    p:"🌿 Anti-Penuaan",d:"decline",
+    p:"🌿 Proteksi Seluler",d:"decline",
     q:"Kalau kamu perhatikan belakangan ini — apakah energi, fokus, dan stamina-mu masih seperti yang kamu harapkan?",
     h:"Semakin awal sinyal ini dikenali, semakin mudah tubuh diajak kembali ke kondisi terbaiknya.",
     opts:[
@@ -869,7 +880,7 @@ function nextQ(){
 // ══════════════════════════════════════════════════════
 function showCalc(){
   show('s-calc');prog(85);
-  const pillars=['⚡ Stabilitas Energi','🩸 Ritme Gula Darah','🫁 Keseimbangan Usus','🛡️ Kesiapan Imunitas','💪 Recovery & Performa','🌿 Anti-Penuaan'];
+  const pillars=['⚡ Stabilitas Energi','🩸 Ritme Gula Darah','🫁 Keseimbangan Usus','🛡️ Kesiapan Imunitas','💪 Recovery & Performa','🌿 Proteksi Seluler'];
   const list=document.getElementById('calc-list');
   list.innerHTML='';
   pillars.forEach((p,i)=>{
@@ -1064,7 +1075,7 @@ function renderResult(){
     gut:{label:"🫁 Keseimbangan Usus",def:"<b>Gut Balance</b> — keseimbangan mikrobioma usus dan kenyamanan pencernaan. Skor tinggi = perut nyaman, BAB teratur, tidak kembung."},
     immune:{label:"🛡️ Kesiapan Imunitas",def:"<b>Immune Readiness</b> — seberapa responsif sistem imunmu. Skor tinggi = jarang sakit, recovery cepat dari penyakit ringan."},
     recovery:{label:"💪 Recovery & Performa",def:"<b>Cellular Recovery</b> — kecepatan tubuh memperbaiki diri setelah stres, aktivitas, atau kurang tidur. Skor tinggi = pulih cepat."},
-    decline:{label:"🌿 Anti-Penuaan",def:"<b>Oxidative Defense</b> — seberapa baik tubuhmu melawan kerusakan oksidatif. Skor tinggi = vitalitas, fokus, dan stamina terjaga."}
+    decline:{label:"🌿 Proteksi Seluler",def:"<b>Proteksi Seluler</b> — seberapa baik tubuhmu melawan kerusakan oksidatif. Skor tinggi = fokus, stamina, dan performa terjaga dalam jangka panjang."}
   };
   const statusColor=(p)=>p>=75?'#4CAF82':p>=50?'#E8C030':p>=25?'#E87A20':'#C84040';
   const statusLabel=(p)=>p>=75?'Terjaga':p>=50?'Perhatian':p>=25?'Dukungan':'Prioritas';
