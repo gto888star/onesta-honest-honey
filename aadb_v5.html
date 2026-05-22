@@ -231,7 +231,7 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 <!-- COVER -->
 <div id="s-cover" class="screen active">
   <span class="cover-hex">⬡</span>
-  <h1 class="cover-title">Ada Apa Dengan<br><em>Balance<span class="cover-tm">?</span></em></h1>
+  <h1 class="cover-title">Ada Apa Dengan<br><em>Balance?</em></h1>
   <p class="cover-tagline">Bukan kuis biasa. Cermin metabolik tubuhmu.</p>
   <div class="cover-pills">
     <div class="cpill"><div class="cd"></div><span>Energi</span></div>
@@ -256,7 +256,7 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
   <button class="btn-start" onclick="validateAndStart()">Cek Keseimbangan Saya</button>
   <p class="cover-note">Kurang dari 3 menit · Gratis · Hasil dikirim ke WhatsApp kamu</p>
   <div class="brand-bottom">
-    <img class="brand-logo" src="https://gto888star.github.io/onesta-honest-honey/image/onesta_logo_light.jpg" alt="Onesta" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <img class="brand-logo" src="https://gto888star.github.io/onesta-honest-honey/onesta_logo_light.jpg" alt="Onesta" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
     <div class="brand-fallback" style="display:none">
       <div class="brand-name">Onesta</div>
     </div>
@@ -603,7 +603,7 @@ const TYPES = {
     name:"Clarity Seeker",nameEN:"The Foggy Thinker",
     tagline:'"Ada di meeting, tapi pikiran entah ke mana. Fokus hilang di tengah hari."',
     science:"Neuroinflammation + disrupted brain glucose metabolism",
-    insight:"Brain fog bukan kelemahan mental. Ia adalah tanda nyata bahwa sistem neuroprotektif otakmu sedang overwhelmed. <b>Neuron butuh lingkungan anti-inflamasi</b> untuk bekerja optimal — dan ini bisa dipulihkan.",
+    insight:"Fokus yang tiba-tiba hilang di tengah hari bukan tanda kelemahan. Ia adalah sinyal nyata bahwa sistem neuroprotektif otakmu sedang membutuhkan dukungan. <b>Neuron butuh lingkungan yang stabil</b> untuk bekerja optimal — dan ini bisa dipulihkan dengan konsistensi yang tepat.",
     therefore:"Tubuhmu menunjukkan pola brain fog dan penurunan kognitif yang konsisten.",
     products:["Daily","Imunisi"],stack:"Daily + Imunisi",
     typeColor:"rgba(155,155,200,.15)",typeBorder:"rgba(155,155,200,.35)",
@@ -806,7 +806,7 @@ function validateAndStart(){
 // ══════════════════════════════════════════════════════
 function goIntro(){
   const titleEl=document.getElementById('intro-title');
-  if(titleEl&&userName) titleEl.textContent='Halo '+userName+', tubuhmu tidak lemah.';
+  if(titleEl&&userName) titleEl.innerHTML='Halo <b>'+userName+'</b> — siap kenali kondisimu?';
   show('s-intro');
   prog(8);
 }
