@@ -159,17 +159,15 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 .rp-definition{display:none;font-size:.75rem;color:var(--sub);line-height:1.6;padding:.55rem .65rem;background:rgba(168,104,0,.04);border-radius:8px;margin-top:.3rem;border-left:2px solid rgba(200,144,42,.25);}
 .rp-definition.open{display:block;animation:sIn .25s ease;}
 .rp-definition b{color:var(--cream);}
-.pillar-legend{margin-bottom:.75rem;padding:.75rem .7rem;background:rgba(168,104,0,.04);border-radius:8px;border:1px solid rgba(168,104,0,.05);}
-.zone-scale{display:flex;flex-direction:column;width:100%;gap:0;}
-.zone-labels-top{display:flex;justify-content:space-between;font-size:.6rem;font-weight:700;font-family:'DM Mono',monospace;padding:0 0 .2rem 0;position:relative;height:1.2rem;}
-.zone-label-top{position:absolute;transform:translateX(-50%);text-align:center;line-height:1;}
-.zone-bar-wrap{position:relative;height:12px;}
-.zone-bar{height:8px;border-radius:99px;background:linear-gradient(90deg,#C84040 0%,#E87820 30%,#E87A20 45%,#E8C030 60%,#4CAF82 100%);width:100%;margin-top:2px;}
-.zone-marker{position:absolute;top:-4px;width:16px;height:16px;border-radius:50%;background:var(--cream);border:2.5px solid var(--gold);transform:translateX(-50%);box-shadow:0 2px 6px rgba(0,0,0,.3);transition:left 1s ease;}
-.zone-labels-bottom{display:flex;justify-content:space-between;font-size:.6rem;font-weight:700;font-family:'DM Mono',monospace;padding:.2rem 0 0 0;position:relative;height:1.2rem;}
-.zone-label-bottom{position:absolute;transform:translateX(-50%);text-align:center;line-height:1;}
-.zone-numbers{display:flex;justify-content:space-between;font-size:.58rem;color:var(--muted);font-family:'DM Mono',monospace;padding:.15rem 0 0 0;position:relative;height:1rem;}
-.zone-number{position:absolute;transform:translateX(-50%);}
+.pillar-legend{margin-bottom:.75rem;padding:.75rem .7rem 1.2rem;background:rgba(168,104,0,.04);border-radius:8px;border:1px solid rgba(168,104,0,.05);}
+.zone-scale{display:flex;flex-direction:column;width:100%;gap:0;position:relative;}
+.zone-bar-wrap{position:relative;height:12px;margin-bottom:.4rem;}
+.zone-bar{height:8px;border-radius:99px;background:linear-gradient(90deg,#C84040 0%,#E87820 29%,#E87A20 52%,#E8C030 74%,#4CAF82 100%);width:100%;margin-top:2px;}
+.zone-marker{position:absolute;top:-3px;width:14px;height:14px;border-radius:50%;background:var(--cream);border:2.5px solid var(--gold-d);transform:translateX(-50%);box-shadow:0 2px 6px rgba(0,0,0,.25);transition:left 1s ease;}
+.zone-ticks{position:relative;height:1.4rem;width:100%;}
+.zone-tick{position:absolute;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;}
+.zone-tick-label{font-size:.58rem;font-weight:700;font-family:'DM Mono',monospace;white-space:nowrap;}
+.zone-tick-num{font-size:.55rem;color:var(--muted);font-family:'DM Mono',monospace;}
 /* RITUAL */
 .r-ritual-block{background:var(--ink-4);border:1px solid var(--border-l);border-radius:18px;overflow:hidden;margin-bottom:1.1rem;}
 .r-ritual-header{padding:1rem 1.2rem;background:var(--gold-bg);border-bottom:1px solid var(--border);}
@@ -344,7 +342,165 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
     <div class="r-score-top">
       <div>
         <div class="r-score-label">Metabolic Balance Score</div>
-        <div><span class="r-score-num" id="r-score">0</span></div>
+        <div><span class="r-score-num" id="r-score">0</span><span class="r-score-max">/100</span></div>
+      </div>
+      <div>
+        <div class="r-zone-label">Status</div>
+        <div class="r-zone-val" id="r-zone"></div>
+      </div>
+    </div>
+    <div class="r-bar-track"><div class="r-bar-fill" id="r-bar" style="width:0%"></div></div>
+    <div class="r-zones"><span>🔴 Prioritas</span><span>🔶 Dukungan</span><span>🟠 Perhatian</span><span>🟡 Stabil</span><span>🟢 Optimal</span></div>
+  </div>
+  <div class="r-type-block" id="r-type-block">
+    <span class="r-type-emoji" id="r-type-emoji"></span>
+    <div class="r-type-eyebrow">Tipe Metabolik Kamu</div>
+    <div class="r-type-name" id="r-type-name"></div>
+    <div class="r-type-en" id="r-type-en"></div>
+    <div class="r-type-tagline" id="r-type-tagline"></div>
+    <div class="r-type-science" id="r-type-science"></div>
+  </div>
+  <div class="r-insight-block">
+    <div class="r-insight-label">💡 Apa Artinya Ini</div>
+    <div class="r-insight-text" id="r-insight"></div>
+  </div>
+  <div class="r-pillars">
+    <div class="r-pillar-title">6 Balance Pillars</div>
+    <div class="pillar-legend">
+      <div class="zone-scale">
+        <div class="zone-bar-wrap">
+          <div class="zone-bar"></div>
+          <div class="zone-marker" id="zone-marker" style="left:0%"></div>
+        </div>
+        <div class="zone-ticks">
+          <div class="zone-tick" style="left:0%">
+            <div class="zone-tick-label" style="color:#C84040">Prioritas</div>
+          </div>
+          <div class="zone-tick" style="left:29%">
+            <div class="zone-tick-label" style="color:#E87820">Dukungan</div>
+          </div>
+          <div class="zone-tick" style="left:52%">
+            <div class="zone-tick-label" style="color:#E87A20">Perhatian</div>
+          </div>
+          <div class="zone-tick" style="left:74%">
+            <div class="zone-tick-label" style="color:#E8C030">Stabil</div>
+          </div>
+          <div class="zone-tick" style="left:100%">
+            <div class="zone-tick-label" style="color:#4CAF82">Optimal</div>
+          </div>
+        </div>
+      </div>
+
+<!-- COVER -->
+<div id="s-cover" class="screen active">
+  <span class="cover-hex">⬡</span>
+  <h1 class="cover-title">Ada Apa Dengan<br><em>Balance?</em></h1>
+  <p class="cover-tagline">Bukan kuis biasa. Cermin metabolik tubuhmu.</p>
+  <div class="cover-pills">
+    <div class="cpill"><div class="cd"></div><span>Energi</span></div>
+    <div class="cpill"><div class="cd"></div><span>Gula Darah</span></div>
+    <div class="cpill"><div class="cd"></div><span>Pencernaan</span></div>
+    <div class="cpill"><div class="cd"></div><span>Imunitas</span></div>
+    <div class="cpill"><div class="cd"></div><span>Recovery</span></div>
+    <div class="cpill"><div class="cd"></div><span>Malam &amp; Stres</span></div>
+  </div>
+  <div class="user-form">
+    <div class="form-field">
+      <label class="form-label">Nama Kamu</label>
+      <input class="form-input" id="user-name" type="text" placeholder="cth. Budi" autocomplete="given-name" maxlength="40">
+      <div class="form-error" id="err-name">Mohon masukkan namamu</div>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Nomor WhatsApp</label>
+      <input class="form-input" id="user-wa" type="tel" placeholder="cth. 081234567890" autocomplete="tel" maxlength="15" inputmode="numeric">
+      <div class="form-error" id="err-wa">Mohon masukkan nomor WhatsApp yang valid</div>
+    </div>
+  </div>
+  <button class="btn-start" onclick="validateAndStart()">Cek Keseimbangan Saya</button>
+  <p class="cover-note">Kurang dari 3 menit · Gratis · Hasil dikirim ke WhatsApp kamu</p>
+  <div class="brand-bottom">
+    <img class="brand-logo" src="https://gto888star.github.io/onesta-honest-honey/onesta_logo_light.jpg" alt="Onesta" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <div class="brand-fallback" style="display:none">
+      <div class="brand-name">Onesta</div>
+    </div>
+    <div class="brand-tag">Honest Honey · Natural Metabolic Stabilizer</div>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div id="s-intro" class="screen">
+  <div class="intro-icon">⚖️</div>
+  <h2 class="intro-title" id="intro-title">Seberapa <strong style="color:var(--gold-l)">Balance</strong> tubuhmu hari ini?</h2>
+  <p class="intro-sub">Ini bukan health-check.<br>Ini Balance-check —<br>kenali kondisimu sebelum<br>tubuhmu yang mengingatkan.</p>
+  <div class="signal-list">
+    <div class="sitem"><div class="sdot"></div>Sinyal apa yang tubuhmu kirimkan hari ini</div>
+    <div class="sitem"><div class="sdot"></div>Pola metabolik yang mendasarinya</div>
+    <div class="sitem"><div class="sdot"></div>Ritual Onesta yang paling tepat untukmu</div>
+  </div>
+  <div class="intro-promise">
+    Ini bukan tentang produk.<br>
+    Ini tentang <b>memahami tubuhmu lebih dalam</b> — dan memberi respons yang tepat, setiap hari.<br>
+    Imbalance yang dibiarkan pelan-pelan menuju <b>metabolic disorder</b> — lalu ke <b>chronic diseases.</b>
+  </div>
+  <button class="btn-start" onclick="startQuiz()" style="max-width:300px">Mulai Sekarang →</button>
+</div>
+
+<!-- QUIZ -->
+<div id="s-quiz" class="screen">
+  <div class="quiz-top">
+    <div class="quiz-meta">
+      <div class="quiz-pillar" id="q-pillar">⚡ Energi</div>
+      <div class="quiz-num" id="q-num">1 / 10</div>
+    </div>
+    <div class="track"><div class="track-fill" id="track-fill" style="width:0%"></div></div>
+    <h2 class="quiz-q" id="q-text"></h2>
+    <p class="quiz-hint" id="q-hint"></p>
+    <div class="opts" id="q-opts"></div>
+    <div class="insight-card" id="insight-card">
+      <div class="ins-label">💡 Yang Tubuhmu Sampaikan</div>
+      <div class="ins-text" id="ins-text"></div>
+    </div>
+  </div>
+  <div><button class="btn-next" id="btn-next" onclick="nextQ()">Lanjut →</button></div>
+</div>
+
+<!-- CALC -->
+<div id="s-calc" class="screen">
+  <div class="calc-bee">🐝</div>
+  <h2 class="calc-title">Membaca sinyal tubuhmu...</h2>
+  <p class="calc-sub">Menganalisis 6 balance pillars</p>
+  <div class="calc-list" id="calc-list"></div>
+</div>
+
+<!-- AHA -->
+<div id="s-aha" class="screen">
+  <div class="aha-card">
+    <div class="aha-eyebrow">Mengapa Kamu Dapat Hasil Ini</div>
+    <h3 class="aha-title">Ini yang tubuhmu ceritakan...</h3>
+    <div style="font-size:.73rem;color:var(--muted);line-height:1.55;margin-bottom:.75rem;font-style:italic;">Berikut sinyal-sinyal yang kamu laporkan tadi — inilah yang membentuk profil metabolikmu.</div>
+    <div class="aha-answers" id="aha-answers"></div>
+    <div class="aha-intent-block" id="aha-intent-block">
+      <div class="aha-intent-label">Yang Kamu Inginkan →</div>
+      <div class="aha-intent-text" id="aha-intent-text"></div>
+    </div>
+    <div class="aha-therefore">
+      <div class="aha-therefore-label">Kesimpulan →</div>
+      <div class="aha-therefore-text" id="aha-therefore"></div>
+    </div>
+    <div class="aha-type-preview" id="aha-type"></div>
+    <div class="aha-type-science" id="aha-science"></div>
+    <button class="btn-start" onclick="goResult()" style="max-width:100%;width:100%">Lihat Laporan Lengkap →</button>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="s-result" class="screen">
+  <div class="r-eyebrow">Laporan Balance-mu · V5.2</div>
+  <div class="r-score-block">
+    <div class="r-score-top">
+      <div>
+        <div class="r-score-label">Metabolic Balance Score</div>
+        <div><span class="r-score-num" id="r-score">0</span><span class="r-score-max">/100</span></div>
       </div>
       <div>
         <div class="r-zone-label">Status</div>
