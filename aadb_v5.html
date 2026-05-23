@@ -340,13 +340,15 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
   <div class="r-eyebrow">Laporan Balance-mu · V5.2</div>
   <div class="r-score-block">
     <div class="r-score-top">
-      <div>
-        <div class="r-score-label">Metabolic Balance Score</div>
-        <div><span class="r-score-num" id="r-score">0</span><span class="r-score-max">/100</span></div>
-      </div>
-      <div>
-        <div class="r-zone-label">Status</div>
-        <div class="r-zone-val" id="r-zone"></div>
+      <div style="display:flex;align-items:baseline;gap:.75rem;flex-wrap:wrap;">
+        <div>
+          <div class="r-score-label">Metabolic Balance Score</div>
+          <div style="display:flex;align-items:baseline;gap:.5rem;">
+            <span class="r-score-num" id="r-score">0</span>
+            <span class="r-score-max">/100</span>
+            <div class="r-zone-val" id="r-zone" style="font-size:1rem;font-weight:800;margin-left:.25rem;"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1226,7 +1228,8 @@ function renderResult(){
   document.getElementById('r-zone').textContent=zone.z;
   document.getElementById('r-zone').style.color=zone.c;
   setTimeout(()=>{
-    document.getElementById('r-bar').style.width=bal+'%';
+    const rBar=document.getElementById('r-bar');
+    if(rBar) rBar.style.width=bal+'%';
     // Animate zone marker - map score 25-90 to 0-100%
     const markerPct=Math.round(((bal-25)/(90-25))*100);
     const marker=document.getElementById('zone-marker');
