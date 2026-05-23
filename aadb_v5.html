@@ -25,16 +25,10 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 .screen{display:none;position:relative;z-index:1;min-height:100vh;}
 .screen.active{display:flex;flex-direction:column;animation:sIn .45s ease both;}
 @keyframes sIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-/* COVER */
 #s-cover{align-items:center;justify-content:center;padding:3rem 1.5rem;text-align:center;background:radial-gradient(ellipse 100% 55% at 50% 0%,rgba(200,144,42,.15) 0%,transparent 65%);}
 .cover-hex{position:absolute;font-size:18rem;opacity:.02;color:var(--gold);top:-2rem;left:50%;transform:translateX(-50%);pointer-events:none;}
-.brand{display:flex;flex-direction:column;align-items:center;gap:.35rem;margin-bottom:2rem;position:relative;}
-.brand-bee{width:56px;height:56px;background:linear-gradient(135deg,var(--gold-l),var(--gold-d));border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;box-shadow:0 8px 32px rgba(200,144,42,.3),0 2px 8px rgba(0,0,0,.4);margin-bottom:.4rem;}
-.brand-name{font-family:'Playfair Display',Georgia,serif;font-size:1.15rem;font-weight:700;color:var(--gold-l);letter-spacing:.2em;text-transform:uppercase;}
-.brand-tag{font-size:.62rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;font-family:'DM Mono',monospace;}
 .cover-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(2.8rem,9vw,4.6rem);font-weight:900;line-height:1.05;color:var(--cream);margin-bottom:.65rem;letter-spacing:-.02em;}
 .cover-title em{font-style:italic;color:var(--gold-l);display:block;}
-.cover-tm{font-size:.5rem;vertical-align:super;color:var(--gold);font-style:normal;font-family:'DM Mono',monospace;}
 .cover-tagline{font-family:'Playfair Display',serif;font-size:clamp(.95rem,2.8vw,1.1rem);font-style:italic;color:var(--sub);line-height:1.6;margin-bottom:1.5rem;}
 .cover-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem;margin-bottom:2rem;}
 .cpill{display:flex;align-items:center;gap:.35rem;padding:.32rem .75rem;background:rgba(168,104,0,.04);border:1px solid rgba(168,104,0,.06);border-radius:99px;font-size:.7rem;color:var(--muted);}
@@ -54,8 +48,8 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 .cover-note{font-size:.7rem;color:var(--muted);margin-top:.85rem;font-style:italic;}
 .brand-bottom{display:flex;flex-direction:column;align-items:center;gap:.35rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border);}
 .brand-logo{width:80px;height:auto;opacity:.85;}
-.brand-fallback .brand-name{font-family:'Playfair Display',Georgia,serif;font-size:1.15rem;font-weight:700;color:var(--gold-l);letter-spacing:.2em;text-transform:uppercase;}
-/* INTRO */
+.brand-name{font-family:'Playfair Display',Georgia,serif;font-size:1.15rem;font-weight:700;color:var(--gold-l);letter-spacing:.2em;text-transform:uppercase;}
+.brand-tag{font-size:.62rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;font-family:'DM Mono',monospace;}
 #s-intro{align-items:center;justify-content:center;padding:2.5rem 1.5rem;text-align:center;}
 .intro-icon{font-size:2.8rem;margin-bottom:1.25rem;animation:gPulse 3s ease infinite;}
 @keyframes gPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
@@ -66,7 +60,6 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 .sdot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;box-shadow:0 0 6px rgba(200,144,42,.5);}
 .intro-promise{background:var(--gold-bg);border:1px solid var(--border-l);border-radius:12px;padding:1rem 1.1rem;font-size:.84rem;color:var(--sub);line-height:1.7;margin-bottom:1.75rem;max-width:360px;text-align:left;}
 .intro-promise b{color:var(--gold-l);}
-/* QUIZ */
 #s-quiz{padding:2rem 1.25rem 2.5rem;justify-content:space-between;min-height:100vh;}
 .quiz-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
 .quiz-pillar{display:flex;align-items:center;gap:.35rem;padding:.26rem .65rem;background:var(--gold-bg);border:1px solid var(--border);border-radius:6px;font-size:.63rem;color:var(--gold);letter-spacing:.05em;}
@@ -92,7 +85,6 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 .btn-next{width:100%;padding:1rem;background:linear-gradient(135deg,var(--gold-l),var(--gold-d));color:var(--ink);font-weight:800;font-size:.9rem;border:none;border-radius:99px;cursor:pointer;margin-top:1.1rem;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.03em;box-shadow:0 4px 18px rgba(200,144,42,.22);visibility:hidden;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s,visibility 0s linear .3s;}
 .btn-next.show{visibility:visible;opacity:1;transform:translateY(0);transition:opacity .3s,transform .3s,visibility 0s;}
 .btn-next:active{transform:scale(.98);}
-/* CALC */
 #s-calc{align-items:center;justify-content:center;padding:2rem 1.5rem;text-align:center;}
 .calc-bee{font-size:3rem;margin-bottom:1.25rem;animation:gPulse 1.5s ease infinite;}
 .calc-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--cream);margin-bottom:.35rem;}
@@ -102,7 +94,6 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 .ci.done{color:var(--sub);}
 .ci-dot{width:6px;height:6px;border-radius:50%;background:rgba(200,144,42,.2);flex-shrink:0;transition:all .3s;}
 .ci.done .ci-dot{background:var(--gold);box-shadow:0 0 8px rgba(200,144,42,.5);}
-/* AHA */
 #s-aha{align-items:center;justify-content:center;padding:2.5rem 1.5rem;}
 .aha-card{background:var(--ink-3);border:1px solid var(--border-ll);border-radius:20px;padding:1.75rem;max-width:400px;width:100%;}
 .aha-eyebrow{font-size:.62rem;color:var(--gold);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.75rem;font-weight:700;}
@@ -119,7 +110,6 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 .aha-therefore-text{font-size:.85rem;color:var(--sub);line-height:1.55;}
 .aha-type-preview{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--gold-l);margin-bottom:.2rem;}
 .aha-type-science{font-size:.73rem;color:var(--muted);font-style:italic;margin-bottom:1.25rem;}
-/* RESULT */
 #s-result{padding:2rem 1.25rem 4rem;}
 .r-eyebrow{font-size:.62rem;color:var(--gold);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.65rem;font-weight:700;display:flex;align-items:center;gap:.5rem;}
 .r-eyebrow::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border-l),transparent);}
@@ -128,11 +118,7 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 .r-score-label{font-size:.6rem;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.18rem;}
 .r-score-num{font-family:'Playfair Display',serif;font-size:3.6rem;font-weight:900;color:var(--gold-l);line-height:1;}
 .r-score-max{font-size:.9rem;color:var(--muted);}
-.r-zone-label{font-size:.6rem;color:var(--muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.18rem;text-align:right;}
-.r-zone-val{font-size:.88rem;font-weight:700;text-align:right;}
-.r-bar-track{height:5px;background:rgba(200,144,42,.1);border-radius:99px;overflow:hidden;margin-bottom:.5rem;}
-.r-bar-fill{height:100%;border-radius:99px;transition:width 1.3s cubic-bezier(.4,0,.2,1);background:linear-gradient(90deg,#C84040,#E8B84B,#3A9E6A);background-size:300% 100%;}
-.r-zones{display:flex;justify-content:space-between;font-size:.58rem;color:rgba(44,26,0,.25);font-family:'DM Mono',monospace;}
+.r-zone-val{font-size:.88rem;font-weight:700;}
 .r-type-block{border-radius:18px;padding:1.35rem;margin-bottom:1.1rem;position:relative;overflow:hidden;}
 .r-type-emoji{font-size:2.5rem;margin-bottom:.5rem;display:block;}
 .r-type-eyebrow{font-size:.6rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.4rem;font-weight:700;}
@@ -167,8 +153,6 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 .zone-ticks{position:relative;height:1.4rem;width:100%;}
 .zone-tick{position:absolute;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;}
 .zone-tick-label{font-size:.58rem;font-weight:700;font-family:'DM Mono',monospace;white-space:nowrap;}
-.zone-tick-num{font-size:.55rem;color:var(--muted);font-family:'DM Mono',monospace;}
-/* RITUAL */
 .r-ritual-block{background:var(--ink-4);border:1px solid var(--border-l);border-radius:18px;overflow:hidden;margin-bottom:1.1rem;}
 .r-ritual-header{padding:1rem 1.2rem;background:var(--gold-bg);border-bottom:1px solid var(--border);}
 .r-ritual-eyebrow{font-size:.6rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.22rem;font-weight:700;}
@@ -180,7 +164,6 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 .rslot-action{font-size:.86rem;color:var(--cream);font-weight:700;margin-bottom:.15rem;}
 .rslot-detail{font-size:.76rem;color:var(--sub);line-height:1.55;}
 .rslot-why{font-size:.7rem;color:var(--muted);font-style:italic;margin-top:.18rem;}
-/* PRODUCT CARDS */
 .prod-section{margin-top:.85rem;}
 .prod-section-intro{font-size:.78rem;color:var(--sub);margin-bottom:.75rem;line-height:1.5;font-style:italic;}
 .prod-section-label{font-size:.6rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.65rem;font-weight:700;}
@@ -205,7 +188,6 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 .r-why-label{font-size:.6rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.32rem;font-weight:700;}
 .r-why-text{font-size:.82rem;color:var(--sub);line-height:1.65;}
 .r-why-text b{color:var(--cream);}
-/* SHARE */
 .r-share-block{margin-bottom:1.25rem;}
 .r-share-label{font-size:.86rem;color:var(--muted);text-align:center;margin-bottom:.85rem;font-style:italic;font-family:'Playfair Display',serif;}
 .share-preview{background:var(--ink-3);border:1px solid var(--border-l);border-radius:14px;padding:1.1rem;margin-bottom:.85rem;}
@@ -262,167 +244,7 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
   <p class="cover-note">Kurang dari 3 menit · Gratis · Hasil dikirim ke WhatsApp kamu</p>
   <div class="brand-bottom">
     <img class="brand-logo" src="https://gto888star.github.io/onesta-honest-honey/onesta_logo_light.jpg" alt="Onesta" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-    <div class="brand-fallback" style="display:none">
-      <div class="brand-name">Onesta</div>
-    </div>
-    <div class="brand-tag">Honest Honey · Natural Metabolic Stabilizer</div>
-  </div>
-</div>
-
-<!-- INTRO -->
-<div id="s-intro" class="screen">
-  <div class="intro-icon">⚖️</div>
-  <h2 class="intro-title" id="intro-title">Seberapa <strong style="color:var(--gold-l)">Balance</strong> tubuhmu hari ini?</h2>
-  <p class="intro-sub">Ini bukan health-check.<br>Ini Balance-check —<br>kenali kondisimu sebelum<br>tubuhmu yang mengingatkan.</p>
-  <div class="signal-list">
-    <div class="sitem"><div class="sdot"></div>Sinyal apa yang tubuhmu kirimkan hari ini</div>
-    <div class="sitem"><div class="sdot"></div>Pola metabolik yang mendasarinya</div>
-    <div class="sitem"><div class="sdot"></div>Ritual Onesta yang paling tepat untukmu</div>
-  </div>
-  <div class="intro-promise">
-    Ini bukan tentang produk.<br>
-    Ini tentang <b>memahami tubuhmu lebih dalam</b> — dan memberi respons yang tepat, setiap hari.<br>
-    Imbalance yang dibiarkan pelan-pelan menuju <b>metabolic disorder</b> — lalu ke <b>chronic diseases.</b>
-  </div>
-  <button class="btn-start" onclick="startQuiz()" style="max-width:300px">Mulai Sekarang →</button>
-</div>
-
-<!-- QUIZ -->
-<div id="s-quiz" class="screen">
-  <div class="quiz-top">
-    <div class="quiz-meta">
-      <div class="quiz-pillar" id="q-pillar">⚡ Energi</div>
-      <div class="quiz-num" id="q-num">1 / 10</div>
-    </div>
-    <div class="track"><div class="track-fill" id="track-fill" style="width:0%"></div></div>
-    <h2 class="quiz-q" id="q-text"></h2>
-    <p class="quiz-hint" id="q-hint"></p>
-    <div class="opts" id="q-opts"></div>
-    <div class="insight-card" id="insight-card">
-      <div class="ins-label">💡 Yang Tubuhmu Sampaikan</div>
-      <div class="ins-text" id="ins-text"></div>
-    </div>
-  </div>
-  <div><button class="btn-next" id="btn-next" onclick="nextQ()">Lanjut →</button></div>
-</div>
-
-<!-- CALC -->
-<div id="s-calc" class="screen">
-  <div class="calc-bee">🐝</div>
-  <h2 class="calc-title">Membaca sinyal tubuhmu...</h2>
-  <p class="calc-sub">Menganalisis 6 balance pillars</p>
-  <div class="calc-list" id="calc-list"></div>
-</div>
-
-<!-- AHA -->
-<div id="s-aha" class="screen">
-  <div class="aha-card">
-    <div class="aha-eyebrow">Mengapa Kamu Dapat Hasil Ini</div>
-    <h3 class="aha-title">Ini yang tubuhmu ceritakan...</h3>
-    <div style="font-size:.73rem;color:var(--muted);line-height:1.55;margin-bottom:.75rem;font-style:italic;">Berikut sinyal-sinyal yang kamu laporkan tadi — inilah yang membentuk profil metabolikmu.</div>
-    <div class="aha-answers" id="aha-answers"></div>
-    <div class="aha-intent-block" id="aha-intent-block">
-      <div class="aha-intent-label">Yang Kamu Inginkan →</div>
-      <div class="aha-intent-text" id="aha-intent-text"></div>
-    </div>
-    <div class="aha-therefore">
-      <div class="aha-therefore-label">Kesimpulan →</div>
-      <div class="aha-therefore-text" id="aha-therefore"></div>
-    </div>
-    <div class="aha-type-preview" id="aha-type"></div>
-    <div class="aha-type-science" id="aha-science"></div>
-    <button class="btn-start" onclick="goResult()" style="max-width:100%;width:100%">Lihat Laporan Lengkap →</button>
-  </div>
-</div>
-
-<!-- RESULT -->
-<div id="s-result" class="screen">
-  <div class="r-eyebrow">Laporan Balance-mu · V5.2</div>
-  <div class="r-score-block">
-    <div class="r-score-top">
-      <div style="display:flex;align-items:baseline;gap:.75rem;flex-wrap:wrap;">
-        <div>
-          <div class="r-score-label">Metabolic Balance Score</div>
-          <div style="display:flex;align-items:baseline;gap:.5rem;">
-            <span class="r-score-num" id="r-score">0</span>
-            <span class="r-score-max">/100</span>
-            <div class="r-zone-val" id="r-zone" style="font-size:1rem;font-weight:800;margin-left:.25rem;"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="r-type-block" id="r-type-block">
-    <span class="r-type-emoji" id="r-type-emoji"></span>
-    <div class="r-type-eyebrow">Tipe Metabolik Kamu</div>
-    <div class="r-type-name" id="r-type-name"></div>
-    <div class="r-type-en" id="r-type-en"></div>
-    <div class="r-type-tagline" id="r-type-tagline"></div>
-    <div class="r-type-science" id="r-type-science"></div>
-  </div>
-  <div class="r-insight-block">
-    <div class="r-insight-label">💡 Apa Artinya Ini</div>
-    <div class="r-insight-text" id="r-insight"></div>
-  </div>
-  <div class="r-pillars">
-    <div class="r-pillar-title">6 Balance Pillars</div>
-    <div class="pillar-legend">
-      <div class="zone-scale">
-        <div class="zone-bar-wrap">
-          <div class="zone-bar"></div>
-          <div class="zone-marker" id="zone-marker" style="left:0%"></div>
-        </div>
-        <div class="zone-ticks">
-          <div class="zone-tick" style="left:0%;transform:none;align-items:flex-start;">
-            <div class="zone-tick-label" style="color:#C84040">Prioritas</div>
-          </div>
-          <div class="zone-tick" style="left:29%">
-            <div class="zone-tick-label" style="color:#E87820">Dukungan</div>
-          </div>
-          <div class="zone-tick" style="left:52%">
-            <div class="zone-tick-label" style="color:#E87A20">Perhatian</div>
-          </div>
-          <div class="zone-tick" style="left:72%">
-            <div class="zone-tick-label" style="color:#E8C030">Stabil</div>
-          </div>
-          <div class="zone-tick" style="left:100%;transform:translateX(-100%);align-items:flex-end;">
-            <div class="zone-tick-label" style="color:#4CAF82">Optimal</div>
-          </div>
-        </div>
-      </div>
-
-<!-- COVER -->
-<div id="s-cover" class="screen active">
-  <span class="cover-hex">⬡</span>
-  <h1 class="cover-title">Ada Apa Dengan<br><em>Balance?</em></h1>
-  <p class="cover-tagline">Bukan kuis biasa. Cermin metabolik tubuhmu.</p>
-  <div class="cover-pills">
-    <div class="cpill"><div class="cd"></div><span>Energi</span></div>
-    <div class="cpill"><div class="cd"></div><span>Gula Darah</span></div>
-    <div class="cpill"><div class="cd"></div><span>Pencernaan</span></div>
-    <div class="cpill"><div class="cd"></div><span>Imunitas</span></div>
-    <div class="cpill"><div class="cd"></div><span>Recovery</span></div>
-    <div class="cpill"><div class="cd"></div><span>Malam &amp; Stres</span></div>
-  </div>
-  <div class="user-form">
-    <div class="form-field">
-      <label class="form-label">Nama Kamu</label>
-      <input class="form-input" id="user-name" type="text" placeholder="cth. Budi" autocomplete="given-name" maxlength="40">
-      <div class="form-error" id="err-name">Mohon masukkan namamu</div>
-    </div>
-    <div class="form-field">
-      <label class="form-label">Nomor WhatsApp</label>
-      <input class="form-input" id="user-wa" type="tel" placeholder="cth. 081234567890" autocomplete="tel" maxlength="15" inputmode="numeric">
-      <div class="form-error" id="err-wa">Mohon masukkan nomor WhatsApp yang valid</div>
-    </div>
-  </div>
-  <button class="btn-start" onclick="validateAndStart()">Cek Keseimbangan Saya</button>
-  <p class="cover-note">Kurang dari 3 menit · Gratis · Hasil dikirim ke WhatsApp kamu</p>
-  <div class="brand-bottom">
-    <img class="brand-logo" src="https://gto888star.github.io/onesta-honest-honey/onesta_logo_light.jpg" alt="Onesta" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-    <div class="brand-fallback" style="display:none">
-      <div class="brand-name">Onesta</div>
-    </div>
+    <div style="display:none"><div class="brand-name">Onesta</div></div>
     <div class="brand-tag">Honest Honey · Natural Metabolic Stabilizer</div>
   </div>
 </div>
@@ -500,11 +322,11 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
     <div class="r-score-top">
       <div>
         <div class="r-score-label">Metabolic Balance Score</div>
-        <div><span class="r-score-num" id="r-score">0</span><span class="r-score-max">/100</span></div>
-      </div>
-      <div>
-        <div class="r-zone-label">Status</div>
-        <div class="r-zone-val" id="r-zone"></div>
+        <div style="display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap;">
+          <span class="r-score-num" id="r-score">0</span>
+          <span class="r-score-max">/100</span>
+          <div class="r-zone-val" id="r-zone" style="font-size:1rem;font-weight:800;margin-left:.25rem;"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -524,26 +346,26 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
     <div class="r-pillar-title">6 Balance Pillars</div>
     <div class="pillar-legend">
       <div class="zone-scale">
-        <div class="zone-labels-top">
-          <div class="zone-label-top" style="left:38%;color:#E87A20">Perhatian</div>
-          <div class="zone-label-top" style="left:72%;color:#E8C030">Stabil</div>
-        </div>
         <div class="zone-bar-wrap">
           <div class="zone-bar"></div>
           <div class="zone-marker" id="zone-marker" style="left:0%"></div>
         </div>
-        <div class="zone-labels-bottom">
-          <div class="zone-label-bottom" style="left:0%;color:#C84040">Prioritas</div>
-          <div class="zone-label-bottom" style="left:52%;color:#E87820">Dukungan</div>
-          <div class="zone-label-bottom" style="left:100%;color:#4CAF82">Optimal</div>
-        </div>
-        <div class="zone-numbers">
-          <div class="zone-number" style="left:0%">25</div>
-          <div class="zone-number" style="left:29%">44</div>
-          <div class="zone-number" style="left:45%">54</div>
-          <div class="zone-number" style="left:60%">64</div>
-          <div class="zone-number" style="left:78%">76</div>
-          <div class="zone-number" style="left:100%">90</div>
+        <div class="zone-ticks">
+          <div class="zone-tick" style="left:0%;transform:none;align-items:flex-start;">
+            <div class="zone-tick-label" style="color:#C84040">Prioritas</div>
+          </div>
+          <div class="zone-tick" style="left:29%">
+            <div class="zone-tick-label" style="color:#E87820">Dukungan</div>
+          </div>
+          <div class="zone-tick" style="left:52%">
+            <div class="zone-tick-label" style="color:#E87A20">Perhatian</div>
+          </div>
+          <div class="zone-tick" style="left:72%">
+            <div class="zone-tick-label" style="color:#E8C030">Stabil</div>
+          </div>
+          <div class="zone-tick" style="left:100%;transform:translateX(-100%);align-items:flex-end;">
+            <div class="zone-tick-label" style="color:#4CAF82">Optimal</div>
+          </div>
         </div>
       </div>
     </div>
@@ -596,6 +418,7 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 </div>
 
 <script>
+
 // ══════════════════════════════════════════════════════
 // PRODUCTS
 // ══════════════════════════════════════════════════════
@@ -1448,6 +1271,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(el) el.addEventListener('keydown',e=>{if(e.key==='Enter')validateAndStart();});
   });
 });
+
 </script>
 </body>
 </html>
