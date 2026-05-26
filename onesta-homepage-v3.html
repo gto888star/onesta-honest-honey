@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onesta — Honest Honey. Living Honey.</title>
+<meta name="description" content="Madu wellness stingless bee Indonesia. Kaya Trehalulose, bisa dilacak dari sarang ke botol. Indonesia's Answer to Manuka.">
+<meta property="og:title" content="Onesta — Stay in Balance.">
+<meta property="og:description" content="Natural Metabolic Stabilizer. Honest Honey. Living Honey.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════
+   ONESTA DESIGN SYSTEM v3
+   Blueprint Narrative + Commerce
+   ═══════════════════════════════ */
+:root {
+  --honey:      #C8842A;
+  --honey-lt:   #E8A84A;
+  --amber:      #F0BE5A;
+  --amber-pale: #FAE9C0;
+  --forest:     #1A2215;
+  --bark:       #2E1F0E;
+  --espresso:   #3A2910;
+  --ink:        #0E0A04;
+  --cream:      #FAF6EE;
+  --warm:       #FEFCF7;
+  --sand:       #EDE3D0;
+  --dsand:      #D6C9B5;
+  --muted:      #9C8870;
+  --lmuted:     #C5B49E;
+  --sage:       #5A6B4A;
+  --leaf:       #3D5030;
+  --green:      #27AE60;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--cream);
+  color:var(--bark);
+  font-family:'DM Sans',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:var(--sand);}
+::-webkit-scrollbar-thumb{background:var(--honey);}
+
+/* ── SHARED ── */
+.serif{font-family:'Cormorant Garamond',serif;}
+.bebas{font-family:'Bebas Neue',sans-serif;}
+
+.sec-label{
+  font-size:10px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--honey);display:flex;align-items:center;gap:10px;
+  margin-bottom:16px;
+}
+.sec-label::before{content:'';width:28px;height:1px;background:var(--honey);}
+.sec-label.light{color:var(--amber);}
+.sec-label.light::before{background:var(--amber);}
+
+.sec-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(32px,3.2vw,52px);
+  font-weight:300;line-height:1.08;
+  margin-bottom:12px;
+}
+.sec-title em{font-style:italic;color:var(--honey);}
+.sec-title.on-dark{color:var(--cream);}
+.sec-title.on-dark em{color:var(--amber);}
+
+.sec-en{
+  font-family:'Cormorant Garamond',serif;
+  font-size:14px;font-style:italic;
+  color:var(--lmuted);margin-bottom:18px;
+}
+.sec-en.on-dark{color:rgba(250,246,238,.35);}
+
+.btn-primary{
+  background:var(--bark);color:var(--cream);
+  padding:14px 32px;font-size:11px;letter-spacing:2.5px;
+  text-transform:uppercase;border:none;cursor:pointer;
+  font-family:'DM Sans',sans-serif;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:all .3s;
+}
+.btn-primary:hover{background:var(--honey);transform:translateY(-2px);box-shadow:0 8px 28px rgba(200,132,42,.28);}
+
+.btn-honey{
+  background:var(--honey);color:var(--cream);
+  padding:14px 32px;font-size:11px;letter-spacing:2.5px;
+  text-transform:uppercase;border:none;cursor:pointer;
+  font-family:'DM Sans',sans-serif;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:all .3s;
+}
+.btn-honey:hover{background:var(--bark);transform:translateY(-2px);}
+
+.btn-ghost-dark{
+  color:var(--amber);font-size:11px;letter-spacing:2px;
+  text-transform:uppercase;background:none;
+  border:1px solid rgba(200,132,42,.3);
+  padding:13px 26px;cursor:pointer;font-family:'DM Sans',sans-serif;
+  text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  transition:all .25s;
+}
+.btn-ghost-dark:hover{background:rgba(200,132,42,.1);border-color:var(--amber);}
+
+.btn-ghost-light{
+  color:var(--bark);font-size:11px;letter-spacing:2px;
+  text-transform:uppercase;background:none;border:none;
+  padding:13px 0;cursor:pointer;font-family:'DM Sans',sans-serif;
+  text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  transition:all .25s;
+}
+.btn-ghost-light:hover{gap:14px;color:var(--honey);}
+.btn-ghost-light::after{content:'→';}
+
+/* ── LANGUAGE BAR ── */
+.langbar{
+  background:var(--ink);padding:8px 60px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.langbar-left{font-size:10px;letter-spacing:2px;color:rgba(250,246,238,.3);}
+.langbar-left span{color:var(--amber);}
+.lang-btns{display:flex;}
+.lang-btn{
+  font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  background:none;border:1px solid rgba(200,132,42,.15);
+  color:rgba(250,246,238,.3);padding:4px 12px;
+  cursor:pointer;font-family:'DM Sans',sans-serif;
+  margin-left:-1px;transition:all .2s;
+}
+.lang-btn.on{background:var(--honey);color:var(--cream);border-color:var(--honey);}
+.lang-btn:hover:not(.on){color:var(--amber);border-color:rgba(200,132,42,.4);}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;width:100%;z-index:200;
+  padding:0 60px;height:66px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(250,246,238,.95);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(200,132,42,.1);
+  transition:box-shadow .3s;
+}
+.nav-logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:24px;letter-spacing:5px;
+  color:var(--bark);text-decoration:none;
+  display:flex;align-items:center;gap:7px;
+}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--honey);}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;transition:color .25s;
+}
+.nav-links a:hover{color:var(--bark);}
+.nav-right{display:flex;gap:10px;align-items:center;}
+.nav-ghost{
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);border:1px solid var(--sand);
+  padding:8px 16px;background:none;cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:all .25s;
+}
+.nav-ghost:hover{border-color:var(--honey);color:var(--honey);}
+.nav-cta{
+  background:var(--bark);color:var(--cream);
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  padding:9px 20px;border:none;cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:background .25s;
+  text-decoration:none;
+}
+.nav-cta:hover{background:var(--honey);}
+
+/* ══════════════════════════════════
+   S1 — HERO
+   ══════════════════════════════════ */
+.hero{
+  min-height:calc(100vh - 82px);
+  display:grid;grid-template-columns:1fr 1fr;
+  position:relative;overflow:hidden;
+}
+.hero-left{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:72px 52px 72px 60px;position:relative;z-index:2;
+}
+.hero-eyebrow{
+  font-size:10px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--honey);margin-bottom:20px;
+  display:flex;align-items:center;gap:12px;
+}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--honey);}
+.hero-h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(48px,5vw,78px);
+  line-height:.98;font-weight:300;
+  color:var(--bark);margin-bottom:10px;
+}
+.hero-h1 em{font-style:italic;color:var(--honey);}
+.hero-h1-en{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(14px,1.3vw,18px);
+  font-style:italic;color:var(--lmuted);margin-bottom:24px;
+}
+.hero-body{
+  font-size:14px;line-height:1.85;
+  color:var(--muted);max-width:420px;margin-bottom:36px;
+}
+.hero-body strong{color:var(--bark);font-weight:500;}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:32px;}
+.hero-trust{display:flex;gap:8px;flex-wrap:wrap;}
+.trust-pill{
+  font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  border:1px solid var(--sand);color:var(--muted);
+  padding:5px 12px;display:flex;align-items:center;gap:5px;
+  transition:all .2s;cursor:default;
+}
+.trust-pill:hover{border-color:var(--honey);color:var(--honey);}
+
+.hero-right{
+  background:var(--forest);
+  position:relative;overflow:hidden;
+}
+.hero-right-overlay{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 60% 25%,rgba(200,132,42,.2) 0%,transparent 55%),
+    radial-gradient(ellipse at 20% 80%,rgba(61,80,48,.25) 0%,transparent 50%);
+}
+.hero-hex-bg{
+  position:absolute;inset:0;
+  width:100%;height:100%;opacity:.06;
+}
+.hero-manuka-badge{
+  position:absolute;top:40px;left:40px;
+  background:rgba(200,132,42,.1);
+  border:1px solid rgba(200,132,42,.3);
+  backdrop-filter:blur(8px);
+  padding:10px 16px;
+}
+.hmb-label{font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(250,246,238,.4);margin-bottom:2px;}
+.hmb-text{font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:var(--amber);}
+.hero-ta-badge{
+  position:absolute;top:40px;right:40px;
+  background:rgba(250,246,238,.06);
+  border:1px solid rgba(232,168,74,.2);
+  backdrop-filter:blur(10px);
+  padding:16px 20px;text-align:center;
+}
+.ta-num{font-family:'Bebas Neue',sans-serif;font-size:48px;line-height:1;color:var(--amber);}
+.ta-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(250,246,238,.38);margin-top:3px;line-height:1.5;}
+.hero-product-box{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:40px;
+  background:linear-gradient(transparent,rgba(14,10,4,.92) 40%);
+}
+.hpb-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(232,168,74,.5);margin-bottom:12px;}
+.hpb-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:38px;font-weight:300;line-height:1.05;
+  color:var(--cream);margin-bottom:6px;
+}
+.hpb-name em{font-style:italic;color:var(--amber);}
+.hpb-desc{font-size:12px;line-height:1.7;color:rgba(250,246,238,.42);max-width:270px;margin-bottom:18px;}
+.hpb-price{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--amber);}
+.hpb-price span{font-size:12px;color:rgba(250,246,238,.3);margin-left:5px;}
+.hpb-btn{
+  margin-top:12px;
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--honey);color:var(--cream);
+  padding:12px 24px;font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;
+}
+.hpb-btn:hover{background:var(--amber-pale);color:var(--bark);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+.hero-left>*{animation:fadeUp .65s ease both;}
+.hero-left>*:nth-child(1){animation-delay:.07s;}
+.hero-left>*:nth-child(2){animation-delay:.15s;}
+.hero-left>*:nth-child(3){animation-delay:.23s;}
+.hero-left>*:nth-child(4){animation-delay:.32s;}
+.hero-left>*:nth-child(5){animation-delay:.42s;}
+.hero-left>*:nth-child(6){animation-delay:.52s;}
+
+/* ══════════════════════════════════
+   S2 — TICKER
+   ══════════════════════════════════ */
+.ticker{background:var(--bark);padding:12px 0;overflow:hidden;}
+.ticker-track{display:flex;white-space:nowrap;animation:ticker 36s linear infinite;}
+.ti{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(232,168,74,.6);padding:0 26px;flex-shrink:0;}
+.td{color:var(--honey);padding:0 4px;}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ══════════════════════════════════
+   S3 — PROBLEM AWARENESS
+   ══════════════════════════════════ */
+.problem{
+  padding:100px 60px;
+  background:var(--warm);
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+  position:relative;overflow:hidden;
+}
+.problem::before{
+  content:'';position:absolute;
+  right:-120px;top:-120px;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,132,42,.07),transparent 70%);
+}
+.problem-left{}
+.problem-question{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(38px,4vw,64px);
+  font-weight:300;line-height:1.0;
+  color:var(--bark);margin-bottom:10px;
+}
+.problem-question em{font-style:italic;color:var(--honey);}
+.problem-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:16px;font-style:italic;
+  color:var(--muted);margin-bottom:28px;
+}
+.problem-body{
+  font-size:14px;line-height:1.9;
+  color:var(--muted);max-width:400px;margin-bottom:32px;
+}
+.problem-right{}
+.symptom-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:36px;}
+.symptom-tile{
+  padding:18px 16px;
+  border:1px solid var(--sand);
+  background:var(--cream);
+  transition:all .25s;cursor:default;
+}
+.symptom-tile:hover{border-color:var(--honey);background:var(--warm);}
+.st-icon{font-size:22px;margin-bottom:8px;}
+.st-text{font-size:13px;font-weight:500;color:var(--bark);margin-bottom:3px;}
+.st-sub{font-size:11px;color:var(--muted);line-height:1.5;}
+
+/* ══════════════════════════════════
+   S4 — THE INSIGHT
+   ══════════════════════════════════ */
+.insight{
+  background:var(--forest);
+  padding:80px 60px;
+  position:relative;overflow:hidden;
+  text-align:center;
+}
+.insight::before{
+  content:'BALANCE';
+  position:absolute;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:260px;line-height:1;
+  color:rgba(255,255,255,.025);
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  pointer-events:none;letter-spacing:8px;
+  white-space:nowrap;
+}
+.insight-inner{position:relative;z-index:1;max-width:760px;margin:0 auto;}
+.insight-quote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(28px,3.5vw,52px);
+  font-weight:300;line-height:1.15;
+  color:var(--cream);margin-bottom:16px;
+}
+.insight-quote em{font-style:italic;color:var(--amber);}
+.insight-sub{
+  font-size:14px;line-height:1.9;
+  color:rgba(250,246,238,.45);
+  max-width:560px;margin:0 auto 40px;
+}
+.insight-chain{
+  display:flex;align-items:center;justify-content:center;
+  gap:0;flex-wrap:wrap;
+}
+.ic-step{
+  display:flex;align-items:center;gap:0;
+}
+.ic-word{
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(250,246,238,.4);
+  padding:10px 18px;border:1px solid rgba(200,132,42,.15);
+  transition:all .25s;
+}
+.ic-word:hover{color:var(--amber);border-color:rgba(200,132,42,.4);}
+.ic-word.highlight{color:var(--amber);border-color:rgba(200,132,42,.3);background:rgba(200,132,42,.08);}
+.ic-arrow{
+  font-size:12px;color:rgba(200,132,42,.3);
+  padding:0 6px;
+}
+
+/* ══════════════════════════════════
+   S5 — THE SOLUTION
+   ══════════════════════════════════ */
+.solution{
+  padding:100px 60px;
+  background:var(--cream);
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+}
+.solution-left{}
+.solution-badge{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(200,132,42,.08);
+  border:1px solid rgba(200,132,42,.2);
+  padding:10px 20px;margin-bottom:24px;
+}
+.sb-icon{font-size:18px;}
+.sb-text{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--honey);}
+.solution-headline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(36px,3.8vw,58px);
+  font-weight:300;line-height:1.0;
+  color:var(--bark);margin-bottom:8px;
+}
+.solution-headline em{font-style:italic;color:var(--honey);}
+.solution-en{
+  font-family:'Cormorant Garamond',serif;
+  font-size:15px;font-style:italic;
+  color:var(--lmuted);margin-bottom:24px;
+}
+.solution-body{
+  font-size:14px;line-height:1.9;color:var(--muted);margin-bottom:32px;
+}
+.solution-benefits{display:flex;flex-direction:column;gap:10px;margin-bottom:36px;}
+.sol-benefit{
+  display:flex;align-items:center;gap:14px;
+  font-size:13px;color:var(--bark);
+}
+.sol-benefit::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--honey);flex-shrink:0;
+}
+.solution-right{}
+.ritual-card{
+  background:var(--bark);
+  padding:48px 40px;
+  position:relative;overflow:hidden;
+}
+.ritual-card::before{
+  content:'2 SENDOK';
+  position:absolute;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:80px;line-height:1;
+  color:rgba(255,255,255,.03);
+  bottom:-5px;right:-5px;
+  pointer-events:none;letter-spacing:2px;white-space:nowrap;
+}
+.rc-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:20px;}
+.rc-ritual{
+  font-family:'Cormorant Garamond',serif;
+  font-size:42px;font-weight:300;line-height:1.1;
+  color:var(--cream);margin-bottom:8px;
+}
+.rc-ritual em{font-style:italic;color:var(--amber);}
+.rc-sub{font-size:13px;color:rgba(250,246,238,.45);margin-bottom:28px;}
+.rc-steps{display:flex;flex-direction:column;gap:12px;margin-bottom:28px;}
+.rc-step{
+  display:flex;align-items:center;gap:14px;
+  padding:12px 16px;
+  border-left:2px solid rgba(200,132,42,.25);
+}
+.rc-step-time{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:18px;color:var(--amber);min-width:60px;
+}
+.rc-step-text{font-size:12px;color:rgba(250,246,238,.55);}
+.rc-tagline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;font-style:italic;
+  color:rgba(250,246,238,.5);
+  border-top:1px solid rgba(200,132,42,.15);
+  padding-top:20px;
+}
+.rc-tagline span{color:var(--amber);}
+
+/* ══════════════════════════════════
+   S6 — WHY ONESTA
+   ══════════════════════════════════ */
+.why{
+  background:var(--warm);
+  padding:100px 60px;
+}
+.why-header{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:end;
+  margin-bottom:60px;
+}
+.why-pillars{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:var(--sand);
+}
+.why-pillar{
+  background:var(--warm);
+  padding:48px 40px;
+  position:relative;overflow:hidden;
+  transition:background .25s;
+}
+.why-pillar:hover{background:var(--cream);}
+.why-pillar::before{
+  content:attr(data-num);
+  position:absolute;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:120px;line-height:1;
+  color:rgba(200,132,42,.06);
+  bottom:-15px;right:-5px;
+  pointer-events:none;
+}
+.wp-badge{
+  font-size:9px;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--honey);border:1px solid rgba(200,132,42,.2);
+  padding:5px 12px;display:inline-block;margin-bottom:16px;
+}
+.wp-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:28px;font-weight:400;
+  color:var(--bark);margin-bottom:10px;
+}
+.wp-title em{font-style:italic;color:var(--honey);}
+.wp-desc{font-size:12px;line-height:1.7;color:var(--muted);margin-bottom:16px;}
+.wp-list{display:flex;flex-direction:column;gap:6px;}
+.wp-item{
+  font-size:11px;color:var(--muted);
+  display:flex;align-items:center;gap:8px;
+}
+.wp-item::before{content:'·';color:var(--honey);font-size:16px;}
+
+/* ══════════════════════════════════
+   S7 — QUIZ ANCHOR (AADB)
+   ══════════════════════════════════ */
+.quiz-anchor{
+  background:var(--bark);
+  display:grid;grid-template-columns:1fr 1.1fr;
+}
+.qa-left{
+  padding:88px 52px 88px 60px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.qa-domains{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:28px;}
+.qa-domain{
+  display:flex;align-items:center;gap:9px;
+  padding:11px 13px;border:1px solid rgba(200,132,42,.18);
+  font-size:11px;color:rgba(250,246,238,.5);
+  transition:all .25s;cursor:default;
+}
+.qa-domain:hover{border-color:var(--honey);color:var(--cream);}
+.qa-domain-icon{font-size:14px;}
+.qa-meta{font-size:10px;color:rgba(250,246,238,.3);margin-bottom:20px;letter-spacing:.5px;}
+
+.qa-right{
+  background:var(--forest);
+  padding:64px 52px;
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.qa-right::before{
+  content:'BALANCE';
+  position:absolute;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:120px;color:rgba(255,255,255,.022);
+  bottom:-10px;right:-8px;pointer-events:none;letter-spacing:4px;
+}
+.qr-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:8px;}
+.qr-dots{display:flex;gap:5px;margin-bottom:26px;}
+.qr-dot{width:24px;height:3px;background:rgba(255,255,255,.1);}
+.qr-dot.done{background:rgba(200,132,42,.4);}
+.qr-dot.active{background:var(--honey);}
+.qr-q{
+  font-family:'Cormorant Garamond',serif;
+  font-size:24px;font-weight:300;line-height:1.45;
+  color:var(--cream);margin-bottom:24px;
+}
+.qr-q em{font-style:italic;color:var(--amber);}
+.qr-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
+.qr-opt{
+  padding:12px 16px;
+  border:1px solid rgba(200,132,42,.18);
+  color:rgba(250,246,238,.55);font-size:12px;
+  cursor:pointer;background:none;text-align:left;
+  font-family:'DM Sans',sans-serif;transition:all .22s;
+}
+.qr-opt:hover,.qr-opt.sel{
+  border-color:var(--honey);
+  background:rgba(200,132,42,.1);
+  color:var(--cream);transform:translateX(5px);
+}
+.qr-footer{display:flex;align-items:center;justify-content:space-between;}
+.qr-next{
+  background:var(--honey);color:var(--cream);
+  border:none;padding:12px 24px;
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  cursor:pointer;font-family:'DM Sans',sans-serif;
+  display:flex;align-items:center;gap:7px;transition:all .25s;
+}
+.qr-next:hover{background:var(--honey-lt);}
+.qr-prog{font-size:10px;color:rgba(250,246,238,.3);}
+
+/* ══════════════════════════════════
+   S8 — BEST SELLERS + SHOP BY NEED
+   ══════════════════════════════════ */
+.products{padding:100px 60px;background:var(--cream);}
+.prod-header{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  margin-bottom:48px;
+}
+.view-all{
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;
+  display:flex;align-items:center;gap:7px;transition:all .25s;
+}
+.view-all:hover{color:var(--honey);gap:12px;}
+.view-all::after{content:'→';}
+
+/* Need filters */
+.need-filters{display:flex;gap:8px;margin-bottom:36px;flex-wrap:wrap;}
+.nf{
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  padding:9px 18px;border:1px solid var(--sand);
+  background:none;color:var(--muted);cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:all .25s;
+}
+.nf.on,.nf:hover{background:var(--bark);color:var(--cream);border-color:var(--bark);}
+
+.prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.prod-card{cursor:pointer;transition:transform .3s;}
+.prod-card:hover{transform:translateY(-5px);}
+.prod-img{
+  aspect-ratio:3/4;position:relative;overflow:hidden;margin-bottom:14px;
+}
+.prod-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.prod-emoji{font-size:64px;filter:drop-shadow(0 4px 16px rgba(0,0,0,.2));}
+.prod-bdg{
+  position:absolute;top:12px;left:12px;
+  background:var(--honey);color:var(--cream);
+  font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:4px 9px;
+}
+.prod-bdg.new{background:var(--leaf);}
+.prod-overlay{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(transparent,rgba(14,10,4,.75));
+  padding:16px 12px 12px;opacity:0;transition:opacity .3s;
+}
+.prod-card:hover .prod-overlay{opacity:1;}
+.prod-overlay-btn{
+  width:100%;background:var(--honey);color:var(--cream);
+  border:none;padding:9px;font-size:9px;letter-spacing:2px;
+  text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;
+}
+.prod-cat{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.prod-name{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:400;margin-bottom:4px;}
+.prod-tag{font-size:11px;color:var(--muted);line-height:1.5;margin-bottom:11px;}
+.prod-bottom{display:flex;align-items:center;justify-content:space-between;}
+.prod-price{font-family:'Cormorant Garamond',serif;font-size:20px;}
+.prod-add{
+  width:32px;height:32px;background:var(--bark);color:var(--cream);
+  border:none;cursor:pointer;font-size:18px;
+  display:flex;align-items:center;justify-content:center;transition:all .25s;
+}
+.prod-add:hover{background:var(--honey);transform:rotate(90deg);}
+.pbg-d{background:linear-gradient(145deg,#2E1F0E,#5A3D1E);}
+.pbg-b{background:linear-gradient(145deg,#1A2215,#3D5030);}
+.pbg-t{background:linear-gradient(145deg,#1E2A35,#2D4A5E);}
+.pbg-f{background:linear-gradient(145deg,#0E1508,#1A2215);}
+
+/* ══════════════════════════════════
+   S9 — SCIENCE
+   ══════════════════════════════════ */
+.science{
+  background:var(--bark);
+  padding:100px 60px;
+  position:relative;overflow:hidden;
+}
+.science-bg{
+  position:absolute;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:200px;line-height:1;
+  color:rgba(255,255,255,.02);
+  right:-20px;top:40px;pointer-events:none;letter-spacing:4px;
+}
+.science-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.science-body{font-size:13px;line-height:1.9;color:rgba(250,246,238,.46);margin-bottom:28px;max-width:380px;}
+.science-body strong{color:rgba(250,246,238,.82);font-weight:500;}
+
+.honey-levels{display:flex;flex-direction:column;gap:2px;}
+.hl-item{
+  display:flex;align-items:center;gap:14px;
+  padding:12px 15px;
+  border-left:3px solid rgba(255,255,255,.04);transition:all .25s;
+}
+.hl-item:hover{border-left-color:var(--honey);background:rgba(200,132,42,.04);}
+.hl-item.on{border-left-color:var(--honey);background:rgba(200,132,42,.09);}
+.hl-num{font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1;color:rgba(232,168,74,.22);min-width:32px;}
+.hl-item.on .hl-num{color:var(--amber);}
+.hl-title{font-size:12px;font-weight:500;color:rgba(250,246,238,.36);margin-bottom:2px;}
+.hl-item.on .hl-title{color:var(--cream);}
+.hl-desc{font-size:11px;color:rgba(250,246,238,.26);}
+.hl-item.on .hl-desc{color:rgba(250,246,238,.5);}
+
+.science-right{display:flex;flex-direction:column;gap:12px;}
+.treha-card{
+  background:linear-gradient(135deg,rgba(200,132,42,.11),rgba(200,132,42,.03));
+  border:1px solid rgba(200,132,42,.22);padding:24px 20px;
+}
+.treha-lbl{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:9px;}
+.treha-name{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--cream);margin-bottom:6px;}
+.treha-name em{font-style:italic;color:var(--amber);}
+.treha-desc{font-size:12px;color:rgba(250,246,238,.46);line-height:1.7;}
+.treha-pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px;}
+.treha-pill{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;border:1px solid rgba(200,132,42,.26);color:var(--amber);padding:3px 9px;}
+
+.bio-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.bio-card{padding:16px 15px;border:1px solid rgba(200,132,42,.12);transition:all .25s;}
+.bio-card:hover{border-color:rgba(200,132,42,.36);background:rgba(200,132,42,.04);}
+.bio-icon{font-size:18px;margin-bottom:8px;}
+.bio-name{font-size:11px;font-weight:500;color:var(--amber);margin-bottom:3px;}
+.bio-desc{font-size:11px;color:rgba(250,246,238,.36);line-height:1.6;}
+
+.trace-strip{
+  display:flex;align-items:center;gap:13px;
+  padding:15px 17px;border:1px solid rgba(200,132,42,.17);
+  background:rgba(200,132,42,.04);
+}
+.ts-icon{font-size:18px;}
+.ts-title{font-size:12px;font-weight:500;color:var(--cream);margin-bottom:2px;}
+.ts-desc{font-size:11px;color:rgba(250,246,238,.36);}
+.ts-cta{
+  margin-left:auto;font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--amber);border:1px solid rgba(200,132,42,.28);
+  padding:7px 13px;cursor:pointer;background:none;
+  font-family:'DM Sans',sans-serif;transition:all .25s;white-space:nowrap;
+}
+.ts-cta:hover{background:var(--honey);color:var(--cream);border-color:var(--honey);}
+
+/* ══════════════════════════════════
+   S10 — TRUST
+   ══════════════════════════════════ */
+.trust-section{
+  background:var(--warm);
+  padding:80px 60px;
+}
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--sand);margin-top:48px;}
+.trust-card{
+  background:var(--warm);padding:36px 28px;
+  transition:background .25s;
+}
+.trust-card:hover{background:var(--cream);}
+.tc-icon{font-size:28px;margin-bottom:14px;}
+.tc-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--bark);margin-bottom:8px;}
+.tc-desc{font-size:12px;line-height:1.7;color:var(--muted);}
+
+/* ══════════════════════════════════
+   S11 — DAILY RITUAL
+   ══════════════════════════════════ */
+.ritual{
+  background:var(--forest);
+  padding:100px 60px;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+  position:relative;overflow:hidden;
+}
+.ritual::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 80% 50%,rgba(200,132,42,.08),transparent 60%);
+}
+.ritual-left{position:relative;z-index:1;}
+.ritual-big{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(80px,10vw,140px);
+  line-height:1;color:var(--amber);
+  margin-bottom:4px;
+}
+.ritual-big-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(24px,2.5vw,36px);
+  font-weight:300;color:var(--cream);
+  margin-bottom:16px;
+}
+.ritual-big-sub em{font-style:italic;color:var(--amber);}
+.ritual-body{font-size:13px;line-height:1.9;color:rgba(250,246,238,.45);max-width:360px;margin-bottom:28px;}
+.ritual-tagline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;font-style:italic;
+  color:rgba(250,246,238,.55);
+}
+.ritual-tagline span{color:var(--amber);}
+
+.ritual-right{position:relative;z-index:1;}
+.ritual-timeline{display:flex;flex-direction:column;gap:0;}
+.rt-item{
+  display:flex;align-items:flex-start;gap:20px;
+  padding:20px 0;
+  border-bottom:1px solid rgba(200,132,42,.1);
+}
+.rt-item:last-child{border-bottom:none;}
+.rt-time{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:20px;color:var(--amber);
+  min-width:80px;letter-spacing:1px;
+}
+.rt-content{}
+.rt-action{font-size:13px;font-weight:500;color:var(--cream);margin-bottom:4px;}
+.rt-detail{font-size:12px;color:rgba(250,246,238,.4);line-height:1.6;}
+
+/* ══════════════════════════════════
+   S12 — PROTOCOLS (CO-BRAND)
+   ══════════════════════════════════ */
+.protocols{padding:100px 60px;background:var(--cream);}
+.proto-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:16px;margin-top:48px;}
+.proto-card{position:relative;overflow:hidden;cursor:pointer;transition:transform .3s;}
+.proto-card:hover{transform:translateY(-4px);}
+.proto-featured{
+  background:var(--forest);padding:48px 40px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  min-height:440px;position:relative;
+}
+.proto-featured::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 70% 20%,rgba(200,132,42,.18) 0%,transparent 55%),
+    linear-gradient(to bottom,transparent 40%,rgba(14,10,4,.88) 100%);
+}
+.proto-partner-badge{
+  position:absolute;top:24px;right:24px;
+  background:rgba(200,132,42,.13);
+  border:1px solid rgba(200,132,42,.28);
+  backdrop-filter:blur(8px);
+  padding:6px 12px;
+  font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);
+}
+.proto-content{position:relative;z-index:1;}
+.proto-tag{
+  font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--amber);margin-bottom:11px;
+  display:flex;align-items:center;gap:7px;
+}
+.proto-tag::before{content:'';width:16px;height:1px;background:var(--honey);}
+.proto-name{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;line-height:1.1;color:var(--cream);margin-bottom:6px;}
+.proto-name em{font-style:italic;color:var(--amber);}
+.proto-by{font-size:11px;color:rgba(250,246,238,.46);margin-bottom:14px;}
+.proto-desc{font-size:12px;line-height:1.7;color:rgba(250,246,238,.46);margin-bottom:20px;}
+.proto-cta{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--amber);background:none;border:none;
+  border-bottom:1px solid rgba(200,132,42,.3);
+  padding-bottom:3px;cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:gap .25s;
+}
+.proto-cta:hover{gap:12px;}
+.proto-cta::after{content:'→';}
+.proto-secondary{
+  background:var(--sand);padding:32px 28px;
+  display:flex;flex-direction:column;min-height:440px;
+}
+.proto-sec-icon{font-size:40px;margin-bottom:16px;display:block;}
+.proto-sec-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--bark);margin-bottom:5px;}
+.proto-sec-by{font-size:11px;color:var(--muted);margin-bottom:11px;}
+.proto-sec-desc{font-size:12px;line-height:1.7;color:var(--muted);flex:1;}
+.proto-sec-footer{margin-top:20px;padding-top:16px;border-top:1px solid var(--dsand);display:flex;align-items:center;justify-content:space-between;}
+.proto-join{
+  background:var(--honey);padding:32px 28px;
+  display:flex;flex-direction:column;min-height:440px;
+}
+.proto-join-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;line-height:1.2;color:var(--cream);margin-bottom:10px;}
+.proto-join-title em{font-style:italic;}
+.proto-join-desc{font-size:12px;line-height:1.7;color:rgba(250,246,238,.72);margin-bottom:16px;flex:1;}
+.proto-join-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:20px;}
+.proto-join-list li{font-size:11px;color:rgba(250,246,238,.8);display:flex;align-items:center;gap:7px;}
+.proto-join-list li::before{content:'✓';font-size:10px;}
+.proto-join-btn{
+  background:var(--cream);color:var(--honey);
+  border:none;padding:12px 20px;
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  cursor:pointer;font-family:'DM Sans',sans-serif;
+  transition:all .25s;margin-top:auto;
+}
+.proto-join-btn:hover{background:var(--bark);color:var(--cream);}
+
+/* ══════════════════════════════════
+   S13 — TESTIMONIALS
+   ══════════════════════════════════ */
+.testi{padding:100px 60px;background:var(--warm);}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--sand);margin-top:48px;}
+.testi-card{background:var(--warm);padding:36px 32px;transition:background .25s;}
+.testi-card:hover{background:var(--cream);}
+.testi-stars{color:var(--honey);font-size:11px;letter-spacing:3px;margin-bottom:14px;}
+.testi-quote{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:300;line-height:1.55;color:var(--bark);margin-bottom:18px;}
+.testi-author{display:flex;align-items:center;gap:11px;}
+.testi-av{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--honey);display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--cream);font-weight:500;
+  flex-shrink:0;
+}
+.testi-name{font-size:12px;font-weight:500;color:var(--bark);}
+.testi-role{font-size:10px;color:var(--muted);margin-top:1px;}
+.testi-prod{
+  display:inline-block;margin-top:11px;
+  font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--honey);border:1px solid rgba(200,132,42,.22);padding:3px 9px;
+}
+
+/* ══════════════════════════════════
+   S14 — MISSION
+   ══════════════════════════════════ */
+.mission{
+  background:var(--forest);
+  padding:100px 60px;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+  position:relative;overflow:hidden;
+}
+.mission::before{
+  content:'MISSION';
+  position:absolute;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:180px;color:rgba(255,255,255,.018);
+  right:-15px;bottom:-20px;pointer-events:none;letter-spacing:5px;
+}
+.mission-left{position:relative;z-index:1;}
+.mission-chain{
+  font-size:12px;line-height:2.2;
+  color:rgba(250,246,238,.4);
+  margin-bottom:28px;
+}
+.mission-chain span{color:var(--amber);}
+.mission-headline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(36px,3.8vw,56px);
+  font-weight:300;line-height:1.05;
+  color:var(--cream);margin-bottom:8px;
+}
+.mission-headline em{font-style:italic;color:var(--amber);}
+.mission-body{font-size:13px;line-height:1.9;color:rgba(250,246,238,.45);max-width:380px;margin-bottom:28px;}
+.mission-right{position:relative;z-index:1;}
+.mission-three{display:flex;flex-direction:column;gap:16px;}
+.mt-item{
+  padding:24px 20px;
+  border:1px solid rgba(200,132,42,.15);
+  transition:all .25s;
+}
+.mt-item:hover{border-color:rgba(200,132,42,.35);background:rgba(200,132,42,.05);}
+.mt-word{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:14px;letter-spacing:3px;
+  color:var(--amber);margin-bottom:6px;
+}
+.mt-title{font-size:13px;font-weight:500;color:var(--cream);margin-bottom:4px;}
+.mt-desc{font-size:12px;color:rgba(250,246,238,.4);line-height:1.6;}
+
+/* ══════════════════════════════════
+   S15 — FOUNDER STORY
+   ══════════════════════════════════ */
+.founder{
+  background:var(--cream);
+  padding:100px 60px;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+}
+.founder-left{}
+.founder-quote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(22px,2.2vw,32px);
+  font-weight:300;font-style:italic;
+  line-height:1.45;color:var(--bark);
+  margin-bottom:24px;
+  padding-left:24px;
+  border-left:3px solid var(--honey);
+}
+.founder-body{font-size:13px;line-height:1.9;color:var(--muted);margin-bottom:28px;}
+.founder-sig{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;font-style:italic;color:var(--honey);
+}
+.founder-right{}
+.founder-pillars{display:flex;flex-direction:column;gap:0;}
+.fp-item{
+  display:flex;align-items:center;gap:16px;
+  padding:20px 0;
+  border-bottom:1px solid var(--sand);
+}
+.fp-item:last-child{border-bottom:none;}
+.fp-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:36px;color:rgba(200,132,42,.2);min-width:44px;
+}
+.fp-title{font-size:13px;font-weight:500;color:var(--bark);margin-bottom:3px;}
+.fp-desc{font-size:11px;color:var(--muted);line-height:1.5;}
+
+/* ══════════════════════════════════
+   S16 — GIFT & B2B
+   ══════════════════════════════════ */
+.gift{
+  background:var(--bark);
+  padding:100px 60px;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:72px;align-items:center;
+  position:relative;overflow:hidden;
+}
+.gift::after{
+  content:'';position:absolute;right:-100px;top:-100px;
+  width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,132,42,.07),transparent 70%);
+}
+.gift-desc{font-size:13px;line-height:1.9;color:rgba(250,246,238,.46);margin-bottom:26px;max-width:350px;}
+.gift-types{display:flex;flex-direction:column;gap:8px;margin-bottom:28px;}
+.gift-type{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 15px;border:1px solid rgba(200,132,42,.13);
+  transition:all .25s;cursor:pointer;
+}
+.gift-type:hover{border-color:rgba(200,132,42,.36);background:rgba(200,132,42,.05);}
+.gt-icon{font-size:16px;}
+.gt-name{font-size:12px;font-weight:500;color:var(--cream);}
+.gt-desc{font-size:11px;color:rgba(250,246,238,.36);}
+.gift-boxes{display:flex;flex-direction:column;gap:13px;position:relative;z-index:1;}
+.gift-box{background:rgba(250,246,238,.04);border:1px solid rgba(200,132,42,.13);padding:28px 24px;}
+.gb-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--cream);margin-bottom:8px;}
+.gb-title em{font-style:italic;color:var(--amber);}
+.gb-desc{font-size:12px;color:rgba(250,246,238,.4);line-height:1.6;margin-bottom:13px;}
+.gb-price{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--amber);margin-bottom:12px;}
+.gb-cta{
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--amber);border:1px solid rgba(200,132,42,.26);
+  padding:8px 16px;background:none;cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:all .25s;
+}
+.gb-cta:hover{background:var(--honey);color:var(--cream);border-color:var(--honey);}
+
+/* ══════════════════════════════════
+   S17 — AFFILIATE
+   ══════════════════════════════════ */
+.affiliate{background:var(--sand);padding:80px 60px;}
+.affiliate-inner{display:flex;align-items:center;justify-content:space-between;gap:44px;}
+.affiliate-left{max-width:440px;}
+.affiliate-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,2.6vw,38px);font-weight:300;line-height:1.15;margin-bottom:10px;}
+.affiliate-title em{font-style:italic;color:var(--honey);}
+.affiliate-desc{font-size:13px;line-height:1.8;color:var(--muted);}
+.affiliate-ctas{margin-top:24px;display:flex;gap:12px;align-items:center;}
+.affiliate-stats{display:flex;gap:12px;flex-shrink:0;}
+.aff-stat{text-align:center;padding:24px 28px;background:var(--warm);border:1px solid var(--dsand);}
+.aff-num{font-family:'Bebas Neue',sans-serif;font-size:44px;line-height:1;color:var(--honey);margin-bottom:5px;}
+.aff-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+
+/* ══════════════════════════════════
+   S18 — GLOBAL
+   ══════════════════════════════════ */
+.global{
+  background:var(--ink);
+  padding:56px 60px;
+  display:flex;align-items:center;gap:52px;
+  position:relative;overflow:hidden;
+}
+.global::before{
+  content:'GLOBAL';
+  position:absolute;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:160px;color:rgba(255,255,255,.018);
+  right:-10px;top:50%;transform:translateY(-50%);
+  pointer-events:none;letter-spacing:6px;
+}
+.global-left{flex:1;position:relative;z-index:1;}
+.global-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,2.6vw,38px);font-weight:300;color:var(--cream);line-height:1.1;margin-bottom:8px;}
+.global-title em{font-style:italic;color:var(--amber);}
+.global-desc{font-size:13px;color:rgba(250,246,238,.44);line-height:1.8;max-width:400px;}
+.global-markets{display:flex;gap:0;flex-shrink:0;position:relative;z-index:1;}
+.market{
+  text-align:center;padding:20px 24px;
+  border:1px solid rgba(200,132,42,.12);margin-left:-1px;
+  transition:all .25s;cursor:pointer;
+}
+.market:hover{background:rgba(200,132,42,.08);border-color:rgba(200,132,42,.3);}
+.market-flag{font-size:28px;margin-bottom:7px;}
+.market-name{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(250,246,238,.35);margin-bottom:2px;}
+.market-status{font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--amber);}
+.market-status.soon{color:rgba(250,246,238,.2);}
+
+/* ══════════════════════════════════
+   S19 — FAQ
+   ══════════════════════════════════ */
+.faq{background:var(--warm);padding:100px 60px;display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:start;}
+.faq-left{}
+.faq-list{display:flex;flex-direction:column;gap:0;margin-top:48px;}
+.faq-item{border-bottom:1px solid var(--sand);}
+.faq-q{
+  width:100%;padding:20px 0;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:14px;font-weight:500;color:var(--bark);
+  background:none;border:none;cursor:pointer;
+  font-family:'DM Sans',sans-serif;text-align:left;
+  transition:color .2s;
+}
+.faq-q:hover{color:var(--honey);}
+.faq-icon{font-size:18px;color:var(--honey);flex-shrink:0;transition:transform .25s;}
+.faq-a{
+  font-size:13px;line-height:1.8;color:var(--muted);
+  padding-bottom:20px;display:none;
+}
+.faq-item.open .faq-a{display:block;}
+.faq-item.open .faq-icon{transform:rotate(45deg);}
+
+.faq-final-cta{
+  background:var(--bark);
+  padding:52px 44px;
+  display:flex;flex-direction:column;justify-content:center;
+  margin-top:48px;
+  position:relative;overflow:hidden;
+}
+.faq-final-cta::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 80% 20%,rgba(200,132,42,.12),transparent 55%);
+}
+.ffc-inner{position:relative;z-index:1;}
+.ffc-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:14px;}
+.ffc-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--cream);margin-bottom:8px;line-height:1.1;}
+.ffc-title em{font-style:italic;color:var(--amber);}
+.ffc-sub{font-size:13px;color:rgba(250,246,238,.45);margin-bottom:28px;}
+.ffc-btns{display:flex;gap:10px;flex-wrap:wrap;}
+
+/* ══════════════════════════════════
+   S20 — CHANNELS
+   ══════════════════════════════════ */
+.channels{background:var(--espresso);padding:44px 60px;}
+.channels-inner{display:flex;align-items:center;gap:40px;justify-content:space-between;flex-wrap:wrap;}
+.ch-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(250,246,238,.28);white-space:nowrap;}
+.ch-list{display:flex;gap:9px;align-items:center;flex-wrap:wrap;}
+.ch-item{
+  display:flex;align-items:center;gap:7px;
+  font-size:11px;color:rgba(250,246,238,.38);
+  border:1px solid rgba(255,255,255,.06);
+  padding:9px 15px;text-decoration:none;transition:all .25s;cursor:pointer;
+}
+.ch-item:hover{color:var(--cream);border-color:rgba(200,132,42,.3);}
+
+/* ══════════════════════════════════
+   FOOTER
+   ══════════════════════════════════ */
+footer{background:var(--ink);padding:56px 60px 24px;}
+.footer-top{
+  display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;
+  gap:32px;margin-bottom:40px;padding-bottom:40px;
+  border-bottom:1px solid rgba(200,132,42,.06);
+}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:5px;color:var(--cream);margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.footer-tagline{font-size:12px;line-height:1.8;color:rgba(250,246,238,.26);max-width:200px;margin-bottom:12px;}
+.footer-tagline-en{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:rgba(250,246,238,.17);}
+.footer-certs{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px;}
+.fcert{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;border:1px solid rgba(200,132,42,.11);color:rgba(250,246,238,.26);padding:3px 9px;}
+.footer-col-title{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--honey);margin-bottom:14px;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.footer-links a{font-size:12px;color:rgba(250,246,238,.3);text-decoration:none;transition:color .25s;}
+.footer-links a:hover{color:rgba(250,246,238,.7);}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.footer-copy{font-size:10px;color:rgba(250,246,238,.17);}
+.footer-socials{display:flex;gap:7px;}
+.soc{width:28px;height:28px;border:1px solid rgba(200,132,42,.11);display:flex;align-items:center;justify-content:center;font-size:11px;color:rgba(250,246,238,.26);text-decoration:none;transition:all .25s;}
+.soc:hover{border-color:var(--honey);color:var(--honey);}
+
+/* FLOAT QUIZ */
+.float-quiz{
+  position:fixed;bottom:24px;right:24px;z-index:150;
+  background:var(--honey);color:var(--cream);
+  padding:12px 20px;font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  border:none;cursor:pointer;font-family:'DM Sans',sans-serif;
+  display:flex;align-items:center;gap:7px;
+  box-shadow:0 8px 28px rgba(200,132,42,.38);
+  transition:all .3s;text-decoration:none;
+  animation:floatIn .6s .9s ease both;
+}
+.float-quiz:hover{background:var(--bark);}
+@keyframes floatIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+@media(max-width:960px){
+  .hero,.problem,.solution,.ritual,.mission,.founder,.gift,.faq{grid-template-columns:1fr;}
+  .hero-right{min-height:300px;}
+  .prod-grid,.proto-grid,.testi-grid,.trust-grid{grid-template-columns:1fr 1fr;}
+  .why-pillars{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+  nav .nav-links{display:none;}
+  .affiliate-inner{flex-direction:column;}
+  .global{flex-direction:column;}
+  .langbar{padding:8px 24px;}
+  nav{padding:0 24px;}
+  .problem,.solution,.science-inner,.quiz-anchor,.ritual,.mission,.founder,.gift{padding:60px 24px;}
+  .products,.testi,.protocols,.trust-section,.faq,.channels,.affiliate{padding:60px 24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- FLOATING QUIZ -->
+<a href="#quiz" class="float-quiz">&#127855; Cek Balance Tubuhmu</a>
+
+<!-- LANGUAGE BAR -->
+<div class="langbar">
+  <div class="langbar-left">&#127760; Available in &nbsp;<span>Indonesia &middot; Singapore &middot; Japan &middot; Coming: Middle East &middot; US &middot; Europe</span></div>
+  <div class="lang-btns">
+    <button class="lang-btn on">ID</button>
+    <button class="lang-btn">EN</button>
+    <button class="lang-btn">JP</button>
+    <button class="lang-btn" style="opacity:.4">AR</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">ONESTA <span class="nav-dot"></span></a>
+  <ul class="nav-links">
+    <li><a href="#problem">Ada Apa?</a></li>
+    <li><a href="#quiz">Balance Check</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#protocols">Protocols</a></li>
+    <li><a href="#gift">Gifts & B2B</a></li>
+    <li><a href="#affiliate">Affiliates</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-ghost" onclick="document.getElementById('quiz').scrollIntoView()">Cek Balance</button>
+    <a href="#products" class="nav-cta">Shop Now</a>
+  </div>
+</nav>
+
+<!-- ══ S1 HERO ══ -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Stingless Bee Wellness Honey &middot; Indonesia</div>
+    <h1 class="hero-h1">
+      Stay in<br><em>Balance.</em>
+    </h1>
+    <p class="hero-h1-en">Honest Honey. Living Honey. Balance is the New Normal.</p>
+    <p class="hero-body">
+      Madu wellness dari lebah tanpa sengat Indonesia &mdash;
+      <strong>kaya Trehalulose, bisa dilacak dari sarang ke botol,</strong>
+      dirancang sebagai fondasi keseimbangan metabolik harianmu.
+    </p>
+    <div class="hero-ctas">
+      <a href="#quiz" class="btn-honey">Ada Apa Dengan Balance? &rarr;</a>
+      <a href="#products" class="btn-ghost-light">Lihat Produk</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-pill">&#10003; Halal Certified</div>
+      <div class="trust-pill">&#128269; Digitally Traceable</div>
+      <div class="trust-pill">&#127807; 100% Raw &amp; Ripe</div>
+      <div class="trust-pill">&#9879; Science-Backed</div>
+      <div class="trust-pill">&#127758; Global Export</div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-overlay"></div>
+    <svg class="hero-hex-bg" viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg">
+      <defs><pattern id="hex" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
+        <polygon points="30,2 58,17 58,47 30,52 2,47 2,17" fill="none" stroke="#C8842A" stroke-width="0.8"/>
+      </pattern></defs>
+      <rect width="600" height="700" fill="url(#hex)"/>
+    </svg>
+    <div class="hero-manuka-badge">
+      <div class="hmb-label">Positioning</div>
+      <div class="hmb-text">"Indonesia's Manuka — and More"</div>
+    </div>
+    <div class="hero-ta-badge">
+      <div class="ta-num">15+</div>
+      <div class="ta-label">Total Activity<br>Score</div>
+    </div>
+    <div class="hero-product-box">
+      <div class="hpb-label">Featured Product</div>
+      <div class="hpb-name">Onesta <em>Daily</em></div>
+      <p class="hpb-desc">Fondasi wellness harianmu. Trehalulose untuk metabolisme &amp; energi stabil.</p>
+      <div class="hpb-price">Rp 320.000 <span>190g</span></div>
+      <button class="hpb-btn">+ Tambah ke Keranjang</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S2 TICKER ══ -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ti">Honest Honey&trade;</span><span class="td">&diams;</span>
+    <span class="ti">Living Honey&trade;</span><span class="td">&diams;</span>
+    <span class="ti">Indonesia's Manuka &mdash; and More</span><span class="td">&diams;</span>
+    <span class="ti">Digitally Traceable &mdash; Hive to Bottle</span><span class="td">&diams;</span>
+    <span class="ti">Halal &middot; NKV Certified</span><span class="td">&diams;</span>
+    <span class="ti">Say No to Honey Laundering&trade;</span><span class="td">&diams;</span>
+    <span class="ti">Ripe &middot; Raw &middot; Natural &middot; Pure</span><span class="td">&diams;</span>
+    <span class="ti">Blockchain Traceability V2 &mdash; Coming</span><span class="td">&diams;</span>
+    <span class="ti">Stingless Bee Wellness Honey</span><span class="td">&diams;</span>
+    <span class="ti">Honest Honey&trade;</span><span class="td">&diams;</span>
+    <span class="ti">Living Honey&trade;</span><span class="td">&diams;</span>
+    <span class="ti">Indonesia's Manuka &mdash; and More</span><span class="td">&diams;</span>
+    <span class="ti">Digitally Traceable &mdash; Hive to Bottle</span><span class="td">&diams;</span>
+    <span class="ti">Halal &middot; NKV Certified</span><span class="td">&diams;</span>
+    <span class="ti">Say No to Honey Laundering&trade;</span><span class="td">&diams;</span>
+    <span class="ti">Ripe &middot; Raw &middot; Natural &middot; Pure</span><span class="td">&diams;</span>
+    <span class="ti">Blockchain Traceability V2 &mdash; Coming</span><span class="td">&diams;</span>
+    <span class="ti">Stingless Bee Wellness Honey</span><span class="td">&diams;</span>
+  </div>
+</div>
+
+<!-- ══ S3 PROBLEM AWARENESS ══ -->
+<section class="problem" id="problem">
+  <div class="problem-left">
+    <div class="sec-label">Problem Awareness</div>
+    <h2 class="problem-question">Ada Apa Dengan<br><em>Balance</em>-mu?</h2>
+    <p class="problem-sub">What's happening with your body's balance?</p>
+    <p class="problem-body">
+      Banyak orang hari ini tidak merasa benar-benar sakit &mdash; tapi juga tidak merasa sepenuhnya sehat.
+      Tubuh memberi sinyal. Kita jarang mendengarnya.
+    </p>
+    <a href="#quiz" class="btn-honey">Temukan Jawabannya &rarr;</a>
+  </div>
+  <div class="problem-right">
+    <div class="symptom-grid">
+      <div class="symptom-tile">
+        <div class="st-icon">&#128564;</div>
+        <div class="st-text">Bangun Kelelahan</div>
+        <div class="st-sub">Tidur cukup tapi tidak segar</div>
+      </div>
+      <div class="symptom-tile">
+        <div class="st-icon">&#129504;</div>
+        <div class="st-text">Brain Fog</div>
+        <div class="st-sub">Sulit fokus, pikiran kabur</div>
+      </div>
+      <div class="symptom-tile">
+        <div class="st-icon">&#9889;</div>
+        <div class="st-text">Energi Tidak Stabil</div>
+        <div class="st-sub">Naik turun sepanjang hari</div>
+      </div>
+      <div class="symptom-tile">
+        <div class="st-icon">&#128294;</div>
+        <div class="st-text">Mood Swings</div>
+        <div class="st-sub">Emosi mengikuti energi</div>
+      </div>
+      <div class="symptom-tile">
+        <div class="st-icon">&#127828;</div>
+        <div class="st-text">Craving Terus</div>
+        <div class="st-sub">Lapar lagi meski baru makan</div>
+      </div>
+      <div class="symptom-tile">
+        <div class="st-icon">&#128684;</div>
+        <div class="st-text">Pemulihan Lambat</div>
+        <div class="st-sub">Lama pulih setelah aktivitas</div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);font-family:'Cormorant Garamond',serif;font-style:italic;">
+      "Mereka tidak mencari produk baru. Mereka mencari keseimbangan."
+    </p>
+  </div>
+</section>
+
+<!-- ══ S4 THE INSIGHT ══ -->
+<section class="insight">
+  <div class="insight-inner">
+    <div class="sec-label light" style="justify-content:center;">The Insight</div>
+    <h2 class="insight-quote">
+      Sebelum tubuh bisa<br><em>optimal</em>, ia perlu<br>keseimbangan dulu.
+    </h2>
+    <p class="insight-sub">
+      Sebelum nutrisi bisa diserap sepenuhnya. Sebelum performa bisa dijaga. Sebelum kesehatan jangka panjang bisa dipertahankan &mdash; tubuh butuh fondasi yang stabil.
+    </p>
+    <div class="insight-chain">
+      <div class="ic-step"><div class="ic-word">Recognize</div><div class="ic-arrow">&rarr;</div></div>
+      <div class="ic-step"><div class="ic-word">Understand</div><div class="ic-arrow">&rarr;</div></div>
+      <div class="ic-step"><div class="ic-word">Discover</div><div class="ic-arrow">&rarr;</div></div>
+      <div class="ic-step"><div class="ic-word highlight">Balance</div><div class="ic-arrow">&rarr;</div></div>
+      <div class="ic-step"><div class="ic-word highlight">Stay in Balance</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S5 THE SOLUTION ══ -->
+<section class="solution">
+  <div class="solution-left">
+    <div class="sec-label">The Solution</div>
+    <div class="solution-badge">
+      <span class="sb-icon">&#127855;</span>
+      <span class="sb-text">Natural Metabolic Stabilizer</span>
+    </div>
+    <h2 class="solution-headline">
+      Reset Balance.<br><em>Stay in Balance.</em>
+    </h2>
+    <p class="solution-en">A daily ritual to help your body find its foundation.</p>
+    <p class="solution-body">
+      Onesta bukan suplemen. Bukan obat. Onesta adalah ritual harian &mdash; sebuah sistem pangan fungsional hidup yang dirancang untuk membantu tubuhmu menemukan kembali keseimbangannya, dan mempertahankannya setiap hari.
+    </p>
+    <div class="solution-benefits">
+      <div class="sol-benefit">Energi tenang dan stabil sepanjang hari</div>
+      <div class="sol-benefit">Keseimbangan gula darah yang lebih baik</div>
+      <div class="sol-benefit">Dukungan untuk kesehatan pencernaan</div>
+      <div class="sol-benefit">Ketahanan imun yang terjaga</div>
+      <div class="sol-benefit">Pemulihan yang lebih cepat</div>
+    </div>
+    <a href="#products" class="btn-primary">Mulai Ritualmu &rarr;</a>
+  </div>
+  <div class="solution-right">
+    <div class="ritual-card">
+      <div class="rc-label">Daily Ritual</div>
+      <div class="rc-ritual">Dua <em>Sendok</em><br>Sehari.</div>
+      <p class="rc-sub">Sesederhana itu. Sekonsisten itu. Seefektif itu.</p>
+      <div class="rc-steps">
+        <div class="rc-step">
+          <div class="rc-step-time">PAGI</div>
+          <div class="rc-step-text">1 sendok sebelum sarapan &mdash; aktifkan metabolisme dengan cara yang stabil</div>
+        </div>
+        <div class="rc-step">
+          <div class="rc-step-time">SORE</div>
+          <div class="rc-step-text">1 sendok menjelang sore &mdash; hindari afternoon crash, jaga energi hingga malam</div>
+        </div>
+        <div class="rc-step">
+          <div class="rc-step-time">30 HARI</div>
+          <div class="rc-step-text">Konsistensi adalah kunci &mdash; tubuh butuh waktu untuk membangun fondasi baru</div>
+        </div>
+      </div>
+      <div class="rc-tagline">"<span>Balance is the New Normal.</span>"</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S6 WHY ONESTA ══ -->
+<section class="why">
+  <div class="why-header">
+    <div>
+      <div class="sec-label">Why Onesta</div>
+      <h2 class="sec-title">Honest Honey.<br><em>Living Honey.</em></h2>
+      <p class="sec-en">Two pillars. One mission. Zero compromise.</p>
+    </div>
+    <p style="font-size:13px;line-height:1.9;color:var(--muted);max-width:380px;">
+      Tidak semua madu sama. Onesta adalah madu yang berbeda secara fundamental &mdash; dari spesies lebahnya, cara panennya, hingga yang dikandungnya. Ini bukan klaim. Ini bisa diverifikasi.
+    </p>
+  </div>
+  <div class="why-pillars">
+    <div class="why-pillar" data-num="01">
+      <span class="wp-badge">Honest Honey&trade; &mdash; Trust</span>
+      <div class="wp-title">Madu dengan<br><em>Integritas</em></div>
+      <p class="wp-desc">Setiap botol Onesta bisa diverifikasi asal-usulnya &mdash; dari sarang, panen, hingga laboratorium. Tidak ada yang disembunyikan.</p>
+      <div class="wp-list">
+        <div class="wp-item">Ripe &mdash; dipanen saat matang sempurna</div>
+        <div class="wp-item">Raw &mdash; tidak dipanaskan berlebih</div>
+        <div class="wp-item">Natural &mdash; murni tanpa tambahan</div>
+        <div class="wp-item">Digitally traceable &mdash; hive to bottle</div>
+      </div>
+    </div>
+    <div class="why-pillar" data-num="02">
+      <span class="wp-badge">Living Honey&trade; &mdash; Function</span>
+      <div class="wp-title">Madu yang<br><em>Hidup</em></div>
+      <p class="wp-desc">Bukan sekadar pemanis alami. Onesta mengandung sistem bioaktif hidup yang bekerja sinergis untuk mendukung keseimbangan metabolikmu.</p>
+      <div class="wp-list">
+        <div class="wp-item">Trehalulose &mdash; intelligent carbohydrate</div>
+        <div class="wp-item">Propolis &mdash; antimikroba alami</div>
+        <div class="wp-item">Prebiotics &mdash; microbiome support</div>
+        <div class="wp-item">Antioxidants &amp; anti-inflammatory</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S7 QUIZ ANCHOR ══ -->
+<section class="quiz-anchor" id="quiz">
+  <div class="qa-left">
+    <div class="sec-label light">Metabolic Balance Diagnostic</div>
+    <h2 class="sec-title on-dark">Ada Apa Dengan<br><em>Balance</em>-mu?</h2>
+    <p class="sec-en on-dark">What's happening with your metabolic balance?</p>
+    <p style="font-size:14px;line-height:1.9;color:rgba(250,246,238,.45);max-width:400px;margin-bottom:26px;">
+      Quiz diagnostik metabolik yang menganalisis <strong style="color:rgba(250,246,238,.8);font-weight:500;">6 balance pillars</strong> untuk membangun protokol wellness personal yang tepat untukmu.
+    </p>
+    <div class="qa-domains">
+      <div class="qa-domain"><span class="qa-domain-icon">&#9889;</span> Energi</div>
+      <div class="qa-domain"><span class="qa-domain-icon">&#129656;</span> Gula Darah</div>
+      <div class="qa-domain"><span class="qa-domain-icon">&#127807;</span> Pencernaan</div>
+      <div class="qa-domain"><span class="qa-domain-icon">&#128737;</span> Imunitas</div>
+      <div class="qa-domain"><span class="qa-domain-icon">&#128260;</span> Recovery</div>
+      <div class="qa-domain"><span class="qa-domain-icon">&#127769;</span> Malam &amp; Stres</div>
+    </div>
+    <p class="qa-meta">&#9200; 5&ndash;7 menit &nbsp;&middot;&nbsp; Gratis &nbsp;&middot;&nbsp; Hasil dikirim ke WhatsApp</p>
+    <a href="#" class="btn-honey" style="width:fit-content;">Mulai Diagnostik Sekarang &rarr;</a>
+  </div>
+  <div class="qa-right">
+    <div class="qr-label">Ada Apa Dengan Balance? &middot; Live Preview</div>
+    <div class="qr-dots">
+      <div class="qr-dot done"></div><div class="qr-dot active"></div>
+      <div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot"></div>
+      <div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot"></div>
+      <div class="qr-dot"></div><div class="qr-dot"></div>
+    </div>
+    <p class="qr-q">Seberapa sering kamu merasa <em>lelah</em> meski sudah cukup tidur?</p>
+    <div class="qr-opts">
+      <button class="qr-opt" onclick="selOpt(this)">Hampir setiap hari &mdash; ini sudah terasa normal</button>
+      <button class="qr-opt" onclick="selOpt(this)">Beberapa kali dalam seminggu</button>
+      <button class="qr-opt sel" onclick="selOpt(this)">Sesekali, tidak terlalu mengganggu</button>
+      <button class="qr-opt" onclick="selOpt(this)">Jarang &mdash; energiku cukup stabil</button>
+    </div>
+    <div class="qr-footer">
+      <span class="qr-prog">Pertanyaan 2 dari 10</span>
+      <button class="qr-next">Lanjut &rarr;</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S8 PRODUCTS ══ -->
+<section class="products" id="products">
+  <div class="prod-header">
+    <div>
+      <div class="sec-label">Our Products</div>
+      <h2 class="sec-title">Where Most<br><em>People Start</em></h2>
+      <p class="sec-en">Find your daily ritual and daily system</p>
+    </div>
+    <a href="#" class="view-all">Semua Produk</a>
+  </div>
+  <div class="need-filters">
+    <button class="nf on" onclick="setFilter(this)">Semua</button>
+    <button class="nf" onclick="setFilter(this)">Daily Wellness</button>
+    <button class="nf" onclick="setFilter(this)">Kids Wellness</button>
+    <button class="nf" onclick="setFilter(this)">Metabolic Balance</button>
+    <button class="nf" onclick="setFilter(this)">Immunity</button>
+    <button class="nf" onclick="setFilter(this)">Fasting Support</button>
+    <button class="nf" onclick="setFilter(this)">Performance</button>
+  </div>
+  <div class="prod-grid">
+    <div class="prod-card">
+      <div class="prod-img pbg-d">
+        <div class="prod-bg"><span class="prod-emoji">&#127855;</span></div>
+        <span class="prod-bdg">Bestseller</span>
+        <div class="prod-overlay"><button class="prod-overlay-btn">+ Add to Cart</button></div>
+      </div>
+      <p class="prod-cat">Daily Foundation</p>
+      <h3 class="prod-name">Onesta Daily</h3>
+      <p class="prod-tag">Metabolic balance untuk kehidupan aktif</p>
+      <div class="prod-bottom"><span class="prod-price">Rp 320.000</span><button class="prod-add">+</button></div>
+    </div>
+    <div class="prod-card">
+      <div class="prod-img pbg-d">
+        <div class="prod-bg"><span class="prod-emoji">&#128027;</span></div>
+        <span class="prod-bdg new">Kids</span>
+        <div class="prod-overlay"><button class="prod-overlay-btn">+ Add to Cart</button></div>
+      </div>
+      <p class="prod-cat">Daily Foundation</p>
+      <h3 class="prod-name">Onesta Junior</h3>
+      <p class="prod-tag">Imunitas &amp; tumbuh kembang optimal anak</p>
+      <div class="prod-bottom"><span class="prod-price">Rp 285.000</span><button class="prod-add">+</button></div>
+    </div>
+    <div class="prod-card">
+      <div class="prod-img pbg-t">
+        <div class="prod-bg"><span class="prod-emoji">&#128137;</span></div>
+        <span class="prod-bdg">Targeted</span>
+        <div class="prod-overlay"><button class="prod-overlay-btn">+ Add to Cart</button></div>
+      </div>
+      <p class="prod-cat">Targeted Wellness</p>
+      <h3 class="prod-name">Diabee</h3>
+      <p class="prod-tag">Formula khusus stabilisasi gula darah</p>
+      <div class="prod-bottom"><span class="prod-price">Rp 380.000</span><button class="prod-add">+</button></div>
+    </div>
+    <div class="prod-card">
+      <div class="prod-img pbg-b">
+        <div class="prod-bg"><span class="prod-emoji">&#127807;</span></div>
+        <span class="prod-bdg">Botanical</span>
+        <div class="prod-overlay"><button class="prod-overlay-btn">+ Add to Cart</button></div>
+      </div>
+      <p class="prod-cat">Signature Botanical</p>
+      <h3 class="prod-name">Myrta</h3>
+      <p class="prod-tag">Dari lebah hutan Belitung</p>
+      <div class="prod-bottom"><span class="prod-price">Rp 420.000</span><button class="prod-add">+</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S9 SCIENCE ══ -->
+<section class="science">
+  <div class="science-bg">LIVING<br>HONEY</div>
+  <div class="science-inner">
+    <div>
+      <div class="sec-label light">The Science</div>
+      <h2 class="sec-title on-dark">Bukan Sekadar<br>Madu Biasa.<br><em>Living Honey.</em></h2>
+      <p class="sec-en on-dark">Not just honey. A living functional food system.</p>
+      <p class="science-body">Onesta adalah satu-satunya madu Indonesia di <strong>Level 4 — Stingless Bee Wellness Honey.</strong> Sistem bioaktif lengkap yang melampaui apa yang ditawarkan madu biasa — bahkan Manuka.</p>
+      <div class="honey-levels">
+        <div class="hl-item"><span class="hl-num">01</span><div><div class="hl-title">Adulterated Honey</div><div class="hl-desc">Dicampur sirup, air, atau zat undeclared</div></div></div>
+        <div class="hl-item"><span class="hl-num">02</span><div><div class="hl-title">Inferior Honey</div><div class="hl-desc">Asli tapi dipanen muda atau dipanaskan berlebih</div></div></div>
+        <div class="hl-item"><span class="hl-num">03</span><div><div class="hl-title">Superfood Honey (Manuka)</div><div class="hl-desc">Premium dari lebah biasa — Apis mellifera</div></div></div>
+        <div class="hl-item on"><span class="hl-num">04</span><div><div class="hl-title">Stingless Bee Wellness Honey ← ONESTA</div><div class="hl-desc">Sistem pangan fungsional hidup — melampaui semua level</div></div></div>
+      </div>
+    </div>
+    <div class="science-right">
+      <div class="treha-card">
+        <div class="treha-lbl">Dominant Bioactive Marker</div>
+        <div class="treha-name"><em>Trehalulose</em></div>
+        <p class="treha-desc">Karbohidrat cerdas eksklusif madu lebah tanpa sengat. Low GI, energi stabil, tanpa spike &amp; crash.</p>
+        <div class="treha-pills"><span class="treha-pill">Low GI</span><span class="treha-pill">Steady Energy</span><span class="treha-pill">No Spike-Crash</span><span class="treha-pill">Metabolic Support</span></div>
+      </div>
+      <div class="bio-grid">
+        <div class="bio-card"><div class="bio-icon">&#128737;</div><div class="bio-name">Propolis</div><p class="bio-desc">Antimikroba &amp; anti-inflamasi alami</p></div>
+        <div class="bio-card"><div class="bio-icon">&#127807;</div><div class="bio-name">Prebiotics</div><p class="bio-desc">Mendukung microbiome usus sehat</p></div>
+        <div class="bio-card"><div class="bio-icon">&#9879;</div><div class="bio-name">Antioxidants</div><p class="bio-desc">Perlindungan sel dari stres oksidatif</p></div>
+        <div class="bio-card"><div class="bio-icon">&#128293;</div><div class="bio-name">Anti-Inflammatory</div><p class="bio-desc">Senyawa aktif pengurang peradangan</p></div>
+      </div>
+      <div class="trace-strip">
+        <span class="ts-icon">&#128269;</span>
+        <div><div class="ts-title">Onesta Trace&#8482; — Digital Traceability</div><div class="ts-desc">Scan QR → lacak sarang, panen &amp; lab results</div></div>
+        <button class="ts-cta">Cek Keaslian</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S10 TRUST ══ -->
+<section class="trust-section">
+  <div class="sec-label">Traceable from Hive to Bottle</div>
+  <h2 class="sec-title">Kepercayaan yang<br><em>Bisa Diverifikasi</em></h2>
+  <div class="trust-grid">
+    <div class="trust-card"><div class="tc-icon">&#9989;</div><div class="tc-title">Halal Certified</div><p class="tc-desc">Tersertifikasi Halal resmi. Aman untuk seluruh keluarga.</p></div>
+    <div class="trust-card"><div class="tc-icon">&#128269;</div><div class="tc-title">Digitally Traceable</div><p class="tc-desc">Setiap botol punya QR code unik. Scan dan lacak asal-usulnya.</p></div>
+    <div class="trust-card"><div class="tc-icon">&#9879;</div><div class="tc-title">NKV Certified</div><p class="tc-desc">Nomor Kontrol Veteriner — jaminan standar keamanan pangan.</p></div>
+    <div class="trust-card"><div class="tc-icon">&#128203;</div><div class="tc-title">Lab Tested</div><p class="tc-desc">Setiap batch diuji laboratorium independen. TA score terverifikasi.</p></div>
+  </div>
+</section>
+
+<!-- ══ S11 RITUAL ══ -->
+<section class="ritual">
+  <div class="ritual-left">
+    <div class="sec-label light">Daily Ritual</div>
+    <div class="ritual-big">2</div>
+    <div class="ritual-big-sub">Sendok <em>Sehari.</em></div>
+    <p class="ritual-body">Sesederhana itu. Dua sendok sehari — konsisten selama 30 hari — adalah semua yang dibutuhkan tubuhmu untuk mulai membangun fondasi keseimbangan yang baru.</p>
+    <div class="ritual-tagline">"Reset balance. <span>Stay in balance.</span>"</div>
+  </div>
+  <div class="ritual-right">
+    <div class="ritual-timeline">
+      <div class="rt-item">
+        <div class="rt-time">PAGI</div>
+        <div class="rt-content"><div class="rt-action">1 sendok sebelum sarapan</div><div class="rt-detail">Aktifkan metabolisme. Trehalulose mempersiapkan tubuh untuk energi sepanjang hari — stabil, bukan spike.</div></div>
+      </div>
+      <div class="rt-item">
+        <div class="rt-time">SORE</div>
+        <div class="rt-content"><div class="rt-action">1 sendok menjelang sore</div><div class="rt-detail">Hindari afternoon crash. Jaga energi, fokus, dan mood hingga malam hari.</div></div>
+      </div>
+      <div class="rt-item">
+        <div class="rt-time">HARI 30</div>
+        <div class="rt-content"><div class="rt-action">Rasakan perbedaannya</div><div class="rt-detail">Tubuh butuh waktu untuk membangun fondasi baru. Konsistensi adalah satu-satunya syarat.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S12 PROTOCOLS ══ -->
+<section class="protocols" id="protocols">
+  <div class="sec-label">Expert Wellness Protocols</div>
+  <h2 class="sec-title">Protokol Dirancang<br>oleh <em>Para Ahli</em></h2>
+  <p class="sec-en">Co-created with Indonesia's leading wellness experts</p>
+  <div class="proto-grid">
+    <div class="proto-card">
+      <div class="proto-featured">
+        <span class="proto-partner-badge">&#10022; Protocol Partner</span>
+        <div class="proto-content">
+          <div class="proto-tag">Performance &amp; Natural Strength</div>
+          <h3 class="proto-name">Ade Rai x <em>Onesta</em></h3>
+          <p class="proto-by">Bersama Ade Rai — "Bapak Bodybuilding Indonesia"</p>
+          <p class="proto-desc">Protokol performance berbasis madu lebah tanpa sengat untuk energi alami, pemulihan optimal, dan ketahanan metabolik.</p>
+          <button class="proto-cta">Lihat Protokol</button>
+        </div>
+      </div>
+    </div>
+    <div class="proto-card">
+      <div class="proto-secondary">
+        <span class="proto-sec-icon">&#129658;</span>
+        <h3 class="proto-sec-name">Metabolic Reset Protocol</h3>
+        <p class="proto-sec-by">Bersama Dokter Spesialis Metabolik · Coming Soon</p>
+        <p class="proto-sec-desc">Protokol 30 hari untuk reset metabolisme, stabilisasi gula darah &amp; pemulihan keseimbangan hormonal.</p>
+        <div class="proto-sec-footer">
+          <span style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);">Daily + Diabee + Imunisi</span>
+          <button class="proto-cta" style="color:var(--honey);border:none;border-bottom:1px solid rgba(200,132,42,.3);background:none;padding-bottom:3px;">Notifikasi</button>
+        </div>
+      </div>
+    </div>
+    <div class="proto-card">
+      <div class="proto-join">
+        <h3 class="proto-join-title">Punya <em>Frekuensi</em> yang Sama?</h3>
+        <p class="proto-join-desc">Kami mencari tokoh wellness, dokter &amp; atlet yang percaya pada kekuatan alam dan sains untuk berkolaborasi bersama Onesta.</p>
+        <ul class="proto-join-list">
+          <li>Co-branded product line</li>
+          <li>Royalti atas setiap penjualan</li>
+          <li>Partner dashboard real-time</li>
+          <li>Quiz &amp; landing page eksklusif</li>
+        </ul>
+        <button class="proto-join-btn">Gabung sebagai Protocol Partner →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S13 TESTIMONIALS ══ -->
+<section class="testi">
+  <div class="sec-label">Real People. Real Balance.</div>
+  <h2 class="sec-title">Mereka Sudah<br><em>Merasakannya</em></h2>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"Saya kira madu itu semua sama. Onesta mengubah cara saya berpikir — energi lebih stabil, tidak ada lagi crash jam 3 sore."</p>
+      <div class="testi-author"><div class="testi-av">R</div><div><div class="testi-name">Rafi A.</div><div class="testi-role">Creative Director, Jakarta</div></div></div>
+      <span class="testi-prod">Onesta Daily</span>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"Balance Score saya naik dari 52 ke 78 dalam 30 hari. Saya share hasilnya ke semua teman — mereka langsung mau ikut coba."</p>
+      <div class="testi-author"><div class="testi-av">M</div><div><div class="testi-name">Mira S.</div><div class="testi-role">Entrepreneur, Surabaya</div></div></div>
+      <span class="testi-prod">Diabee · Balance Quiz</span>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"Scan QR code dan langsung lihat sarangnya. Level kepercayaan ini belum pernah saya rasakan dari brand madu mana pun."</p>
+      <div class="testi-author"><div class="testi-av">D</div><div><div class="testi-name">Dika P.</div><div class="testi-role">Tech Entrepreneur, Bali</div></div></div>
+      <span class="testi-prod">Myrta · Onesta Trace™</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S14 MISSION ══ -->
+<section class="mission">
+  <div class="mission-left">
+    <div class="sec-label light">Our Mission</div>
+    <div class="mission-chain"><span>Bees</span> → <span>Plants</span> → <span>Forests</span> → <span>Carbon</span> → <span>Communities</span> → <span>Wellness</span></div>
+    <h2 class="mission-headline">Honey is<br>the New <em>Tree.</em></h2>
+    <p class="mission-body">Setiap botol Onesta yang terjual mendukung lebah tanpa sengat, biodiversitas hutan, komunitas peternak lokal, dan kesehatan Indonesia. Ini bukan sekadar madu. Ini gerakan.</p>
+    <a href="#" class="btn-ghost-dark">Pelajari Misi Kami</a>
+  </div>
+  <div class="mission-right">
+    <div class="mission-three">
+      <div class="mt-item"><div class="mt-word">Converse</div><div class="mt-title">Wellness Conversations</div><p class="mt-desc">Memicu percakapan bermakna tentang kesehatan dan pentingnya kembali ke alam.</p></div>
+      <div class="mt-item"><div class="mt-word">Preserve</div><div class="mt-title">Human Health</div><p class="mt-desc">Membantu manusia menjaga vitalitas dan kesejahteraan jangka panjang.</p></div>
+      <div class="mt-item"><div class="mt-word">Conserve</div><div class="mt-title">Our Environment</div><p class="mt-desc">Melindungi lebah tanpa sengat, biodiversitas, dan ekosistem yang menopang kehidupan.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S15 FOUNDER ══ -->
+<section class="founder">
+  <div class="founder-left">
+    <div class="sec-label">A Brand With a Mission</div>
+    <div class="founder-quote">"Nature already provides extraordinary solutions for human health — if we preserve their integrity."</div>
+    <p class="founder-body">Onesta lahir setelah lebih dari empat tahun riset mendalam tentang wellness, nutrisi, dan integritas madu. Bukan untuk menjual produk — tapi untuk menyelesaikan masalah. Dan untuk berdiri mewakili sesuatu yang lebih besar dari sekadar toples madu.</p>
+    <div class="founder-sig">Onesta Founding Team · 2024</div>
+  </div>
+  <div class="founder-right">
+    <div class="founder-pillars">
+      <div class="fp-item"><div class="fp-num">01</div><div><div class="fp-title">Trust</div><div class="fp-desc">Kepercayaan yang dibangun dari transparansi dan verifikasi.</div></div></div>
+      <div class="fp-item"><div class="fp-num">02</div><div><div class="fp-title">Science</div><div class="fp-desc">Setiap klaim didukung riset. 1.128+ referensi ilmiah menjadi fondasi kami.</div></div></div>
+      <div class="fp-item"><div class="fp-num">03</div><div><div class="fp-title">Wellness</div><div class="fp-desc">Membantu setiap orang mencapai keseimbangan sebagai gaya hidup.</div></div></div>
+      <div class="fp-item"><div class="fp-num">04</div><div><div class="fp-title">Sustainability</div><div class="fp-desc">Bisnis yang tumbuh harus menciptakan nilai untuk semua pihak.</div></div></div>
+      <div class="fp-item"><div class="fp-num">05</div><div><div class="fp-title">National Pride</div><div class="fp-desc">Indonesia punya kekayaan alam luar biasa. Saatnya itu diakui dunia.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S16 GIFT ══ -->
+<section class="gift" id="gift">
+  <div>
+    <div class="sec-label light">Gift &amp; Corporate</div>
+    <h2 class="sec-title on-dark">Say It With<br><em>Onesta</em></h2>
+    <p class="sec-en on-dark">A gift that is beautiful, meaningful, and purposeful.</p>
+    <p class="gift-desc">Lebih dari sekadar hadiah — Onesta adalah pernyataan kepedulian untuk orang yang berarti dan korporat yang peduli ESG.</p>
+    <div class="gift-types">
+      <div class="gift-type"><span class="gt-icon">&#127873;</span><div><div class="gt-name">Personal Gift</div><div class="gt-desc">Untuk keluarga, sahabat, dan orang tersayang</div></div></div>
+      <div class="gift-type"><span class="gt-icon">&#127970;</span><div><div class="gt-name">Corporate &amp; ESG Gift</div><div class="gt-desc">Branded hamper · Adopt-a-Hive · ESG reporting</div></div></div>
+      <div class="gift-type"><span class="gt-icon">&#9992;</span><div><div class="gt-name">Omiyage / Sunmul</div><div class="gt-desc">Premium oleh-oleh Indonesia untuk pasar global</div></div></div>
+    </div>
+    <a href="#" class="btn-ghost-dark">Hubungi Tim Gift</a>
+  </div>
+  <div class="gift-boxes">
+    <div class="gift-box"><div class="gb-title">Wellness <em>Starter</em> Hamper</div><p class="gb-desc">Daily + Myrta + Imunisi — dikemas premium dengan Onesta Trace™ QR.</p><div class="gb-price">Rp 850.000</div><button class="gb-cta">Pesan Sekarang</button></div>
+    <div class="gift-box"><div class="gb-title">Corporate <em>ESG</em> Gift Pack</div><p class="gb-desc">Min. 20 pcs · Co-branding · Sertifikat Adopt-a-Hive · ESG impact report.</p><div class="gb-price">From Rp 1.200.000 / pcs</div><button class="gb-cta">Request Proposal</button></div>
+  </div>
+</section>
+
+<!-- ══ S17 AFFILIATE ══ -->
+<section class="affiliate" id="affiliate">
+  <div class="affiliate-inner">
+    <div class="affiliate-left">
+      <div class="sec-label">Affiliate &amp; Reseller</div>
+      <h2 class="affiliate-title">Sehat Bersama,<br><em>Tumbuh Bersama</em></h2>
+      <p class="affiliate-desc">Ekosistem afiliasi terbuka untuk siapa saja yang percaya pada Onesta. Share, rekomendasikan, dan dapatkan komisi.</p>
+      <div class="affiliate-ctas"><a href="#" class="btn-primary">Daftar Jadi Affiliate →</a><a href="#" class="btn-ghost-light">Pelajari Program</a></div>
+    </div>
+    <div class="affiliate-stats">
+      <div class="aff-stat"><div class="aff-num">15%</div><div class="aff-lbl">Komisi per<br>transaksi</div></div>
+      <div class="aff-stat"><div class="aff-num">48H</div><div class="aff-lbl">Pencairan<br>komisi</div></div>
+      <div class="aff-stat"><div class="aff-num">∞</div><div class="aff-lbl">Unlimited<br>earning</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S18 GLOBAL ══ -->
+<section class="global">
+  <div class="global-left">
+    <div class="sec-label light" style="margin-bottom:12px;">Global Markets</div>
+    <h2 class="global-title">Dari Indonesia<br>untuk <em>Dunia</em></h2>
+    <p class="global-desc">Test market aktif di Singapore &amp; Jepang. Dengan Blockchain Traceability V2, pasar US, Eropa &amp; Middle East menjadi jangkauan nyata.</p>
+  </div>
+  <div class="global-markets">
+    <div class="market"><div class="market-flag">&#127470;&#127465;</div><div class="market-name">Indonesia</div><div class="market-status">Active</div></div>
+    <div class="market"><div class="market-flag">&#127480;&#127468;</div><div class="market-name">Singapore</div><div class="market-status">Test Market</div></div>
+    <div class="market"><div class="market-flag">&#127471;&#127477;</div><div class="market-name">Japan</div><div class="market-status">Test Market</div></div>
+    <div class="market"><div class="market-flag">&#127468;&#127463;</div><div class="market-name">Middle East</div><div class="market-status soon">Phase 2</div></div>
+    <div class="market"><div class="market-flag">&#127482;&#127480;</div><div class="market-name">US &amp; Europe</div><div class="market-status soon">Phase 3</div></div>
+  </div>
+</section>
+
+<!-- ══ S19 FAQ ══ -->
+<section class="faq">
+  <div class="faq-left">
+    <div class="sec-label">FAQ</div>
+    <h2 class="sec-title">Pertanyaan<br>yang Sering<br><em>Ditanyakan</em></h2>
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Apa bedanya Onesta dengan madu biasa?<span class="faq-icon">+</span></button><div class="faq-a">Onesta adalah madu lebah tanpa sengat yang mengandung Trehalulose — karbohidrat cerdas dengan indeks glikemik rendah yang tidak ada pada madu lain. Ditambah sistem bioaktif lengkap: propolis, prebiotics, antioxidants.</div></div>
+      <div class="faq-item open"><button class="faq-q" onclick="toggleFaq(this)">Mengapa harganya lebih tinggi?<span class="faq-icon">+</span></button><div class="faq-a">Lebah tanpa sengat menghasilkan madu dalam jumlah jauh lebih sedikit. Ditambah proses panen hati-hati, uji lab independen per batch, dan sistem traceability digital. Ini bukan markup — ini biaya integritas.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Bagaimana cara kerja Onesta Trace?<span class="faq-icon">+</span></button><div class="faq-a">Scan QR code pada botol → lihat: spesies lebah, lokasi sarang (GPS), tanggal panen, hingga hasil lab independen. Setiap botol punya identitas unik.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Kapan mulai merasakan hasilnya?<span class="faq-icon">+</span></button><div class="faq-a">Kebanyakan pengguna merasakan perubahan energi dalam 7–14 hari. Keseimbangan metabolik yang lebih dalam terasa setelah 30 hari konsumsi rutin.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Apakah aman untuk penderita diabetes?<span class="faq-icon">+</span></button><div class="faq-a">Onesta Diabee dirancang khusus dengan Trehalulose sebagai komponen utama — GI sangat rendah. Namun selalu konsultasikan dengan dokter jika sedang dalam pengobatan diabetes.</div></div>
+    </div>
+  </div>
+  <div>
+    <div class="faq-final-cta">
+      <div class="ffc-inner">
+        <div class="ffc-label">Mulai Hari Ini</div>
+        <h3 class="ffc-title">Temukan Balance<br><em>Score</em>-mu.</h3>
+        <p class="ffc-sub">5 menit. Gratis. Hasil personal dikirim ke WhatsApp. Tidak ada alasan untuk menunda.</p>
+        <div class="ffc-btns"><a href="#quiz" class="btn-honey">Ada Apa Dengan Balance? →</a><a href="#products" class="btn-ghost-dark">Shop Best Sellers</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S20 CHANNELS ══ -->
+<section class="channels">
+  <div class="channels-inner">
+    <span class="ch-label">Tersedia di</span>
+    <div class="ch-list">
+      <a class="ch-item">&#127760; onesta.co.id</a>
+      <a class="ch-item">&#128992; Shopee</a>
+      <a class="ch-item">&#128994; Tokopedia</a>
+      <a class="ch-item">&#127925; TikTok Shop</a>
+      <a class="ch-item">&#127978; Growell</a>
+      <a class="ch-item">&#128247; @onesta.official</a>
+    </div>
+    <a href="#products" class="nav-cta">Shop Now →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">ONESTA <span class="nav-dot"></span></div>
+      <p class="footer-tagline">Madu wellness dari lebah tanpa sengat Indonesia — jujur, hidup, bisa dilacak.</p>
+      <p class="footer-tagline-en">Honest Honey. Living Honey. A Brand With a Mission.</p>
+      <div class="footer-certs"><span class="fcert">Halal</span><span class="fcert">NKV</span><span class="fcert">Traceable</span><span class="fcert">Raw</span></div>
+    </div>
+    <div>
+      <div class="footer-col-title">Products</div>
+      <ul class="footer-links"><li><a href="#">Daily Foundation</a></li><li><a href="#">Targeted Wellness</a></li><li><a href="#">Signature Botanical</a></li><li><a href="#">Forest Gold</a></li><li><a href="#">Gift Sets</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links"><li><a href="#">Tentang Onesta</a></li><li><a href="#">Onesta Trace™</a></li><li><a href="#">Sustainability & ESG</a></li><li><a href="#">Protocol Partners</a></li><li><a href="#">Global Markets</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Support</div>
+      <ul class="footer-links"><li><a href="#">Affiliate Program</a></li><li><a href="#">FAQ</a></li><li><a href="#">Cara Pemesanan</a></li><li><a href="#">WhatsApp</a></li><li><a href="#">Hubungi Kami</a></li></ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Onesta Honey Indonesia · All rights reserved · Say No to Honey Laundering™</p>
+    <div class="footer-socials"><a href="#" class="soc">ig</a><a href="#" class="soc">tt</a><a href="#" class="soc">yt</a><a href="#" class="soc">wa</a></div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{const n=document.getElementById('main-nav');if(n)n.style.boxShadow=window.scrollY>40?'0 2px 24px rgba(58,41,16,.09)':'none';});
+document.querySelectorAll('.lang-btn').forEach(btn=>{btn.addEventListener('click',function(){document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('on'));this.classList.add('on');});});
+function selOpt(el){document.querySelectorAll('.qr-opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');}
+function setFilter(el){document.querySelectorAll('.nf').forEach(n=>n.classList.remove('on'));el.classList.add('on');}
+function toggleFaq(el){const item=el.parentElement;const wasOpen=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!wasOpen)item.classList.add('open');}
+document.querySelectorAll('.prod-add').forEach(btn=>{btn.addEventListener('click',function(){this.textContent='✓';this.style.background='#27AE60';setTimeout(()=>{this.textContent='+';this.style.background='var(--bark)';},1500);});});
+</script>
+</body>
+</html>
