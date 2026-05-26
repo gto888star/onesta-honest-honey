@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onesta — UX Flow Diagram</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --honey:#C8842A;--amber:#F2C46D;--forest:#1A2215;--bark:#2E1F0E;
+  --cream:#FAF6EE;--sand:#EDE3D0;--muted:#9C8870;--green:#27AE60;
+  --blue:#2471A3;--red:#C0392B;--orange:#E67E22;--purple:#7D3C98;
+  --warm:#FEFCF7;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#F0ECE4;font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;}
+
+/* HEADER */
+.header{
+  background:var(--bark);padding:20px 40px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.header-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:5px;color:var(--amber);}
+.header-title{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:rgba(250,246,238,.5);}
+.header-legend{display:flex;gap:16px;align-items:center;}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(250,246,238,.5);}
+.legend-dot{width:10px;height:10px;border-radius:50%;}
+
+/* TABS */
+.tabs{
+  display:flex;gap:0;background:var(--forest);
+  padding:0 40px;border-bottom:1px solid rgba(200,132,42,.15);
+}
+.tab{
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  padding:14px 20px;color:rgba(250,246,238,.4);
+  cursor:pointer;border-bottom:2px solid transparent;
+  margin-bottom:-1px;transition:all .25s;background:none;border-top:none;border-left:none;border-right:none;
+  font-family:'DM Sans',sans-serif;
+}
+.tab.on{color:var(--amber);border-bottom-color:var(--honey);}
+.tab:hover:not(.on){color:rgba(250,246,238,.7);}
+
+/* FLOW CANVAS */
+.canvas{padding:40px;overflow-x:auto;}
+.flow{display:flex;flex-direction:column;gap:0;min-width:900px;}
+
+/* PERSONA ROW */
+.persona-row{
+  display:grid;gap:0;
+  margin-bottom:32px;
+}
+.persona-header{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 20px;
+  margin-bottom:16px;
+}
+.persona-icon{font-size:24px;}
+.persona-name{font-size:13px;font-weight:600;color:var(--bark);}
+.persona-desc{font-size:11px;color:var(--muted);}
+.persona-tag{
+  font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  padding:4px 10px;border-radius:0;margin-left:auto;
+}
+
+/* FLOW STEPS */
+.flow-steps{
+  display:flex;align-items:flex-start;gap:0;
+  padding:0 20px;overflow-x:auto;
+}
+.flow-step{
+  display:flex;flex-direction:column;align-items:center;
+  min-width:130px;position:relative;
+}
+.flow-step:not(:last-child)::after{
+  content:'→';
+  position:absolute;
+  right:-18px;top:28px;
+  font-size:18px;color:var(--muted);
+  z-index:2;
+}
+.step-box{
+  width:110px;padding:14px 10px;
+  text-align:center;
+  border:1px solid var(--sand);
+  background:var(--warm);
+  cursor:pointer;
+  transition:all .25s;
+  position:relative;
+}
+.step-box:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.08);}
+.step-box.entry{border-color:var(--green);background:#EAFAF1;}
+.step-box.action{border-color:var(--honey);background:#FFF8EC;}
+.step-box.decision{border-color:var(--blue);background:#EBF5FB;transform:rotate(0deg);}
+.step-box.result{border-color:var(--purple);background:#F5EEF8;}
+.step-box.convert{border-color:var(--green);background:#EAFAF1;}
+.step-box.exit{border-color:var(--red);background:#FDECEA;}
+.step-box.viral{border-color:var(--orange);background:#FEF3E2;}
+.step-icon{font-size:20px;margin-bottom:6px;}
+.step-num{
+  position:absolute;top:-8px;left:-8px;
+  width:18px;height:18px;border-radius:50%;
+  font-size:9px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;
+  color:white;
+}
+.step-num.green{background:var(--green);}
+.step-num.honey{background:var(--honey);}
+.step-num.blue{background:var(--blue);}
+.step-num.purple{background:var(--purple);}
+.step-num.red{background:var(--red);}
+.step-num.orange{background:var(--orange);}
+.step-label{font-size:11px;font-weight:500;color:var(--bark);margin-bottom:3px;line-height:1.3;}
+.step-sub{font-size:9px;color:var(--muted);line-height:1.4;}
+.step-time{
+  font-size:9px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--muted);margin-top:6px;
+}
+
+/* EMOTION BAR */
+.emotion-section{
+  padding:0 20px;margin-top:24px;
+}
+.emotion-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.emotion-bar{
+  display:flex;gap:0;height:8px;
+  border-radius:0;overflow:hidden;
+}
+.em-seg{height:100%;transition:opacity .25s;}
+.em-seg:hover{opacity:.7;}
+
+/* BRANCH FLOWS */
+.branch-section{
+  margin-top:32px;padding:24px 20px;
+  background:rgba(255,255,255,.5);
+  border:1px solid var(--sand);
+}
+.branch-title{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.branch-title::before{content:'';width:20px;height:1px;background:var(--muted);}
+.branch-flows{display:flex;gap:20px;flex-wrap:wrap;}
+.branch-flow{
+  flex:1;min-width:200px;
+  padding:16px;
+  border:1px solid var(--sand);
+  background:var(--warm);
+}
+.bf-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:10px;}
+.bf-steps{display:flex;flex-direction:column;gap:6px;}
+.bf-step{
+  font-size:11px;color:var(--bark);
+  padding:7px 10px;
+  border-left:3px solid var(--sand);
+  display:flex;align-items:center;gap:8px;
+}
+.bf-step.yes{border-left-color:var(--green);}
+.bf-step.no{border-left-color:var(--red);}
+.bf-step.share{border-left-color:var(--orange);}
+.bf-arrow{color:var(--muted);font-size:10px;}
+
+/* METRICS */
+.metrics-section{
+  margin-top:32px;
+  display:grid;grid-template-columns:repeat(5,1fr);gap:12px;
+  padding:0 20px;
+}
+.metric-card{
+  background:var(--warm);border:1px solid var(--sand);
+  padding:16px 14px;text-align:center;
+}
+.metric-num{font-family:'Bebas Neue',sans-serif;font-size:36px;line-height:1;color:var(--honey);margin-bottom:4px;}
+.metric-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);line-height:1.4;}
+.metric-trend{font-size:10px;margin-top:4px;}
+.metric-trend.up{color:var(--green);}
+.metric-trend.down{color:var(--red);}
+
+/* DIVIDER */
+.flow-divider{
+  height:1px;background:var(--sand);
+  margin:32px 20px;
+}
+
+/* TOOLTIP */
+.tooltip{
+  position:fixed;z-index:999;
+  background:var(--bark);color:var(--cream);
+  padding:12px 16px;font-size:11px;line-height:1.6;
+  max-width:220px;pointer-events:none;
+  opacity:0;transition:opacity .2s;
+  box-shadow:0 8px 24px rgba(0,0,0,.2);
+}
+.tooltip.show{opacity:1;}
+.tt-title{font-weight:600;color:var(--amber);margin-bottom:4px;}
+
+/* PAGE VIEW */
+.page-view{display:none;}
+.page-view.on{display:block;}
+
+/* SECTION TITLE */
+.section-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;font-weight:300;color:var(--bark);
+  margin-bottom:4px;
+}
+.section-title em{font-style:italic;color:var(--honey);}
+
+.persona-card{
+  background:var(--warm);
+  border:1px solid var(--sand);
+  border-top:3px solid var(--honey);
+  margin-bottom:32px;overflow:hidden;
+}
+.persona-card-header{
+  padding:16px 20px;
+  background:rgba(200,132,42,.05);
+  border-bottom:1px solid var(--sand);
+  display:flex;align-items:center;gap:12px;
+}
+.pc-icon{font-size:28px;}
+.pc-name{font-size:14px;font-weight:600;color:var(--bark);}
+.pc-desc{font-size:11px;color:var(--muted);margin-top:1px;}
+.pc-tag{margin-left:auto;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;background:var(--honey);color:var(--cream);}
+.persona-card-body{padding:20px;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-logo">ONESTA</div>
+    <div class="header-title">UX Flow Diagram · Homepage Visitor Journey</div>
+  </div>
+  <div class="header-legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#27AE60"></div>Entry/Convert</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#C8842A"></div>Action</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#2471A3"></div>Decision</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#7D3C98"></div>Result</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#E67E22"></div>Viral</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#C0392B"></div>Exit</div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab on" onclick="showTab('main')">🗺️ Main Flow</button>
+  <button class="tab" onclick="showTab('persona')">👥 Per Persona</button>
+  <button class="tab" onclick="showTab('quiz')">🧠 Quiz Flow</button>
+  <button class="tab" onclick="showTab('viral')">📤 Viral Loop</button>
+  <button class="tab" onclick="showTab('metrics')">📊 KPI Targets</button>
+</div>
+
+<!-- ═══ TAB 1: MAIN FLOW ═══ -->
+<div id="tab-main" class="page-view on">
+<div class="canvas">
+
+  <!-- ROW 1: ENTRY -->
+  <div style="padding:0 20px;margin-bottom:8px;">
+    <div class="section-title">1. <em>Entry Points</em> — Bagaimana visitor tiba di homepage</div>
+    <p style="font-size:12px;color:var(--muted);margin-top:4px;">Setiap channel membawa visitor dengan intent yang berbeda</p>
+  </div>
+  <div class="flow-steps" style="margin-bottom:32px;">
+    <div class="flow-step">
+      <div class="step-box entry" onmouseenter="showTT(event,'Organic Search','Google: madu stingless bee, madu diabetes, madu wellness Indonesia')"><span class="step-num green">1</span><div class="step-icon">🔍</div><div class="step-label">Google Search</div><div class="step-sub">Organic / SEO</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box entry" onmouseenter="showTT(event,'Instagram','@onesta.official → link in bio → homepage')"><span class="step-num green">2</span><div class="step-icon">📸</div><div class="step-label">Instagram</div><div class="step-sub">Link in bio</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box entry" onmouseenter="showTT(event,'WhatsApp Share','Hasil quiz dibagikan → teman klik link → masuk homepage')"><span class="step-num green">3</span><div class="step-icon">📱</div><div class="step-label">WA Share</div><div class="step-sub">Viral referral</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box entry" onmouseenter="showTT(event,'TikTok / Reels','Video konten → swipe up / link di bio → homepage')"><span class="step-num green">4</span><div class="step-icon">🎵</div><div class="step-label">TikTok</div><div class="step-sub">Content traffic</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box entry" onmouseenter="showTT(event,'Affiliate Link','onesta.co.id?ref=[code] → homepage dengan tracking')"><span class="step-num green">5</span><div class="step-icon">🔗</div><div class="step-label">Affiliate Link</div><div class="step-sub">?ref=[code]</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box entry" onmouseenter="showTT(event,'Protocol Page','Dari /aderai/ → klik quiz atau produk → homepage')"><span class="step-num green">6</span><div class="step-icon">💪</div><div class="step-label">Ade Rai Page</div><div class="step-sub">Protocol partner</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box entry" onmouseenter="showTT(event,'Direct / Returning','Sudah tahu Onesta, langsung ketik URL atau bookmark')"><span class="step-num green">7</span><div class="step-icon">🔖</div><div class="step-label">Direct</div><div class="step-sub">Returning visitor</div></div>
+    </div>
+  </div>
+
+  <div class="flow-divider"></div>
+
+  <!-- ROW 2: HOMEPAGE JOURNEY -->
+  <div style="padding:0 20px;margin-bottom:8px;">
+    <div class="section-title">2. <em>Homepage Journey</em> — Scroll dari atas ke bawah</div>
+    <p style="font-size:12px;color:var(--muted);margin-top:4px;">Blueprint narrative: Problem → Insight → Solution → Action</p>
+  </div>
+  <div class="flow-steps" style="margin-bottom:24px;">
+    <div class="flow-step">
+      <div class="step-box action" onmouseenter="showTT(event,'S1 Hero','First impression: Stay in Balance. Dual CTA: Quiz atau Shop. 3-5 detik untuk decide.')"><span class="step-num honey">1</span><div class="step-icon">🏠</div><div class="step-label">Hero</div><div class="step-sub">Stay in Balance</div><div class="step-time">0-5 detik</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box action" onmouseenter="showTT(event,'S3 Problem','6 symptom tiles. Visitor identify diri: ini gue! Emotional hook terkuat.')"><span class="step-num honey">2</span><div class="step-icon">😴</div><div class="step-label">Problem</div><div class="step-sub">Ada Apa Dengan Balance?</div><div class="step-time">+10 detik</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box action" onmouseenter="showTT(event,'S4 Insight','Jembatan: sebelum optimal, perlu balance dulu. Edukasi tanpa hard sell.')"><span class="step-num honey">3</span><div class="step-icon">💡</div><div class="step-label">Insight</div><div class="step-sub">Before optimize, balance</div><div class="step-time">+15 detik</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box action" onmouseenter="showTT(event,'S5 Solution','Natural Metabolic Stabilizer. Ritual card: 2 sendok sehari. Simple & memorable.')"><span class="step-num honey">4</span><div class="step-icon">🍯</div><div class="step-label">Solution</div><div class="step-sub">Natural Metabolic Stabilizer</div><div class="step-time">+25 detik</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box decision" onmouseenter="showTT(event,'DECISION POINT 1','Visitor decide: mau quiz atau langsung lihat produk? Ini fork pertama di journey.')"><span class="step-num blue">!</span><div class="step-icon">🔀</div><div class="step-label">Decision #1</div><div class="step-sub">Quiz atau Produk?</div><div class="step-time">+35 detik</div></div>
+    </div>
+  </div>
+
+  <!-- Branch dari Decision #1 -->
+  <div class="branch-section" style="margin:0 20px 32px;">
+    <div class="branch-title">Cabang dari Decision #1</div>
+    <div class="branch-flows">
+      <div class="branch-flow">
+        <div class="bf-label" style="color:var(--honey);">Path A — Ambil Quiz (60% target)</div>
+        <div class="bf-steps">
+          <div class="bf-step yes">🧠 Tap "Ada Apa Dengan Balance?"</div>
+          <div class="bf-step yes">📝 Input Nama + WA</div>
+          <div class="bf-step yes">❓ 10 pertanyaan diagnostik</div>
+          <div class="bf-step yes">⏳ Loading analysis screen</div>
+          <div class="bf-step yes">📊 Dapat Balance Score + Tipe</div>
+          <div class="bf-step yes">🛒 Rekomendasi → Add to Cart</div>
+        </div>
+      </div>
+      <div class="branch-flow">
+        <div class="bf-label" style="color:var(--blue);">Path B — Langsung Produk (30% target)</div>
+        <div class="bf-steps">
+          <div class="bf-step no">🛍️ Scroll ke Products section</div>
+          <div class="bf-step no">🔍 Browse 4 kategori</div>
+          <div class="bf-step no">👆 Tap produk yang menarik</div>
+          <div class="bf-step no">📄 Buka Product Detail Page</div>
+          <div class="bf-step no">🛒 Add to Cart</div>
+          <div class="bf-step no">💳 Checkout via Xendit</div>
+        </div>
+      </div>
+      <div class="branch-flow">
+        <div class="bf-label" style="color:var(--red);">Path C — Bounce (10% target)</div>
+        <div class="bf-steps">
+          <div class="bf-step no">❌ Tidak tertarik</div>
+          <div class="bf-step no">🔙 Kembali ke Google</div>
+          <div class="bf-step" style="border-left-color:var(--orange);">📧 Retargeting via Klaviyo</div>
+          <div class="bf-step" style="border-left-color:var(--orange);">📱 WA follow-up jika submit form</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 3: CONTINUED SCROLL -->
+  <div style="padding:0 20px;margin-bottom:8px;">
+    <div class="section-title">3. <em>Lower Funnel</em> — Trust building & conversion</div>
+  </div>
+  <div class="flow-steps" style="margin-bottom:24px;">
+    <div class="flow-step">
+      <div class="step-box action" onmouseenter="showTT(event,'S9 Science','Honey Levels 1-4. Level 4 = Onesta. Trehalulose explained. Credibility builder.')"><span class="step-num honey">5</span><div class="step-icon">⚗️</div><div class="step-label">Science</div><div class="step-sub">Level 4 honey</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box action" onmouseenter="showTT(event,'S10 Trust','Halal, NKV, Traceable, Lab Tested. Objection handling sebelum checkout.')"><span class="step-num honey">6</span><div class="step-icon">✅</div><div class="step-label">Trust</div><div class="step-sub">Certifications</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box action" onmouseenter="showTT(event,'S11 Ritual','2 sendok sehari. Simplicity = low barrier to try. Key to conversion.')"><span class="step-num honey">7</span><div class="step-icon">🌅</div><div class="step-label">Daily Ritual</div><div class="step-sub">2 sendok sehari</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box action" onmouseenter="showTT(event,'S12 Protocols','Ade Rai x Onesta. Social proof dari authority figure. Trust amplifier.')"><span class="step-num honey">8</span><div class="step-icon">💪</div><div class="step-label">Protocols</div><div class="step-sub">Ade Rai partner</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box action" onmouseenter="showTT(event,'S13 Testimonials','Real people, real results. Balance Score naik. Product tag = specific proof.')"><span class="step-num honey">9</span><div class="step-icon">⭐</div><div class="step-label">Testimonials</div><div class="step-sub">Social proof</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box decision" onmouseenter="showTT(event,'DECISION POINT 2','Visitor decide setelah scroll panjang: beli, share, atau keluar?')"><span class="step-num blue">!</span><div class="step-icon">🔀</div><div class="step-label">Decision #2</div><div class="step-sub">Beli / Share / Keluar</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box action" onmouseenter="showTT(event,'S19 FAQ + Final CTA','Last chance conversion. FAQ handle objections. Final CTA: Ada Apa Dengan Balance?')"><span class="step-num honey">10</span><div class="step-icon">❓</div><div class="step-label">FAQ + CTA</div><div class="step-sub">Final conversion</div></div>
+    </div>
+  </div>
+
+  <!-- EMOTION CURVE -->
+  <div class="emotion-section">
+    <div class="emotion-label">Emotional Journey — Visitor experience sepanjang scroll</div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
+      <span style="font-size:10px;color:var(--muted);width:80px;">Curiosity</span>
+      <div class="emotion-bar" style="flex:1;">
+        <div class="em-seg" style="width:15%;background:#E8A84A;"></div>
+        <div class="em-seg" style="width:20%;background:#C8842A;"></div>
+        <div class="em-seg" style="width:15%;background:#E8A84A;"></div>
+        <div class="em-seg" style="width:25%;background:#F2C46D;"></div>
+        <div class="em-seg" style="width:15%;background:#E8A84A;"></div>
+        <div class="em-seg" style="width:10%;background:#C8842A;"></div>
+      </div>
+      <span style="font-size:10px;color:var(--muted);width:80px;">Intent</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:0 0 0 92px;margin-bottom:20px;">
+      <span style="font-size:9px;color:var(--muted);">Hero</span>
+      <span style="font-size:9px;color:var(--muted);">Problem</span>
+      <span style="font-size:9px;color:var(--muted);">Insight</span>
+      <span style="font-size:9px;color:var(--muted);">Solution</span>
+      <span style="font-size:9px;color:var(--muted);">Science</span>
+      <span style="font-size:9px;color:var(--muted);">Trust</span>
+      <span style="font-size:9px;color:var(--muted);">FAQ/CTA</span>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══ TAB 2: PERSONA ═══ -->
+<div id="tab-persona" class="page-view">
+<div class="canvas">
+
+  <!-- Persona 1 -->
+  <div class="persona-card">
+    <div class="persona-card-header">
+      <div class="pc-icon">👩</div>
+      <div>
+        <div class="pc-name">Persona 1 — The Wellness Seeker</div>
+        <div class="pc-desc">Wanita 28-38, urban, health-conscious, sering browsing wellness content</div>
+      </div>
+      <div class="pc-tag">60% Traffic</div>
+    </div>
+    <div class="persona-card-body">
+      <div class="flow-steps">
+        <div class="flow-step"><div class="step-box entry"><span class="step-num green">1</span><div class="step-icon">📸</div><div class="step-label">Instagram</div><div class="step-sub">Reels / stories</div></div></div>
+        <div class="flow-step"><div class="step-box action"><span class="step-num honey">2</span><div class="step-icon">😴</div><div class="step-label">Problem Hook</div><div class="step-sub">"Ini gue banget!"</div></div></div>
+        <div class="flow-step"><div class="step-box action"><span class="step-num honey">3</span><div class="step-icon">🧠</div><div class="step-label">Ambil Quiz</div><div class="step-sub">Penasaran hasilnya</div></div></div>
+        <div class="flow-step"><div class="step-box result"><span class="step-num purple">4</span><div class="step-icon">📊</div><div class="step-label">Dapat Score</div><div class="step-sub">Rollercoaster Rider</div></div></div>
+        <div class="flow-step"><div class="step-box viral"><span class="step-num orange">5</span><div class="step-icon">📤</div><div class="step-label">Share ke WA</div><div class="step-sub">"Cek punya kamu!"</div></div></div>
+        <div class="flow-step"><div class="step-box convert"><span class="step-num green">6</span><div class="step-icon">🛒</div><div class="step-label">Beli Daily</div><div class="step-sub">Rp 320.000</div></div></div>
+      </div>
+      <div style="margin-top:16px;padding:12px;background:rgba(200,132,42,.06);border:1px solid rgba(200,132,42,.15);">
+        <span style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--honey);">Key Insight: </span>
+        <span style="font-size:12px;color:var(--muted);">Emotional hook di Problem section adalah trigger utama. Quiz adalah vehicle untuk engagement. Share adalah natural karena ingin validasi sosial.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Persona 2 -->
+  <div class="persona-card" style="border-top-color:#2471A3;">
+    <div class="persona-card-header">
+      <div class="pc-icon">👨</div>
+      <div>
+        <div class="pc-name">Persona 2 — The Performance Seeker</div>
+        <div class="pc-desc">Pria 30-45, aktif, interested in performance & recovery, gym goer</div>
+      </div>
+      <div class="pc-tag" style="background:#2471A3;">20% Traffic</div>
+    </div>
+    <div class="persona-card-body">
+      <div class="flow-steps">
+        <div class="flow-step"><div class="step-box entry"><span class="step-num green">1</span><div class="step-icon">💪</div><div class="step-label">Ade Rai Page</div><div class="step-sub">Protocol partner</div></div></div>
+        <div class="flow-step"><div class="step-box action"><span class="step-num honey">2</span><div class="step-icon">🏠</div><div class="step-label">Homepage</div><div class="step-sub">Science section</div></div></div>
+        <div class="flow-step"><div class="step-box action"><span class="step-num honey">3</span><div class="step-icon">⚗️</div><div class="step-label">Trehalulose</div><div class="step-sub">Credibility check</div></div></div>
+        <div class="flow-step"><div class="step-box action"><span class="step-num honey">4</span><div class="step-icon">🛍️</div><div class="step-label">Lihat Produk</div><div class="step-sub">Browse SKU</div></div></div>
+        <div class="flow-step"><div class="step-box convert"><span class="step-num green">5</span><div class="step-icon">🛒</div><div class="step-label">Beli Bundle</div><div class="step-sub">Ade Rai Bundle</div></div></div>
+        <div class="flow-step"><div class="step-box viral"><span class="step-num orange">6</span><div class="step-icon">🏅</div><div class="step-label">Protocol Badge</div><div class="step-sub">Share di sosmed</div></div></div>
+      </div>
+      <div style="margin-top:16px;padding:12px;background:rgba(36,113,163,.06);border:1px solid rgba(36,113,163,.15);">
+        <span style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#2471A3;">Key Insight: </span>
+        <span style="font-size:12px;color:var(--muted);">Science credibility dan authority figure (Ade Rai) adalah trigger utama. Less emotional, more rational purchase. Bundle upsell natural.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Persona 3 -->
+  <div class="persona-card" style="border-top-color:#27AE60;">
+    <div class="persona-card-header">
+      <div class="pc-icon">👴👵</div>
+      <div>
+        <div class="pc-name">Persona 3 — The Family Buyer</div>
+        <div class="pc-desc">Orang tua 40-55, beli untuk keluarga, concerned dengan kesehatan anak & pasangan</div>
+      </div>
+      <div class="pc-tag" style="background:#27AE60;">15% Traffic</div>
+    </div>
+    <div class="persona-card-body">
+      <div class="flow-steps">
+        <div class="flow-step"><div class="step-box entry"><span class="step-num green">1</span><div class="step-icon">📱</div><div class="step-label">WA Referral</div><div class="step-sub">Dari teman/anak</div></div></div>
+        <div class="flow-step"><div class="step-box action"><span class="step-num honey">2</span><div class="step-icon">✅</div><div class="step-label">Trust Check</div><div class="step-sub">Halal, NKV, Lab</div></div></div>
+        <div class="flow-step"><div class="step-box action"><span class="step-num honey">3</span><div class="step-icon">🛍️</div><div class="step-label">Shop by Need</div><div class="step-sub">Kids / Daily</div></div></div>
+        <div class="flow-step"><div class="step-box decision"><span class="step-num blue">?</span><div class="step-icon">🔀</div><div class="step-label">Ragu harga</div><div class="step-sub">Premium concern</div></div></div>
+        <div class="flow-step"><div class="step-box action"><span class="step-num honey">4</span><div class="step-icon">❓</div><div class="step-label">Baca FAQ</div><div class="step-sub">Overcome objection</div></div></div>
+        <div class="flow-step"><div class="step-box convert"><span class="step-num green">5</span><div class="step-icon">🛒</div><div class="step-label">Beli Daily+Junior</div><div class="step-sub">Family bundle</div></div></div>
+      </div>
+      <div style="margin-top:16px;padding:12px;background:rgba(39,174,96,.06);border:1px solid rgba(39,174,96,.15);">
+        <span style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#27AE60;">Key Insight: </span>
+        <span style="font-size:12px;color:var(--muted);">Trust signals (Halal, NKV) adalah gate pertama. Harga premium butuh justifikasi via FAQ & science. Referral dari orang yang dikenal = high conversion rate.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Persona 4 -->
+  <div class="persona-card" style="border-top-color:#7D3C98;">
+    <div class="persona-card-header">
+      <div class="pc-icon">🏢</div>
+      <div>
+        <div class="pc-name">Persona 4 — The Corporate/Gift Buyer</div>
+        <div class="pc-desc">HR/procurement, cari premium corporate gift dengan ESG angle</div>
+      </div>
+      <div class="pc-tag" style="background:#7D3C98;">5% Traffic, High Value</div>
+    </div>
+    <div class="persona-card-body">
+      <div class="flow-steps">
+        <div class="flow-step"><div class="step-box entry"><span class="step-num green">1</span><div class="step-icon">🔍</div><div class="step-label">Google</div><div class="step-sub">Corporate gift ESG</div></div></div>
+        <div class="flow-step"><div class="step-box action"><span class="step-num honey">2</span><div class="step-icon">🏠</div><div class="step-label">Homepage</div><div class="step-sub">Brand impression</div></div></div>
+        <div class="flow-step"><div class="step-box action"><span class="step-num honey">3</span><div class="step-icon">🎁</div><div class="step-label">Gift Section</div><div class="step-sub">Corporate packages</div></div></div>
+        <div class="flow-step"><div class="step-box action"><span class="step-num honey">4</span><div class="step-icon">🌱</div><div class="step-label">ESG Angle</div><div class="step-sub">Adopt-a-Hive</div></div></div>
+        <div class="flow-step"><div class="step-box convert"><span class="step-num green">5</span><div class="step-icon">📋</div><div class="step-label">Request Proposal</div><div class="step-sub">B2B inquiry form</div></div></div>
+        <div class="flow-step"><div class="step-box result"><span class="step-num purple">6</span><div class="step-icon">🤝</div><div class="step-label">Follow-up WA</div><div class="step-sub">Gift team contact</div></div></div>
+      </div>
+      <div style="margin-top:16px;padding:12px;background:rgba(125,60,152,.06);border:1px solid rgba(125,60,152,.15);">
+        <span style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#7D3C98;">Key Insight: </span>
+        <span style="font-size:12px;color:var(--muted);">Premium brand impression penting. ESG angle (Adopt-a-Hive) adalah differentiator kuat. Conversion via form/inquiry, bukan langsung cart. High AOV.</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══ TAB 3: QUIZ FLOW ═══ -->
+<div id="tab-quiz" class="page-view">
+<div class="canvas">
+
+  <div style="padding:0 20px;margin-bottom:24px;">
+    <div class="section-title">Quiz Flow — <em>Ada Apa Dengan Balance?</em></div>
+    <p style="font-size:12px;color:var(--muted);margin-top:4px;">AADB V5 · 10 pertanyaan · 6 pillars · 13 metabolic types</p>
+  </div>
+
+  <!-- Main quiz steps -->
+  <div class="flow-steps" style="margin-bottom:32px;">
+    <div class="flow-step">
+      <div class="step-box entry"><span class="step-num green">1</span><div class="step-icon">🔗</div><div class="step-label">Tap CTA</div><div class="step-sub">Dari homepage</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box action"><span class="step-num honey">2</span><div class="step-icon">📝</div><div class="step-label">Lead Capture</div><div class="step-sub">Nama + WA</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box action"><span class="step-num honey">3</span><div class="step-icon">❓</div><div class="step-label">Q1-Q10</div><div class="step-sub">6 balance pillars</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box action"><span class="step-num honey">4</span><div class="step-icon">🐝</div><div class="step-label">Loading</div><div class="step-sub">Membaca sinyal...</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box result"><span class="step-num purple">5</span><div class="step-icon">📊</div><div class="step-label">Balance Score</div><div class="step-sub">0-100 + Status</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box result"><span class="step-num purple">6</span><div class="step-icon">🏷️</div><div class="step-label">Metabolic Type</div><div class="step-sub">1 dari 13 tipe</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box action"><span class="step-num honey">7</span><div class="step-icon">📱</div><div class="step-label">WA Delivery</div><div class="step-sub">Auto via API</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box decision"><span class="step-num blue">!</span><div class="step-icon">🔀</div><div class="step-label">Decision</div><div class="step-sub">Beli / Share / Close</div></div>
+    </div>
+  </div>
+
+  <!-- 13 Types grid -->
+  <div style="padding:0 20px;margin-bottom:16px;">
+    <div class="section-title" style="font-size:16px;">13 <em>Metabolic Types</em> — Output Quiz</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 20px;margin-bottom:32px;">
+    <div style="padding:14px;background:var(--warm);border:1px solid var(--sand);border-left:3px solid var(--honey);">
+      <div style="font-size:18px;margin-bottom:6px;">🎢</div>
+      <div style="font-size:12px;font-weight:600;color:var(--bark);">Rollercoaster Rider</div>
+      <div style="font-size:10px;color:var(--muted);">Energy naik-turun</div>
+      <div style="font-size:10px;color:var(--honey);margin-top:4px;">→ Onesta Daily</div>
+    </div>
+    <div style="padding:14px;background:var(--warm);border:1px solid var(--sand);border-left:3px solid var(--honey);">
+      <div style="font-size:18px;margin-bottom:6px;">🔋</div>
+      <div style="font-size:12px;font-weight:600;color:var(--bark);">Energy Reviver</div>
+      <div style="font-size:10px;color:var(--muted);">Chronic fatigue</div>
+      <div style="font-size:10px;color:var(--honey);margin-top:4px;">→ Daily + Beeyond</div>
+    </div>
+    <div style="padding:14px;background:var(--warm);border:1px solid var(--sand);border-left:3px solid var(--honey);">
+      <div style="font-size:18px;margin-bottom:6px;">🌫️</div>
+      <div style="font-size:12px;font-weight:600;color:var(--bark);">Clarity Seeker</div>
+      <div style="font-size:10px;color:var(--muted);">Cognitive fatigue</div>
+      <div style="font-size:10px;color:var(--honey);margin-top:4px;">→ Daily + Botanical</div>
+    </div>
+    <div style="padding:14px;background:var(--warm);border:1px solid var(--sand);border-left:3px solid var(--honey);">
+      <div style="font-size:18px;margin-bottom:6px;">🫧</div>
+      <div style="font-size:12px;font-weight:600;color:var(--bark);">Gut Whisperer</div>
+      <div style="font-size:10px;color:var(--muted);">Sensitive gut muda</div>
+      <div style="font-size:10px;color:var(--honey);margin-top:4px;">→ Daily + gut SKU</div>
+    </div>
+    <div style="padding:14px;background:var(--warm);border:1px solid var(--sand);border-left:3px solid var(--honey);">
+      <div style="font-size:18px;margin-bottom:6px;">🛡️</div>
+      <div style="font-size:12px;font-weight:600;color:var(--bark);">Gut Harmonizer</div>
+      <div style="font-size:10px;color:var(--muted);">Sensitive gut 40+</div>
+      <div style="font-size:10px;color:var(--honey);margin-top:4px;">→ Daily + Imunisi</div>
+    </div>
+    <div style="padding:14px;background:var(--warm);border:1px solid var(--sand);border-left:3px solid var(--honey);">
+      <div style="font-size:18px;margin-bottom:6px;">🐢</div>
+      <div style="font-size:12px;font-weight:600;color:var(--bark);">Recovery Seeker</div>
+      <div style="font-size:10px;color:var(--muted);">Slow recovery</div>
+      <div style="font-size:10px;color:var(--honey);margin-top:4px;">→ Daily + Beeyond</div>
+    </div>
+    <div style="padding:14px;background:var(--warm);border:1px solid var(--sand);border-left:3px solid var(--honey);">
+      <div style="font-size:18px;margin-bottom:6px;">⚡</div>
+      <div style="font-size:12px;font-weight:600;color:var(--bark);">Fasting Refiner</div>
+      <div style="font-size:10px;color:var(--muted);">Fasting instability</div>
+      <div style="font-size:10px;color:var(--honey);margin-top:4px;">→ Fasting SKU</div>
+    </div>
+    <div style="padding:14px;background:var(--warm);border:1px solid var(--sand);border-left:3px solid var(--honey);">
+      <div style="font-size:18px;margin-bottom:6px;">🌿</div>
+      <div style="font-size:12px;font-weight:600;color:var(--bark);">Graceful Guardian</div>
+      <div style="font-size:10px;color:var(--muted);">Anti decline F 40+</div>
+      <div style="font-size:10px;color:var(--honey);margin-top:4px;">→ Daily + Botanical</div>
+    </div>
+    <div style="padding:14px;background:var(--warm);border:1px solid var(--sand);border-left:3px solid var(--honey);">
+      <div style="font-size:18px;margin-bottom:6px;">🛡️</div>
+      <div style="font-size:12px;font-weight:600;color:var(--bark);">Prime Guardian</div>
+      <div style="font-size:10px;color:var(--muted);">Anti decline M 40+</div>
+      <div style="font-size:10px;color:var(--honey);margin-top:4px;">→ Daily + Beeyond</div>
+    </div>
+    <div style="padding:14px;background:var(--warm);border:1px solid var(--sand);border-left:3px solid var(--honey);">
+      <div style="font-size:18px;margin-bottom:6px;">🌱</div>
+      <div style="font-size:12px;font-weight:600;color:var(--bark);">Zest Builder</div>
+      <div style="font-size:10px;color:var(--muted);">Anti decline muda</div>
+      <div style="font-size:10px;color:var(--honey);margin-top:4px;">→ Daily + Botanical</div>
+    </div>
+    <div style="padding:14px;background:var(--warm);border:1px solid var(--sand);border-left:3px solid var(--honey);">
+      <div style="font-size:18px;margin-bottom:6px;">🌙</div>
+      <div style="font-size:12px;font-weight:600;color:var(--bark);">Night Restorer</div>
+      <div style="font-size:10px;color:var(--muted);">Night craving</div>
+      <div style="font-size:10px;color:var(--honey);margin-top:4px;">→ Daily + night SKU</div>
+    </div>
+    <div style="padding:14px;background:var(--warm);border:1px solid var(--sand);border-left:3px solid var(--honey);">
+      <div style="font-size:18px;margin-bottom:6px;">😤</div>
+      <div style="font-size:12px;font-weight:600;color:var(--bark);">Stress Snacker</div>
+      <div style="font-size:10px;color:var(--muted);">Stress eating</div>
+      <div style="font-size:10px;color:var(--honey);margin-top:4px;">→ Daily + Imunisi</div>
+    </div>
+    <div style="padding:14px;background:linear-gradient(135deg,rgba(200,132,42,.1),rgba(200,132,42,.03));border:1px solid rgba(200,132,42,.3);border-left:3px solid var(--honey);">
+      <div style="font-size:18px;margin-bottom:6px;">🏆</div>
+      <div style="font-size:12px;font-weight:600;color:var(--bark);">Balance Master</div>
+      <div style="font-size:10px;color:var(--muted);">Highest balance</div>
+      <div style="font-size:10px;color:var(--honey);margin-top:4px;">→ Daily (maintain)</div>
+    </div>
+    <div style="padding:14px;background:var(--warm);border:1px dashed var(--sand);">
+      <div style="font-size:18px;margin-bottom:6px;">➕</div>
+      <div style="font-size:12px;font-weight:600;color:var(--lmuted);">Slot Available</div>
+      <div style="font-size:10px;color:var(--lmuted);">Future expansion</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══ TAB 4: VIRAL LOOP ═══ -->
+<div id="tab-viral" class="page-view">
+<div class="canvas">
+
+  <div style="padding:0 20px;margin-bottom:24px;">
+    <div class="section-title">Viral Loop — <em>Growth by Sharing</em></div>
+    <p style="font-size:12px;color:var(--muted);margin-top:4px;">Setiap user yang share membawa user baru masuk ke funnel</p>
+  </div>
+
+  <div class="flow-steps" style="margin-bottom:40px;">
+    <div class="flow-step">
+      <div class="step-box entry"><span class="step-num green">1</span><div class="step-icon">🆕</div><div class="step-label">New Visitor</div><div class="step-sub">Masuk homepage</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box action"><span class="step-num honey">2</span><div class="step-icon">🧠</div><div class="step-label">Ambil Quiz</div><div class="step-sub">AADB V5</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box result"><span class="step-num purple">3</span><div class="step-icon">📊</div><div class="step-label">Dapat Score</div><div class="step-sub">Personal result</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box viral"><span class="step-num orange">4</span><div class="step-icon">📤</div><div class="step-label">Share Card</div><div class="step-sub">"Cek punya kamu!"</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box entry"><span class="step-num green">5</span><div class="step-icon">👥</div><div class="step-label">Friend Clicks</div><div class="step-sub">New visitor masuk</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="step-box convert"><span class="step-num green">6</span><div class="step-icon">♾️</div><div class="step-label">Loop Repeats</div><div class="step-sub">Viral coefficient</div></div>
+    </div>
+  </div>
+
+  <!-- 3 Viral Mechanisms -->
+  <div style="padding:0 20px;margin-bottom:16px;">
+    <div class="section-title" style="font-size:16px;">3 <em>Viral Mechanisms</em></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;padding:0 20px;margin-bottom:32px;">
+    <div style="background:var(--warm);border:1px solid var(--sand);border-top:3px solid var(--orange);padding:24px;">
+      <div style="font-size:32px;margin-bottom:12px;">📊</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:var(--orange);margin-bottom:8px;">MECHANISM 1</div>
+      <div style="font-size:14px;font-weight:600;color:var(--bark);margin-bottom:8px;">Quiz Result Share Card</div>
+      <p style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:12px;">Setelah dapat Balance Score, user bisa share card bergambar score + tipe metabolik ke WhatsApp, Instagram Stories, atau copy link.</p>
+      <div style="font-size:11px;color:var(--orange);">Copy: "Balance Score-ku 68/100 — Rollercoaster Rider 🎢 Cek punya kamu!"</div>
+    </div>
+    <div style="background:var(--warm);border:1px solid var(--sand);border-top:3px solid var(--blue);padding:24px;">
+      <div style="font-size:32px;margin-bottom:12px;">🔍</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:var(--blue);margin-bottom:8px;">MECHANISM 2</div>
+      <div style="font-size:14px;font-weight:600;color:var(--bark);margin-bottom:8px;">Onesta Trace Unboxing</div>
+      <p style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:12px;">User scan QR botol → dapat halaman indah dengan asal sarang, GPS location, lab results. Natural shareable moment saat unboxing.</p>
+      <div style="font-size:11px;color:var(--blue);">Copy: "Madu ini dari hutan Belitung 🍯 — bisa dilacak sendiri!"</div>
+    </div>
+    <div style="background:var(--warm);border:1px solid var(--sand);border-top:3px solid var(--green);padding:24px;">
+      <div style="font-size:32px;margin-bottom:12px;">🏅</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:var(--green);margin-bottom:8px;">MECHANISM 3</div>
+      <div style="font-size:14px;font-weight:600;color:var(--bark);margin-bottom:8px;">Protocol Badge</div>
+      <p style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:12px;">Setelah 30 hari mengikuti protocol, user dapat digital badge. "Saya pakai Ade Rai x Onesta Protocol ✓" — shareable sebagai identity signal.</p>
+      <div style="font-size:11px;color:var(--green);">Copy: "Day 30 ✓ Ade Rai x Onesta Performance Protocol"</div>
+    </div>
+  </div>
+
+  <!-- Retention loop -->
+  <div style="padding:0 20px;margin-bottom:16px;">
+    <div class="section-title" style="font-size:16px;">Retention Loop — <em>Cek Ulang Minggu Depan</em></div>
+  </div>
+  <div class="flow-steps" style="padding:0 20px;">
+    <div class="flow-step"><div class="step-box result"><span class="step-num purple">1</span><div class="step-icon">📊</div><div class="step-label">Quiz Result</div><div class="step-sub">Score pertama</div></div></div>
+    <div class="flow-step"><div class="step-box action"><span class="step-num honey">2</span><div class="step-icon">↺</div><div class="step-label">Set Reminder</div><div class="step-sub">"Cek ulang minggu depan"</div></div></div>
+    <div class="flow-step"><div class="step-box action"><span class="step-num honey">3</span><div class="step-icon">📱</div><div class="step-label">WA Reminder</div><div class="step-sub">7 hari kemudian</div></div></div>
+    <div class="flow-step"><div class="step-box action"><span class="step-num honey">4</span><div class="step-icon">🧠</div><div class="step-label">Quiz Lagi</div><div class="step-sub">Score baru</div></div></div>
+    <div class="flow-step"><div class="step-box viral"><span class="step-num orange">5</span><div class="step-icon">📈</div><div class="step-label">Score Naik</div><div class="step-sub">"52 → 78!" = share!</div></div></div>
+    <div class="flow-step"><div class="step-box convert"><span class="step-num green">6</span><div class="step-icon">🔄</div><div class="step-label">Repeat Buy</div><div class="step-sub">Ritual terbentuk</div></div></div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══ TAB 5: METRICS ═══ -->
+<div id="tab-metrics" class="page-view">
+<div class="canvas">
+
+  <div style="padding:0 20px;margin-bottom:24px;">
+    <div class="section-title">KPI Targets — <em>Ukuran Keberhasilan</em></div>
+    <p style="font-size:12px;color:var(--muted);margin-top:4px;">Target bulan 1-3 post soft launch</p>
+  </div>
+
+  <div class="metrics-section">
+    <div class="metric-card"><div class="metric-num">60%</div><div class="metric-label">Quiz Completion Rate</div><div class="metric-trend up">↑ Target Month 3</div></div>
+    <div class="metric-card"><div class="metric-num">12%</div><div class="metric-label">Quiz → Purchase Conversion</div><div class="metric-trend up">↑ Target Month 3</div></div>
+    <div class="metric-card"><div class="metric-num">0.3</div><div class="metric-label">Share per Result (viral coefficient)</div><div class="metric-trend up">↑ Target Month 3</div></div>
+    <div class="metric-card"><div class="metric-num">420K</div><div class="metric-label">Avg Order Value (IDR)</div><div class="metric-trend up">↑ Target Month 3</div></div>
+    <div class="metric-card"><div class="metric-num">25%</div><div class="metric-label">Repeat Purchase Rate (90d)</div><div class="metric-trend up">↑ Target Month 3</div></div>
+  </div>
+
+  <div style="margin-top:24px;padding:0 20px;margin-bottom:16px;">
+    <div class="section-title" style="font-size:16px;">Funnel <em>Conversion</em> Model</div>
+  </div>
+
+  <div style="padding:0 20px;">
+    <div style="display:flex;flex-direction:column;gap:8px;max-width:600px;">
+      <div style="background:var(--forest);padding:16px 20px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:12px;color:var(--cream);">🌐 Homepage Visitors</span>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--amber);">100%</span>
+      </div>
+      <div style="background:var(--bark);padding:14px 20px 14px 36px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:12px;color:var(--cream);">🧠 Start Quiz</span>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--amber);">45%</span>
+      </div>
+      <div style="background:var(--espresso);padding:14px 20px 14px 52px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:12px;color:var(--cream);">✅ Complete Quiz</span>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--amber);">60%</span>
+      </div>
+      <div style="background:rgba(125,60,152,.3);border:1px solid rgba(125,60,152,.4);padding:14px 20px 14px 68px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:12px;color:var(--bark);">📊 View Result + Recommendation</span>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--purple);">100%</span>
+      </div>
+      <div style="background:rgba(230,126,34,.15);border:1px solid rgba(230,126,34,.3);padding:14px 20px 14px 84px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:12px;color:var(--bark);">📤 Share Result</span>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--orange);">30%</span>
+      </div>
+      <div style="background:rgba(200,132,42,.15);border:1px solid rgba(200,132,42,.3);padding:14px 20px 14px 100px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:12px;color:var(--bark);">🛒 Add to Cart</span>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--honey);">20%</span>
+      </div>
+      <div style="background:rgba(39,174,96,.15);border:1px solid rgba(39,174,96,.3);padding:14px 20px 14px 116px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:12px;color:var(--bark);">💳 Complete Purchase</span>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--green);">12%</span>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-top:12px;font-style:italic;">*Dari 100 pengunjung homepage → target 12 pembelian (bulan 3). Improve quiz completion = improve seluruh funnel.</p>
+  </div>
+
+</div>
+</div>
+
+<!-- TOOLTIP -->
+<div class="tooltip" id="tooltip">
+  <div class="tt-title" id="tt-title"></div>
+  <div id="tt-body"></div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.page-view').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  document.getElementById('tab-' + id).classList.add('on');
+  event.target.classList.add('on');
+}
+
+function showTT(e, title, body) {
+  const tt = document.getElementById('tooltip');
+  document.getElementById('tt-title').textContent = title;
+  document.getElementById('tt-body').textContent = body;
+  tt.style.left = (e.clientX + 12) + 'px';
+  tt.style.top = (e.clientY - 60) + 'px';
+  tt.classList.add('show');
+}
+
+document.addEventListener('mousemove', function(e) {
+  const tt = document.getElementById('tooltip');
+  if (!e.target.closest('.step-box')) tt.classList.remove('show');
+  else {
+    tt.style.left = (e.clientX + 12) + 'px';
+    tt.style.top = (e.clientY - 60) + 'px';
+  }
+});
+</script>
+</body>
+</html>
