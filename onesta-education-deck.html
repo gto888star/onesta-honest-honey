@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onesta — Natural Metabolic Stabilizer Education Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root {
+  --honey: #C8842A; --honey-lt: #E8A84A; --amber: #F2C46D;
+  --amber-pale: #FAE9C0; --forest: #1A2215; --bark: #2E1F0E;
+  --espresso: #3A2910; --ink: #0E0A04;
+  --cream: #FAF6EE; --warm: #FEFCF7; --sand: #EDE3D0;
+  --dsand: #D6C9B5; --muted: #9C8870; --lmuted: #C5B49E;
+  --green: #27AE60; --red: #C0392B; --blue: #2471A3;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; overflow:hidden; }
+body {
+  background: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+}
+
+/* ── SHELL ── */
+.shell {
+  display: grid;
+  grid-template-rows: 52px 1fr 64px;
+  height: 100vh;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  background: var(--bark);
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  border-bottom: 1px solid rgba(200,132,42,.15);
+}
+.topbar-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px; letter-spacing: 5px; color: var(--amber);
+}
+.topbar-title {
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  color: rgba(250,246,238,.4);
+}
+.topbar-counter {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px; color: rgba(250,246,238,.4);
+}
+.topbar-counter span { color: var(--amber); }
+
+/* ── SLIDE AREA ── */
+.slide-area {
+  position: relative;
+  overflow: hidden;
+}
+.slide {
+  position: absolute; inset: 0;
+  opacity: 0; pointer-events: none;
+  transition: opacity .5s ease;
+}
+.slide.active {
+  opacity: 1; pointer-events: all;
+}
+
+/* ── BOTTOM NAV ── */
+.bottomnav {
+  background: var(--bark);
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  border-top: 1px solid rgba(200,132,42,.15);
+}
+.nav-btn {
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(250,246,238,.5); background: none;
+  border: 1px solid rgba(200,132,42,.2);
+  padding: 8px 20px; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all .25s;
+}
+.nav-btn:hover { background: var(--honey); color: var(--cream); border-color: var(--honey); }
+.nav-btn:disabled { opacity: .25; cursor: default; }
+.nav-btn:disabled:hover { background: none; color: rgba(250,246,238,.5); border-color: rgba(200,132,42,.2); }
+.progress-dots {
+  display: flex; gap: 6px; align-items: center;
+}
+.pdot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(250,246,238,.15);
+  cursor: pointer; transition: all .25s;
+}
+.pdot.on { background: var(--honey); transform: scale(1.3); }
+.slide-label {
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(250,246,238,.3); min-width: 200px; text-align: center;
+}
+
+/* ══════════════════════════════
+   SLIDE LAYOUTS
+   ══════════════════════════════ */
+
+/* COVER */
+.s-cover {
+  background: var(--bark);
+  display: grid; grid-template-columns: 1fr 1fr;
+  height: 100%;
+}
+.sc-left {
+  padding: 60px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative;
+}
+.sc-left::after {
+  content: '';
+  position: absolute; right: 0; top: 15%; bottom: 15%;
+  width: 1px; background: rgba(200,132,42,.2);
+}
+.sc-eyebrow {
+  font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--honey); margin-bottom: 24px;
+  display: flex; align-items: center; gap: 10px;
+}
+.sc-eyebrow::before { content:''; width:24px; height:1px; background:var(--honey); }
+.sc-h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 4vw, 58px);
+  font-weight: 300; line-height: 1.05;
+  color: var(--cream); margin-bottom: 8px;
+}
+.sc-h1 em { font-style: italic; color: var(--amber); }
+.sc-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px; font-style: italic;
+  color: rgba(250,246,238,.45); margin-bottom: 32px;
+}
+.sc-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 300; font-style: italic;
+  color: var(--amber); padding-top: 24px;
+  border-top: 1px solid rgba(200,132,42,.2);
+}
+.sc-right {
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  padding: 60px;
+  background: radial-gradient(ellipse at 50% 40%, rgba(200,132,42,.12), transparent 65%);
+}
+.sc-hex-grid {
+  position: absolute; inset: 0; opacity: .05;
+}
+.sc-stats {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 16px; width: 100%; max-width: 340px;
+  position: relative; z-index: 1;
+}
+.sc-stat {
+  padding: 20px 16px;
+  border: 1px solid rgba(200,132,42,.2);
+  background: rgba(250,246,238,.04);
+  text-align: center;
+}
+.sc-stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 44px; line-height: 1; color: var(--amber); margin-bottom: 4px;
+}
+.sc-stat-label {
+  font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(250,246,238,.4); line-height: 1.5;
+}
+.sc-audience {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  margin-top: 20px; justify-content: center;
+  position: relative; z-index: 1;
+}
+.sc-aud-tag {
+  font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+  border: 1px solid rgba(200,132,42,.25); color: rgba(250,246,238,.5);
+  padding: 4px 10px;
+}
+
+/* SECTION DIVIDER */
+.s-divider {
+  background: var(--forest);
+  display: flex; align-items: center; justify-content: center;
+  height: 100%;
+  position: relative; overflow: hidden;
+}
+.sd-bg {
+  position: absolute;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 200px; line-height: 1;
+  color: rgba(255,255,255,.025);
+  letter-spacing: 8px;
+  pointer-events: none;
+}
+.sd-content { text-align: center; position: relative; z-index: 1; }
+.sd-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px; letter-spacing: 4px;
+  color: var(--honey); margin-bottom: 16px;
+}
+.sd-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(40px, 5vw, 72px);
+  font-weight: 300; color: var(--cream); line-height: 1.05;
+  margin-bottom: 12px;
+}
+.sd-title em { font-style: italic; color: var(--amber); }
+.sd-sub {
+  font-size: 13px; color: rgba(250,246,238,.4);
+  max-width: 480px; line-height: 1.8;
+}
+
+/* TWO COL CONTENT */
+.s-twocol {
+  background: var(--cream);
+  display: grid; grid-template-columns: 1fr 1fr;
+  height: 100%;
+}
+.stc-left { padding: 52px 48px 52px 56px; }
+.stc-right { padding: 52px 56px 52px 48px; }
+.stc-divider { border-left: 1px solid var(--sand); }
+
+/* DARK TWO COL */
+.s-twocol-dark {
+  background: var(--bark);
+  display: grid; grid-template-columns: 1fr 1fr;
+  height: 100%;
+}
+.std-left { padding: 52px 48px 52px 56px; }
+.std-right {
+  padding: 52px 56px 52px 48px;
+  border-left: 1px solid rgba(200,132,42,.12);
+}
+
+/* FULL DARK */
+.s-full-dark {
+  background: var(--bark);
+  padding: 52px 56px;
+  height: 100%;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+/* FULL LIGHT */
+.s-full-light {
+  background: var(--cream);
+  padding: 52px 56px;
+  height: 100%;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+/* FOREST */
+.s-forest {
+  background: var(--forest);
+  padding: 52px 56px;
+  height: 100%;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+}
+
+/* ── TYPOGRAPHY COMPONENTS ── */
+.slide-eyebrow {
+  font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--honey); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.slide-eyebrow::before { content:''; width:22px; height:1px; background:var(--honey); }
+.slide-eyebrow.light { color: var(--amber); }
+.slide-eyebrow.light::before { background: var(--amber); }
+
+.slide-h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 300; line-height: 1.1; margin-bottom: 10px;
+  color: var(--bark);
+}
+.slide-h2 em { font-style: italic; color: var(--honey); }
+.slide-h2.on-dark { color: var(--cream); }
+.slide-h2.on-dark em { color: var(--amber); }
+
+.slide-h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 300; line-height: 1.2; margin-bottom: 8px;
+  color: var(--bark);
+}
+.slide-h3 em { font-style: italic; color: var(--honey); }
+.slide-h3.on-dark { color: var(--cream); }
+.slide-h3.on-dark em { color: var(--amber); }
+
+.slide-en {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px; font-style: italic;
+  color: var(--lmuted); margin-bottom: 20px;
+}
+.slide-en.on-dark { color: rgba(250,246,238,.35); }
+
+.slide-body {
+  font-size: 13px; line-height: 1.85;
+  color: var(--muted); margin-bottom: 16px;
+}
+.slide-body.on-dark { color: rgba(250,246,238,.5); }
+.slide-body strong { color: var(--bark); font-weight: 500; }
+.slide-body.on-dark strong { color: rgba(250,246,238,.85); }
+
+/* ── CONTENT COMPONENTS ── */
+.bullet-list { display: flex; flex-direction: column; gap: 10px; }
+.bullet-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 13px; color: var(--muted); line-height: 1.6;
+}
+.bullet-item.on-dark { color: rgba(250,246,238,.55); }
+.bullet-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--honey); margin-top: 6px; flex-shrink: 0;
+}
+
+.stat-row {
+  display: flex; gap: 12px; margin: 20px 0;
+}
+.stat-box {
+  flex: 1; padding: 16px 12px; text-align: center;
+  border: 1px solid var(--sand); background: var(--warm);
+}
+.stat-box.dark {
+  border-color: rgba(200,132,42,.18);
+  background: rgba(250,246,238,.04);
+}
+.sb-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px; line-height: 1; color: var(--honey); margin-bottom: 4px;
+}
+.sb-num.on-dark { color: var(--amber); }
+.sb-label {
+  font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); line-height: 1.5;
+}
+.sb-label.on-dark { color: rgba(250,246,238,.38); }
+
+.card-grid { display: grid; gap: 12px; }
+.card-grid.two { grid-template-columns: 1fr 1fr; }
+.card-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+.info-card {
+  padding: 18px 16px;
+  border: 1px solid var(--sand); background: var(--warm);
+}
+.info-card.dark {
+  border-color: rgba(200,132,42,.15);
+  background: rgba(250,246,238,.04);
+}
+.ic-icon { font-size: 22px; margin-bottom: 8px; }
+.ic-title {
+  font-size: 12px; font-weight: 500; color: var(--bark);
+  margin-bottom: 4px;
+}
+.ic-title.on-dark { color: var(--cream); }
+.ic-body { font-size: 11px; color: var(--muted); line-height: 1.6; }
+.ic-body.on-dark { color: rgba(250,246,238,.42); }
+
+.honey-level-list { display: flex; flex-direction: column; gap: 3px; }
+.hl {
+  display: flex; align-items: center; gap: 14px;
+  padding: 11px 14px;
+  border-left: 3px solid rgba(200,132,42,.12);
+  transition: all .25s;
+}
+.hl:hover { background: rgba(200,132,42,.05); border-left-color: var(--honey); }
+.hl.on { border-left-color: var(--honey); background: rgba(200,132,42,.08); }
+.hl-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 26px; line-height: 1; color: rgba(232,168,74,.25); min-width: 30px;
+}
+.hl.on .hl-num { color: var(--amber); }
+.hl-title { font-size: 12px; font-weight: 500; color: rgba(250,246,238,.35); margin-bottom: 1px; }
+.hl.on .hl-title { color: var(--cream); }
+.hl-desc { font-size: 10px; color: rgba(250,246,238,.28); }
+.hl.on .hl-desc { color: rgba(250,246,238,.5); }
+
+.pillar-bars { display: flex; flex-direction: column; gap: 12px; }
+.pillar-bar-item {}
+.pb-top { display: flex; justify-content: space-between; margin-bottom: 5px; }
+.pb-name { font-size: 11px; color: var(--muted); }
+.pb-name.on-dark { color: rgba(250,246,238,.55); }
+.pb-pct { font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: var(--honey); }
+.pb-track { height: 4px; background: rgba(200,132,42,.1); }
+.pb-fill { height: 100%; background: var(--honey); }
+
+.quote-block {
+  border-left: 3px solid var(--honey);
+  padding: 16px 20px;
+  margin: 16px 0;
+}
+.qb-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; font-weight: 300; font-style: italic;
+  color: var(--bark); line-height: 1.5;
+}
+.qb-text.on-dark { color: rgba(250,246,238,.7); }
+
+.tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+.tag {
+  font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+  border: 1px solid rgba(200,132,42,.25); color: var(--honey); padding: 4px 10px;
+}
+.tag.filled { background: var(--honey); color: var(--cream); border-color: var(--honey); }
+.tag.light { border-color: var(--sand); color: var(--muted); }
+
+.chain-flow {
+  display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+  margin: 16px 0;
+}
+.cf-step {
+  font-size: 11px; letter-spacing: 1px;
+  padding: 8px 14px; border: 1px solid rgba(200,132,42,.2);
+  color: rgba(250,246,238,.5); transition: all .25s;
+}
+.cf-step:hover { color: var(--cream); border-color: var(--honey); }
+.cf-step.on { background: rgba(200,132,42,.1); border-color: var(--honey); color: var(--amber); }
+.cf-arrow { font-size: 12px; color: rgba(200,132,42,.3); padding: 0 4px; }
+
+.two-pillar {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+.tp-card {
+  padding: 24px 20px;
+  border: 1px solid var(--sand); background: var(--warm);
+  position: relative; overflow: hidden;
+}
+.tp-card.dark {
+  border-color: rgba(200,132,42,.15);
+  background: rgba(250,246,238,.04);
+}
+.tp-card::before {
+  content: attr(data-num);
+  position: absolute;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 80px; line-height: 1;
+  color: rgba(200,132,42,.06);
+  bottom: -10px; right: -5px;
+  pointer-events: none;
+}
+.tp-badge {
+  font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--honey); border: 1px solid rgba(200,132,42,.2);
+  padding: 3px 10px; display: inline-block; margin-bottom: 12px;
+}
+.tp-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 300; color: var(--bark);
+  margin-bottom: 8px;
+}
+.tp-title em { font-style: italic; color: var(--honey); }
+.tp-title.on-dark { color: var(--cream); }
+.tp-title.on-dark em { color: var(--amber); }
+.tp-body { font-size: 12px; color: var(--muted); line-height: 1.7; }
+.tp-body.on-dark { color: rgba(250,246,238,.45); }
+.tp-list { display: flex; flex-direction: column; gap: 5px; margin-top: 10px; }
+.tp-list li {
+  font-size: 11px; color: var(--muted); list-style: none;
+  display: flex; align-items: center; gap: 7px;
+}
+.tp-list.on-dark li { color: rgba(250,246,238,.45); }
+.tp-list li::before { content: '·'; color: var(--honey); font-size: 16px; }
+
+.timeline { display: flex; flex-direction: column; gap: 0; }
+.tl-item {
+  display: flex; gap: 20px; padding: 16px 0;
+  border-bottom: 1px solid rgba(200,132,42,.1);
+}
+.tl-item:last-child { border-bottom: none; }
+.tl-dot-wrap { display: flex; flex-direction: column; align-items: center; min-width: 28px; }
+.tl-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--honey); margin-top: 3px; }
+.tl-line { flex: 1; width: 1px; background: rgba(200,132,42,.2); margin-top: 4px; }
+.tl-title { font-size: 13px; font-weight: 500; color: var(--cream); margin-bottom: 3px; }
+.tl-body { font-size: 11px; color: rgba(250,246,238,.44); line-height: 1.6; }
+
+/* CLOSING SLIDE */
+.s-closing {
+  background: var(--forest);
+  height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.closing-bg {
+  position: absolute;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 220px; letter-spacing: 10px; line-height: 1;
+  color: rgba(255,255,255,.025);
+  pointer-events: none;
+}
+.closing-inner {
+  text-align: center; position: relative; z-index: 1;
+  max-width: 600px; padding: 40px;
+}
+.closing-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px; letter-spacing: 8px; color: var(--amber);
+  margin-bottom: 8px;
+}
+.closing-h {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 300; color: var(--cream); margin-bottom: 12px;
+  line-height: 1.1;
+}
+.closing-h em { font-style: italic; color: var(--amber); }
+.closing-sub {
+  font-size: 13px; color: rgba(250,246,238,.45);
+  margin-bottom: 32px; line-height: 1.8;
+}
+.closing-cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--honey); color: var(--cream);
+  padding: 14px 32px; font-size: 11px; letter-spacing: 2px;
+  text-transform: uppercase; border: none; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: all .3s;
+}
+.closing-cta:hover { background: var(--bark); }
+.closing-science {
+  margin-top: 24px;
+  font-size: 10px; color: rgba(250,246,238,.25); letter-spacing: .5px;
+}
+
+@keyframes fadeIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+.slide.active > * { animation: fadeIn .5s ease both; }
+.slide.active > *:nth-child(2) { animation-delay: .1s; }
+.slide.active > *:nth-child(3) { animation-delay: .2s; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-logo">ONESTA</div>
+  <div class="topbar-title">Natural Metabolic Stabilizer — Education Deck</div>
+  <div class="topbar-counter"><span id="cur">1</span> / <span id="tot">18</span></div>
+</div>
+
+<!-- SLIDE AREA -->
+<div class="slide-area" id="slides">
+
+<!-- ══ SLIDE 1: COVER ══ -->
+<div class="slide active" data-label="Cover">
+<div class="s-cover">
+  <div class="sc-left">
+    <svg class="sc-hex-grid" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;opacity:.05;"><defs><pattern id="hx" x="0" y="0" width="50" height="43" patternUnits="userSpaceOnUse"><polygon points="25,2 48,14 48,38 25,43 2,38 2,14" fill="none" stroke="#C8842A" stroke-width="0.8"/></pattern></defs><rect width="400" height="500" fill="url(#hx)"/></svg>
+    <div class="sc-eyebrow" style="position:relative;z-index:1;">Stingless Bee Wellness Honey · Onesta Indonesia</div>
+    <h1 class="sc-h1" style="position:relative;z-index:1;">
+      Natural<br><em>Metabolic</em><br>Stabilizer
+    </h1>
+    <p class="sc-sub" style="position:relative;z-index:1;">A Daily Nutritional Foundation for Modern Life<br>Fondasi Nutrisi Harian untuk Kehidupan Modern</p>
+    <div class="sc-tagline" style="position:relative;z-index:1;">"Balance is the New Normal."</div>
+  </div>
+  <div class="sc-right" style="position:relative;">
+    <svg class="sc-hex-grid" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;opacity:.06;"><defs><pattern id="hx2" x="0" y="0" width="50" height="43" patternUnits="userSpaceOnUse"><polygon points="25,2 48,14 48,38 25,43 2,38 2,14" fill="none" stroke="#C8842A" stroke-width="0.8"/></pattern></defs><rect width="400" height="500" fill="url(#hx2)"/></svg>
+    <div class="sc-stats">
+      <div class="sc-stat"><div class="sc-stat-num">15+</div><div class="sc-stat-label">Total Activity<br>Score</div></div>
+      <div class="sc-stat"><div class="sc-stat-num">1K+</div><div class="sc-stat-label">Scientific<br>References</div></div>
+      <div class="sc-stat"><div class="sc-stat-num">4+</div><div class="sc-stat-label">Years of<br>Research</div></div>
+      <div class="sc-stat"><div class="sc-stat-num">13</div><div class="sc-stat-label">Metabolic<br>Types</div></div>
+    </div>
+    <div class="sc-audience">
+      <span class="sc-aud-tag">Consumer</span>
+      <span class="sc-aud-tag">Clinician</span>
+      <span class="sc-aud-tag">Corporate</span>
+      <span class="sc-aud-tag">Retailer</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══ SLIDE 2: SECTION 1 DIVIDER ══ -->
+<div class="slide" data-label="The Modern Challenge">
+<div class="s-divider">
+  <div class="sd-bg">BALANCE</div>
+  <div class="sd-content">
+    <div class="sd-num">Chapter 01</div>
+    <h2 class="sd-title">The Modern<br><em>Health Challenge</em></h2>
+    <p class="sd-sub">Tantangan Kesehatan Modern<br>Why more people feel unwell without being sick</p>
+  </div>
+</div>
+</div>
+
+<!-- ══ SLIDE 3: THE WELLNESS GAP ══ -->
+<div class="slide" data-label="The Wellness Gap">
+<div class="s-twocol">
+  <div class="stc-left">
+    <div class="slide-eyebrow">The Problem</div>
+    <h2 class="slide-h2">Tidak Sakit.<br>Tapi Tidak <em>Sepenuhnya Sehat.</em></h2>
+    <p class="slide-en">Not sick. But not fully well either.</p>
+    <p class="slide-body">Banyak orang modern hidup di zona abu-abu antara sakit dan sehat. Sistem kesehatan sangat baik dalam menangani penyakit akut — tapi banyak orang kini mencari dukungan sebelum disfungsi menjadi parah.</p>
+    <p class="slide-body">Many modern individuals live in a growing "wellness gap" — not ill enough for medical intervention, yet not thriving.</p>
+    <div class="quote-block">
+      <div class="qb-text">"The challenge of modern wellness may no longer be survival. It may be <strong>stability.</strong>"</div>
+    </div>
+  </div>
+  <div class="stc-right stc-divider">
+    <div class="slide-eyebrow">Common Symptoms</div>
+    <h3 class="slide-h3">Sinyal yang Sering <em>Diabaikan</em></h3>
+    <p class="slide-en">Signals we normalize but shouldn't</p>
+    <div class="card-grid two" style="margin-top:16px;">
+      <div class="info-card"><div class="ic-icon">😴</div><div class="ic-title">Bangun Kelelahan</div><div class="ic-body">Waking tired despite adequate sleep</div></div>
+      <div class="info-card"><div class="ic-icon">🌫️</div><div class="ic-title">Brain Fog</div><div class="ic-body">Difficulty focusing and thinking clearly</div></div>
+      <div class="info-card"><div class="ic-icon">⚡</div><div class="ic-title">Energi Tidak Stabil</div><div class="ic-body">Energy spikes and crashes throughout the day</div></div>
+      <div class="info-card"><div class="ic-icon">😰</div><div class="ic-title">Stress Vulnerability</div><div class="ic-body">Reduced resilience under everyday pressure</div></div>
+      <div class="info-card"><div class="ic-icon">🌿</div><div class="ic-title">Digestive Discomfort</div><div class="ic-body">Bloating, irregularity, food sensitivity</div></div>
+      <div class="info-card"><div class="ic-icon">🔄</div><div class="ic-title">Pemulihan Lambat</div><div class="ic-body">Slow recovery from exercise or illness</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══ SLIDE 4: ROOT CAUSE ══ -->
+<div class="slide" data-label="Root Cause: Metabolic Disruption">
+<div class="s-twocol-dark">
+  <div class="std-left">
+    <div class="slide-eyebrow light">Root Cause</div>
+    <h2 class="slide-h2 on-dark">Akar Masalah:<br><em>Metabolic Disruption</em></h2>
+    <p class="slide-en on-dark">The body under constant metabolic stress</p>
+    <p class="slide-body on-dark">Kehidupan modern menciptakan lingkungan biologis yang belum pernah dialami manusia sebelumnya. Tubuh terus-menerus menerima sinyal yang mengganggu ritme alaminya.</p>
+    <div class="bullet-list" style="margin-top:16px;">
+      <div class="bullet-item on-dark"><div class="bullet-dot"></div>Continuous caloric availability — tubuh tidak pernah istirahat dari pemrosesan nutrisi</div>
+      <div class="bullet-item on-dark"><div class="bullet-dot"></div>Ultra-processed foods — sinyal glikemik yang terus-menerus dan berlebihan</div>
+      <div class="bullet-item on-dark"><div class="bullet-dot"></div>Chronic psychological stress — cortisol pathway terganggu</div>
+      <div class="bullet-item on-dark"><div class="bullet-dot"></div>Sleep disruption — sirkadian ritme terputus</div>
+      <div class="bullet-item on-dark"><div class="bullet-dot"></div>Digital overstimulation — sistem saraf tidak pernah tenang</div>
+    </div>
+  </div>
+  <div class="std-right">
+    <div class="slide-eyebrow light">The Consequence</div>
+    <h3 class="slide-h3 on-dark">Tubuh yang <em>Kehilangan Ritme</em></h3>
+    <p class="slide-body on-dark">Hasil dari gangguan berkelanjutan ini:</p>
+    <div class="stat-row">
+      <div class="stat-box dark"><div class="sb-num on-dark">↑</div><div class="sb-label on-dark">Insulin resistance risk</div></div>
+      <div class="stat-box dark"><div class="sb-num on-dark">↑</div><div class="sb-label on-dark">Chronic inflammation</div></div>
+      <div class="stat-box dark"><div class="sb-num on-dark">↓</div><div class="sb-label on-dark">Gut microbiome diversity</div></div>
+    </div>
+    <div class="timeline" style="margin-top:16px;">
+      <div class="tl-item">
+        <div class="tl-dot-wrap"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div><div class="tl-title">Spike & Crash Cycle</div><div class="tl-body">Energi naik cepat lalu jatuh drastis — siklus yang melemahkan metabolisme setiap hari</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot-wrap"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div><div class="tl-title">Inflammatory Load</div><div class="tl-body">Peradangan kronis ringan yang menumpuk perlahan tanpa terasa</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot-wrap"><div class="tl-dot"></div></div>
+        <div><div class="tl-title">Reduced Resilience</div><div class="tl-body">Kapasitas tubuh untuk pulih dan beradaptasi semakin berkurang</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══ SLIDE 5: SECTION 2 DIVIDER ══ -->
+<div class="slide" data-label="Why Balance Matters">
+<div class="s-divider">
+  <div class="sd-bg">RHYTHM</div>
+  <div class="sd-content">
+    <div class="sd-num">Chapter 02</div>
+    <h2 class="sd-title">Why <em>Balance</em><br>Matters</h2>
+    <p class="sd-sub">Mengapa Keseimbangan adalah Fondasi<br>Before optimization — before performance — before health</p>
+  </div>
+</div>
+</div>
+
+<!-- ══ SLIDE 6: HOMEOSTASIS ══ -->
+<div class="slide" data-label="The Science of Balance">
+<div class="s-full-light">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;height:100%;">
+    <div>
+      <div class="slide-eyebrow">The Science</div>
+      <h2 class="slide-h2">Biologi yang <em>Dibangun<br>untuk Keseimbangan</em></h2>
+      <p class="slide-en">The human body is built around dynamic equilibrium</p>
+      <p class="slide-body">Setiap sistem fisiologis utama dalam tubuh manusia bergantung pada keseimbangan dinamis yang disebut <strong>homeostasis</strong>. Tubuh terus beradaptasi, menyesuaikan, dan merekalibrasi diri untuk mempertahankan equilibrium.</p>
+      <div class="quote-block">
+        <div class="qb-text">"Balance is not weakness. Balance may be one of the <strong>highest forms of biological intelligence.</strong>"</div>
+      </div>
+    </div>
+    <div>
+      <div class="slide-eyebrow">6 Systems</div>
+      <h3 class="slide-h3">Sistem yang Bergantung<br>pada <em>Keseimbangan</em></h3>
+      <div class="pillar-bars" style="margin-top:16px;">
+        <div class="pillar-bar-item"><div class="pb-top"><span class="pb-name">⚡ Energi & Metabolisme Glukosa</span></div><div class="pb-track"><div class="pb-fill" style="width:88%"></div></div></div>
+        <div class="pillar-bar-item"><div class="pb-top"><span class="pb-name">🩸 Hormonal Signaling</span></div><div class="pb-track"><div class="pb-fill" style="width:82%"></div></div></div>
+        <div class="pillar-bar-item"><div class="pb-top"><span class="pb-name">🌿 Gut Ecology & Microbiome</span></div><div class="pb-track"><div class="pb-fill" style="width:76%"></div></div></div>
+        <div class="pillar-bar-item"><div class="pb-top"><span class="pb-name">🛡️ Inflammatory Response</span></div><div class="pb-track"><div class="pb-fill" style="width:79%"></div></div></div>
+        <div class="pillar-bar-item"><div class="pb-top"><span class="pb-name">🔄 Circadian Rhythm</span></div><div class="pb-track"><div class="pb-fill" style="width:85%"></div></div></div>
+        <div class="pillar-bar-item"><div class="pb-top"><span class="pb-name">🧠 Neurological Signaling</span></div><div class="pb-track"><div class="pb-fill" style="width:72%"></div></div></div>
+      </div>
+      <p style="font-size:10px;color:var(--lmuted);margin-top:8px;font-style:italic;">Tingkat ketergantungan pada keseimbangan dinamis</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══ SLIDE 7: WELLNESS SHIFT ══ -->
+<div class="slide" data-label="The Wellness Shift">
+<div class="s-forest">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(200,132,42,.1),transparent 60%);"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="slide-eyebrow light">Paradigm Shift</div>
+    <h2 class="slide-h2 on-dark" style="margin-bottom:32px;">Pergeseran Paradigma <em>Wellness</em></h2>
+    <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0;align-items:center;">
+      <div style="padding:24px 20px;border:1px solid rgba(200,132,42,.15);text-align:center;">
+        <div style="font-size:28px;margin-bottom:10px;">🏥</div>
+        <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(250,246,238,.4);margin-bottom:8px;">Before</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:rgba(250,246,238,.6);">Reactive Healthcare</div>
+        <div style="font-size:11px;color:rgba(250,246,238,.35);margin-top:6px;line-height:1.5;">Treat after dysfunction appears</div>
+      </div>
+      <div style="font-size:24px;color:rgba(200,132,42,.4);padding:0 16px;">→</div>
+      <div style="padding:24px 20px;border:1px solid rgba(200,132,42,.3);background:rgba(200,132,42,.08);text-align:center;">
+        <div style="font-size:28px;margin-bottom:10px;">⚖️</div>
+        <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:8px;">Now</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:var(--cream);">Preventive Wellness</div>
+        <div style="font-size:11px;color:rgba(250,246,238,.5);margin-top:6px;line-height:1.5;">Support before dysfunction escalates</div>
+      </div>
+      <div style="font-size:24px;color:rgba(200,132,42,.4);padding:0 16px;">→</div>
+      <div style="padding:24px 20px;border:1px solid rgba(200,132,42,.2);text-align:center;">
+        <div style="font-size:28px;margin-bottom:10px;">🌱</div>
+        <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(250,246,238,.4);margin-bottom:8px;">Future</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:rgba(250,246,238,.7);">Daily Nutritional Rhythm</div>
+        <div style="font-size:11px;color:rgba(250,246,238,.35);margin-top:6px;line-height:1.5;">Consistent biological support</div>
+      </div>
+    </div>
+    <div style="margin-top:28px;padding:18px 20px;background:rgba(200,132,42,.08);border:1px solid rgba(200,132,42,.2);">
+      <p style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:rgba(250,246,238,.65);text-align:center;">"The future of wellness may belong to systems that help the human body <span style="color:var(--amber);">restore rhythm, resilience, steadiness, and balance.</span>"</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══ SLIDE 8: SECTION 3 DIVIDER ══ -->
+<div class="slide" data-label="The Solution: Stingless Bee Honey">
+<div class="s-divider">
+  <div class="sd-bg">LIVING</div>
+  <div class="sd-content">
+    <div class="sd-num">Chapter 03</div>
+    <h2 class="sd-title">The <em>Solution</em></h2>
+    <p class="sd-sub">Stingless Bee Wellness Honey<br>Nature's answer to metabolic imbalance</p>
+  </div>
+</div>
+</div>
+
+<!-- ══ SLIDE 9: NOT ALL HONEY ══ -->
+<div class="slide" data-label="Not All Honey Is Equal">
+<div class="s-twocol-dark">
+  <div class="std-left">
+    <div class="slide-eyebrow light">The Difference</div>
+    <h2 class="slide-h2 on-dark">Tidak Semua Madu<br><em>Sama.</em></h2>
+    <p class="slide-en on-dark">Four levels of honey — only one is Living Honey</p>
+    <p class="slide-body on-dark">Pasar madu dipenuhi produk di Level 1 dan 2. Manuka ada di Level 3. Onesta menciptakan kategori baru di Level 4 — yang belum ada sebelumnya.</p>
+    <div class="honey-level-list" style="margin-top:20px;">
+      <div class="hl"><span class="hl-num">01</span><div><div class="hl-title">Adulterated Honey</div><div class="hl-desc">Mixed with syrups, additives, undeclared substances</div></div></div>
+      <div class="hl"><span class="hl-num">02</span><div><div class="hl-title">Inferior Honey</div><div class="hl-desc">Real honey, harvested immature, overheated, stripped</div></div></div>
+      <div class="hl"><span class="hl-num">03</span><div><div class="hl-title">Superfood Honey (Manuka)</div><div class="hl-desc">Premium from Apis mellifera — conventional bee</div></div></div>
+      <div class="hl on"><span class="hl-num">04</span><div><div class="hl-title">Stingless Bee Wellness Honey ← ONESTA</div><div class="hl-desc">Living functional food system — beyond all levels</div></div></div>
+    </div>
+  </div>
+  <div class="std-right">
+    <div class="slide-eyebrow light">Why Level 4</div>
+    <h3 class="slide-h3 on-dark">Apa yang <em>Membedakan</em></h3>
+    <p class="slide-body on-dark">Lebah tanpa sengat (Heterotrigona itama) menghasilkan madu dengan profil biokimia yang fundamentally berbeda:</p>
+    <div class="card-grid two" style="margin-top:16px;">
+      <div class="info-card dark"><div class="ic-icon">🔬</div><div class="ic-title on-dark">Trehalulose</div><div class="ic-body on-dark">Naturally occurring — not found in Manuka or regular honey</div></div>
+      <div class="info-card dark"><div class="ic-icon">🛡️</div><div class="ic-title on-dark">Propolis Rich</div><div class="ic-body on-dark">Higher propolis content than conventional bee honey</div></div>
+      <div class="info-card dark"><div class="ic-icon">🌱</div><div class="ic-title on-dark">Prebiotic Potential</div><div class="ic-body on-dark">Supports gut microbiome ecology naturally</div></div>
+      <div class="info-card dark"><div class="ic-icon">⚗️</div><div class="ic-title on-dark">Higher TA Score</div><div class="ic-body on-dark">Total Activity 15+ — broad-spectrum bioactivity</div></div>
+    </div>
+    <div style="margin-top:16px;padding:14px 16px;border:1px solid rgba(200,132,42,.2);background:rgba(200,132,42,.06);">
+      <p style="font-size:11px;color:rgba(250,246,238,.5);line-height:1.6;">Scientific Reports & Food Chemistry publications have identified trehalulose as a <span style="color:var(--amber);">distinguishing marker</span> of stingless bee honey from Heterotrigona itama.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══ SLIDE 10: TREHALULOSE ══ -->
+<div class="slide" data-label="Trehalulose — The Key Bioactive">
+<div class="s-full-dark" style="background:var(--bark);">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;height:100%;align-items:center;">
+    <div>
+      <div class="slide-eyebrow light">Dominant Bioactive Marker</div>
+      <h2 class="slide-h2 on-dark" style="font-size:clamp(32px,4vw,54px);">
+        <em>Trehalulose</em>
+      </h2>
+      <p class="slide-en on-dark">The Intelligent Carbohydrate</p>
+      <p class="slide-body on-dark">Trehalulose adalah disakarida alami yang hanya ditemukan dalam madu lebah tanpa sengat. Berbeda dari sukrosa dan glukosa biasa — ia dicerna jauh lebih lambat, menghasilkan respons glikemik yang rendah dan pelepasan energi yang stabil.</p>
+      <div class="tag-row">
+        <span class="tag">Low Glycemic Index</span>
+        <span class="tag">Slow Digestion</span>
+        <span class="tag">Steady Energy Release</span>
+        <span class="tag">No Spike & Crash</span>
+      </div>
+      <div style="margin-top:20px;padding:16px;border:1px solid rgba(200,132,42,.2);background:rgba(200,132,42,.08);">
+        <p style="font-size:11px;color:rgba(250,246,238,.55);line-height:1.6;">Studi di <span style="color:var(--amber);">Scientific Reports (Nature Publishing Group)</span> mengidentifikasi stingless bee honey sebagai sumber trehalulose alami yang baru — dengan implikasi signifikan untuk metabolic health.</p>
+      </div>
+    </div>
+    <div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="padding:20px;border:1px solid rgba(200,132,42,.2);background:rgba(200,132,42,.08);">
+          <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:8px;">vs Regular Sugar</div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
+            <span style="font-size:11px;color:rgba(250,246,238,.4);width:100px;">Regular Sugar</span>
+            <div style="flex:1;height:8px;background:rgba(255,255,255,.08);"><div style="height:100%;width:90%;background:#C0392B;"></div></div>
+            <span style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:#C0392B;">GI 65+</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span style="font-size:11px;color:rgba(250,246,238,.4);width:100px;">Trehalulose</span>
+            <div style="flex:1;height:8px;background:rgba(255,255,255,.08);"><div style="height:100%;width:32%;background:var(--green);"></div></div>
+            <span style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--green);">GI ~32</span>
+          </div>
+        </div>
+        <div style="padding:20px;border:1px solid rgba(200,132,42,.15);background:rgba(250,246,238,.03);">
+          <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:10px;">Metabolic Benefits</div>
+          <div class="bullet-list">
+            <div class="bullet-item on-dark"><div class="bullet-dot"></div>Supports blood glucose stability after meals</div>
+            <div class="bullet-item on-dark"><div class="bullet-dot"></div>Reduces post-meal energy crashes</div>
+            <div class="bullet-item on-dark"><div class="bullet-dot"></div>Supports sustained cognitive function</div>
+            <div class="bullet-item on-dark"><div class="bullet-dot"></div>May reduce insulin demand over time</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══ SLIDE 11: FULL BIOACTIVE PROFILE ══ -->
+<div class="slide" data-label="Full Bioactive Profile">
+<div class="s-full-light">
+  <div class="slide-eyebrow">Complete Nutritional Profile</div>
+  <h2 class="slide-h2">Sistem Bioaktif yang <em>Bekerja Sinergis</em></h2>
+  <p class="slide-en">A living functional food system — not just nutrients</p>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:20px;">
+    <div style="padding:20px 14px;border:1px solid var(--sand);background:var(--warm);text-align:center;border-top:3px solid var(--honey);">
+      <div style="font-size:28px;margin-bottom:10px;">🍯</div>
+      <div style="font-size:12px;font-weight:500;color:var(--bark);margin-bottom:6px;">Trehalulose</div>
+      <div style="font-size:10px;color:var(--muted);line-height:1.5;">Low-GI intelligent carbohydrate. Metabolic stability anchor.</div>
+    </div>
+    <div style="padding:20px 14px;border:1px solid var(--sand);background:var(--warm);text-align:center;border-top:3px solid var(--honey);">
+      <div style="font-size:28px;margin-bottom:10px;">🛡️</div>
+      <div style="font-size:12px;font-weight:500;color:var(--bark);margin-bottom:6px;">Propolis</div>
+      <div style="font-size:10px;color:var(--muted);line-height:1.5;">Antimicrobial & anti-inflammatory. Immune system support.</div>
+    </div>
+    <div style="padding:20px 14px;border:1px solid var(--sand);background:var(--warm);text-align:center;border-top:3px solid var(--honey);">
+      <div style="font-size:28px;margin-bottom:10px;">🌱</div>
+      <div style="font-size:12px;font-weight:500;color:var(--bark);margin-bottom:6px;">Prebiotics</div>
+      <div style="font-size:10px;color:var(--muted);line-height:1.5;">Supports gut microbiome. Feeds beneficial bacteria.</div>
+    </div>
+    <div style="padding:20px 14px;border:1px solid var(--sand);background:var(--warm);text-align:center;border-top:3px solid var(--honey);">
+      <div style="font-size:28px;margin-bottom:10px;">⚗️</div>
+      <div style="font-size:12px;font-weight:500;color:var(--bark);margin-bottom:6px;">Antioxidants</div>
+      <div style="font-size:10px;color:var(--muted);line-height:1.5;">Polyphenols & flavonoids. Cellular protection from oxidative stress.</div>
+    </div>
+    <div style="padding:20px 14px;border:1px solid var(--sand);background:var(--warm);text-align:center;border-top:3px solid var(--honey);">
+      <div style="font-size:28px;margin-bottom:10px;">🔥</div>
+      <div style="font-size:12px;font-weight:500;color:var(--bark);margin-bottom:6px;">Anti-Inflammatory</div>
+      <div style="font-size:10px;color:var(--muted);line-height:1.5;">Organic acids & bioactives. Reduces systemic inflammation.</div>
+    </div>
+  </div>
+  <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+    <div style="padding:14px;background:rgba(200,132,42,.06);border:1px solid rgba(200,132,42,.2);">
+      <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--honey);margin-bottom:6px;">Honest Honey™</div>
+      <div style="font-size:12px;color:var(--muted);">Ripe · Raw · Natural · Pure · 100% honey · No additives · Digitally traceable</div>
+    </div>
+    <div style="padding:14px;background:rgba(200,132,42,.06);border:1px solid rgba(200,132,42,.2);">
+      <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--honey);margin-bottom:6px;">Living Honey™</div>
+      <div style="font-size:12px;color:var(--muted);">Active bioactives preserved · Harvested at natural ripeness · Minimal processing</div>
+    </div>
+    <div style="padding:14px;background:rgba(200,132,42,.06);border:1px solid rgba(200,132,42,.2);">
+      <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--honey);margin-bottom:6px;">Science-Backed</div>
+      <div style="font-size:12px;color:var(--muted);">1,128+ scientific references · PMC/NCBI · Wiley · Nature · MDPI · 2000–2025</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══ SLIDE 12: SECTION 4 DIVIDER ══ -->
+<div class="slide" data-label="How It Works">
+<div class="s-divider">
+  <div class="sd-bg">RITUAL</div>
+  <div class="sd-content">
+    <div class="sd-num">Chapter 04</div>
+    <h2 class="sd-title">How It <em>Works</em></h2>
+    <p class="sd-sub">Bagaimana Bekerja<br>The daily ritual that restores metabolic balance</p>
+  </div>
+</div>
+</div>
+
+<!-- ══ SLIDE 13: 6 BALANCE PILLARS ══ -->
+<div class="slide" data-label="6 Balance Pillars">
+<div class="s-full-dark" style="background:var(--espresso);">
+  <div class="slide-eyebrow light">Diagnostic Framework</div>
+  <h2 class="slide-h2 on-dark">6 <em>Balance Pillars</em></h2>
+  <p class="slide-en on-dark">The six domains of metabolic balance Onesta supports</p>
+  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:20px;flex:1;">
+    <div style="padding:20px 14px;border:1px solid rgba(200,132,42,.18);background:rgba(200,132,42,.06);text-align:center;">
+      <div style="font-size:26px;margin-bottom:8px;">⚡</div>
+      <div style="font-size:11px;font-weight:500;color:var(--cream);margin-bottom:6px;">Energi</div>
+      <div style="font-size:9px;color:rgba(250,246,238,.4);line-height:1.5;">Fatigue, brain fog, energy stability</div>
+      <div style="font-size:9px;color:var(--amber);margin-top:8px;">Trehalulose</div>
+    </div>
+    <div style="padding:20px 14px;border:1px solid rgba(200,132,42,.18);background:rgba(200,132,42,.06);text-align:center;">
+      <div style="font-size:26px;margin-bottom:8px;">🩸</div>
+      <div style="font-size:11px;font-weight:500;color:var(--cream);margin-bottom:6px;">Gula Darah</div>
+      <div style="font-size:9px;color:rgba(250,246,238,.4);line-height:1.5;">Blood glucose, cravings, post-meal dips</div>
+      <div style="font-size:9px;color:var(--amber);margin-top:8px;">Trehalulose + Low GI</div>
+    </div>
+    <div style="padding:20px 14px;border:1px solid rgba(200,132,42,.18);background:rgba(200,132,42,.06);text-align:center;">
+      <div style="font-size:26px;margin-bottom:8px;">🌿</div>
+      <div style="font-size:11px;font-weight:500;color:var(--cream);margin-bottom:6px;">Pencernaan</div>
+      <div style="font-size:9px;color:rgba(250,246,238,.4);line-height:1.5;">Gut health, microbiome, bloating</div>
+      <div style="font-size:9px;color:var(--amber);margin-top:8px;">Prebiotics + Propolis</div>
+    </div>
+    <div style="padding:20px 14px;border:1px solid rgba(200,132,42,.18);background:rgba(200,132,42,.06);text-align:center;">
+      <div style="font-size:26px;margin-bottom:8px;">🛡️</div>
+      <div style="font-size:11px;font-weight:500;color:var(--cream);margin-bottom:6px;">Imunitas</div>
+      <div style="font-size:9px;color:rgba(250,246,238,.4);line-height:1.5;">Immune resilience, inflammation</div>
+      <div style="font-size:9px;color:var(--amber);margin-top:8px;">Propolis + Antioxidants</div>
+    </div>
+    <div style="padding:20px 14px;border:1px solid rgba(200,132,42,.18);background:rgba(200,132,42,.06);text-align:center;">
+      <div style="font-size:26px;margin-bottom:8px;">🔄</div>
+      <div style="font-size:11px;font-weight:500;color:var(--cream);margin-bottom:6px;">Recovery</div>
+      <div style="font-size:9px;color:rgba(250,246,238,.4);line-height:1.5;">Muscle repair, sleep quality, cellular regeneration</div>
+      <div style="font-size:9px;color:var(--amber);margin-top:8px;">Anti-inflammatory</div>
+    </div>
+    <div style="padding:20px 14px;border:1px solid rgba(200,132,42,.18);background:rgba(200,132,42,.06);text-align:center;">
+      <div style="font-size:26px;margin-bottom:8px;">🌙</div>
+      <div style="font-size:11px;font-weight:500;color:var(--cream);margin-bottom:6px;">Malam & Stres</div>
+      <div style="font-size:9px;color:rgba(250,246,238,.4);line-height:1.5;">Cortisol, night cravings, stress eating</div>
+      <div style="font-size:9px;color:var(--amber);margin-top:8px;">Bioactive complex</div>
+    </div>
+  </div>
+  <div style="margin-top:16px;padding:14px 16px;background:rgba(200,132,42,.08);border:1px solid rgba(200,132,42,.2);">
+    <p style="font-size:11px;color:rgba(250,246,238,.55);text-align:center;">Setiap pillar diukur melalui <span style="color:var(--amber);">Balance Diagnostic Quiz "Ada Apa Dengan Balance?"</span> — menghasilkan skor personal dan rekomendasi produk spesifik</p>
+  </div>
+</div>
+</div>
+
+<!-- ══ SLIDE 14: DAILY RITUAL ══ -->
+<div class="slide" data-label="The Daily Ritual">
+<div class="s-twocol">
+  <div class="stc-left">
+    <div class="slide-eyebrow">The Protocol</div>
+    <h2 class="slide-h2">Dua Sendok <em>Sehari.</em></h2>
+    <p class="slide-en">The simplest ritual with the deepest impact</p>
+    <p class="slide-body">Efektivitas Onesta bukan dari dosis yang besar, tapi dari <strong>konsistensi harian.</strong> Tubuh merespons pengulangan — dua sendok sehari memberikan sinyal nutrisi yang konsisten yang secara bertahap membangun keseimbangan metabolik.</p>
+    <div style="margin-top:20px;display:flex;flex-direction:column;gap:0;">
+      <div style="display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid var(--sand);">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--honey);min-width:60px;">PAGI</div>
+        <div><div style="font-size:13px;font-weight:500;color:var(--bark);">1 sendok sebelum sarapan</div><div style="font-size:11px;color:var(--muted);">Activates metabolic rhythm. Trehalulose prepares steady energy release.</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid var(--sand);">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--honey);min-width:60px;">SORE</div>
+        <div><div style="font-size:13px;font-weight:500;color:var(--bark);">1 sendok menjelang sore</div><div style="font-size:11px;color:var(--muted);">Prevents afternoon crash. Sustains energy, focus, and mood into evening.</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;padding:16px 0;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--honey);min-width:60px;">30 HARI</div>
+        <div><div style="font-size:13px;font-weight:500;color:var(--bark);">Rasakan perbedaannya</div><div style="font-size:11px;color:var(--muted);">Physiological adaptation. A new metabolic baseline begins to form.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="stc-right stc-divider">
+    <div class="slide-eyebrow">Expected Timeline</div>
+    <h3 class="slide-h3">Perjalanan <em>30 Hari</em></h3>
+    <div style="display:flex;flex-direction:column;gap:0;margin-top:16px;">
+      <div style="padding:14px 0;border-bottom:1px solid var(--sand);display:flex;gap:14px;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:rgba(200,132,42,.3);min-width:60px;">D1–7</div>
+        <div><div style="font-size:12px;font-weight:500;color:var(--bark);">Initial Adjustment</div><div style="font-size:11px;color:var(--muted);line-height:1.5;">Tubuh mulai mengenal sinyal baru. Beberapa orang merasakan perubahan energi ringan.</div></div>
+      </div>
+      <div style="padding:14px 0;border-bottom:1px solid var(--sand);display:flex;gap:14px;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:rgba(200,132,42,.5);min-width:60px;">D8–14</div>
+        <div><div style="font-size:12px;font-weight:500;color:var(--bark);">First Signals</div><div style="font-size:11px;color:var(--muted);line-height:1.5;">Kebanyakan pengguna mulai merasakan perubahan energi yang lebih stabil dan mood yang lebih konsisten.</div></div>
+      </div>
+      <div style="padding:14px 0;border-bottom:1px solid var(--sand);display:flex;gap:14px;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--honey);min-width:60px;">D15–21</div>
+        <div><div class="ic-title">Deeper Balance</div><div style="font-size:11px;color:var(--muted);line-height:1.5;">Gut health improvement noticed. Recovery feels faster. Sleep quality often improves.</div></div>
+      </div>
+      <div style="padding:14px 0;display:flex;gap:14px;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--honey);min-width:60px;">D30</div>
+        <div><div class="ic-title">New Baseline</div><div style="font-size:11px;color:var(--muted);line-height:1.5;">Metabolic rhythm re-established. Cek ulang Balance Score untuk melihat perubahan terukur.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══ SLIDE 15: SECTION 5 DIVIDER ══ -->
+<div class="slide" data-label="Trust & Integrity">
+<div class="s-divider">
+  <div class="sd-bg">HONEST</div>
+  <div class="sd-content">
+    <div class="sd-num">Chapter 05</div>
+    <h2 class="sd-title">Trust &<br><em>Integrity</em></h2>
+    <p class="sd-sub">Kepercayaan yang Bisa Diverifikasi<br>Why Onesta is different from every other honey</p>
+  </div>
+</div>
+</div>
+
+<!-- ══ SLIDE 16: HONEST + LIVING ══ -->
+<div class="slide" data-label="Honest Honey + Living Honey">
+<div class="s-full-light">
+  <div class="slide-eyebrow">Two Brand Pillars</div>
+  <h2 class="slide-h2">Honest Honey™ <em>+</em> Living Honey™</h2>
+  <p class="slide-en">Two pillars. One mission. Zero compromise.</p>
+  <div class="two-pillar" style="margin-top:20px;flex:1;">
+    <div class="tp-card" data-num="01">
+      <span class="tp-badge">Honest Honey™ — Trust</span>
+      <div class="tp-title">Madu dengan <em>Integritas</em></div>
+      <p class="tp-body">Setiap botol Onesta bisa diverifikasi asal-usulnya — dari sarang, panen, hingga laboratorium. Tidak ada yang disembunyikan.</p>
+      <ul class="tp-list">
+        <li>Ripe — dipanen saat matang sempurna (kadar air ≤22%)</li>
+        <li>Raw — tidak dipanaskan berlebih, bioactives terjaga</li>
+        <li>Natural — murni tanpa tambahan apapun</li>
+        <li>Halal Certified — tersertifikasi resmi</li>
+        <li>NKV Certified — standar keamanan pangan pemerintah</li>
+        <li>Digitally traceable — QR code ke hive origin</li>
+      </ul>
+    </div>
+    <div class="tp-card" data-num="02">
+      <span class="tp-badge">Living Honey™ — Function</span>
+      <div class="tp-title">Madu yang <em>Hidup</em></div>
+      <p class="tp-body">Bukan sekadar pemanis alami. Sistem bioaktif hidup yang bekerja sinergis untuk mendukung keseimbangan metabolikmu.</p>
+      <ul class="tp-list">
+        <li>Trehalulose — intelligent carbohydrate, Low GI</li>
+        <li>Propolis — antimicrobial, anti-inflammatory</li>
+        <li>Prebiotics — gut microbiome support</li>
+        <li>Antioxidants — cellular protection</li>
+        <li>Organic acids — metabolic signaling support</li>
+        <li>Total Activity 15+ — broad-spectrum bioactivity</li>
+      </ul>
+    </div>
+  </div>
+  <div style="margin-top:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+    <div style="padding:12px;text-align:center;border:1px solid var(--sand);"><div style="font-size:18px;">✅</div><div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:5px;">Halal</div></div>
+    <div style="padding:12px;text-align:center;border:1px solid var(--sand);"><div style="font-size:18px;">🔍</div><div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:5px;">Traceable</div></div>
+    <div style="padding:12px;text-align:center;border:1px solid var(--sand);"><div style="font-size:18px;">🧪</div><div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:5px;">Lab Tested</div></div>
+    <div style="padding:12px;text-align:center;border:1px solid var(--sand);"><div style="font-size:18px;">📜</div><div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:5px;">NKV Certified</div></div>
+  </div>
+</div>
+</div>
+
+<!-- ══ SLIDE 17: SECTION 6 DIVIDER ══ -->
+<div class="slide" data-label="Beyond Wellness">
+<div class="s-divider">
+  <div class="sd-bg">MISSION</div>
+  <div class="sd-content">
+    <div class="sd-num">Chapter 06</div>
+    <h2 class="sd-title">Beyond <em>Wellness</em></h2>
+    <p class="sd-sub">Honey is the New Tree<br>The ecological & social mission of Onesta</p>
+  </div>
+</div>
+</div>
+
+<!-- ══ SLIDE 18: CLOSING ══ -->
+<div class="slide" data-label="Stay in Balance">
+<div class="s-closing">
+  <div class="closing-bg">BALANCE</div>
+  <div class="closing-inner">
+    <div class="closing-logo">ONESTA</div>
+    <h2 class="closing-h">
+      Reset Balance.<br><em>Stay in Balance.</em>
+    </h2>
+    <p class="closing-sub">
+      Onesta adalah madu wellness dari lebah tanpa sengat Indonesia — kaya Trehalulose, bisa dilacak dari sarang ke botol, dan dirancang sebagai fondasi keseimbangan metabolik harianmu.<br><br>
+      Onesta is stingless bee wellness honey from Indonesia — rich in Trehalulose, digitally traceable from hive to bottle, and designed as your daily metabolic balance foundation.
+    </p>
+    <button class="closing-cta">Cek Balance Score-mu →</button>
+    <div style="margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <span style="font-size:9px;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(200,132,42,.25);color:rgba(250,246,238,.4);padding:4px 10px;">Honest Honey™</span>
+      <span style="font-size:9px;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(200,132,42,.25);color:rgba(250,246,238,.4);padding:4px 10px;">Living Honey™</span>
+      <span style="font-size:9px;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(200,132,42,.25);color:rgba(250,246,238,.4);padding:4px 10px;">Halal Certified</span>
+      <span style="font-size:9px;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(200,132,42,.25);color:rgba(250,246,238,.4);padding:4px 10px;">Digitally Traceable</span>
+    </div>
+    <div class="closing-science">Based on 1,128+ scientific references · PMC/NCBI · Wiley · Nature · MDPI · 2000–2025<br>Hasil bersifat edukatif, bukan klaim medis atau diagnosis.</div>
+  </div>
+</div>
+</div>
+
+</div><!-- end slides -->
+
+<!-- BOTTOM NAV -->
+<div class="bottomnav">
+  <button class="nav-btn" id="prev-btn" onclick="prevSlide()" disabled>← Prev</button>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+    <div class="progress-dots" id="dots"></div>
+    <div class="slide-label" id="slide-label">Cover</div>
+  </div>
+  <button class="nav-btn" id="next-btn" onclick="nextSlide()">Next →</button>
+</div>
+
+</div><!-- end shell -->
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let current = 0;
+
+document.getElementById('tot').textContent = total;
+
+// Build dots
+const dotsEl = document.getElementById('dots');
+slides.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'pdot' + (i === 0 ? ' on' : '');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+});
+
+function goTo(n) {
+  slides[current].classList.remove('active');
+  current = Math.max(0, Math.min(n, total - 1));
+  slides[current].classList.add('active');
+  document.getElementById('cur').textContent = current + 1;
+  document.getElementById('slide-label').textContent = slides[current].dataset.label || '';
+  document.querySelectorAll('.pdot').forEach((d, i) => d.classList.toggle('on', i === current));
+  document.getElementById('prev-btn').disabled = current === 0;
+  document.getElementById('next-btn').disabled = current === total - 1;
+}
+
+function nextSlide() { goTo(current + 1); }
+function prevSlide() { goTo(current - 1); }
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide();
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide();
+});
+
+// Initialize label
+document.getElementById('slide-label').textContent = slides[0].dataset.label || '';
+</script>
+</body>
+</html>
