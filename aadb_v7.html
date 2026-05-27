@@ -415,7 +415,7 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 
 <!-- RESULT -->
 <div id="s-result" class="screen">
-  <div class="r-eyebrow">Laporan Balance-mu · V6</div>
+  <div class="r-eyebrow">Laporan Balance-mu · V7</div>
   <div class="r-score-block">
     <div class="r-score-top">
       <div>
@@ -772,6 +772,42 @@ const TYPES = {
       {t:"🌅 PAGI (WAJIB, perut kosong)",action:"1 sdm Onesta Daily + air hangat + lemon",detail:"Protokol fondasi yang tidak boleh dilangkahi.",why:"Fondasi anti-inflamasi"},
       {t:"🍽️ SETELAH MAKAN SIANG",action:"1 sdt Onesta Imunisi + air",detail:"Mencegah post-lunch inflammation cascade.",why:"Mengurangi inflamasi setelah makan"},
       {t:"🌙 MALAM (WAJIB)",action:"1 sdt Onesta Imunisi + air hangat",detail:"Golden window untuk cellular repair. Tidak boleh diskip.",why:"Memaksimalkan repair malam"},
+    ]
+  },
+
+  // ── Q11 SPLIT: Graceful Guardian (F40+) ──
+  "graceful_guardian":{
+    id:"graceful_guardian",emoji:"🌿",
+    name:"Graceful Guardian",nameEN:"The Transition Protector",
+    tagline:'"Tubuhmu sedang dalam transisi yang nyata. Bukan melemah — sedang berubah. Dan perubahan butuh perlindungan."',
+    science:"Perimenopause/menopause transition + multi-domain metabolic shift + estrogen-driven oxidative stress",
+    insight:"Apa yang kamu rasakan bukan imajinasimu. Ketika estrogen mulai bergeser, <b>beberapa sistem tubuh merespons sekaligus</b> — energi, tidur, mood, pencernaan, dan pemulihan semuanya saling terhubung. Ini bukan melemah. Ini transisi biologis nyata yang butuh dukungan yang tepat, bukan yang generik.",
+    therefore:"Profil biologismu menunjukkan sinyal multi-sistem yang khas pada fase transisi hormonal — setiap sinyal terhubung satu sama lain.",
+    products:["Daily","Imunisi"],stack:"Daily + Imunisi",
+    typeColor:"rgba(46,125,87,.12)",typeBorder:"rgba(46,125,87,.30)",
+    why:"Untuk fase transisi hormonal, Daily menstabilkan ritme metabolik dasar sementara Imunisi mengurangi inflammatory load yang meningkat seiring pergeseran estrogen. Kombinasi ini bekerja pada level seluler — bukan sekadar gejala.",
+    slots:[
+      {t:"🌅 PAGI (sebelum sarapan)",action:"1 sdm Onesta Daily + air hangat",detail:"Stabilisasi metabolik sebelum aktivitas dimulai.",why:"Morning cortisol + metabolic rhythm reset"},
+      {t:"🍽️ SETELAH MAKAN SIANG",action:"1 sdt Onesta Imunisi",detail:"Window terbaik untuk anti-inflammatory support.",why:"Reduksi post-meal inflammatory response"},
+      {t:"🌙 MALAM (30 menit sebelum tidur)",action:"1 sdm Onesta Daily",detail:"Mendukung kualitas tidur dan cellular repair overnight.",why:"Overnight hormonal + cellular recovery"},
+    ]
+  },
+
+  // ── Q11 SPLIT: Prime Guardian (M40+) ──
+  "prime_guardian":{
+    id:"prime_guardian",emoji:"🏔️",
+    name:"Prime Guardian",nameEN:"The Edge Protector",
+    tagline:'"Yang sudah dibangun perlu dijaga. Bukan soal mundur — soal mempertahankan yang terbaik dari dirimu."',
+    science:"Andropause onset + testosterone decline + multi-domain metabolic stress + cardiovascular risk window",
+    insight:"Perubahan yang kamu rasakan bukan sekadar 'penuaan normal'. Ketika testosterone mulai menurun, <b>beberapa sistem merespons sekaligus</b> — energi, recovery, fokus, dan stamina semuanya saling terhubung via hormon yang sama. Yang dibutuhkan bukan lebih keras bekerja — tapi fondasi yang lebih cerdas.",
+    therefore:"Profil biologismu menunjukkan sinyal multi-sistem yang khas pada fase andropause — setiap domain terhubung ke testosterone-cortisol axis.",
+    products:["Daily","Beeyond"],stack:"Daily + Beeyond",
+    typeColor:"rgba(26,74,138,.12)",typeBorder:"rgba(26,74,138,.30)",
+    why:"Untuk fase andropause, Daily menstabilkan metabolik baseline sementara Beeyond mendukung performance recovery yang melambat seiring penurunan testosterone. Kombinasi ini menyasar testosterone-cortisol axis — bukan hanya gejala permukaan.",
+    slots:[
+      {t:"🌅 PAGI (sebelum aktivitas)",action:"1 sdm Onesta Daily + air putih",detail:"Activate cellular energy production sebelum hari dimulai.",why:"Testosterone-cortisol morning optimization"},
+      {t:"💪 SETELAH AKTIVITAS FISIK",action:"1 sdm Onesta Beeyond",detail:"Dalam 30 menit setelah olahraga atau aktivitas intens.",why:"Accelerate lactate clearance + anabolic recovery window"},
+      {t:"🌙 MALAM",action:"1 sdm Onesta Daily",detail:"Mendukung testosterone preservation overnight.",why:"Sleep-dependent testosterone + cellular repair"},
     ]
   },
   "night_restorer":{
@@ -1192,12 +1228,58 @@ function showAha(){
 // ══════════════════════════════════════════════════════
 // BUILD RESULT — Score 25-90
 // ══════════════════════════════════════════════════════
-function buildResult(){
-  const tmpMax=67;
-  const tmpBal=Math.round(100-(totalScore/tmpMax)*100);
-  const adjustedBal=Math.round(25+(tmpBal*0.65));
-  const type=detectType();
-  const zones=[
+// ══════════════════════════════════════════════════════
+// SEGMENT PILLAR WEIGHTS — V7
+// Weight = seberapa determinan pillar ini per segment
+// ══════════════════════════════════════════════════════
+const SEGMENT_WEIGHTS={
+  'F40-':{ energy:1.0, glucose:1.3, gut:1.4, immune:1.3, recovery:1.0, decline:0.8, night_stress:1.1 },
+  'F40+':{ energy:1.4, glucose:1.2, gut:1.0, immune:1.0, recovery:1.3, decline:1.5, night_stress:1.4 },
+  'M40-':{ energy:1.4, glucose:1.1, gut:0.9, immune:0.9, recovery:1.4, decline:0.8, night_stress:1.3 },
+  'M40+':{ energy:1.4, glucose:1.2, gut:1.0, immune:1.0, recovery:1.3, decline:1.5, night_stress:1.3 },
+  'N':   { energy:1.0, glucose:1.0, gut:1.0, immune:1.0, recovery:1.0, decline:1.0, night_stress:1.0 },
+};
+
+// Segment-specific score band thresholds
+// F40+ and M40+ have lower thresholds — biological baseline is harder
+const SEGMENT_ZONES={
+  'F40-':[
+    {min:88,max:100,z:'✨ In Full Flow',         label:'Sangat Jarang Tercapai', c:'#2E8B57'},
+    {min:78,max:87, z:'🟢 Consistently Aligned', label:'Stabil & Terjaga',       c:'#3FAD72'},
+    {min:68,max:77, z:'🟢 In Your Stride',       label:'Momentum yang Baik',     c:'#4CAF82'},
+    {min:57,max:67, z:'🟡 Finding Your Rhythm',  label:'Sedang Bergerak',         c:'#C8A020'},
+    {min:46,max:56, z:'🟠 Building Foundations', label:'Perlu Perhatian',         c:'#E87A20'},
+    {min:35,max:45, z:'🟠 At the Reset Point',   label:'Saatnya Berbenah',        c:'#D45A10'},
+    {min:0, max:34, z:'🔴 Body Asking for Rest', label:'Prioritas Utama',         c:'#C84040'},
+  ],
+  'F40+':[
+    {min:83,max:100,z:'✨ In Full Flow',         label:'Sangat Jarang Tercapai', c:'#2E8B57'},
+    {min:74,max:82, z:'🟢 Consistently Aligned', label:'Stabil & Terjaga',       c:'#3FAD72'},
+    {min:64,max:73, z:'🟢 In Your Stride',       label:'Momentum yang Baik',     c:'#4CAF82'},
+    {min:53,max:63, z:'🟡 Finding Your Rhythm',  label:'Sedang Bergerak',         c:'#C8A020'},
+    {min:42,max:52, z:'🟠 Building Foundations', label:'Perlu Perhatian',         c:'#E87A20'},
+    {min:31,max:41, z:'🟠 At the Reset Point',   label:'Saatnya Berbenah',        c:'#D45A10'},
+    {min:0, max:30, z:'🔴 Body Asking for Rest', label:'Prioritas Utama',         c:'#C84040'},
+  ],
+  'M40-':[
+    {min:88,max:100,z:'✨ In Full Flow',         label:'Sangat Jarang Tercapai', c:'#2E8B57'},
+    {min:78,max:87, z:'🟢 Consistently Aligned', label:'Stabil & Terjaga',       c:'#3FAD72'},
+    {min:68,max:77, z:'🟢 In Your Stride',       label:'Momentum yang Baik',     c:'#4CAF82'},
+    {min:57,max:67, z:'🟡 Finding Your Rhythm',  label:'Sedang Bergerak',         c:'#C8A020'},
+    {min:46,max:56, z:'🟠 Building Foundations', label:'Perlu Perhatian',         c:'#E87A20'},
+    {min:35,max:45, z:'🟠 At the Reset Point',   label:'Saatnya Berbenah',        c:'#D45A10'},
+    {min:0, max:34, z:'🔴 Body Asking for Rest', label:'Prioritas Utama',         c:'#C84040'},
+  ],
+  'M40+':[
+    {min:83,max:100,z:'✨ In Full Flow',         label:'Sangat Jarang Tercapai', c:'#2E8B57'},
+    {min:74,max:82, z:'🟢 Consistently Aligned', label:'Stabil & Terjaga',       c:'#3FAD72'},
+    {min:64,max:73, z:'🟢 In Your Stride',       label:'Momentum yang Baik',     c:'#4CAF82'},
+    {min:53,max:63, z:'🟡 Finding Your Rhythm',  label:'Sedang Bergerak',         c:'#C8A020'},
+    {min:42,max:52, z:'🟠 Building Foundations', label:'Perlu Perhatian',         c:'#E87A20'},
+    {min:31,max:41, z:'🟠 At the Reset Point',   label:'Saatnya Berbenah',        c:'#D45A10'},
+    {min:0, max:30, z:'🔴 Body Asking for Rest', label:'Prioritas Utama',         c:'#C84040'},
+  ],
+  'N':[
     {min:85,max:100,z:'✨ In Full Flow',         label:'Sangat Jarang Tercapai', c:'#2E8B57'},
     {min:76,max:84, z:'🟢 Consistently Aligned', label:'Stabil & Terjaga',       c:'#3FAD72'},
     {min:67,max:75, z:'🟢 In Your Stride',       label:'Momentum yang Baik',     c:'#4CAF82'},
@@ -1205,9 +1287,51 @@ function buildResult(){
     {min:47,max:56, z:'🟠 Building Foundations', label:'Perlu Perhatian',         c:'#E87A20'},
     {min:36,max:46, z:'🟠 At the Reset Point',   label:'Saatnya Berbenah',        c:'#D45A10'},
     {min:0, max:35, z:'🔴 Body Asking for Rest', label:'Prioritas Utama',         c:'#C84040'},
-  ];
-  const zone=zones.find(z=>adjustedBal>=z.min&&adjustedBal<=z.max)||zones[6];
-  return{bal:adjustedBal,tmpBal,type,zone};
+  ],
+};
+
+// Segment display labels for result screen
+const SEGMENT_LABELS={
+  'F40-':{ short:'Ritme Perempuan · Membangun & Bertumbuh',  tag:'F<40' },
+  'F40+':{ short:'Ritme Perempuan · Menavigasi Babak Baru',  tag:'F>40' },
+  'M40-':{ short:'Ritme Laki-laki · Membangun & Bertumbuh',  tag:'M<40' },
+  'M40+':{ short:'Ritme Laki-laki · Menjaga & Melindungi',   tag:'M>40' },
+  'N':   { short:'Universal',                                  tag:'N'    },
+};
+
+function buildResult(){
+  const tmpMax=67;
+  const tmpBal=Math.round(100-(totalScore/tmpMax)*100);
+
+  // ── Segment engine: apply pillar weights ──
+  const seg=segment||'N';
+  const weights=SEGMENT_WEIGHTS[seg];
+
+  // Recalculate weighted score using segment-specific pillar weights
+  // We reweight the raw domain scores, then recompute balance
+  const dmxBase={energy:16,glucose:16,gut:7,immune:7,recovery:7,decline:7,night_stress:7};
+  let weightedScore=0;
+  let weightedMax=0;
+  Object.entries(dmxBase).forEach(([d,mx])=>{
+    const w=weights[d]||1.0;
+    weightedScore+=(scores[d]||0)*w;
+    weightedMax+=mx*w;
+  });
+  const weightedBal=weightedMax>0?Math.round(100-(weightedScore/weightedMax)*100):tmpBal;
+
+  // Apply adjusted scaling (same 25-90 range as V6)
+  const adjustedBal=Math.round(25+(weightedBal*0.65));
+  const finalBal=Math.max(25,Math.min(90,adjustedBal));
+
+  const type=detectType();
+
+  // Use segment-specific zone thresholds
+  const zones=SEGMENT_ZONES[seg]||SEGMENT_ZONES['N'];
+  const zone=zones.find(z=>finalBal>=z.min&&finalBal<=z.max)||zones[zones.length-1];
+
+  const segLabel=SEGMENT_LABELS[seg]||SEGMENT_LABELS['N'];
+
+  return{bal:finalBal,tmpBal,weightedBal,type,zone,seg,segLabel};
 }
 
 // ══════════════════════════════════════════════════════
@@ -1238,9 +1362,13 @@ function detectType(){
   const maxPillar=Math.max(...Object.values(pct));
   if(maxPillar<45&&tmpBal>=70) return TYPES["balance_master"];
 
-  // P3: Peak Guardian multi-domain
+  // P3: Peak Guardian — split by segment (Q11 active)
   const highPillars=Object.entries(pct).filter(([d,p])=>p>=65&&d!=='night_stress').length;
-  if(highPillars>=4&&tmpBal<=65) return TYPES["peak_guardian"];
+  if(highPillars>=4&&tmpBal<=65){
+    if(segment==='F40+') return TYPES["graceful_guardian"];
+    if(segment==='M40+') return TYPES["prime_guardian"];
+    return TYPES["peak_guardian"]; // neutral / F40- / M40-
+  }
 
   // P4: Night Restorer — Q9 pilihan C + glucose tinggi
   const q9answer=answers[8];
@@ -1249,8 +1377,12 @@ function detectType(){
   // P5: Stress Snacker — Q9 pilihan D
   if(q9answer&&q9answer.k==='D'&&(gl>=6||ns_pct>=70)) return TYPES["stress_snacker"];
 
-  // P6: Peak Guardian decline+energy
-  if(dc>=6&&en>=8) return TYPES["peak_guardian"];
+  // P6: Peak Guardian decline+energy — split by segment
+  if(dc>=6&&en>=8){
+    if(segment==='F40+') return TYPES["graceful_guardian"];
+    if(segment==='M40+') return TYPES["prime_guardian"];
+    return TYPES["peak_guardian"];
+  }
 
   // P7: Fasting Refiner — Q10 pilihan E
   const q10answer=answers[9];
@@ -1289,7 +1421,17 @@ function detectType(){
 function renderResult(){
   if(!result) result=buildResult();
   prog(100);
-  const{bal,type,zone}=result;
+  const{bal,type,zone,seg,segLabel}=result;
+
+  // ── Segment eyebrow + score label ──
+  const eyebrowEl=document.querySelector('.r-eyebrow');
+  if(eyebrowEl) eyebrowEl.textContent='Laporan Balance-mu · V7';
+  const scoreLabelEl=document.querySelector('.r-score-label');
+  if(scoreLabelEl){
+    scoreLabelEl.textContent=seg&&seg!=='N'
+      ? 'Wellness Readiness Index · '+segLabel.short
+      : 'Wellness Readiness Index';
+  }
 
   // Score
   const scoreEl=document.getElementById('r-score');
@@ -1484,6 +1626,8 @@ function logToSheets(converted){
       pct_decline:  pillarPct.decline+'%',
       share_clicked:shareClicked?'true':'false',
       time_on_result:timeOnResult+'s',
+      segment:      result.seg||'N',
+      segment_label:result.segLabel?result.segLabel.short:'Universal',
     };
     fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
   } catch(err){
