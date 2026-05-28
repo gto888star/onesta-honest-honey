@@ -362,14 +362,7 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
           <div class="gw-check"></div>
         </button>
 
-        <button class="gw-card gw-card--neutral" data-gw="1" data-val="N" onclick="selectGw(this)">
-          <div class="gw-card-icon">🌀</div>
-          <div>
-            <div class="gw-card-name">Saya lebih suka tidak menyebutkan</div>
-            <div class="gw-card-sub">Kami tetap berikan hasil terbaik untukmu</div>
-          </div>
-          <div class="gw-check"></div>
-        </button>
+        <!-- N segment removed v7.1 — hanya Ritme Perempuan & Laki-laki -->
 
       </div>
     </div>
@@ -680,7 +673,7 @@ const QS = [
 ];
 
 // ══════════════════════════════════════════════════════
-// 13 METABOLIC TYPES V7 (11 universal + 2 Q11 segment split)
+// 14 METABOLIC TYPES V7.1 (10 universal + 4 segment-specific: Graceful/Prime/Zest/GutHarmonizer)
 // ══════════════════════════════════════════════════════
 const TYPES = {
   "rollercoaster_rider":{
@@ -815,27 +808,11 @@ const TYPES = {
       {t:"🌙 MALAM SETELAH MAKAN",action:"½ sdt Onesta DiaBee + air",detail:"Menstabilkan glukosa malam — mencegah night cravings.",why:"Kontrol glukosa malam"},
     ]
   },
-  "peak_guardian":{
-    id:"peak_guardian",emoji:"🛡️",
-    name:"Peak Guardian",nameEN:"The Multi-System Defender",
-    tagline:'"Hampir semua sistem terasa perlu perhatian. Bukan satu masalah — tapi beberapa sekaligus."',
-    science:"Multi-domain metabolic stress + systemic inflammation",
-    insight:"Kamu bukan hipokondria. Ketika beberapa sistem tubuh sekaligus menunjukkan sinyal, itu tanda bahwa <b>fondasi metabolikmu sedang menanggung beban yang cukup berat</b>. Tapi justru dengan satu fondasi yang kuat, semua sistem bisa diperbaiki bersama.",
-    segInsight:{
-      'F40-':"Beberapa sistem yang bersamaan memberikan sinyal sering mencerminkan <b>efek kaskade hormonal</b> — ketika satu sistem tidak seimbang, hormon yang sama memengaruhi sistem lainnya. Ini bukan berarti semuanya rusak. Ini berarti satu fondasi yang kuat bisa memperbaiki banyak hal sekaligus.",
-      'M40-':"Beberapa domain yang aktif bersamaan menandakan <b>allostatic load yang tinggi</b> — tubuhmu sedang mengelola lebih banyak tekanan dari yang bisa diproses secara bersamaan. Ini sinyal bahwa kapasitas adaptasimu sedang diuji. Fondasi yang kuat, bukan penanganan satu per satu, adalah jawabannya.",
-      'N':"Ketika beberapa sistem bersamaan menunjukkan sinyal, itu tanda bahwa <b>fondasi metabolikmu sedang menanggung beban berat dari berbagai arah</b>. Satu fondasi yang kuat jauh lebih efektif dari menangani setiap sinyal secara terpisah.",
-    },
-    therefore:"Tubuhmu menunjukkan sinyal kuat di beberapa domain sekaligus — tanda multi-sistem yang perlu perhatian konsisten.",
-    products:["Daily","Imunisi"],stack:"Daily + Imunisi",
-    typeColor:"rgba(200,144,42,.15)",typeBorder:"rgba(200,144,42,.35)",
-    why:"Kombinasi Daily + Imunisi menyasar mekanisme multi-sistem: oxidative stress, immune decline, dan gut-brain axis sekaligus.",
-    slots:[
-      {t:"🌅 PAGI (WAJIB, perut kosong)",action:"1 sdm Onesta Daily + air hangat + lemon",detail:"Protokol fondasi yang tidak boleh dilangkahi.",why:"Fondasi anti-inflamasi"},
-      {t:"🍽️ SETELAH MAKAN SIANG",action:"1 sdt Onesta Imunisi + air",detail:"Mencegah post-lunch inflammation cascade.",why:"Mengurangi inflamasi setelah makan"},
-      {t:"🌙 MALAM (WAJIB)",action:"1 sdt Onesta Imunisi + air hangat",detail:"Golden window untuk cellular repair. Tidak boleh diskip.",why:"Memaksimalkan repair malam"},
-    ]
-  },
+  // ── Peak Guardian RETIRED v7.1 ──
+  // Replaced by:
+  //   F40-/M40- → 🌱 Zest Builder (multi-system under-40)
+  //   F40+      → 🌿 Graceful Guardian (multi-system 40+ female)
+  //   M40+      → 🏔️ Prime Guardian  (multi-system 40+ male)
 
   // ── Q11 SPLIT: Graceful Guardian (F40+) ──
   "graceful_guardian":{
@@ -935,6 +912,46 @@ const TYPES = {
     slots:[
       {t:"🌅 PAGI (setiap hari)",action:"1 sdt Onesta Daily + air hangat",detail:"Ritual harian yang tidak boleh diskip — bahkan saat merasa baik-baik saja.",why:"Mempertahankan baseline metabolik"},
       {t:"🌙 MALAM",action:"½ sdt Onesta Daily",detail:"Melindungi overnight repair process.",why:"Mempertahankan kondisi stabil"},
+    ]
+  },
+  "zest_builder":{
+    id:"zest_builder",emoji:"🌱",
+    name:"Zest Builder",nameEN:"The High-Potential Overloader",
+    tagline:'"Semangatku penuh — tapi beberapa sistem mulai minta perhatian sekaligus."',
+    science:"Multi-system overload + early oxidative stress (under 40)",
+    insight:"Ini bukan tanda kelemahan. Ini tanda bahwa <b>tubuhmu yang penuh potensi sedang menanggung lebih dari yang disadari</b>. Semangat tinggi tidak selalu berarti fondasi sudah kuat — dan justru di usia ini, membangun fondasi yang benar adalah investasi jangka panjang paling bernilai.",
+    segInsight:{
+      'F40-':"Estrogen masih aktif melindungi tubuhmu — tapi ketika terlalu banyak sistem bersamaan memberikan sinyal, <b>perlindungan hormonal tidak bisa mengimbangi semua beban yang datang dari segala arah</b>. Ini bukan kelemahan. Ini tubuh yang sangat responsif, sedang berbicara dengan jelas. Mendengarnya sekarang jauh lebih mudah dari memulihkan setelah terlambat.",
+      'M40-':"Testosterone mendukung output yang tinggi — tapi ketika beberapa sistem bersamaan terbebani, <b>efisiensi seluler mulai tergerus sebelum kamu menyadarinya</b>. Bukan soal kurang kuat. Ini soal sistem yang belum dioptimalkan untuk jangka panjang. Membangun fondasi di usia ini adalah keputusan terbaik yang bisa kamu buat untuk dirimu sendiri.",
+    },
+    therefore:"Tubuhmu menunjukkan sinyal dari beberapa sistem sekaligus — tanda bahwa fondasi metabolikmu perlu diperkuat sebelum terlambat.",
+    products:["Daily","Imunisi"],stack:"Daily + Imunisi",
+    typeColor:"rgba(76,175,82,.15)",typeBorder:"rgba(76,175,82,.35)",
+    why:"Di usia produktif dengan beban multi-sistem, Onesta Daily membangun fondasi metabolik yang stabil dari dalam. Imunisi memperkuat ketahanan seluler agar semua sistem bisa berjalan optimal secara bersamaan.",
+    slots:[
+      {t:"🌅 PAGI (sebelum aktivitas)",action:"1 sdm Onesta Daily + air hangat",detail:"Siapkan fondasi energi sebelum hari dimulai — sebelum tuntutan datang dari segala arah.",why:"Membangun fondasi metabolik harian"},
+      {t:"🍽️ SETELAH MAKAN SIANG",action:"1 sdt Onesta Imunisi",detail:"Saat tubuh sedang dalam mode recovery pasca-makan — ini waktu optimal untuk memperkuat sistem.",why:"Penguatan seluler di tengah hari"},
+      {t:"🌙 MALAM (1 jam sebelum tidur)",action:"1 sdt Onesta Daily",detail:"Dukung proses repair dan regenerasi yang terjadi saat tidur — fondasi dibangun di malam hari.",why:"Overnight restoration"},
+    ]
+  },
+  "gut_harmonizer":{
+    id:"gut_harmonizer",emoji:"🛡️",
+    name:"Gut Harmonizer",nameEN:"The Inner Ecosystem Conductor",
+    tagline:'"Ususku sudah semakin kompleks — butuh pendekatan yang lebih dari sekadar sensitif."',
+    science:"Gut microbiome imbalance + hormonal influence on gut axis (40+)",
+    insight:"Di atas 40, sistem pencernaanmu tidak hanya sensitif — ia bekerja dalam ekosistem yang jauh lebih kompleks dari sebelumnya. <b>Hormon, inflamasi, dan microbiome saling memengaruhi</b> dengan cara yang unik di fase ini. Bukan sekadar menjaga perut — ini tentang mengharmoinisasi seluruh ekosistem dari dalam.",
+    segInsight:{
+      'F40+':"Di fase transisi hormonal, <b>estrogen secara langsung memengaruhi komposisi microbiome ususmu</b> — ketika estrogen bergeser, ekosistem gut ikut berubah. Ini menjelaskan mengapa kondisi pencernaan terasa berbeda dari sebelumnya. Harmonisasi gut di fase ini adalah investasi untuk hormon, mood, dan imunitas sekaligus.",
+      'M40+':"Seiring pergeseran testosterone, <b>permeabilitas usus dan komposisi microbiome berubah secara signifikan</b> — ini memengaruhi penyerapan nutrisi, inflamasi sistemik, dan bahkan produksi neurotransmitter. Gut yang harmonis di usia ini adalah fondasi untuk semua sistem lainnya.",
+    },
+    therefore:"Tubuhmu menunjukkan sinyal kuat pada sistem pencernaan dan imunitas — terutama dalam konteks perubahan hormonal yang sedang berlangsung.",
+    products:["Daily","Imunisi"],stack:"Daily + Imunisi",
+    typeColor:"rgba(91,143,175,.15)",typeBorder:"rgba(91,143,175,.35)",
+    why:"Onesta Daily menstabilkan ekosistem metabolik yang mendukung microbiome. Imunisi secara langsung mendukung gut-immune axis yang sangat aktif di usia 40+.",
+    slots:[
+      {t:"🌅 PAGI (sebelum sarapan)",action:"1 sdm Onesta Daily + air hangat",detail:"Siapkan ekosistem gut sebelum makanan masuk — fondasi harian yang kritis.",why:"Pre-load gut ecosystem"},
+      {t:"🍽️ SETELAH MAKAN SIANG",action:"1 sdt Onesta Imunisi",detail:"Dukung gut-immune axis saat sistem pencernaan sedang aktif.",why:"Gut-immune support"},
+      {t:"🌙 MALAM",action:"1 sdt Onesta Daily + air hangat",detail:"Dukung repair microbiome dan gut lining selama proses recovery malam.",why:"Overnight microbiome restoration"},
     ]
   },
   "zona_kritis":{
@@ -1162,16 +1179,9 @@ function selectGw(card){
   if(gwNum===1){
     gwRitme=val;
     gwStage=null;
-    if(val==='N'){
-      // Neutral: hide block 2, enable CTA immediately
-      hideBlock2();
-      segment='N';
-      enableGwBtn();
-    } else {
-      // Show life stage options for F or M
-      showLifeStage(val);
-      disableGwBtn();
-    }
+    // F & M only — show life stage for segment selection
+    showLifeStage(val);
+    disableGwBtn();
   } else if(gwNum===2){
     gwStage=val;
     // Determine segment
@@ -1438,7 +1448,7 @@ function buildResult(){
   const tmpBal=Math.round(100-(totalScore/tmpMax)*100);
 
   // ── Segment engine: apply pillar weights ──
-  const seg=segment||'N';
+  const seg=segment||'F40-'; // fallback: segment always set via gateway
   const weights=SEGMENT_WEIGHTS[seg];
 
   // Recalculate weighted score using segment-specific pillar weights
@@ -1497,12 +1507,12 @@ function detectType(){
   const maxPillar=Math.max(...Object.values(pct));
   if(maxPillar<45&&tmpBal>=70) return TYPES["balance_master"];
 
-  // P3: Peak Guardian — split by segment (Q11 active)
+  // P3: Multi-system — split by ALL segments (Q11 active)
   const highPillars=Object.entries(pct).filter(([d,p])=>p>=65&&d!=='night_stress').length;
   if(highPillars>=4&&tmpBal<=65){
     if(segment==='F40+') return TYPES["graceful_guardian"];
     if(segment==='M40+') return TYPES["prime_guardian"];
-    return TYPES["peak_guardian"]; // neutral / F40- / M40-
+    if(segment==='F40-'||segment==='M40-') return TYPES["zest_builder"]; // under-40 multi-system
   }
 
   // P4: Night Restorer — Q9 pilihan C + glucose tinggi
@@ -1512,11 +1522,16 @@ function detectType(){
   // P5: Stress Snacker — Q9 pilihan D
   if(q9answer&&q9answer.k==='D'&&(gl>=6||ns_pct>=70)) return TYPES["stress_snacker"];
 
-  // P6: Peak Guardian decline+energy — split by segment
+  // P6: Decline+Energy combo — split by ALL segments
   if(dc>=6&&en>=8){
     if(segment==='F40+') return TYPES["graceful_guardian"];
     if(segment==='M40+') return TYPES["prime_guardian"];
-    return TYPES["peak_guardian"];
+    if(segment==='F40-'||segment==='M40-') return TYPES["zest_builder"]; // under-40 early decline
+  }
+
+  // P6b: Early decline dominant for under-40 (Zest Builder path B)
+  if(pct.decline>=70&&tmpBal>=45&&tmpBal<=79){
+    if(segment==='F40-'||segment==='M40-') return TYPES["zest_builder"];
   }
 
   // P7: Fasting Refiner — Q10 pilihan E
@@ -1526,12 +1541,18 @@ function detectType(){
   // P8: Rollercoaster Rider — glucose dominant
   if(gl>=10&&gl>gt&&gl>im&&gl>dc&&gl>rc) return TYPES["rollercoaster_rider"];
 
-  // P9: Gut Whisperer — gut+immune combined
-  if(gt>=5&&im>=5&&gt>=gl) return TYPES["gut_whisperer"];
+  // P9: Gut — split by segment (40+ → Gut Harmonizer, under-40 → Gut Whisperer)
+  if(gt>=5&&im>=5&&gt>=gl){
+    if(segment==='F40+'||segment==='M40+') return TYPES["gut_harmonizer"];
+    return TYPES["gut_whisperer"];
+  }
 
   // P10-13: Single domain dominant
   if(pct.recovery>=70) return TYPES["recovery_seeker"];
-  if(pct.gut>=70) return TYPES["gut_whisperer"];
+  if(pct.gut>=70){
+    if(segment==='F40+'||segment==='M40+') return TYPES["gut_harmonizer"];
+    return TYPES["gut_whisperer"];
+  }
   if(pct.immune>=70) return TYPES["energy_reviver"];
   if(pct.decline>=70) return TYPES["clarity_seeker"];
 
@@ -1541,7 +1562,7 @@ function detectType(){
   const map={
     glucose:"rollercoaster_rider",
     decline:"clarity_seeker",
-    gut:"gut_whisperer",
+    gut:(segment==='F40+'||segment==='M40+')?"gut_harmonizer":"gut_whisperer",
     immune:"energy_reviver",
     recovery:"recovery_seeker",
     energy:"energy_reviver",
@@ -1563,7 +1584,7 @@ function renderResult(){
   if(eyebrowEl) eyebrowEl.textContent='Laporan Balance-mu · V7';
   const scoreLabelEl=document.querySelector('.r-score-label');
   if(scoreLabelEl){
-    scoreLabelEl.textContent=seg&&seg!=='N'
+    scoreLabelEl.textContent=seg
       ? 'Wellness Readiness Index · '+segLabel.short
       : 'Wellness Readiness Index';
   }
@@ -1600,9 +1621,7 @@ function renderResult(){
     } else {
       pctBlock.style.display='block';
       const fillPct=Math.round(100-topPct);
-      const segPopLabel=seg&&seg!=='N'
-        ?segLabel.short.split('·')[0].trim()
-        :'semua profil';
+      const segPopLabel=segLabel.short.split('·')[0].trim();
       const topLabel=topPct<=10
         ?`<b>Top ${topPct}%</b> — hasil yang sangat langka`
         :topPct<=25
@@ -1797,7 +1816,7 @@ function logToSheets(converted){
       pct_decline:  pillarPct.decline+'%',
       share_clicked:shareClicked?'true':'false',
       time_on_result:timeOnResult+'s',
-      segment:      result.seg||'N',
+      segment:      result.seg||'F40-',
       segment_label:result.segLabel?result.segLabel.short:'Universal',
     };
     fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
