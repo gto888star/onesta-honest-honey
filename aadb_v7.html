@@ -680,7 +680,7 @@ const QS = [
 ];
 
 // ══════════════════════════════════════════════════════
-// 11 METABOLIC TYPES V6
+// 13 METABOLIC TYPES V7 (11 universal + 2 Q11 segment split)
 // ══════════════════════════════════════════════════════
 const TYPES = {
   "rollercoaster_rider":{
@@ -711,6 +711,12 @@ const TYPES = {
     tagline:'"Sudah tidur 8 jam, tapi bangun masih capek juga."',
     science:"Suboptimal cellular energy production (mitochondrial stress)",
     insight:"Tubuhmu tidak malas. <b>Mitokondria</b> — pabrik energi dalam setiap sel — sedang overwhelmed oleh stres oksidatif yang menumpuk. Ini bisa terjadi pada siapa saja di usia berapapun, dan bisa dipulihkan dengan konsistensi yang tepat.",
+    segInsight:{
+      'F40-':"Estrogen secara alami <b>melindungi mitokondria dari kerusakan oksidatif</b> — tapi fluktuasi hormonal dalam siklus dapat melemahkan perlindungan ini secara temporer. Kelelahan yang kamu rasakan sering kali memuncak di fase tertentu siklus, dan ini bukan kebetulan. Ini sinyal biologis nyata yang bisa distabilkan dari dalam.",
+      'F40+':"Setelah pergeseran hormonal, <b>perlindungan estrogen terhadap mitokondria berkurang secara signifikan</b> — sel-sel energimu membutuhkan dukungan antioksidan yang lebih aktif dari sebelumnya. Kelelahan yang terasa berbeda dari dulu adalah respons nyata terhadap perubahan ini, bukan tanda kelemahan.",
+      'M40-':"Testosterone mendukung <b>produksi energi seluler dan efisiensi mitokondria</b> — tapi ketika stres oksidatif menumpuk, buffer ini tidak cukup. Kelelahan yang kamu rasakan menggerus kapasitas recovery dan performa secara langsung. Ini masalah seluler, bukan masalah mental.",
+      'M40+':"Seiring penurunan testosterone, <b>efisiensi mitokondria berkurang secara bertahap</b> — kelelahan yang terasa lebih dalam dan lebih lama dari biasanya adalah sinyal bahwa sel-sel energimu butuh dukungan yang berbeda dari sebelumnya. Ini bisa dibalik dengan konsistensi yang tepat.",
+    },
     therefore:"Tubuhmu menunjukkan pola kelelahan kronis yang konsisten — bahkan setelah istirahat cukup.",
     products:["Daily","Imunisi"],stack:"Daily + Imunisi",
     typeColor:"rgba(26,111,181,.15)",typeBorder:"rgba(26,111,181,.35)",
@@ -727,6 +733,12 @@ const TYPES = {
     tagline:'"Ada di meeting, tapi pikiran entah ke mana. Fokus hilang di tengah hari."',
     science:"Neuroinflammation + disrupted brain glucose metabolism",
     insight:"Fokus yang tiba-tiba hilang di tengah hari bukan tanda kelemahan. Ia adalah sinyal nyata bahwa sistem neuroprotektif otakmu sedang membutuhkan dukungan. <b>Neuron butuh lingkungan yang stabil</b> untuk bekerja optimal — dan ini bisa dipulihkan dengan konsistensi yang tepat.",
+    segInsight:{
+      'F40-':"Estrogen adalah <b>neuroprotector alami</b> — ia mendukung produksi asetilkolin dan melindungi neuron dari neuroinflammasi. Ketika kadar estrogen berfluktuasi, terutama di fase pre-menstrual, brain fog dan penurunan fokus adalah respons biologis yang nyata. Ini bisa distabilkan dari fondasi metabolik.",
+      'F40+':"Pergeseran estrogen secara langsung memengaruhi <b>metabolisme glukosa otak dan sistem neurotransmitter</b> — asetilkolin dan serotonin keduanya sensitif terhadap perubahan hormonal ini. Kabut kognitif yang kamu rasakan bukan imajinasimu. Ini adalah sinyal biologis nyata dari transisi yang sedang terjadi.",
+      'M40-':"Testosterone mendukung <b>produksi dopamin dan fokus kognitif</b> — ketika brain fog menghantam, itu sinyal bahwa inflammatory load sudah melampaui kapasitas buffer biologismu. Bukan soal kurang tidur atau kurang motivasi. Ini masalah neuroinflammasi yang bisa diatasi dari dalam.",
+      'M40+':"Penurunan testosterone secara langsung memengaruhi <b>sistem dopamin dan asetilkolin</b> — dua neurotransmitter yang paling bertanggung jawab atas fokus dan kejernihan pikiran. Penurunan kognitif yang kamu rasakan bukan sekadar 'penuaan' — ini sinyal biologis spesifik yang membutuhkan dukungan yang spesifik pula.",
+    },
     therefore:"Tubuhmu menunjukkan pola brain fog dan penurunan kognitif yang konsisten.",
     products:["Daily","Imunisi"],stack:"Daily + Imunisi",
     typeColor:"rgba(155,155,200,.15)",typeBorder:"rgba(155,155,200,.35)",
@@ -765,6 +777,12 @@ const TYPES = {
     tagline:'"Semua orang sudah segar, aku masih dalam proses recovery."',
     science:"Elevated oxidative damage + impaired cellular repair",
     insight:"Recovery lambat bukan tanda usia atau kelemahan. Ini tanda bahwa <b>antioksidan alami tubuh tidak cukup melindungi sel</b> dari kerusakan — dan kerusakan itu menumpuk. Tapi ini bisa dibalik dengan dukungan yang konsisten.",
+    segInsight:{
+      'F40-':"Estrogen memiliki <b>sifat antioksidan alami</b> yang mendukung cellular repair — tapi fluktuasi hormonal dalam siklus dapat melemahkan kemampuan ini secara periodik. Recovery yang lambat setelah aktivitas atau stres sering mencerminkan momen di mana perlindungan ini sedang di titik terendah.",
+      'F40+':"Setelah pergeseran hormonal, <b>perlindungan antioksidan estrogen berkurang signifikan</b> — sel-selmu membutuhkan waktu lebih lama untuk memperbaiki diri bukan karena kamu lemah, tapi karena sistem repair-mu bekerja dengan kapasitas yang berbeda. Dukungan dari luar kini menjadi lebih penting dari sebelumnya.",
+      'M40-':"Testosterone mendukung <b>sinyal anabolik untuk repair seluler</b> — ketika recovery melambat, itu sinyal bahwa kerusakan oksidatif sudah melampaui kapasitas sinyal repair testosterone. Bukan soal kurang latihan atau kurang istirahat. Ini masalah seluler yang bisa diselesaikan dengan antioksidan yang tepat.",
+      'M40+':"Penurunan testosterone disertai peningkatan oxidative stress menciptakan <b>double hit pada kapasitas recovery</b> — dua sistem yang biasa bekerja bersama untuk memperbaiki sel kini keduanya sedang dalam tekanan. Yang dibutuhkan bukan lebih keras bekerja, tapi fondasi seluler yang lebih kuat.",
+    },
     therefore:"Tubuhmu menunjukkan pola recovery yang melambat secara konsisten.",
     products:["Daily","Beeyond"],stack:"Daily + Beeyond",
     typeColor:"rgba(91,175,106,.15)",typeBorder:"rgba(91,175,106,.35)",
@@ -781,6 +799,12 @@ const TYPES = {
     tagline:'"Puasa semangat, tapi drop di tengah jalan. Buka puasa langsung balas dendam."',
     science:"Circadian glucose dysregulation + fasting stress response",
     insight:"Masalahmu bukan willpower saat puasa. Tubuhmu belum punya 'jembatan energi' yang stabil antara periode puasa dan makan. <b>Transisi yang tepat</b> — bukan menahan lebih keras — adalah kuncinya.",
+    segInsight:{
+      'F40-':"Metabolisme wanita merespons puasa berbeda dari laki-laki — <b>estrogen memengaruhi utilisasi glukosa dan metabolisme lemak dalam kondisi fasted</b>. Crash yang kamu rasakan di tengah puasa sering kali lebih tajam di fase tertentu siklus hormonal. Membangun jembatan energi yang stabil jauh lebih efektif dari sekadar menahan lebih lama.",
+      'F40+':"Perubahan hormonal mengubah cara tubuh mengelola energi saat berpuasa — <b>fleksibilitas metabolik antara glukosa dan lemak sebagai sumber energi berkurang</b> seiring pergeseran hormonal. Crash yang terasa lebih intens dari sebelumnya bukan tanda kamu semakin lemah. Ini tanda tubuhmu butuh strategi puasa yang berbeda.",
+      'M40-':"Massa otot yang lebih tinggi berarti kebutuhan energi yang lebih besar — <b>puasa dapat memicu respons kortisol yang menguras cadangan energi lebih cepat</b> dari yang disadari. Balas dendam saat buka bukan soal lapar, tapi respons hormonal terhadap deficit energi yang terakumulasi. Kuncinya adalah menstabilkan transisi, bukan memperketat pembatasan.",
+      'M40+':"Penurunan testosterone mengubah <b>komposisi tubuh dan fleksibilitas metabolik</b> — puasa yang dulu terasa energizing kini bisa terasa draining karena rasio kortisol-testosterone yang bergeser. Yang dibutuhkan bukan disiplin lebih keras, tapi dukungan yang menjaga ritme energi tetap stabil sepanjang periode puasa.",
+    },
     therefore:"Tubuhmu menunjukkan pola ketidakstabilan energi yang khas selama periode puasa.",
     products:["Daily","Fasting"],stack:"Daily + Fasting",
     typeColor:"rgba(123,108,240,.15)",typeBorder:"rgba(123,108,240,.35)",
@@ -797,6 +821,11 @@ const TYPES = {
     tagline:'"Hampir semua sistem terasa perlu perhatian. Bukan satu masalah — tapi beberapa sekaligus."',
     science:"Multi-domain metabolic stress + systemic inflammation",
     insight:"Kamu bukan hipokondria. Ketika beberapa sistem tubuh sekaligus menunjukkan sinyal, itu tanda bahwa <b>fondasi metabolikmu sedang menanggung beban yang cukup berat</b>. Tapi justru dengan satu fondasi yang kuat, semua sistem bisa diperbaiki bersama.",
+    segInsight:{
+      'F40-':"Beberapa sistem yang bersamaan memberikan sinyal sering mencerminkan <b>efek kaskade hormonal</b> — ketika satu sistem tidak seimbang, hormon yang sama memengaruhi sistem lainnya. Ini bukan berarti semuanya rusak. Ini berarti satu fondasi yang kuat bisa memperbaiki banyak hal sekaligus.",
+      'M40-':"Beberapa domain yang aktif bersamaan menandakan <b>allostatic load yang tinggi</b> — tubuhmu sedang mengelola lebih banyak tekanan dari yang bisa diproses secara bersamaan. Ini sinyal bahwa kapasitas adaptasimu sedang diuji. Fondasi yang kuat, bukan penanganan satu per satu, adalah jawabannya.",
+      'N':"Ketika beberapa sistem bersamaan menunjukkan sinyal, itu tanda bahwa <b>fondasi metabolikmu sedang menanggung beban berat dari berbagai arah</b>. Satu fondasi yang kuat jauh lebih efektif dari menangani setiap sinyal secara terpisah.",
+    },
     therefore:"Tubuhmu menunjukkan sinyal kuat di beberapa domain sekaligus — tanda multi-sistem yang perlu perhatian konsisten.",
     products:["Daily","Imunisi"],stack:"Daily + Imunisi",
     typeColor:"rgba(200,144,42,.15)",typeBorder:"rgba(200,144,42,.35)",
@@ -893,6 +922,12 @@ const TYPES = {
     tagline:'"Energi stabil, jarang craving, fokus baik. Ini adalah kondisi yang ingin dicapai semua orang."',
     science:"Balanced metabolic function across all pillars",
     insight:"Orang dengan kondisi stabil sering tidak menyadari betapa berharganya kondisi ini. Tubuh yang dinamis membutuhkan perawatan aktif — justru saat ini adalah waktu terbaik untuk membangun fondasi yang kuat.",
+    segInsight:{
+      'F40-':"Stabilitas metabolik di usia ini adalah fondasi yang sangat berharga — <b>fluktuasi hormonal bisa menggeser keseimbangan ini lebih cepat dari yang disadari</b>. Justru saat kondisi baik adalah momen terbaik untuk membangun pertahanan, bukan menunggu sinyal pertama muncul.",
+      'F40+':"Mencapai keseimbangan di tengah transisi hormonal adalah pencapaian yang nyata — <b>stabilitas yang kamu miliki sekarang adalah hasil dari adaptasi biologis yang tidak terjadi begitu saja</b>. Mempertahankannya dengan dukungan aktif jauh lebih mudah dari memulihkannya setelah drop.",
+      'M40-':"Stabilitas metabolik di fase ini adalah <b>fondasi untuk performa jangka panjang</b> — semua yang ingin kamu capai, dari produktivitas hingga kesehatan, berdiri di atas kondisi yang sedang kamu miliki sekarang. Ini bukan waktunya bersantai, ini waktunya mengunci fondasi ini.",
+      'M40+':"Keseimbangan metabolik di tahap ini <b>tidak terjadi secara kebetulan</b> — ini mencerminkan kebiasaan dan pola hidup yang sudah dibangun. Mempertahankannya dengan konsistensi aktif adalah investasi terbaik untuk vitalitas 10-20 tahun ke depan.",
+    },
     therefore:"Tubuhmu menunjukkan kondisi yang relatif seimbang di semua area. Fokus pada mempertahankan stabilitas ini.",
     products:["Daily","Signature"],stack:"Daily + Signature Botanical",
     typeColor:"rgba(91,175,106,.15)",typeBorder:"rgba(91,175,106,.35)",
@@ -908,6 +943,12 @@ const TYPES = {
     tagline:'"Hampir semua sinyal aktif sekaligus. Ini saatnya mulai dari fondasi."',
     science:"Multi-system metabolic stress",
     insight:"Ini bukan kelemahan. Mulai dari satu langkah kecil — konsisten lebih penting dari sempurna. Tubuhmu butuh dukungan yang konsisten, bukan yang sempurna.",
+    segInsight:{
+      'F40-':"Ketika hampir semua sistem memberikan sinyal bersamaan, ini sering bermula dari <b>satu ketidakseimbangan yang memicu efek domino</b> — tubuhmu sudah lama beradaptasi dan berkompensasi. Yang dibutuhkan bukan perubahan drastis, tapi satu fondasi yang stabil yang memberi semua sistem kesempatan untuk pulih bersama.",
+      'F40+':"Dalam fase transisi hormonal, <b>beberapa sistem bisa bersamaan merespons perubahan yang sedang terjadi</b> — ini bukan berarti kondisi ini permanen atau tidak bisa dibalik. Tubuhmu sedang membutuhkan dukungan yang konsisten, bukan yang sempurna. Satu langkah kecil hari ini lebih berharga dari rencana besar yang tidak dimulai.",
+      'M40-':"Sinyal dari hampir semua sistem menunjukkan bahwa <b>tubuhmu sudah menyerap lebih dari yang bisa diproses secara bersamaan</b> — ini bukan tanda kelemahan, ini tanda bahwa kapasitas adaptasi sudah di batasnya. Satu fondasi yang kuat bisa membuka ruang bagi semua sistem untuk bernapas kembali.",
+      'M40+':"Pada titik ini, <b>beban kumulatif dari berbagai arah — hormonal, oksidatif, inflamasi — sedang melampaui kapasitas pemulihan alami tubuh</b>. Ini adalah sinyal yang jelas dan spesifik. Konsistensi dalam langkah kecil jauh lebih powerful dari intervensi besar yang tidak berkelanjutan.",
+    },
     therefore:"Tubuhmu menunjukkan sinyal kuat di hampir semua sistem. Ini momen yang tepat untuk mulai membangun fondasi dari dalam.",
     products:["Daily","Imunisi"],stack:"Daily + Imunisi",
     typeColor:"rgba(176,48,48,.1)",typeBorder:"rgba(176,48,48,.25)",
@@ -1542,8 +1583,7 @@ function renderResult(){
   document.getElementById('r-zone').textContent=zone.z;
   document.getElementById('r-zone').style.color=zone.c;
   setTimeout(()=>{
-    const rBar=document.getElementById('r-bar');
-    if(rBar) rBar.style.width=bal+'%';
+    // r-bar element removed (V7 uses zone-marker instead)
     // Animate zone marker - map score 25-90 to 0-100%
     const markerPct=Math.round(((bal-25)/(90-25))*100);
     const marker=document.getElementById('zone-marker');
@@ -1553,27 +1593,34 @@ function renderResult(){
   // ── Percentile Bar ──
   const pctBlock=document.getElementById('pct-bar-block');
   if(pctBlock && topPct){
-    pctBlock.style.display='block';
-    // topPct = "top X%" — so fill = (100-topPct)% from left
-    const fillPct=Math.round(100-topPct);
-    const segPopLabel=seg&&seg!=='N'
-      ?segLabel.short.split('·')[0].trim()
-      :'semua profil';
-    const topLabel=topPct<=10
-      ?`<b>Top ${topPct}%</b> — hasil yang sangat langka`
-      :topPct<=25
-      ?`<b>Top ${topPct}%</b> — di atas rata-rata`
-      :topPct<=50
-      ?`<b>Top ${topPct}%</b> — setengah teratas`
-      :`<b>${topPct}% dari bawah</b> — ada ruang untuk tumbuh`;
-    document.getElementById('pct-label').innerHTML=
-      `Dari ${segPopLabel} yang telah kami assess — kamu berada di ${topLabel}.`;
-    setTimeout(()=>{
-      const fill=document.getElementById('pct-fill');
-      const mkr=document.getElementById('pct-marker');
-      if(fill) fill.style.width=fillPct+'%';
-      if(mkr) mkr.style.left=fillPct+'%';
-    },600);
+    // P0 FIX: Zona Prioritas — sembunyikan bar, tampilkan pesan supportive
+    if(type.id==='zona_kritis'){
+      pctBlock.style.display='block';
+      pctBlock.innerHTML=`<div style="background:rgba(168,104,0,.06);border:1px solid rgba(168,104,0,.2);border-radius:10px;padding:.85rem 1rem;font-size:.82rem;color:var(--sub);line-height:1.65;"><span style="font-size:.6rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;font-weight:700;display:block;margin-bottom:.3rem;">Perjalananmu</span>Setiap langkah kecil yang <b>konsisten</b> akan menggeser kondisi ini secara nyata. Yang terpenting bukan seberapa jauh kamu dari puncak — tapi bahwa kamu sudah memilih untuk mulai.</div>`;
+    } else {
+      pctBlock.style.display='block';
+      const fillPct=Math.round(100-topPct);
+      const segPopLabel=seg&&seg!=='N'
+        ?segLabel.short.split('·')[0].trim()
+        :'semua profil';
+      const topLabel=topPct<=10
+        ?`<b>Top ${topPct}%</b> — hasil yang sangat langka`
+        :topPct<=25
+        ?`<b>Top ${topPct}%</b> — di atas rata-rata`
+        :topPct<=50
+        ?`<b>Top ${topPct}%</b> — setengah teratas`
+        :topPct<=75
+        ?`<b>perlu perhatian</b> — di sinilah banyak perjalanan dimulai`
+        :`<b>titik awal</b> — tubuhmu sudah memberi sinyal yang jelas`;
+      document.getElementById('pct-label').innerHTML=
+        `Dari ${segPopLabel} yang telah kami assess — kamu berada di ${topLabel}.`;
+      setTimeout(()=>{
+        const fill=document.getElementById('pct-fill');
+        const mkr=document.getElementById('pct-marker');
+        if(fill) fill.style.width=fillPct+'%';
+        if(mkr) mkr.style.left=fillPct+'%';
+      },600);
+    }
   }
 
   // Type block
