@@ -1667,7 +1667,7 @@ function showAha(){
     const aLabel=a.a.length>35?a.a.substring(0,33).trim()+'...':a.a;
     cont.innerHTML+=`<div class="aha-row"><div class="aha-q">${a.q}</div><div class="aha-a">${aLabel}</div></div>`;
   });
-  const intentAnswer=answers.find(a=>a.domain==='intent');
+  const intentAnswer=null; // V8: intent Q removed from quiz — no longer in answers
   const intentBlock=document.getElementById('aha-intent-block');
   const intentText=document.getElementById('aha-intent-text');
   if(intentAnswer&&intentText){
@@ -2212,6 +2212,7 @@ function logToSheets(converted){
       pct_immune:   pillarPct.immune+'%',
       pct_recovery: pillarPct.recovery+'%',
       pct_decline:  pillarPct.decline+'%',
+      pct_night_stress: pillarPct.night_stress+'%',
       share_clicked:shareClicked?'true':'false',
       time_on_result:timeOnResult+'s',
       segment:      result.seg||'F40-',
