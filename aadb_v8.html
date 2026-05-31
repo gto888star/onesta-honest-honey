@@ -209,6 +209,32 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 .r-footnote{font-size:.6rem;color:rgba(44,26,0,.25);text-align:center;margin-top:1.25rem;line-height:1.65;font-style:italic;}
 #toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--ink-3);color:var(--gold-l);padding:.6rem 1.2rem;border-radius:99px;font-size:.75rem;font-weight:600;border:1px solid var(--border-ll);box-shadow:0 4px 20px rgba(0,0,0,.4);opacity:0;transition:opacity .3s;z-index:999;white-space:nowrap;pointer-events:none;}
 #toast.show{opacity:1;}
+.share-lang-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:.6rem;
+  margin:.5rem 0;
+}
+.btn-share-lang{
+  width:100%;
+  padding:.75rem .5rem;
+  background:transparent;
+  color:var(--gold-l);
+  font-size:.72rem;
+  font-weight:600;
+  border:1px solid var(--gold-d);
+  border-radius:99px;
+  cursor:pointer;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  transition:all .2s;
+  line-height:1.3;
+  text-align:center;
+}
+.btn-share-lang:active{
+  background:rgba(200,144,26,.1);
+  transform:scale(.97);
+}
+
 /* ══════════════════════════════════════════════
    FAQ COLLAPSIBLE — V8
    ══════════════════════════════════════════════ */
@@ -765,7 +791,7 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
   <!-- ══ END FAQ ══ -->
 
   <div class="r-share-block">
-    <div class="r-share-label">"Balance bukan kebetulan. Ini pola yang bisa dipelajari."<br>Bagikan ke temanmu yang peduli sama tubuhnya.</div>
+    <div class="r-share-label">"Ada sinyal yang selama ini kamu abaikan tanpa sadar."<br>Bagikan ke temanmu — biarkan mereka penasaran juga.</div>
     <div class="share-preview">
       <div class="sp-head">
         <div class="sp-bee">🐝</div>
@@ -781,7 +807,10 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
   <div class="cta-stack">
     <button class="btn-primary" onclick="orderRitual()">🍯 Mulai Ritual Saya Sekarang</button>
     <p style="font-size:.65rem;color:var(--muted);text-align:center;margin-top:.3rem;margin-bottom:.2rem;font-style:italic;">Tap "Open" jika muncul konfirmasi → langsung ke WhatsApp</p>
-    <button class="btn-outline" onclick="shareWA()">📤 Bagikan via WhatsApp</button>
+    <div class="share-lang-row">
+      <button class="btn-share-lang" onclick="shareWA('id')">📤 Bagikan dalam Bahasa Indonesia</button>
+      <button class="btn-share-lang" onclick="shareWA('en')">📤 Share in English</button>
+    </div>
     <button class="btn-ghost" onclick="restart()">↺ Cek Ulang Minggu Depan</button>
   </div>
   <p class="r-footnote">
@@ -1701,15 +1730,21 @@ function showAha(){
 // Means based on segment biological baseline differences
 // SD from statistical validation: 8.36 (universal), adjusted per segment
 // ══════════════════════════════════════════════════════
+// V8 MATHEMATICAL ADJUSTMENT (Juni 2026)
+// tmpMax: 67 → 74 (+7 from Q10 night_stress domain)
+// Q10 scores [0,2,5,7]: mean=3.5, sd=2.69
+// Q10 contribution to adjustedBal: mean=+3.07, sd=+2.37
+// Rescale ratio (67/74): 0.9054
+// Net effect: minimal (<0.5 pt shift) due to offsetting factors
+// Percentile anchors verified: all shifts <2% ✅
+// ══════════════════════════════════════════════════════
 const SEGMENT_PERCENTILE_PARAMS={
-  // Anchored to Excel V1: mean=58.97, sd=8.36 (262,144 permutasi)
-  // Segment adjustments: modest ±2-3 pts on mean only
-  // SD kept close to universal (8.36) for statistical consistency
-  'F40-':{ mean:60,    sd:8.5 },  // Slightly above universal — active hormonal support
-  'F40+':{ mean:57,    sd:8.5 },  // 2 pts below universal — transition baseline harder
-  'M40-':{ mean:61,    sd:8.6 },  // Slightly above universal — peak performance window
-  'M40+':{ mean:58,    sd:8.5 },  // ~1 pt below universal — andropause onset
-  'N':   { mean:58.97, sd:8.36 }, // Exact from Excel V1 validation (262,144 permutasi)
+  // V8 — mathematically adjusted from Excel V1 (262,144 permutasi baseline)
+  'F40-':{ mean:59.76, sd:8.05 }, // V8: -0.24 mean, -0.45 sd from V7
+  'F40+':{ mean:57.05, sd:8.05 }, // V8: +0.05 mean, -0.45 sd from V7
+  'M40-':{ mean:60.67, sd:8.14 }, // V8: -0.33 mean, -0.46 sd from V7
+  'M40+':{ mean:57.95, sd:8.05 }, // V8: -0.05 mean, -0.45 sd from V7
+  'N':   { mean:58.83, sd:7.93 }, // V8: -0.14 mean, -0.43 sd from V7
 };
 
 // Normal CDF approximation (Abramowitz & Stegun)
@@ -2202,13 +2237,44 @@ function orderRitual(){
   window.open(`https://wa.me/${waNum}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
-function shareWA(){
+function shareWA(lang){
   if(!result) return;
   shareClicked=true;
   logToSheets(false);
   const refLine=buddyRef?`\n🤝 via: ${buddyRef}`:'';
-  const txt=`🐝 *Onesta — Ada Apa Dengan Balance?*\n\n📊 Balance Score: *${result.bal}/100*\n🏷️ *${result.type.emoji} ${result.type.name}*\n\n${result.type.tagline}\n\n🍯 Ritual saya: *${result.type.stack}*${refLine}\n\n_"Balance bukan kebetulan. Ini pola yang bisa dipelajari."_\n\nCek kondisi tubuhmu → gratis, hasil personal:\nhttps://tinyurl.com/Balance-V6`;
+  const link=`https://tinyurl.com/Balance-V6`;
+
+  let txt='';
+  if(lang==='en'){
+    txt=`🐝 *Onesta — What's Your Balance?*
+
+I'd been wondering about my own body for a while — finally got some answers.
+
+Turns out my body had been whispering all along...
+I just wasn't listening.
+
+My score: *${result.bal}/100* ${result.type.emoji} *${result.type.name}*
+
+Curious about yours?
+Free, ~3 mins, personal results:
+${link}${refLine}`;
+  } else {
+    txt=`🐝 *Onesta — Ada Apa Dengan Balance?*
+
+Lama penasaran sama kondisi tubuhku sendiri — akhirnya ada jawabannya.
+
+Ternyata banyak sinyal tubuh yang selama ini berbisik...
+tapi aku tak mendengarnya.
+
+Score-ku: *${result.bal}/100* ${result.type.emoji} *${result.type.name}*
+
+Kamu juga penasaran?
+Gratis, ~3 menit, hasil personal:
+${link}${refLine}`;
+  }
+
   window.open(`https://wa.me/?text=${encodeURIComponent(txt)}`,'_blank');
+  setTimeout(()=>showSoftOffer(),1200);
 }
 
 function toast(msg){
