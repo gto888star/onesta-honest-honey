@@ -158,12 +158,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .r-ritual-eyebrow{font-size:.6rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.22rem;font-weight:700;}
 .r-ritual-title{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:700;color:var(--cream);}
 .r-ritual-body{padding:1rem 1.2rem;}
-.ritual-slots{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1rem;}
-.rslot{background:rgba(204,85,0,.04);border:1px solid rgba(204,85,0,.05);border-radius:10px;padding:.75rem .9rem;}
-.rslot-time{font-size:.62rem;color:var(--gold);font-family:'Montserrat',sans-serif;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.32rem;font-weight:700;}
-.rslot-action{font-size:.86rem;color:var(--cream);font-weight:700;margin-bottom:.15rem;}
-.rslot-detail{font-size:.76rem;color:var(--sub);line-height:1.55;}
-.rslot-why{font-size:.7rem;color:var(--muted);font-style:italic;margin-top:.18rem;}
+/* ritual-slots CSS removed V9 */
 .prod-section{margin-top:.85rem;}
 .prod-section-intro{font-size:.78rem;color:var(--sub);margin-bottom:.75rem;line-height:1.5;font-style:italic;}
 .dosage-block{background:var(--ink-2);border:1px solid var(--border-l);border-radius:14px;padding:1.1rem 1.2rem;margin-bottom:.9rem;text-align:center;}
@@ -706,7 +701,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
       <div class="r-ritual-title" id="r-ritual-title"></div>
     </div>
     <div class="r-ritual-body">
-      <div class="ritual-slots" id="r-slots"></div>
+
       <div class="r-why-onesta">
         <div class="r-why-label">Mengapa Onesta Bekerja untuk Kondisi Ini</div>
         <div class="r-why-text" id="r-why"></div>
@@ -2122,19 +2117,8 @@ function renderResult(){
     },500+i*100);
   });
 
-  // Ritual
+  // Ritual slots removed V9 — replaced by dosage-block
   document.getElementById('r-ritual-title').textContent=type.stack+' — Ritual Harian';
-  const slots=document.getElementById('r-slots');
-  slots.innerHTML='';
-  type.slots.forEach(s=>{
-    slots.innerHTML+=`
-      <div class="rslot">
-        <div class="rslot-time">${s.t}</div>
-        <div class="rslot-action">${s.action}</div>
-        <div class="rslot-detail">${s.detail}</div>
-        <div class="rslot-why">→ ${s.why}</div>
-      </div>`;
-  });
 
   // Product cards
   const prodCards=document.getElementById('r-prod-cards');
