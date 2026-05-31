@@ -99,9 +99,9 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .aha-eyebrow{font-size:.62rem;color:var(--gold);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.75rem;font-weight:700;}
 .aha-title{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:700;color:var(--cream);margin-bottom:.85rem;line-height:1.3;}
 .aha-answers{display:flex;flex-direction:column;gap:.38rem;margin-bottom:1.1rem;}
-.aha-row{display:flex;align-items:flex-start;gap:.65rem;padding:.52rem .72rem;background:rgba(204,85,0,.04);border-radius:8px;}
-.aha-q{color:var(--muted);flex:1;line-height:1.4;font-size:.76rem;}
-.aha-a{color:var(--gold-l);font-weight:600;font-size:.73rem;text-align:right;min-width:55px;line-height:1.4;}
+.aha-row{display:flex;flex-direction:column;gap:.22rem;padding:.6rem .8rem;background:rgba(204,85,0,.04);border-radius:8px;}
+.aha-q{color:var(--muted);line-height:1.45;font-size:.72rem;}
+.aha-a{color:var(--gold-l);font-weight:700;font-size:.8rem;line-height:1.35;}
 .aha-intent-block{display:none;background:rgba(204,85,0,.06);border:1px solid rgba(204,85,0,.18);border-radius:10px;padding:.75rem 1rem;margin-bottom:.65rem;}
 .aha-intent-label{font-size:.6rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.25rem;font-weight:700;}
 .aha-intent-text{font-size:.85rem;color:var(--cream);font-weight:600;line-height:1.45;}
@@ -166,6 +166,11 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .rslot-why{font-size:.7rem;color:var(--muted);font-style:italic;margin-top:.18rem;}
 .prod-section{margin-top:.85rem;}
 .prod-section-intro{font-size:.78rem;color:var(--sub);margin-bottom:.75rem;line-height:1.5;font-style:italic;}
+.dosage-block{background:var(--ink-2);border:1px solid var(--border-l);border-radius:14px;padding:1.1rem 1.2rem;margin-bottom:.9rem;text-align:center;}
+.dosage-title{font-size:.72rem;font-weight:700;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.2rem;}
+.dosage-sub{font-size:.8rem;color:var(--sub);margin-bottom:.6rem;}
+.dosage-amount{font-size:1.35rem;font-weight:800;color:var(--cream);margin-bottom:.6rem;letter-spacing:.01em;}
+.dosage-reason{font-size:.78rem;color:var(--sub);line-height:1.65;font-style:italic;}
 .prod-section-label{font-size:.6rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.65rem;font-weight:700;}
 .prod-cards{display:flex;flex-direction:column;gap:.6rem;}
 .prod-card{display:flex;gap:.85rem;align-items:stretch;background:rgba(204,85,0,.05);border:1px solid var(--border-l);border-radius:14px;overflow:hidden;cursor:pointer;transition:border-color .2s;}
@@ -492,7 +497,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
   <div class="intro-promise">
     Ini bukan tentang produk.<br>
     Ini tentang <b>memahami tubuhmu lebih dalam</b> — dan memberi respons yang tepat, setiap hari.<br>
-    Imbalance yang dibiarkan pelan-pelan menjadi <b>kebiasaan yang sulit dibalik.</b>
+    Imbalance yang dibiarkan pelan-pelan menjadi <b>kebiasaan yang sulit dikembalikan.</b>
   </div>
   <button class="btn-start" onclick="startQuiz()" style="max-width:300px">Mulai Sekarang →</button>
 </div>
@@ -708,7 +713,12 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
       </div>
       <div class="prod-section">
         <div class="prod-section-label">Mulai dari Sini 👇</div>
-        <div class="prod-section-intro">Satu langkah kecil. Dua sendok sehari. Tubuh yang lebih stabil.</div>
+        <div class="dosage-block">
+          <div class="dosage-title">Semua Dimulai dari Ritual Kecil</div>
+          <div class="dosage-sub">Bukan sesuatu yang rumit.</div>
+          <div class="dosage-amount">2 teaspoons per day</div>
+          <div class="dosage-reason">Balance bukan sesuatu yang dilakukan sesekali.<br>Balance adalah sesuatu yang dijaga setiap hari.</div>
+        </div>
         <div class="prod-cards" id="r-prod-cards"></div>
       </div>
     </div>
@@ -740,7 +750,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
         </div>
         <div class="faq-a">
           Sinyal metabolik bekerja seperti air yang menetes perlahan.<br><br>
-          Saat ini terasa "masih oke" — tapi pola yang dibiarkan perlahan menjadi kondisi yang jauh lebih sulit dibalik.<br><br>
+          Saat ini terasa "masih oke" — tapi pola yang dibiarkan perlahan menjadi kondisi yang jauh lebih sulit dikembalikan.<br><br>
           <b>Semakin awal direspons, semakin mudah tubuh diajak kembali ke kondisi terbaiknya.</b>
         </div>
       </div>
@@ -1440,7 +1450,7 @@ function renderQ(){
         <div class="ch-intro">${chData.intro.replace(/\n/g,'<br>')}</div>
       `;
       chapterEl.classList.add('show');
-      setTimeout(()=>chapterEl.classList.remove('show'),4000);
+      // V9: No auto-hide — chapter intro stays until visitor scrolls/proceeds
     }
     lastChapter=ch;
   }
@@ -1480,6 +1490,9 @@ function nextQ(){
   scores[q.d]=(scores[q.d]||0)+selOpt.sc;
   totalScore+=selOpt.sc;
   answers.push({q:q.q,a:selOpt.l,k:selOpt.k,domain:q.d,sc:selOpt.sc});
+  // V9: Hide chapter header when visitor taps Lanjut (not auto-timeout)
+  const chapterEl=document.getElementById('chapter-header');
+  if(chapterEl) chapterEl.classList.remove('show');
   qIdx++;
   if(qIdx>=QS.length) showGateway(); else renderQ();
 }
