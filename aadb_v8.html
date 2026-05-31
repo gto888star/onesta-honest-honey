@@ -210,6 +210,85 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 #toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--ink-3);color:var(--gold-l);padding:.6rem 1.2rem;border-radius:99px;font-size:.75rem;font-weight:600;border:1px solid var(--border-ll);box-shadow:0 4px 20px rgba(0,0,0,.4);opacity:0;transition:opacity .3s;z-index:999;white-space:nowrap;pointer-events:none;}
 #toast.show{opacity:1;}
 /* ══════════════════════════════════════════════
+   FAQ COLLAPSIBLE — V8
+   ══════════════════════════════════════════════ */
+.r-faq-block{
+  margin:1.5rem 0;
+  border:1px solid var(--border);
+  border-radius:16px;
+  overflow:hidden;
+  background:var(--card2);
+}
+.r-faq-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:1rem 1.25rem;
+  cursor:pointer;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  transition:background .2s;
+}
+.r-faq-header:active{ background:var(--card); }
+.r-faq-title{
+  font-size:.85rem;
+  font-weight:700;
+  color:var(--cream);
+}
+.r-faq-toggle{
+  font-size:1.2rem;
+  color:var(--gold);
+  font-weight:300;
+  transition:transform .3s ease;
+  line-height:1;
+}
+.r-faq-toggle.open{ transform:rotate(45deg); }
+.r-faq-body{
+  display:none;
+  padding:0 1.25rem 1rem;
+  border-top:1px solid var(--border);
+}
+.r-faq-body.open{ display:block; }
+.faq-item{
+  border-bottom:1px solid rgba(200,144,26,.08);
+  padding:.75rem 0;
+}
+.faq-item:last-child{ border-bottom:none; }
+.faq-q{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:.75rem;
+  cursor:pointer;
+  font-size:.82rem;
+  font-weight:600;
+  color:var(--cream);
+  line-height:1.4;
+  -webkit-tap-highlight-color:transparent;
+  padding:.2rem 0;
+}
+.faq-icon{
+  font-size:1rem;
+  color:var(--gold);
+  font-weight:300;
+  flex-shrink:0;
+  transition:transform .25s ease;
+  line-height:1;
+}
+.faq-icon.open{ transform:rotate(45deg); }
+.faq-a{
+  display:none;
+  font-size:.78rem;
+  color:var(--sub);
+  line-height:1.75;
+  padding-top:.6rem;
+  padding-bottom:.2rem;
+}
+.faq-a.open{ display:block; }
+.faq-a b{ color:var(--cream); }
+.faq-a em{ color:var(--gold-l); font-style:italic; }
+
+/* ══════════════════════════════════════════════
    CHAPTER PROGRESS INDICATOR — V8
    ══════════════════════════════════════════════ */
 .ch-progress{
@@ -453,7 +532,7 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
         <button class="gw-card" data-gw="1" data-val="F" onclick="selectGw(this)">
           <div class="gw-card-icon">🌸</div>
           <div>
-            <div class="gw-card-name">Ritme Perempuan</div>
+            <div class="gw-card-name">Perempuan</div>
             <div class="gw-card-sub">Siklus hormonal dan keseimbangan yang unik</div>
           </div>
           <div class="gw-check"></div>
@@ -462,13 +541,13 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
         <button class="gw-card" data-gw="1" data-val="M" onclick="selectGw(this)">
           <div class="gw-card-icon">🌿</div>
           <div>
-            <div class="gw-card-name">Ritme Laki-laki</div>
+            <div class="gw-card-name">Laki-laki</div>
             <div class="gw-card-sub">Pola energi dan pemulihan yang berbeda</div>
           </div>
           <div class="gw-check"></div>
         </button>
 
-        <!-- N segment removed v7.1 — hanya Ritme Perempuan & Laki-laki -->
+        <!-- N segment removed v7.1 — hanya Perempuan & Laki-laki -->
 
       </div>
     </div>
@@ -608,6 +687,83 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
       </div>
     </div>
   </div>
+  <!-- ══ FAQ COLLAPSIBLE — V8 ══ -->
+  <div class="r-faq-block">
+    <div class="r-faq-header" onclick="toggleFaqSection()">
+      <div class="r-faq-title">💬 Masih ada pertanyaan?</div>
+      <div class="r-faq-toggle" id="faq-toggle">＋</div>
+    </div>
+    <div class="r-faq-body" id="faq-body">
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Beneran ndak hasilnya akurat?</span>
+          <span class="faq-icon">＋</span>
+        </div>
+        <div class="faq-a">
+          Hasil ini bukan kami yang rancang untukmu.<br><br>
+          Ini adalah cermin dari apa yang kamu sendiri ceritakan tadi — sinyal demi sinyal. Semakin jujur jawabanmu, semakin akurat profilnya.<br><br>
+          <em>Tubuh tidak pernah berbohong. Hanya kita yang kadang belum siap mendengarnya.</em>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Kondisiku masih oke — perlu direspons sekarang?</span>
+          <span class="faq-icon">＋</span>
+        </div>
+        <div class="faq-a">
+          Sinyal metabolik bekerja seperti air yang menetes perlahan.<br><br>
+          Saat ini terasa "masih oke" — tapi pola yang dibiarkan perlahan menjadi kondisi yang jauh lebih sulit dibalik.<br><br>
+          <b>Semakin awal direspons, semakin mudah tubuh diajak kembali ke kondisi terbaiknya.</b>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Kenapa madu lebah tanpa sengat?</span>
+          <span class="faq-icon">＋</span>
+        </div>
+        <div class="faq-a">
+          Lebah tanpa sengat (<em>stingless bee</em>) menghasilkan madu yang secara alami berbeda — lebih asam, lebih kaya enzim aktif, dan lebih efektif sebagai metabolic stabilizer.<br><br>
+          Tapi madunya hanya bekerja kalau prosesnya jujur. Onesta selalu:<br><br>
+          <b>✓ Ripe</b> — dipanen saat benar-benar matang<br>
+          <b>✓ Raw</b> — tidak dipanaskan, enzim aktif intact<br>
+          <b>✓ Pure</b> — 100% madu, tanpa tambahan apapun<br><br>
+          <em>No shortcuts. No honey laundering.</em><br>
+          Bukan klaim — ini pilihan yang kami buat di setiap tetes.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Apa bedanya sama madu yang biasa aku minum?</span>
+          <span class="faq-icon">＋</span>
+        </div>
+        <div class="faq-a">
+          Madu biasa = pemanis alami.<br><br>
+          Onesta bekerja sebagai <b>natural metabolic stabilizer</b> — menstabilkan ritme glukosa, mendukung sistem imun, dan membantu tubuh kembali ke kondisi keseimbangannya dari dalam.<br><br>
+          Perbedaannya ada di spesies, proses, dan tujuannya. Bukan hanya apa yang ada di dalam botol — tapi <b>apa yang tidak ada</b> di dalamnya.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Perlu berapa lama untuk merasakan hasilnya?</span>
+          <span class="faq-icon">＋</span>
+        </div>
+        <div class="faq-a">
+          Tidak ada yang instan — dan kami tidak akan mengklaim sebaliknya.<br><br>
+          Kebanyakan orang mulai merasakan perbedaan dalam <b>14–30 hari pertama</b> ritual yang konsisten.<br><br>
+          Bukan karena produknya bekerja cepat — tapi karena tubuh yang mulai distabilkan dari dalam punya ritme pemulihannya sendiri.<br><br>
+          <em>Coba 14 hari dulu. Biarkan tubuhmu yang menjawab.</em>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- ══ END FAQ ══ -->
+
   <div class="r-share-block">
     <div class="r-share-label">"Balance bukan kebetulan. Ini pola yang bisa dipelajari."<br>Bagikan ke temanmu yang peduli sama tubuhnya.</div>
     <div class="share-preview">
@@ -732,7 +888,7 @@ const QS = [
     opts:[
       {k:"A",l:"Nyaman sepanjang hari",s:"Pencernaan berjalan normal — tidak ada yang mengganggu",sc:0},
       {k:"B",l:"Sesekali perut berasa penuh, begah, atau kembung",s:"Ada tapi tidak sering — biasanya hilang sendiri",sc:2},
-      {k:"C",l:"Sering kembung, tidak nyaman, atau BAB tidak teratur",s:"Ketidaknyamanan yang cukup mengganggu aktivitas dan konsentrasi harianmu",sc:5},
+      {k:"C",l:"Sering kembung, tidak nyaman, atau pencernaan tidak lancar",s:"Ketidaknyamanan yang cukup mengganggu aktivitas dan konsentrasi harianmu",sc:5},
       {k:"D",l:"Pencernaan yang tidak pernah benar-benar nyaman",s:"Sudah jadi bagian keseharian — selalu ada saja yang tidak beres",sc:7},
     ],
     ins:"Pencernaan yang tidak nyaman adalah tanda <b>disbiosis</b> — ketidakseimbangan antara bakteri baik dan jahat. Ini berdampak langsung pada produksi serotonin (90% diproduksi di usus), mood, dan imunitas."
@@ -1300,7 +1456,33 @@ function nextQ(){
 }
 
 // ══════════════════════════════════════════════════════
-// GATEWAY V7 — State
+// FAQ TOGGLE — V8
+// ══════════════════════════════════════════════════════
+function toggleFaqSection(){
+  const body=document.getElementById('faq-body');
+  const toggle=document.getElementById('faq-toggle');
+  if(!body||!toggle) return;
+  const isOpen=body.classList.contains('open');
+  body.classList.toggle('open',!isOpen);
+  toggle.classList.toggle('open',!isOpen);
+}
+
+function toggleFaq(el){
+  const icon=el.querySelector('.faq-icon');
+  const answer=el.nextElementSibling;
+  if(!answer||!icon) return;
+  const isOpen=answer.classList.contains('open');
+  // Close all others
+  document.querySelectorAll('.faq-a').forEach(a=>a.classList.remove('open'));
+  document.querySelectorAll('.faq-icon').forEach(i=>i.classList.remove('open'));
+  // Open this one if it was closed
+  if(!isOpen){
+    answer.classList.add('open');
+    icon.classList.add('open');
+  }
+}
+
+// ══════════════════════════════════════════════════════
 // ══════════════════════════════════════════════════════
 let gwRitme=null;    // 'F' | 'M' | 'N'
 let gwStage=null;    // 'young' | 'next' | null (N skips)
@@ -1309,15 +1491,15 @@ let segment=null;   // 'F40-' | 'F40+' | 'M40-' | 'M40+' | 'N'
 const LIFE_STAGE_OPTIONS={
   F:[
     {val:'young', icon:'🌱', name:'Membangun & Bertumbuh',
-     sub:'Energi penuh, siklus aktif, fondasi sedang dibangun'},
+     sub:'Siklus dan energi masih terasa stabil dan konsisten'},
     {val:'next',  icon:'🦋', name:'Menavigasi Babak Baru',
-     sub:'Perubahan yang terasa, transisi yang perlu dihormati'},
+     sub:'Mulai ada perubahan yang terasa — hormon, energi, atau ritme tubuh'},
   ],
   M:[
     {val:'young', icon:'🌱', name:'Membangun & Bertumbuh',
-     sub:'Peak performance, stamina tinggi, ambisi sedang penuh'},
+     sub:'Stamina dan energi masih terasa stabil dan konsisten'},
     {val:'next',  icon:'🛡️', name:'Menjaga & Melindungi',
-     sub:'Pengalaman matang, menjaga yang sudah dibangun'},
+     sub:'Mulai ada perubahan yang terasa — energi, pemulihan, atau ritme tubuh'},
   ],
 };
 
@@ -1609,11 +1791,11 @@ const SEGMENT_ZONES={
 
 // Segment display labels for result screen
 const SEGMENT_LABELS={
-  'F40-':{ short:'Ritme Perempuan · Membangun & Bertumbuh',  tag:'F<40' },
-  'F40+':{ short:'Ritme Perempuan · Menavigasi Babak Baru',  tag:'F>40' },
-  'M40-':{ short:'Ritme Laki-laki · Membangun & Bertumbuh',  tag:'M<40' },
-  'M40+':{ short:'Ritme Laki-laki · Menjaga & Melindungi',   tag:'M>40' },
-  'N':   { short:'Universal',                                  tag:'N'    },
+  'F40-':{ short:'Perempuan · Membangun & Bertumbuh',  tag:'F<40' },
+  'F40+':{ short:'Perempuan · Menavigasi Babak Baru',  tag:'F>40' },
+  'M40-':{ short:'Laki-laki · Membangun & Bertumbuh',  tag:'M<40' },
+  'M40+':{ short:'Laki-laki · Menjaga & Melindungi',   tag:'M>40' },
+  'N':   { short:'Universal',                           tag:'N'    },
 };
 
 function buildResult(){
