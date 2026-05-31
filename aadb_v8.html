@@ -210,10 +210,74 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
 #toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--ink-3);color:var(--gold-l);padding:.6rem 1.2rem;border-radius:99px;font-size:.75rem;font-weight:600;border:1px solid var(--border-ll);box-shadow:0 4px 20px rgba(0,0,0,.4);opacity:0;transition:opacity .3s;z-index:999;white-space:nowrap;pointer-events:none;}
 #toast.show{opacity:1;}
 /* ══════════════════════════════════════════════
-   CHAPTER UI — V8
+   CHAPTER PROGRESS INDICATOR — V8
+   ══════════════════════════════════════════════ */
+.ch-progress{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0;
+  margin:.6rem 0 .9rem;
+  padding:.5rem .75rem;
+  background:rgba(168,104,0,.05);
+  border:1px solid rgba(168,104,0,.12);
+  border-radius:99px;
+}
+.ch-pip{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:.22rem;
+  flex-shrink:0;
+}
+.ch-pip-dot{
+  width:8px;height:8px;
+  border-radius:50%;
+  background:var(--border);
+  border:1.5px solid var(--border);
+  transition:all .3s ease;
+}
+.ch-pip.active .ch-pip-dot{
+  background:var(--gold);
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(168,104,0,.2);
+  transform:scale(1.2);
+}
+.ch-pip.done .ch-pip-dot{
+  background:var(--gold-d);
+  border-color:var(--gold-d);
+}
+.ch-pip-label{
+  font-size:.58rem;
+  color:var(--muted);
+  font-family:'DM Mono',monospace;
+  letter-spacing:.04em;
+  white-space:nowrap;
+  transition:color .3s ease;
+}
+.ch-pip.active .ch-pip-label{
+  color:var(--gold-l);
+  font-weight:700;
+}
+.ch-pip.done .ch-pip-label{
+  color:var(--sub);
+}
+.ch-pip-line{
+  width:32px;
+  height:1px;
+  background:var(--border);
+  margin:0 .3rem;
+  margin-bottom:.9rem;
+  transition:background .3s ease;
+}
+.ch-pip.done + .ch-pip-line{
+  background:var(--gold-d);
+}
+
+/* ══════════════════════════════════════════════
+   CHAPTER HEADER (intro card) — V8
    ══════════════════════════════════════════════ */
 #chapter-header{
-  background:linear-gradient(135deg,rgba(168,104,0,.08),rgba(168,104,0,.03));
   border:1px solid var(--border-l);
   border-left:3px solid var(--gold);
   border-radius:0 12px 12px 0;
@@ -336,6 +400,23 @@ body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif
       <div class="quiz-num" id="q-num">1 / 10</div>
     </div>
     <div class="track"><div class="track-fill" id="track-fill" style="width:0%"></div></div>
+    <!-- CHAPTER PROGRESS INDICATOR — V8 -->
+    <div class="ch-progress" id="ch-progress">
+      <div class="ch-pip" id="ch-pip-1">
+        <div class="ch-pip-dot"></div>
+        <div class="ch-pip-label">⚡ Energi Harian</div>
+      </div>
+      <div class="ch-pip-line"></div>
+      <div class="ch-pip" id="ch-pip-2">
+        <div class="ch-pip-dot"></div>
+        <div class="ch-pip-label">🛡️ Ketahanan</div>
+      </div>
+      <div class="ch-pip-line"></div>
+      <div class="ch-pip" id="ch-pip-3">
+        <div class="ch-pip-dot"></div>
+        <div class="ch-pip-label">🌙 Malam</div>
+      </div>
+    </div>
     <div id="chapter-header"></div>
     <h2 class="quiz-q" id="q-text"></h2>
     <p class="quiz-hint" id="q-hint"></p>
@@ -1149,6 +1230,17 @@ function renderQ(){
   prog(12+(qIdx/QS.length)*68);
   document.getElementById('track-fill').style.width=((qIdx/QS.length)*100)+'%';
   document.getElementById('q-num').textContent=(qIdx+1)+' / '+QS.length;
+
+  // ── Chapter progress indicator update ──
+  const chapterMap={1:1,2:1,3:1,4:2,5:2,6:2,7:2,8:3,9:3,10:3};
+  const currentChapter=chapterMap[qIdx+1]||1;
+  [1,2,3].forEach(n=>{
+    const pip=document.getElementById('ch-pip-'+n);
+    if(!pip) return;
+    pip.classList.remove('active','done');
+    if(n<currentChapter) pip.classList.add('done');
+    else if(n===currentChapter) pip.classList.add('active');
+  });
 
   // ── Chapter header — show on first Q of each chapter ──
   const ch=q.ch||0;
