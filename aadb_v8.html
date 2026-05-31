@@ -1915,6 +1915,7 @@ function detectType(){
 
   // P5: Stress Snacker — Q10 (answers[9]) pilihan D
   // V8: Q10 = stress somatic (answers[9]) — Smart Index approach
+  const q10answer=answers[9];
   if(q10answer&&q10answer.k==='D'&&(gl>=6||ns_pct>=50)) return TYPES["stress_snacker"];
 
   // P6: Decline+Energy combo — split by ALL segments
@@ -1933,7 +1934,6 @@ function detectType(){
   // pct = score/max % (higher = more problematic)
   // glucose DOMINANT + moderate zone + no stress somatic signal (Q10=A)
   const gl_pct=pct.glucose||0;
-  const q10answer=answers[9];
   const fastingCandidate=(
     gl>=10 &&
     tmpBal>=45 && tmpBal<=77 &&
