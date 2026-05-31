@@ -1915,7 +1915,6 @@ function detectType(){
 
   // P5: Stress Snacker — Q10 (answers[9]) pilihan D
   // V8: Q10 = stress somatic (answers[9]) — Smart Index approach
-  const q10answer=answers[9];
   if(q10answer&&q10answer.k==='D'&&(gl>=6||ns_pct>=50)) return TYPES["stress_snacker"];
 
   // P6: Decline+Energy combo — split by ALL segments
@@ -1931,9 +1930,19 @@ function detectType(){
   }
 
   // P7: Fasting Refiner — Path C Hybrid (V8)
-  // Scoring filter: glucose dominant + recovery moderate + mid zone
-  // Intent confirmation happens post-result (UI layer)
-  const fastingCandidate=(gl>=10&&rc<=4&&tmpBal>=45&&tmpBal<=75);
+  // pct = score/max % (higher = more problematic)
+  // glucose DOMINANT + moderate zone + no stress somatic signal (Q10=A)
+  const gl_pct=pct.glucose||0;
+  const q10answer=answers[9];
+  const fastingCandidate=(
+    gl>=10 &&
+    tmpBal>=45 && tmpBal<=77 &&
+    gl_pct > (pct.energy||0) &&
+    gl_pct > (pct.gut||0) &&
+    gl_pct > (pct.recovery||0) &&
+    gl_pct > (pct.decline||0) &&
+    q10answer && q10answer.k==='A'
+  );
   if(fastingCandidate) return TYPES["fasting_refiner"];
 
   // P8: Rollercoaster Rider — glucose dominant
@@ -2166,7 +2175,7 @@ function togglePillarDef(id,header){
 // ══════════════════════════════════════════════════════
 // GOOGLE SHEETS — V6 URL
 // ══════════════════════════════════════════════════════
-const SHEETS_URL='https://script.google.com/macros/s/AKfycbzZO1orZ1cFf6LIwwmpdXq6dBazlyAExE-WPc18Ll_k58Sr_GcZqm7JPDmHtOVNROwm/exec';
+const SHEETS_URL='https://script.google.com/macros/s/AKfycbzl2NqaNQ-s66lgkf8EUucdWL7QDQrrSTIgVbmv80cfXgJkyDZzd8AmPqOQeNYEM3txAw/exec';
 
 function logToSheets(converted){
   if(!result) return;
