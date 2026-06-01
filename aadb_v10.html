@@ -2000,9 +2000,15 @@ function detectType(){
     if(segment==='F40-'||segment==='M40-') return TYPES["zest_builder"]; // under-40 early decline
   }
 
-  // P6b: Early decline dominant for under-40 (Zest Builder path B)
+  // P6b: Early decline dominant for under-40 — V10 OPSI A
+  // Floor ditambahkan: minimal 2 domain lain (excl decline & night_stress) ≥40%
+  // Zest Builder = genuine multi-sistem. Decline-only → fall through ke Clarity Seeker.
   if(pct.decline>=70&&tmpBal>=45&&tmpBal<=79){
-    if(segment==='F40-'||segment==='M40-') return TYPES["zest_builder"];
+    if(segment==='F40-'||segment==='M40-'){
+      const otherHP=Object.entries(pct)
+        .filter(([d,p])=>d!=='decline'&&d!=='night_stress'&&p>=40).length;
+      if(otherHP>=2) return TYPES["zest_builder"];
+    }
   }
 
   // P7: Fasting Refiner — Path C Hybrid (V8)
