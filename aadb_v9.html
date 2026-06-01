@@ -117,7 +117,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .r-score-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:.85rem;}
 .r-score-label{font-size:.6rem;color:var(--muted);font-family:'Montserrat',sans-serif;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.18rem;}
 .r-score-num{font-family:'Montserrat',sans-serif;font-size:3.6rem;font-weight:900;color:var(--gold-l);line-height:1;}
-.r-score-max{font-size:.9rem;color:var(--muted);}
+/* r-score-max removed V9 — /100 display eliminated */
 .r-zone-val{font-size:.88rem;font-weight:700;}
 .r-type-block{border-radius:18px;padding:1.35rem;margin-bottom:1.1rem;position:relative;overflow:hidden;}
 .r-type-emoji{font-size:2.5rem;margin-bottom:.5rem;display:block;}
@@ -159,6 +159,13 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .r-ritual-title{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:700;color:var(--cream);}
 .r-ritual-body{padding:1rem 1.2rem;}
 /* ritual-slots CSS removed V9 */
+/* Score Position Bar — literal 0-100 scale V9 */
+.score-pos-bar-wrap{margin-top:.85rem;}
+.score-pos-track{position:relative;height:6px;background:rgba(204,85,0,.12);border-radius:99px;margin-bottom:.35rem;}
+.score-pos-mid{position:absolute;left:50%;top:-3px;width:1px;height:12px;background:rgba(204,85,0,.25);transform:translateX(-50%);}
+.score-pos-dot{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;background:var(--cream);border:2.5px solid var(--gold);box-shadow:0 0 0 3px rgba(204,85,0,.2);transform:translate(-50%,-50%);transition:left 1.2s cubic-bezier(.22,1,.36,1);}
+.score-pos-ends{display:flex;justify-content:space-between;font-size:.62rem;color:var(--muted);font-weight:600;padding:0 2px;}
+.score-pos-mid-label{color:rgba(204,85,0,.45);}
 .prod-section{margin-top:.85rem;}
 .prod-section-intro{font-size:.78rem;color:var(--sub);margin-bottom:.75rem;line-height:1.5;font-style:italic;}
 .dosage-block{background:var(--ink-2);border:1px solid var(--border-l);border-radius:14px;padding:1.1rem 1.2rem;margin-bottom:.9rem;text-align:center;}
@@ -634,8 +641,19 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
         <div class="r-score-label">Metabolic Balance Score</div>
         <div style="display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap;">
           <span class="r-score-num" id="r-score">0</span>
-          <span class="r-score-max">/100</span>
           <div class="r-zone-val" id="r-zone" style="font-size:1rem;font-weight:800;margin-left:.25rem;"></div>
+        </div>
+        <!-- Score position bar — literal 0-100 scale V9 -->
+        <div class="score-pos-bar-wrap">
+          <div class="score-pos-track">
+            <div class="score-pos-mid"></div>
+            <div class="score-pos-dot" id="score-pos-dot" style="left:0%"></div>
+          </div>
+          <div class="score-pos-ends">
+            <span>0</span>
+            <span class="score-pos-mid-label">50</span>
+            <span>100</span>
+          </div>
         </div>
       </div>
     </div>
@@ -1924,9 +1942,9 @@ function detectType(){
   if(q9answer&&q9answer.k==='C'&&gl>=8&&tmpBal<=75) return TYPES["night_restorer"];
 
   // P5: Stress Snacker — Q10 (answers[9]) pilihan D
-  // V8: Q10 = stress somatic (answers[9]) — Smart Index approach
+  // V9: AND logic — kedua sinyal harus hadir (glucose + night stress)
   const q10answer=answers[9];
-  if(q10answer&&q10answer.k==='D'&&(gl>=6||ns_pct>=50)) return TYPES["stress_snacker"];
+  if(q10answer&&q10answer.k==='D'&&gl>=6&&ns_pct>=50) return TYPES["stress_snacker"];
 
   // P6: Decline+Energy combo — split by ALL segments
   if(dc>=6&&en>=8){
@@ -2021,11 +2039,13 @@ function renderResult(){
   document.getElementById('r-zone').textContent=zone.z;
   document.getElementById('r-zone').style.color=zone.c;
   setTimeout(()=>{
-    // r-bar element removed (V7 uses zone-marker instead)
-    // Animate zone marker - map score 25-90 to 0-100%
+    // V9: zone-marker — map score 25-90 to 0-100% (zone bar)
     const markerPct=Math.round(((bal-25)/(90-25))*100);
     const marker=document.getElementById('zone-marker');
     if(marker) marker.style.left=Math.min(Math.max(markerPct,0),100)+'%';
+    // V9: score-pos-dot — literal position on 0-100 scale
+    const scoreDot=document.getElementById('score-pos-dot');
+    if(scoreDot) scoreDot.style.left=Math.min(Math.max(bal,0),100)+'%';
   },400);
 
   // ── Percentile Bar ──
@@ -2152,7 +2172,7 @@ function renderResult(){
   // Share preview
   const scpLines=document.getElementById('scp-lines');
   scpLines.innerHTML=`
-    <div class="sp-line"><span class="sp-k">Score</span><span class="sp-v">${bal}/100</span></div>
+    <div class="sp-line"><span class="sp-k">Score</span><span class="sp-v">${bal}</span></div>
     <div class="sp-line"><span class="sp-k">Tipe</span><span class="sp-v">${type.emoji} ${type.name}</span></div>
     <div class="sp-line"><span class="sp-k">Status</span><span class="sp-v">${zone.z}</span></div>
     <div class="sp-line"><span class="sp-k">Ritual</span><span class="sp-v">${type.stack}</span></div>`;
@@ -2241,7 +2261,7 @@ function orderRitual(){
   const name=userName||'Teman';
   const refLine=buddyRef?`\n🤝 Referral: ${buddyRef}`:'';
   const msg=result
-    ?`Halo Onesta! Nama saya ${name}.${refLine}\n\nSaya baru selesai Ada Apa Dengan Balance?:\n\n📊 Balance Score: ${result.bal}/100\n🏷️ Tipe: ${result.type.emoji} ${result.type.name}\n🍯 Ritual: ${result.type.stack}\n\nBoleh bantu saya mulai ritual ini?`
+    ?`Halo Onesta! Nama saya ${name}.${refLine}\n\nSaya baru selesai Ada Apa Dengan Balance?:\n\n📊 Balance Score: ${result.bal}\n🏷️ Tipe: ${result.type.emoji} ${result.type.name}\n🍯 Ritual: ${result.type.stack}\n\nBoleh bantu saya mulai ritual ini?`
     :`Halo Onesta! Nama saya ${name}. Saya tertarik memulai ritual Onesta. Boleh info lebih lanjut?`;
   window.open(`https://wa.me/${waNum}?text=${encodeURIComponent(msg)}`,'_blank');
 }
@@ -2262,7 +2282,7 @@ I'd been wondering about my own body for a while — finally got some answers.
 Turns out my body had been whispering all along...
 I just wasn't listening.
 
-My score: *${result.bal}/100* ${result.type.emoji} *${result.type.name}*
+My score: *${result.bal}* ${result.type.emoji} *${result.type.name}*
 
 Curious about yours?
 Free, ~3 mins, personal results:
@@ -2275,7 +2295,7 @@ Lama penasaran sama kondisi tubuhku sendiri — akhirnya ada jawabannya.
 Ternyata banyak sinyal tubuh yang selama ini berbisik...
 tapi aku tak mendengarnya.
 
-Score-ku: *${result.bal}/100* ${result.type.emoji} *${result.type.name}*
+Score-ku: *${result.bal}* ${result.type.emoji} *${result.type.name}*
 
 Kamu juga penasaran?
 Gratis, ~3 menit, hasil personal:
