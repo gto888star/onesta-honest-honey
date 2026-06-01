@@ -194,6 +194,11 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .prod-start-note{font-size:.68rem;color:var(--green);margin-top:.3rem;font-weight:500;line-height:1.4;}
 .prod-opt-note{font-size:.68rem;color:var(--muted);margin-top:.3rem;font-style:italic;line-height:1.4;}
 .r-why-onesta{background:rgba(204,85,0,.06);border:1px solid var(--border-l);border-radius:12px;padding:.9rem 1rem;margin-top:.85rem;}
+/* ── RITUAL BRIDGE — V10 Dynamic Pillar Bridge ── */
+.r-ritual-bridge{background:rgba(204,85,0,.04);border:1px solid var(--border);border-radius:12px;padding:.9rem 1rem;margin-bottom:.85rem;}
+.r-bridge-label{font-size:.58rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:.45rem;}
+.r-bridge-text{font-size:.78rem;color:var(--sub);line-height:1.65;}
+.r-bridge-text em{font-style:normal;color:var(--cream);font-weight:600;}
 .r-why-label{font-size:.6rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.32rem;font-weight:700;}
 .r-why-text{font-size:.82rem;color:var(--sub);line-height:1.65;}
 .r-why-text b{color:var(--cream);}
@@ -2064,6 +2069,33 @@ function detectType(){
 // ══════════════════════════════════════════════════════
 // RENDER RESULT
 // ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════
+// RITUAL BRIDGE — V10 Dynamic Pillar Bridge
+// "Dari jawabanmu, pola tubuhmu terbaca:"
+// Called from renderResult() before product cards
+// ══════════════════════════════════════════════════════
+function getRitualBridge(typeId,ans){
+  const a=(n)=>(ans&&ans[n]&&ans[n].s)?ans[n].s:'';
+  const op='Dari jawabanmu, pola tubuhmu terbaca:';
+  const b={
+    rollercoaster_rider:`${op}<br><em>"${a(1)}"</em> — dan <em>"${a(2)}."</em><br><br>Dua sinyal ini bersama adalah pola glucose rhythm yang tidak stabil. DiaBee Itama dirancang untuk memutus siklus ini dari dalam.`,
+    energy_reviver:`${op}<br><em>"${a(0)}"</em> — dan <em>"${a(4)}."</em><br><br>Energi yang terkuras dan sistem imun yang bekerja keras adalah dua sinyal yang saling terhubung. Imunisi mendukung kapasitas seluler di balik keduanya.`,
+    clarity_seeker:`${op}<br><em>"${a(6)}"</em> — dan <em>"${a(7)}."</em><br><br>Jarak dari kondisi terbaikmu dan tidur yang belum memulihkan adalah pola yang saling memperkuat. Lecy hadir sebagai taste journey — bonus alaminya relevan untuk kondisi ini.`,
+    gut_whisperer:`${op}<br><em>"${a(3)}"</em> — dan <em>"${a(4)}."</em><br><br>Sinyal pencernaan dan imunitas yang muncul bersamaan menunjukkan ekosistem yang butuh keseimbangan. Imunisi bekerja di lapisan ini.`,
+    recovery_seeker:`${op}<br><em>"${a(5)}"</em> — dan <em>"${a(7)}."</em><br><br>Recovery yang melambat dan tidur yang tidak menyelesaikan kelelahan adalah sinyal seluler yang saling terkait. Imunisi bekerja di level perbaikan ini.`,
+    fasting_refiner:`${op}<br><em>"${a(1)}"</em> — dan <em>"${a(2)}."</em><br><br>Tubuhmu menunjukkan pola glucose yang dominan — sekaligus kesiapan metabolik untuk ritme yang lebih bersih. Fasting MF02 dirancang untuk transisi ini.`,
+    graceful_guardian:`${op}<br><em>"${a(6)}"</em> — dan <em>"${a(5)}."</em><br><br>Dua sinyal ini konsisten dengan fase transisi biologis yang sedang kamu jalani — setiap sinyal terhubung satu sama lain. Daily + Imunisi menyasar fondasi keduanya.`,
+    prime_guardian:`${op}<br><em>"${a(6)}"</em> — dan <em>"${a(5)}."</em><br><br>Dua sinyal ini konsisten dengan pergeseran vitalitas yang khas di fase ini — terhubung ke testosterone-cortisol axis. Daily + Beeyond menyasar keduanya secara langsung.`,
+    night_restorer:`${op}<br><em>"${a(8)}"</em> — dan <em>"${a(1)}."</em><br><br>Lapar malam dan ritme gula yang belum stabil adalah kombinasi yang menciptakan false hunger nokturnal. DiaBee Itama bekerja di malam hari untuk menstabilkan ini.`,
+    stress_snacker:`${op}<br><em>"${a(9)}"</em> — dan <em>"${a(2)}."</em><br><br>Cortisol reaktif dan glucose yang tidak stabil saling memperkuat satu sama lain secara biologis. DiaBee Itama memutus rantai ini dari sisinya.`,
+    zest_builder:`${op}<br><em>"${a(6)}"</em> — dan <em>"${a(0)}."</em><br><br>Sinyal decline di usiamu ini adalah early signal — justru yang paling mudah direspons sebelum menguat lebih jauh. Daily + Imunisi adalah fondasi yang paling efektif sekarang.`,
+    gut_harmonizer:`${op}<br><em>"${a(3)}"</em> — dan <em>"${a(4)}."</em><br><br>Di fase hidupmu ini, sinyal pencernaan dan imunitas saling memperkuat satu sama lain. Imunisi mendukung keseimbangan ekosistem ini dari dalam.`,
+    balance_master:`Dari jawabanmu, pola tubuhmu terbaca — dan kondisi ini bukan kebetulan.<br><br><em>"${a(0)}."</em><br><br>Kondisi ini tidak bisa menjaga dirinya sendiri. Tubuh yang dinamis berubah setiap siklus — tidak dijaga dengan konsisten, dapat diam-diam bergeser. Daily + Signature Botanical adalah cara paling elegan untuk menjaga apa yang sudah kamu bangun.`,
+    zona_kritis:`Dari jawabanmu, pola tubuhmu terbaca dengan jelas — dan pola yang terbaca, bisa direspons.<br><br>Satu langkah pertama yang konsisten lebih berarti dari sepuluh langkah yang terburu-buru. Daily adalah fondasi itu — mulai dari sini, dan biarkan tubuhmu menunjukkan jalannya.`
+  };
+  return b[typeId]||op;
+}
+
 function renderResult(){
   if(!result) result=buildResult();
   prog(100);
@@ -2194,6 +2226,14 @@ function renderResult(){
 
   // Ritual slots removed V9 — replaced by dosage-block
   document.getElementById('r-ritual-title').textContent=type.stack+' — Ritual Harian';
+
+  // ── Ritual Bridge — dynamic pillar-to-product connector ──
+  const bridgeEl=document.getElementById('r-ritual-bridge');
+  const bridgeText=document.getElementById('r-bridge-text');
+  if(bridgeEl&&bridgeText){
+    bridgeText.innerHTML=getRitualBridge(type.id,answers);
+    bridgeEl.style.display='block';
+  }
 
   // Product cards — V10: 4-tier badge (primary / support / upgrade / l4)
   const prodCards=document.getElementById('r-prod-cards');
