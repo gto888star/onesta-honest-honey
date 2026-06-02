@@ -2087,22 +2087,21 @@ function detectType(){
 // Called from renderResult() before product cards
 // ══════════════════════════════════════════════════════
 function getRitualBridge(typeId,ans){
-  const a=(n)=>(ans&&ans[n]&&ans[n].a)?ans[n].a:'';
-  const op='Dari jawabanmu, pola tubuhmu terbaca:';
+  const op='Dari jawabanmu, pola tubuhmu terbaca —';
   const b={
-    rollercoaster_rider:`${op}<br><em>"${a(1)}"</em> — dan <em>"${a(2)}."</em><br><br>Dua sinyal ini bersama adalah pola glucose rhythm yang tidak stabil. DiaBee Itama dirancang untuk memutus siklus ini dari dalam.`,
-    energy_reviver:`${op}<br><em>"${a(0)}"</em> — dan <em>"${a(4)}."</em><br><br>Energi yang terkuras dan sistem imun yang bekerja keras adalah dua sinyal yang saling terhubung. Imunisi mendukung kapasitas seluler di balik keduanya.`,
-    clarity_seeker:`${op}<br><em>"${a(6)}"</em> — dan <em>"${a(7)}."</em><br><br>Jarak dari kondisi terbaikmu dan tidur yang belum memulihkan adalah pola yang saling memperkuat. Lecy hadir sebagai taste journey — bonus alaminya relevan untuk kondisi ini.`,
-    gut_whisperer:`${op}<br><em>"${a(3)}"</em> — dan <em>"${a(4)}."</em><br><br>Sinyal pencernaan dan imunitas yang muncul bersamaan menunjukkan ekosistem yang butuh keseimbangan. Imunisi bekerja di lapisan ini.`,
-    recovery_seeker:`${op}<br><em>"${a(5)}"</em> — dan <em>"${a(7)}."</em><br><br>Recovery yang melambat dan tidur yang tidak menyelesaikan kelelahan adalah sinyal seluler yang saling terkait. Imunisi bekerja di level perbaikan ini.`,
-    fasting_refiner:`${op}<br><em>"${a(1)}"</em> — dan <em>"${a(2)}."</em><br><br>Tubuhmu menunjukkan pola glucose yang dominan — sekaligus kesiapan metabolik untuk ritme yang lebih bersih. Fasting MF02 dirancang untuk transisi ini.`,
-    graceful_guardian:`${op}<br><em>"${a(6)}"</em> — dan <em>"${a(5)}."</em><br><br>Dua sinyal ini konsisten dengan fase transisi biologis yang sedang kamu jalani — setiap sinyal terhubung satu sama lain. Daily + Imunisi menyasar fondasi keduanya.`,
-    prime_guardian:`${op}<br><em>"${a(6)}"</em> — dan <em>"${a(5)}."</em><br><br>Dua sinyal ini konsisten dengan pergeseran vitalitas yang khas di fase ini — terhubung ke testosterone-cortisol axis. Daily + Beeyond menyasar keduanya secara langsung.`,
-    night_restorer:`${op}<br><em>"${a(8)}"</em> — dan <em>"${a(1)}."</em><br><br>Lapar malam dan ritme gula yang belum stabil adalah kombinasi yang menciptakan false hunger nokturnal. DiaBee Itama bekerja di malam hari untuk menstabilkan ini.`,
-    stress_snacker:`${op}<br><em>"${a(9)}"</em> — dan <em>"${a(2)}."</em><br><br>Cortisol reaktif dan glucose yang tidak stabil saling memperkuat satu sama lain secara biologis. DiaBee Itama memutus rantai ini dari sisinya.`,
-    zest_builder:`${op}<br><em>"${a(6)}"</em> — dan <em>"${a(0)}."</em><br><br>Sinyal decline di usiamu ini adalah early signal — justru yang paling mudah direspons sebelum menguat lebih jauh. Daily + Imunisi adalah fondasi yang paling efektif sekarang.`,
-    gut_harmonizer:`${op}<br><em>"${a(3)}"</em> — dan <em>"${a(4)}."</em><br><br>Di fase hidupmu ini, sinyal pencernaan dan imunitas saling memperkuat satu sama lain. Imunisi mendukung keseimbangan ekosistem ini dari dalam.`,
-    balance_master:`Dari jawabanmu, pola tubuhmu terbaca — dan kondisi ini bukan kebetulan.<br><br><em>"${a(0)}."</em><br><br>Kondisi ini tidak bisa menjaga dirinya sendiri. Tubuh yang dinamis berubah setiap siklus — tidak dijaga dengan konsisten, dapat diam-diam bergeser. Daily + Signature Botanical adalah cara paling elegan untuk menjaga apa yang sudah kamu bangun.`,
+    rollercoaster_rider:`${op} pola setelah makan dan craving yang kamu ceritakan membentuk satu gambaran: glucose rhythm yang tidak stabil. DiaBee Itama dirancang untuk memutus siklus ini dari dalam.`,
+    energy_reviver:`${op} pola energi dan respons imunitas yang kamu ceritakan adalah dua sinyal yang saling terhubung. Imunisi mendukung kapasitas seluler di balik keduanya.`,
+    clarity_seeker:`${op} jarak dari kondisi terbaikmu dan pola tidur yang kamu ceritakan saling memperkuat. Lecy hadir sebagai taste journey — bonus alaminya relevan untuk kondisi ini.`,
+    gut_whisperer:`${op} sinyal pencernaan dan imunitas yang kamu ceritakan muncul bersamaan, menunjukkan ekosistem yang butuh keseimbangan. Imunisi bekerja di lapisan ini.`,
+    recovery_seeker:`${op} pola recovery dan kualitas tidur yang kamu ceritakan adalah sinyal seluler yang saling terkait. Imunisi bekerja di level perbaikan ini.`,
+    fasting_refiner:`${op} pola setelah makan dan craving yang kamu ceritakan menunjukkan glucose dominan, sekaligus kesiapan metabolik untuk ritme yang lebih bersih. Fasting MF02 dirancang untuk transisi ini.`,
+    graceful_guardian:`${op} sinyal yang kamu ceritakan tentang kondisi vs terbaikmu dan recovery konsisten dengan fase transisi biologis yang sedang kamu jalani — setiap sinyal terhubung. Daily + Imunisi menyasar fondasi keduanya.`,
+    prime_guardian:`${op} sinyal yang kamu ceritakan tentang kondisi vs terbaikmu dan recovery konsisten dengan pergeseran vitalitas di fase ini — terhubung ke testosterone-cortisol axis. Daily + Beeyond menyasar keduanya secara langsung.`,
+    night_restorer:`${op} pola malam dan ritme setelah makan yang kamu ceritakan saling terhubung — menciptakan false hunger nokturnal yang bisa distabilkan. DiaBee Itama bekerja di malam hari untuk ini.`,
+    stress_snacker:`${op} respons tubuhmu setelah hari penuh tekanan dan pola craving yang kamu ceritakan saling memperkuat secara biologis. DiaBee Itama memutus rantai ini dari sisinya.`,
+    balance_master:`Dari jawabanmu, pola tubuhmu terbaca — dan kondisi ini bukan kebetulan.<br><br>Kondisi ini tidak bisa menjaga dirinya sendiri. Tubuh yang dinamis berubah setiap siklus — tidak dijaga dengan konsisten, dapat diam-diam bergeser. Daily + Signature Botanical adalah cara paling elegan untuk menjaga apa yang sudah kamu bangun.`,
+    zest_builder:`${op} sinyal yang kamu ceritakan tentang kondisi vs terbaikmu dan energi harian adalah early signal — justru yang paling mudah direspons sebelum menguat lebih jauh. Daily + Imunisi adalah fondasi yang paling efektif sekarang.`,
+    gut_harmonizer:`${op} di fase hidupmu ini, sinyal pencernaan dan imunitas yang kamu ceritakan saling memperkuat satu sama lain. Imunisi mendukung keseimbangan ekosistem ini dari dalam.`,
     zona_kritis:`Dari jawabanmu, pola tubuhmu terbaca dengan jelas — dan pola yang terbaca, bisa direspons.<br><br>Satu langkah pertama yang konsisten lebih berarti dari sepuluh langkah yang terburu-buru. Daily adalah fondasi itu — mulai dari sini, dan biarkan tubuhmu menunjukkan jalannya.`
   };
   return b[typeId]||op;
