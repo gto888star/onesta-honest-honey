@@ -526,7 +526,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
   <div class="intro-promise">
     Ini bukan tentang produk.<br>
     Ini tentang <b>memahami tubuhmu lebih dalam</b> — dan memberi respons yang tepat, setiap hari.<br>
-    Ketika sinyal tubuh dibiarkan, pola kecil bisa menjadi kebiasaan yang lebih sulit diubah. <b>AADB membantu kamu mendengar lebih awal.</b>
+    Ketika sinyal tubuh dibiarkan, pola kecil bisa menjadi kebiasaan yang lebih sulit diubah. Quiz <b>"Ada Apa Dengan Balance?" (AADB)</b> — karena tubuhmu ingin bicara jujur, saatnya mendengarkan.
   </div>
   <button class="btn-start" onclick="startQuiz()" style="max-width:300px">Mulai Sekarang →</button>
 </div>
@@ -586,7 +586,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 
     <!-- GATEWAY 1 — Ritme Biologis -->
     <div class="gw-block" id="gw-block-1">
-      <div class="gw-q-label">Secara biologis, tubuhmu lebih dekat ke:</div>
+      <div class="gw-q-label">Untuk kalibrasi yang lebih akurat, pilih profil metabolik yang paling sesuai:</div>
       <div class="gw-cards" id="gw-cards-1">
 
         <button class="gw-card" data-gw="1" data-val="F" onclick="selectGw(this)">
@@ -614,7 +614,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 
     <!-- GATEWAY 2 — Life Stage (kondisional, hidden by default) -->
     <div class="gw-block gw-block--hidden" id="gw-block-2">
-      <div class="gw-q-label" id="gw-q2-label">Di fase kehidupan mana kamu merasa paling relate saat ini?</div>
+      <div class="gw-q-label" id="gw-q2-label">Secara biologis dan energi, di mana kamu berada saat ini?</div>
       <div class="gw-cards" id="gw-cards-2">
         <!-- Populated dynamically by showLifeStage() -->
       </div>
@@ -1544,8 +1544,15 @@ function renderQ(){
 function pickOpt(el,opt,q){
   document.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
   el.classList.add('sel');selOpt=opt;
-  document.getElementById('ins-text').innerHTML=q.ins;
-  document.getElementById('insight-card').classList.add('show');
+  const insCard=document.getElementById('insight-card');
+  // Insight hanya muncul untuk jawaban C atau D — sinyal yang perlu dijelaskan
+  // A dan B = kondisi baik/ringan → tidak perlu educational context negatif
+  if(opt.k==='C'||opt.k==='D'){
+    document.getElementById('ins-text').innerHTML=q.ins;
+    insCard.classList.add('show');
+  } else {
+    insCard.classList.remove('show');
+  }
   const btn=document.getElementById('btn-next');
   btn.textContent='Lanjut →';
   btn.classList.add('show');
@@ -1600,16 +1607,16 @@ let segment=null;   // 'F40-' | 'F40+' | 'M40-' | 'M40+' | 'N'
 
 const LIFE_STAGE_OPTIONS={
   F:[
-    {val:'young', icon:'🌱', name:'Membangun & Bertumbuh',
-     sub:'Siklus dan energi masih terasa stabil dan konsisten'},
-    {val:'next',  icon:'🦋', name:'Menavigasi Babak Baru',
-     sub:'Mulai ada perubahan yang terasa — hormon, energi, atau ritme tubuh'},
+    {val:'young', icon:'🌱', name:'Masih merasa di fase membangun',
+     sub:'Tubuh terasa konsisten — energi dan siklus relatif stabil'},
+    {val:'next',  icon:'🦋', name:'Sudah mulai merasakan pergeseran',
+     sub:'Ada yang berbeda dari sebelumnya — energi, tidur, atau ritme tubuh'},
   ],
   M:[
-    {val:'young', icon:'🌱', name:'Membangun & Bertumbuh',
-     sub:'Stamina dan energi masih terasa stabil dan konsisten'},
-    {val:'next',  icon:'🛡️', name:'Menjaga & Melindungi',
-     sub:'Mulai ada perubahan yang terasa — energi, pemulihan, atau ritme tubuh'},
+    {val:'young', icon:'🌱', name:'Masih merasa di fase membangun',
+     sub:'Tubuh terasa konsisten — stamina dan energi relatif stabil'},
+    {val:'next',  icon:'🛡️', name:'Sudah mulai merasakan pergeseran',
+     sub:'Ada yang berbeda dari sebelumnya — energi, pemulihan, atau ritme tubuh'},
   ],
 };
 
@@ -1790,14 +1797,17 @@ function showAha(){
   }
 
   let conclusion='';
-  if(signals.length===0){
+  // ── F3/F4: Balance Master & Zona Prioritas — custom AHA, no negative signals ──
+  if(type.id==='balance_master'){
+    conclusion='Jawabanmu menunjukkan kondisi yang relatif seimbang di semua area. <b>Ini bukan kebetulan</b> — ini mencerminkan pola dan kebiasaan yang sudah kamu bangun. Tugasmu sekarang: menjaga apa yang sudah ada, dengan konsistensi aktif.';
+  } else if(type.id==='zona_kritis'){
+    conclusion='Jawabanmu menunjukkan sinyal dari beberapa area sekaligus. <b>Ini bisa direspons</b> — dan satu langkah kecil yang konsisten lebih berarti dari banyak langkah yang terburu-buru. Mulai dari fondasinya.';
+  } else if(signals.length===0){
     conclusion='Jawabanmu menunjukkan kondisi yang relatif baik di semua area. Kamu berada di zona yang baik — tugasmu sekarang adalah mempertahankan stabilitas ini secara konsisten.';
-    if(intentAnswer) conclusion+=` Dan kamu ingin fokus pada: ${intentAnswer.a.toLowerCase()}. Ritual yang kami rekomendasikan dirancang untuk mempertahankan yang sudah kamu bangun.`;
   } else {
     const signalText=signals.slice(0,2).join(' + ');
     conclusion=`Tubuhmu menunjukkan sinyal: <b>${signalText}</b>. Ini membentuk profil metabolikmu sebagai <b>${type.name}</b>.`;
     conclusion+=gapSentence;
-    if(intentAnswer) conclusion+=` Ritualmu dirancang untuk mendukung tujuanmu: ${intentAnswer.a.toLowerCase()}.`;
   }
   document.getElementById('aha-therefore').innerHTML=conclusion;
   document.getElementById('aha-type').textContent=type.emoji+' '+type.name;
@@ -1909,11 +1919,11 @@ const SEGMENT_ZONES={
 
 // Segment display labels for result screen
 const SEGMENT_LABELS={
-  'F40-':{ short:'Perempuan · Membangun & Bertumbuh',  tag:'F<40' },
-  'F40+':{ short:'Perempuan · Menavigasi Babak Baru',  tag:'F>40' },
-  'M40-':{ short:'Laki-laki · Membangun & Bertumbuh',  tag:'M<40' },
-  'M40+':{ short:'Laki-laki · Menjaga & Melindungi',   tag:'M>40' },
-  'N':   { short:'Universal',                           tag:'N'    },
+  'F40-':{ short:'Perempuan · Fase Membangun',        tag:'F<40' },
+  'F40+':{ short:'Perempuan · Merasakan Pergeseran',  tag:'F>40' },
+  'M40-':{ short:'Laki-laki · Fase Membangun',        tag:'M<40' },
+  'M40+':{ short:'Laki-laki · Merasakan Pergeseran',  tag:'M>40' },
+  'N':   { short:'Universal',                          tag:'N'    },
 };
 
 function buildResult(){
