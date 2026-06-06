@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Onesta — Ada Apa Dengan Balance? V14.6</title>
+<title>Onesta — Ada Apa Dengan Balance? V14.8</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -704,7 +704,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 
 <!-- RESULT -->
 <div id="s-result" class="screen">
-  <div class="r-eyebrow">Laporan Balance-mu · V14.6</div>
+  <div class="r-eyebrow">Laporan Balance-mu · V14.8</div>
   <div class="r-score-block">
     <div class="r-score-top">
       <div>
@@ -724,23 +724,11 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
             <span class="score-pos-mid-label">70</span>
             <span>100</span>
           </div>
-          <p style="font-size:.6rem;color:var(--muted);text-align:center;margin-top:.3rem;font-style:italic;">Tidak ada angka sempurna — setiap posisi adalah titik untuk melanjutkan.</p>
+
         </div>
       </div>
     </div>
-    <!-- PERCENTILE BAR — V7 -->
-    <div class="pct-bar-block" id="pct-bar-block" style="display:none">
-      <div class="pct-bar-label" id="pct-label"></div>
-      <div class="pct-track">
-        <div class="pct-fill" id="pct-fill" style="width:0%"></div>
-        <div class="pct-marker" id="pct-marker" style="left:0%"></div>
-      </div>
-      <div class="pct-ends">
-        <span>0%</span>
-        <span>Top 50%</span>
-        <span>Top 1%</span>
-      </div>
-    </div>
+    <!-- PERCENTILE BAR REMOVED V14.7 -->
   </div>
   <div class="r-type-block" id="r-type-block">
     <span class="r-type-emoji" id="r-type-emoji"></span>
@@ -801,16 +789,16 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
     <div class="r-ritual-body">
 
       <div class="r-why-onesta">
-        <div class="r-why-label">Mengapa Onesta Bekerja untuk Kondisi Ini</div>
         <div class="r-why-text" id="r-why"></div>
       </div>
       <div class="prod-section">
-        <div class="prod-section-label">Tubuhmu sudah berbicara. Ini responnya.</div>
-        <div class="dosage-block">
-          <div class="dosage-title">Semua Dimulai dari Ritual Kecil</div>
-          <div class="dosage-sub">Bukan sesuatu yang rumit.</div>
-          <div class="dosage-amount">2 teaspoons per day</div>
-          <div class="dosage-reason">Balance bukan sesuatu yang dilakukan sesekali.<br>Balance adalah sesuatu yang dijaga setiap hari.</div>
+
+        <div class="dosage-block" style="display:flex;align-items:center;gap:.75rem;text-align:left;padding:.65rem 1rem;">
+          <div style="font-size:1.4rem;flex-shrink:0;">🍯</div>
+          <div>
+            <div class="dosage-amount" style="font-size:.88rem;margin-bottom:.15rem;">2 sendok teh per hari</div>
+            <div class="dosage-reason" style="font-size:.72rem;font-style:italic;">Ritual kecil untuk membangun dan mempertahankan Balance.</div>
+          </div>
         </div>
         <div id="r-ritual-bridge" class="r-ritual-bridge" style="display:none"><div class="r-bridge-label">Mengapa ritual ini untukmu</div><p class="r-bridge-text" id="r-bridge-text"></p></div>
         <div class="prod-cards" id="r-prod-cards"></div>
@@ -845,8 +833,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
     <!-- Layer 7: Conditional CTA -->
     <div class="r-optional-cta" id="r-optional-cta" style="display:none">
       <button class="btn-primary" id="btn-optional-order" onclick="orderRitualOptional()">🍯 Mulai Ritual Saya Sekarang</button>
-      <p style="font-size:.65rem;color:var(--muted);text-align:center;margin-top:.3rem;font-style:italic;">Tap "Open" jika muncul konfirmasi → langsung ke WhatsApp</p>
-    </div>
+      </div>
   </div>
   <!-- ══ END OPTIONAL FLOW ══ -->
 
@@ -952,13 +939,12 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
   <!-- ══ END FAQ ══ -->
 
   <div class="r-share-block">
-    <div class="r-share-label">"Ada sinyal yang selama ini kamu abaikan tanpa sadar."<br>Bagikan ke temanmu — biarkan mereka penasaran juga.</div>
+    <div class="r-share-label">"Ada sinyal yang selama ini kamu abaikan tanpa sadar."<br>Bagikan kebaikan ini kepada temanmu.</div>
     <div class="share-preview">
       <div class="sp-head">
         <div class="sp-bee">🐝</div>
         <div>
-          <div class="sp-brand">Onesta Ada Apa Dengan Balance?</div>
-          <div class="sp-tag">Natural Metabolic Stabilizer</div>
+          <div class="sp-brand">Onesta — Ada Apa Dengan Balance?</div>
         </div>
       </div>
       <div id="scp-lines"></div>
@@ -967,18 +953,14 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
   </div>
   <div class="cta-stack">
     <button class="btn-primary" onclick="orderRitual()">🍯 Mulai Ritual Saya Sekarang</button>
-    <p style="font-size:.65rem;color:var(--muted);text-align:center;margin-top:.3rem;margin-bottom:.2rem;font-style:italic;">Tap "Open" jika muncul konfirmasi → langsung ke WhatsApp</p>
+
     <div class="share-lang-row">
       <button class="btn-share-lang" onclick="shareWA('id')">📤 Bagikan dalam Bahasa Indonesia</button>
       <button class="btn-share-lang" onclick="shareWA('en')">📤 Share in English</button>
     </div>
     <button class="btn-ghost" onclick="restart()">↺ Cek Ulang Minggu Depan</button>
   </div>
-  <p class="r-footnote">
-    Hasil ini bersifat edukatif, bukan diagnosis medis.<br>
-    Berdasarkan 1.128+ referensi ilmiah · PMC/NCBI · Wiley · Nature · MDPI (2000–2025)<br>
-    Onesta™ · Honest Honey · Heterotrigona Itama · Hutan Indonesia
-  </p>
+  <p class="r-footnote">Hasil ini edukatif, bukan diagnosis medis · Berdasarkan 1.100+ referensi ilmiah · Onesta™</p>
 </div>
 
 <script>
@@ -2232,7 +2214,7 @@ function renderResult(){
 
   // ── Segment eyebrow + score label ──
   const eyebrowEl=document.querySelector('.r-eyebrow');
-  if(eyebrowEl) eyebrowEl.textContent='Laporan Balance-mu · V14.6';
+  if(eyebrowEl) eyebrowEl.textContent='Laporan Balance-mu · V14.8';
   const scoreLabelEl=document.querySelector('.r-score-label');
   if(scoreLabelEl){
     // F1+F3 V14.1: nama + Balance Score-mu, no segment display
@@ -2265,36 +2247,7 @@ function renderResult(){
     if(scoreDot) scoreDot.style.left=Math.min(Math.max(Math.round(((bal-40)/60)*100),8),100)+'%';
   },400);
 
-  // ── Percentile Bar ──
-  const pctBlock=document.getElementById('pct-bar-block');
-  if(pctBlock && topPct){
-    // P0 FIX: Zona Prioritas — sembunyikan bar, tampilkan pesan supportive
-    if(type.id==='zona_kritis'){
-      pctBlock.style.display='block';
-      pctBlock.innerHTML=`<div style="background:rgba(204,85,0,.06);border:1px solid rgba(204,85,0,.2);border-radius:10px;padding:.85rem 1rem;font-size:.82rem;color:var(--sub);line-height:1.65;"><span style="font-size:.6rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;font-weight:700;display:block;margin-bottom:.3rem;">Perjalananmu</span>Setiap langkah kecil yang <b>konsisten</b> akan menggeser kondisi ini secara nyata. Yang terpenting bukan seberapa jauh kamu dari puncak — tapi bahwa kamu sudah memilih untuk mulai.</div>`;
-    } else {
-      pctBlock.style.display='block';
-      const fillPct=Math.round(100-topPct);
-      const segPopLabel=segLabel.short.split('·')[0].trim();
-      const topLabel=topPct<=10
-        ?`<b>Top ${topPct}%</b> — hasil yang sangat langka`
-        :topPct<=25
-        ?`<b>Top ${topPct}%</b> — di atas rata-rata`
-        :topPct<=50
-        ?`<b>Top ${topPct}%</b> — setengah teratas`
-        :topPct<=75
-        ?`<b>perlu perhatian</b> — di sinilah banyak perjalanan dimulai`
-        :`<b>titik awal</b> — tubuhmu sudah memberi sinyal yang jelas`;
-      document.getElementById('pct-label').innerHTML=
-        `Berdasarkan pemetaan profil metabolik Onesta — kamu berada di ${topLabel}.`;
-      setTimeout(()=>{
-        const fill=document.getElementById('pct-fill');
-        const mkr=document.getElementById('pct-marker');
-        if(fill) fill.style.width=fillPct+'%';
-        if(mkr) mkr.style.left=fillPct+'%';
-      },600);
-    }
-  }
+  // PERCENTILE BAR REMOVED V14.7
 
   // Type block
   const tb=document.getElementById('r-type-block');
@@ -2406,16 +2359,41 @@ function renderResult(){
     }
   });
 
-  // Staggered auto-reveal: pillar 3→900ms · 4→1600ms · 5→2300ms · 6→3000ms
-  pillarEntries.slice(REVEAL_THRESHOLD).forEach(([d],idx)=>{
+  // V14.8 OPSI B — Hybrid reveal:
+  // Pillar 3 (first locked) → auto reveal at 1200ms (still in viewport)
+  // Pillar 4-6 → IntersectionObserver (reward on scroll)
+  const lockedDomains=pillarEntries.slice(REVEAL_THRESHOLD).map(([d])=>d);
+
+  // Pillar 3: auto reveal after 1200ms
+  if(lockedDomains.length>0){
     setTimeout(()=>{
-      const row=document.getElementById('pr-'+d);
+      const row=document.getElementById('pr-'+lockedDomains[0]);
       if(row) revealPillar(row);
-    },900+(idx*STAGGER_MS));
-  });
+    },1200);
+  }
+
+  // Pillar 4-6: reveal on scroll via IntersectionObserver
+  // Delay 800ms before attaching observer — give result screen time to render
+  if(lockedDomains.length>1){
+    setTimeout(()=>{
+      const observer=new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            revealPillar(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      },{threshold:0.35,rootMargin:'0px 0px 0px 0px'});
+      // Observe pillar 4-6 only (skip first locked which auto-reveals)
+      lockedDomains.slice(1).forEach(d=>{
+        const row=document.getElementById('pr-'+d);
+        if(row) observer.observe(row);
+      });
+    },800);
+  }
 
   // Ritual slots removed V9 — replaced by dosage-block
-  document.getElementById('r-ritual-title').textContent=type.stack+' — Ritual Harian';
+  document.getElementById('r-ritual-title').textContent=type.stack;
 
   // ── Ritual Bridge — dynamic pillar-to-product connector ──
   const bridgeEl=document.getElementById('r-ritual-bridge');
@@ -2428,10 +2406,11 @@ function renderResult(){
   // Product cards — V10: 4-tier badge (primary / support / upgrade / l4)
   const prodCards=document.getElementById('r-prod-cards');
   prodCards.innerHTML='';
-  type.products.forEach((prodKey,idx)=>{
+  // V14.7: Ritual block shows PRIMARY only — secondary in optional flow
+  type.products.slice(0,1).forEach((prodKey,idx)=>{
     const p=PRODUCTS[prodKey];
     if(!p) return;
-    const isPrimary=idx===0;
+    const isPrimary=true;
     const role=p.role||'support';
     const card=document.createElement('div');
     card.className='prod-card';
