@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Onesta — Ada Apa Dengan Balance? V14.2</title>
+<title>Onesta — Ada Apa Dengan Balance? V14.3</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -665,7 +665,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 
 <!-- RESULT -->
 <div id="s-result" class="screen">
-  <div class="r-eyebrow">Laporan Balance-mu · V14.2</div>
+  <div class="r-eyebrow">Laporan Balance-mu · V14.3</div>
   <div class="r-score-block">
     <div class="r-score-top">
       <div>
@@ -744,15 +744,6 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
         <div class="zone-ticks">
           <div class="zone-tick" style="left:0%;transform:none;align-items:flex-start;">
             <div class="zone-tick-label" style="color:#C84040">Prioritas</div>
-          </div>
-          <div class="zone-tick" style="left:29%">
-            <div class="zone-tick-label" style="color:#E87820">Dukungan</div>
-          </div>
-          <div class="zone-tick" style="left:52%">
-            <div class="zone-tick-label" style="color:#E87A20">Perhatian</div>
-          </div>
-          <div class="zone-tick" style="left:72%">
-            <div class="zone-tick-label" style="color:#E8C030">Stabil</div>
           </div>
           <div class="zone-tick" style="left:100%;transform:translateX(-100%);align-items:flex-end;">
             <div class="zone-tick-label" style="color:#4CAF82">Optimal</div>
@@ -2202,7 +2193,7 @@ function renderResult(){
 
   // ── Segment eyebrow + score label ──
   const eyebrowEl=document.querySelector('.r-eyebrow');
-  if(eyebrowEl) eyebrowEl.textContent='Laporan Balance-mu · V14.2';
+  if(eyebrowEl) eyebrowEl.textContent='Laporan Balance-mu · V14.3';
   const scoreLabelEl=document.querySelector('.r-score-label');
   if(scoreLabelEl){
     // F1+F3 V14.1: nama + Balance Score-mu, no segment display
@@ -2225,12 +2216,14 @@ function renderResult(){
   document.getElementById('r-zone').style.color=zone.c;
   setTimeout(()=>{
     // V9: zone-marker — map score 25-90 to 0-100% (zone bar)
+    // D2 V14.3: min 8% on zone-marker too
     const markerPct=Math.round(((bal-40)/(100-40))*100);
     const marker=document.getElementById('zone-marker');
-    if(marker) marker.style.left=Math.min(Math.max(markerPct,0),100)+'%';
+    if(marker) marker.style.left=Math.min(Math.max(markerPct,8),100)+'%';
     // V9: score-pos-dot — literal position on 0-100 scale
     const scoreDot=document.getElementById('score-pos-dot');
-    if(scoreDot) scoreDot.style.left=Math.min(Math.max(Math.round(((bal-40)/60)*100),0),100)+'%';
+    // D2 V14.3: min 8% so score 40 never touches left edge (psychological floor)
+    if(scoreDot) scoreDot.style.left=Math.min(Math.max(Math.round(((bal-40)/60)*100),8),100)+'%';
   },400);
 
   // ── Percentile Bar ──
