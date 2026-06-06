@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Onesta — Ada Apa Dengan Balance? V14.4</title>
+<title>Onesta — Ada Apa Dengan Balance? V14.5</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -447,17 +447,16 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .rp-row.locked .rp-expand{display:none;}
 .rp-lock-overlay{
   position:absolute;inset:0;
-  background:rgba(255,251,249,.72);
-  backdrop-filter:blur(3px);
-  -webkit-backdrop-filter:blur(3px);
+  background:rgba(255,248,242,.90);
   border-radius:12px;
   display:flex;align-items:center;justify-content:flex-end;
   padding-right:.85rem;
   pointer-events:none;
-  transition:opacity .4s ease;
+  transition:opacity .35s ease;
+  border:1.5px solid rgba(204,85,0,.08);
 }
 .rp-lock-icon{
-  font-size:.85rem;opacity:.45;
+  font-size:1rem;opacity:.55;
   transition:opacity .3s ease;
 }
 .rp-row.locked .rp-val{
@@ -713,7 +712,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 
 <!-- RESULT -->
 <div id="s-result" class="screen">
-  <div class="r-eyebrow">Laporan Balance-mu · V14.4</div>
+  <div class="r-eyebrow">Laporan Balance-mu · V14.5</div>
   <div class="r-score-block">
     <div class="r-score-top">
       <div>
@@ -729,8 +728,8 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
             <div class="score-pos-dot" id="score-pos-dot" style="left:0%"></div>
           </div>
           <div class="score-pos-ends">
-            <span>0</span>
-            <span class="score-pos-mid-label">50</span>
+            <span>40</span>
+            <span class="score-pos-mid-label">70</span>
             <span>100</span>
           </div>
           <p style="font-size:.6rem;color:var(--muted);text-align:center;margin-top:.3rem;font-style:italic;">Tidak ada angka sempurna — setiap posisi adalah titik untuk melanjutkan.</p>
@@ -2241,7 +2240,7 @@ function renderResult(){
 
   // ── Segment eyebrow + score label ──
   const eyebrowEl=document.querySelector('.r-eyebrow');
-  if(eyebrowEl) eyebrowEl.textContent='Laporan Balance-mu · V14.4';
+  if(eyebrowEl) eyebrowEl.textContent='Laporan Balance-mu · V14.5';
   const scoreLabelEl=document.querySelector('.r-score-label');
   if(scoreLabelEl){
     // F1+F3 V14.1: nama + Balance Score-mu, no segment display
@@ -2270,7 +2269,7 @@ function renderResult(){
     if(marker) marker.style.left=Math.min(Math.max(markerPct,8),100)+'%';
     // V9: score-pos-dot — literal position on 0-100 scale
     const scoreDot=document.getElementById('score-pos-dot');
-    // D2 V14.3: min 8% so score 40 never touches left edge (psychological floor)
+    // V14.5: bar anchored 40-100, labels 40·70·100, min 8% floor
     if(scoreDot) scoreDot.style.left=Math.min(Math.max(Math.round(((bal-40)/60)*100),8),100)+'%';
   },400);
 
@@ -2370,7 +2369,7 @@ function renderResult(){
             ${isLocked?'':'<div class="rp-expand">▾</div>'}
           </div>
         </div>
-        <div class="rp-track"><div class="rp-fill" id="rpf-${d}" style="width:0%;background:${isLocked?'rgba(204,85,0,.15)':sc}"></div></div>
+        <div class="rp-track"><div class="rp-fill" id="rpf-${d}" style="width:0%;background:${isLocked?'rgba(204,85,0,.08)':sc}"></div></div>
         <div class="rp-definition" id="${defId}">${def.def}</div>
         ${isLocked?'<div class="rp-lock-overlay"><span class="rp-lock-icon">🔒</span></div>':''}
       </div>`;
