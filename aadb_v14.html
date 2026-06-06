@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Onesta — Ada Apa Dengan Balance? V14.5</title>
+<title>Onesta — Ada Apa Dengan Balance? V14.6</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -478,15 +478,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
   to{opacity:1;transform:translateY(0);}
 }
 .rp-row.revealed{animation:revealRow .4s ease both;}
-/* Scroll hint */
-.pillar-scroll-hint{
-  text-align:center;font-size:.72rem;color:var(--gold);
-  font-style:italic;font-family:'Montserrat',sans-serif;
-  margin:-.25rem 0 .75rem;opacity:0;
-  transition:opacity .5s ease;
-  letter-spacing:.02em;
-}
-.pillar-scroll-hint.show{opacity:1;}
+/* Scroll hint removed V14.6 */
 
 @keyframes pillarPulse{
   0%{transform:translateX(0);}
@@ -712,7 +704,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 
 <!-- RESULT -->
 <div id="s-result" class="screen">
-  <div class="r-eyebrow">Laporan Balance-mu · V14.5</div>
+  <div class="r-eyebrow">Laporan Balance-mu · V14.6</div>
   <div class="r-score-block">
     <div class="r-score-top">
       <div>
@@ -2240,7 +2232,7 @@ function renderResult(){
 
   // ── Segment eyebrow + score label ──
   const eyebrowEl=document.querySelector('.r-eyebrow');
-  if(eyebrowEl) eyebrowEl.textContent='Laporan Balance-mu · V14.5';
+  if(eyebrowEl) eyebrowEl.textContent='Laporan Balance-mu · V14.6';
   const scoreLabelEl=document.querySelector('.r-score-label');
   if(scoreLabelEl){
     // F1+F3 V14.1: nama + Balance Score-mu, no segment display
@@ -2333,7 +2325,7 @@ function renderResult(){
   const statusLabel=(p)=>p>=75?'Terjaga':p>=50?'Perhatian':p>=25?'Dukungan':'Prioritas';
   const cont=document.getElementById('r-pillars-content');
   cont.innerHTML='';
-  // V14.4: Event delegation for pillar header clicks
+  // V14.6: Event delegation for pillar header clicks
   cont.onclick=(e)=>{
     const row=e.target.closest('.rp-row[data-active]');
     if(!row) return;
@@ -2341,9 +2333,47 @@ function renderResult(){
     const header=row.querySelector('.pillar-header');
     if(defId&&header) togglePillarDef(defId,header);
   };
-  // V14.4: Progressive Reveal — pillar 1-2 immediate, 3-6 locked until scroll
+
+  // V14.6: Progressive Reveal — staggered timeout (guaranteed cross-device)
   const pillarEntries=Object.entries(dmxDisplay);
-  const REVEAL_THRESHOLD=2; // first 2 pillars show immediately
+  const REVEAL_THRESHOLD=2;
+  const STAGGER_MS=700;
+
+  const revealPillar=(row)=>{
+    if(!row||!row.classList.contains('locked')) return;
+    const d=row.id.replace('pr-','');
+    const pct=parseInt(row.dataset.pct)||0;
+    const sc=row.dataset.sc||'var(--gold)';
+    const defId=row.dataset.defid||('pd-'+d);
+    row.classList.remove('locked');
+    row.classList.add('revealed');
+    row.setAttribute('data-active','1');
+    // Restore expand arrow
+    const valWrap=row.querySelector('.pillar-header > div:last-child');
+    if(valWrap&&!valWrap.querySelector('.rp-expand')){
+      const arrow=document.createElement('div');
+      arrow.className='rp-expand';arrow.textContent='▾';
+      valWrap.appendChild(arrow);
+    }
+    // Animate fill bar
+    const fill=document.getElementById('rpf-'+d);
+    if(fill){fill.style.background=sc;setTimeout(()=>{fill.style.width=pct+'%';},60);}
+    // Count up %
+    const valEl=row.querySelector('.rp-val');
+    if(valEl){
+      valEl.innerHTML='0%';
+      let cur=0;const step=Math.max(1,Math.ceil(pct/18));
+      const iv=setInterval(()=>{cur=Math.min(cur+step,pct);valEl.innerHTML=cur+'%';if(cur>=pct)clearInterval(iv);},35);
+    }
+    // Restore status badge
+    const badge=row.querySelector('.rp-status');
+    if(badge){badge.style.opacity='1';badge.style.filter='';}
+    // Fade out overlay
+    setTimeout(()=>{
+      const overlay=row.querySelector('.rp-lock-overlay');
+      if(overlay){overlay.style.opacity='0';setTimeout(()=>overlay.remove(),350);}
+    },120);
+  };
 
   pillarEntries.forEach(([d,mx],i)=>{
     const raw=scores[d]||0;
@@ -2354,18 +2384,15 @@ function renderResult(){
     const defId='pd-'+d;
     const rowId='pr-'+d;
     const isLocked=i>=REVEAL_THRESHOLD;
-
-    // Build row — use data-defid for onclick, avoids nested quote issues in template
-    const onclickAttr=isLocked?'':'data-active="1"';
     cont.innerHTML+=`
-      <div class="rp-row${isLocked?' locked':''}" id="${rowId}" data-pct="${pct}" data-sc="${sc}" data-defid="${defId}" ${onclickAttr}>
+      <div class="rp-row${isLocked?' locked':''}" id="${rowId}" data-pct="${pct}" data-sc="${sc}" data-defid="${defId}" ${isLocked?'':'data-active="1"'}>
         <div class="pillar-header">
           <div class="rp-name-wrap">
             <div class="rp-name">${def.label}</div>
-            <span class="rp-status" style="background:${sc}22;color:${sc};border:1px solid ${sc}44">${sl}</span>
+            <span class="rp-status" style="background:${sc}22;color:${sc};border:1px solid ${sc}44;${isLocked?'opacity:.35;filter:grayscale(1)':''}">${sl}</span>
           </div>
           <div style="display:flex;align-items:center;gap:.3rem">
-            <div class="rp-val">${isLocked?'':pct+'%'}</div>
+            <div class="rp-val">${isLocked?'<span style="color:var(--muted);opacity:.45;font-size:.7rem">??</span>':pct+'%'}</div>
             ${isLocked?'':'<div class="rp-expand">▾</div>'}
           </div>
         </div>
@@ -2373,104 +2400,19 @@ function renderResult(){
         <div class="rp-definition" id="${defId}">${def.def}</div>
         ${isLocked?'<div class="rp-lock-overlay"><span class="rp-lock-icon">🔒</span></div>':''}
       </div>`;
-
     if(!isLocked){
-      // Immediate reveal for first 2
-      setTimeout(()=>{
-        const el=document.getElementById('rpf-'+d);
-        if(el) el.style.width=pct+'%';
-      },500+i*100);
-      // I1B: pulse on first pillar
-      if(i===0){
-        setTimeout(()=>{
-          const row=document.getElementById('pr-'+d);
-          if(row){row.classList.add('pillar-pulse-hint');
-            row.addEventListener('animationend',()=>row.classList.remove('pillar-pulse-hint'),{once:true});}
-        },900);
-      }
+      setTimeout(()=>{const el=document.getElementById('rpf-'+d);if(el)el.style.width=pct+'%';},400+i*80);
+      if(i===0){setTimeout(()=>{const r=document.getElementById('pr-'+d);if(r){r.classList.add('pillar-pulse-hint');r.addEventListener('animationend',()=>r.classList.remove('pillar-pulse-hint'),{once:true});}},800);}
     }
   });
 
-  // Scroll hint — appears after short delay, fades when first locked pillar revealed
-  const hintEl=document.createElement('div');
-  hintEl.className='pillar-scroll-hint';
-  hintEl.id='pillar-scroll-hint';
-  hintEl.textContent='↓ Scroll untuk membuka semua Balance Pillar-mu';
-  cont.parentElement.insertBefore(hintEl,cont.nextSibling);
-  setTimeout(()=>{if(hintEl)hintEl.classList.add('show');},1400);
-
-  // IntersectionObserver — reveal locked pillars as they enter viewport
-  const revealPillar=(row)=>{
-    if(!row.classList.contains('locked')) return;
-    const d=row.id.replace('pr-','');
-    const pct=parseInt(row.dataset.pct)||0;
-    const sc=row.dataset.sc||'var(--gold)';
-    const defId=row.dataset.defid||('pd-'+d);
-
-    // Remove locked state
-    row.classList.remove('locked');
-    row.classList.add('revealing');
-
-    // Restore interactive header via data attribute + row click delegation
-    row.setAttribute('data-active','1');
-
-    // Restore val display
-    const valEl=row.querySelector('.rp-val');
-    if(valEl){valEl.textContent='0%';}
-
-    // Restore expand arrow
-    const valWrap=row.querySelector('.pillar-header > div:last-child');
-    if(valWrap&&!valWrap.querySelector('.rp-expand')){
-      const arrow=document.createElement('div');
-      arrow.className='rp-expand';arrow.textContent='▾';
-      valWrap.appendChild(arrow);
-    }
-
-    // Animate fill bar
-    const fill=document.getElementById('rpf-'+d);
-    if(fill){fill.style.background=sc;setTimeout(()=>{fill.style.width=pct+'%';},80);}
-
-    // Count up %
-    if(valEl){
-      let cur=0;const step=Math.ceil(pct/20);
-      const iv=setInterval(()=>{
-        cur=Math.min(cur+step,pct);
-        valEl.textContent=cur+'%';
-        if(cur>=pct)clearInterval(iv);
-      },40);
-    }
-
-    // Restore status badge color
-    const badge=row.querySelector('.rp-status');
-    if(badge){badge.style.opacity='1';badge.style.filter='';}
-
-    // Fade out overlay
+  // Staggered auto-reveal: pillar 3→900ms · 4→1600ms · 5→2300ms · 6→3000ms
+  pillarEntries.slice(REVEAL_THRESHOLD).forEach(([d],idx)=>{
     setTimeout(()=>{
-      row.classList.remove('revealing');
-      row.classList.add('revealed');
-      const overlay=row.querySelector('.rp-lock-overlay');
-      if(overlay) overlay.remove();
-    },350);
-
-    // Hide scroll hint when first locked pillar revealed
-    const hint=document.getElementById('pillar-scroll-hint');
-    if(hint) hint.classList.remove('show');
-  };
-
-  // Set up observer after DOM renders
-  setTimeout(()=>{
-    const lockedRows=cont.querySelectorAll('.rp-row.locked');
-    if(!lockedRows.length) return;
-    const observer=new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){
-          revealPillar(entry.target);
-          observer.unobserve(entry.target);
-        }
-      });
-    },{threshold:0.25,rootMargin:'0px 0px -40px 0px'});
-    lockedRows.forEach(row=>observer.observe(row));
-  },300);
+      const row=document.getElementById('pr-'+d);
+      if(row) revealPillar(row);
+    },900+(idx*STAGGER_MS));
+  });
 
   // Ritual slots removed V9 — replaced by dosage-block
   document.getElementById('r-ritual-title').textContent=type.stack+' — Ritual Harian';
