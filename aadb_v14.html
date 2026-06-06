@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Onesta — Ada Apa Dengan Balance? V14.9</title>
+<title>Onesta — Ada Apa Dengan Balance? V14.10</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -733,7 +733,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 
 <!-- RESULT -->
 <div id="s-result" class="screen">
-  <div class="r-eyebrow">Laporan Balance-mu · V14.9</div>
+  <div class="r-eyebrow">Laporan Balance-mu · V14.10</div>
   <div class="r-score-block">
     <div class="r-score-top">
       <div>
@@ -2225,7 +2225,7 @@ function renderResult(){
 
   // ── Segment eyebrow + score label ──
   const eyebrowEl=document.querySelector('.r-eyebrow');
-  if(eyebrowEl) eyebrowEl.textContent='Laporan Balance-mu · V14.9';
+  if(eyebrowEl) eyebrowEl.textContent='Laporan Balance-mu · V14.10';
   const scoreLabelEl=document.querySelector('.r-score-label');
   if(scoreLabelEl){
     // F1+F3 V14.1: nama + Balance Score-mu, no segment display
@@ -2493,39 +2493,78 @@ function renderOptionalFlow(){
   const sec=sk?PRODUCTS[sk]:null;
   const grid=document.getElementById('opt-prod-grid');
   if(!grid) return;
+
   const plusPoints={
-    'Daily':  'Fondasi stabilitas metabolik harian — energi lebih stabil dari dalam.',
-    'Myrta':  'Proteksi seluler jangka panjang + profil rasa botanical yang unik.',
-    'Imunisi':'Perkuat ketahanan tubuh — respons imun dan pencernaan lebih optimal.',
-    'DiaBee': 'Stabilkan ritme glukosa — kurangi craving dan crash setelah makan.',
-    'Signature':'Eksplorasi rasa botanical premium — manfaat alami sebagai bonus.',
+    Daily:  'Fondasi stabilitas metabolik harian — energi lebih stabil dari dalam.',
+    Myrta:  'Proteksi seluler jangka panjang + profil rasa botanical yang unik.',
+    Imunisi:'Perkuat ketahanan tubuh — respons imun dan pencernaan lebih optimal.',
+    DiaBee: 'Stabilkan ritme glukosa — kurangi craving dan crash setelah makan.',
+    Signature:'Eksplorasi rasa botanical premium — manfaat alami sebagai bonus.',
   };
-  const priImgH=pri&&pri.img?`<img src="${pri.img}" alt="${pri.name}" style="width:100%;height:100%;object-fit:contain;padding:6px;" loading="eager" onerror="this.outerHTML='<div style=font-size:2rem;text-align:center>${pri.emoji}</div>'">`:`<div style="font-size:2rem;text-align:center">${pri?pri.emoji:''}</div>`;
-  const secImgH=sec&&sec.img?`<img src="${sec.img}" alt="${sec.name}" style="width:100%;height:100%;object-fit:contain;padding:6px;" loading="eager" onerror="this.outerHTML='<div style=font-size:2rem;text-align:center>${sec.emoji}</div>'">`:`<div style="font-size:2rem;text-align:center">${sec?sec.emoji:''}</div>`;
-  const secPlus=sk&&plusPoints[sk]?`<div class="opt-plus"><span class="opt-plus-icon">+</span><span class="opt-plus-text">${plusPoints[sk]}</span></div>`:'';
-  grid.innerHTML=`
-    <div class="opt-card-primary">
-      <div class="opt-card-img">${priImgH}</div>
-      <div class="opt-card-body">
-        <div class="opt-card-label ocl-primary">✦ Fondasi Utama</div>
-        <div class="opt-card-name">${pri?pri.name:''}</div>
-        <div class="opt-card-tagline">${pri?pri.tagline:''}</div>
-        <span class="opt-primary-badge">✅ Fondasi utama</span>
-      </div>
-    </div>
-    ${sec?`<div class="opt-card-secondary" id="opt-sec-card">
-      <div class="opt-card-img">${secImgH}</div>
-      <div class="opt-card-body">
-        <div class="opt-card-label ocl-secondary">✦ Pilihan Tambahanmu</div>
-        <div class="opt-card-name">${sec.name}</div>
-        <div class="opt-card-tagline">${sec.tagline}</div>
-        ${secPlus}
-        <div class="yn-row">
-          <button class="btn-yn btn-yes" id="btn-yes-sec" onclick="pickYesNo('yes')">YES</button>
-          <button class="btn-yn btn-no" id="btn-no-sec" onclick="pickYesNo('no')">NO</button>
-        </div>
-      </div>
-    </div>`:''}`;
+
+  grid.innerHTML='';
+
+  // PRIMARY CARD
+  const priDiv=document.createElement('div');
+  priDiv.className='opt-card-primary';
+  const priImgWrap=document.createElement('div');
+  priImgWrap.className='opt-card-img';
+  if(pri&&pri.img){
+    const img=document.createElement('img');
+    img.src=pri.img;img.alt=pri.name;
+    img.style.cssText='width:100%;height:100%;object-fit:contain;padding:6px;';
+    img.loading='eager';
+    priImgWrap.appendChild(img);
+  } else {
+    priImgWrap.innerHTML='<div style="font-size:2rem;text-align:center">'+(pri?pri.emoji:'')+'</div>';
+  }
+  priDiv.appendChild(priImgWrap);
+  priDiv.innerHTML+=''
+    +'<div class="opt-card-body">'
+    +'<div class="opt-card-label ocl-primary">✦ Fondasi Utama</div>'
+    +'<div class="opt-card-name">'+(pri?pri.name:'')+'</div>'
+    +'<div class="opt-card-tagline">'+(pri?pri.tagline:'')+'</div>'
+    +'<span class="opt-primary-badge">✅ Fondasi utama</span>'
+    +'</div>';
+  grid.appendChild(priDiv);
+
+  // SECONDARY CARD
+  if(sec){
+    const secDiv=document.createElement('div');
+    secDiv.className='opt-card-secondary';
+    secDiv.id='opt-sec-card';
+    const secImgWrap=document.createElement('div');
+    secImgWrap.className='opt-card-img';
+    if(sec.img){
+      const img2=document.createElement('img');
+      img2.src=sec.img;img2.alt=sec.name;
+      img2.style.cssText='width:100%;height:100%;object-fit:contain;padding:6px;';
+      img2.loading='eager';
+      secImgWrap.appendChild(img2);
+    } else {
+      secImgWrap.innerHTML='<div style="font-size:2rem;text-align:center">'+sec.emoji+'</div>';
+    }
+    secDiv.appendChild(secImgWrap);
+    const plus=sk&&plusPoints[sk]
+      ?'<div class="opt-plus"><span class="opt-plus-icon">+</span><span class="opt-plus-text">'+plusPoints[sk]+'</span></div>'
+      :'';
+    secDiv.innerHTML+=''
+      +'<div class="opt-card-body">'
+      +'<div class="opt-card-label ocl-secondary">✦ Pilihan Tambahanmu</div>'
+      +'<div class="opt-card-name">'+sec.name+'</div>'
+      +'<div class="opt-card-tagline">'+sec.tagline+'</div>'
+      +plus
+      +'<div class="yn-row">'
+      +'<button class="btn-yn btn-yes" id="btn-yes-sec" data-yn="yes">YES</button>'
+      +'<button class="btn-yn btn-no" id="btn-no-sec" data-yn="no">NO</button>'
+      +'</div></div>';
+    grid.appendChild(secDiv);
+    // Attach click via addEventListener — avoids quote issues
+    const btnY=document.getElementById('btn-yes-sec');
+    const btnN=document.getElementById('btn-no-sec');
+    if(btnY) btnY.addEventListener('click',function(){pickYesNo('yes');});
+    if(btnN) btnN.addEventListener('click',function(){pickYesNo('no');});
+  }
 }
 
 function pickYesNo(val){
