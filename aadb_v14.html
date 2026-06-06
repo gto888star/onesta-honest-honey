@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Onesta — Ada Apa Dengan Balance? V14</title>
+<title>Onesta — Ada Apa Dengan Balance? V14.1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -139,7 +139,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .rp-name{font-size:.76rem;color:var(--sub);}
 .rp-status{font-size:.58rem;padding:.1rem .38rem;border-radius:4px;font-weight:700;font-family:'Montserrat',sans-serif;flex-shrink:0;}
 .rp-val{font-size:.7rem;color:var(--gold);font-family:'Montserrat',sans-serif;}
-.rp-expand{font-size:.6rem;color:var(--muted);margin-left:.2rem;}
+.rp-expand{font-size:.78rem;color:var(--gold);margin-left:.3rem;transition:transform .25s;font-weight:700;}
 .rp-track{height:3px;background:rgba(204,85,0,.08);border-radius:99px;overflow:hidden;}
 .rp-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold-d),var(--gold-l));transition:width .9s ease .2s;}
 .rp-definition{display:none;font-size:.75rem;color:var(--sub);line-height:1.6;padding:.55rem .65rem;background:rgba(204,85,0,.04);border-radius:8px;margin-top:.3rem;border-left:2px solid rgba(204,85,0,.22);}
@@ -437,6 +437,16 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .ch-intro b{color:var(--cream);}
 
 /* ══ V14 NEW CSS ══ */
+/* ══ V14.1 PILLAR PULSE ══ */
+@keyframes pillarPulse{
+  0%{transform:translateX(0);}
+  20%{transform:translateX(4px);}
+  40%{transform:translateX(-2px);}
+  60%{transform:translateX(3px);}
+  80%{transform:translateX(-1px);}
+  100%{transform:translateX(0);}
+}
+.pillar-pulse-hint{animation:pillarPulse .7s ease .8s 2;}
 .r-aha-accordion{background:var(--ink-3);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:1.1rem;}
 .r-aha-toggle{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1rem;cursor:pointer;font-size:.8rem;font-weight:600;color:var(--sub);font-family:'Montserrat',sans-serif;-webkit-tap-highlight-color:transparent;}
 .r-aha-toggle:hover{background:rgba(204,85,0,.04);}
@@ -554,8 +564,8 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
       </div>
     </div>
     <div id="chapter-header"></div>
-    <div id="back-btn-wrap" style="display:none;margin-bottom:.5rem;">
-      <button id="btn-back" onclick="goBack()" style="background:none;border:none;color:var(--muted);font-size:.78rem;cursor:pointer;padding:.2rem 0;font-family:'Montserrat',sans-serif;display:flex;align-items:center;gap:.3rem;">← Kembali</button>
+    <div id="back-btn-wrap" style="display:none;margin-bottom:.75rem;">
+      <button id="btn-back" onclick="goBack()" style="background:rgba(204,85,0,.08);border:1px solid rgba(204,85,0,.20);color:var(--gold);font-size:.78rem;font-weight:700;cursor:pointer;padding:.38rem .85rem;border-radius:99px;font-family:'Montserrat',sans-serif;display:inline-flex;align-items:center;gap:.35rem;letter-spacing:.01em;-webkit-tap-highlight-color:transparent;">← Kembali</button>
     </div>
     <h2 class="quiz-q" id="q-text"></h2>
     <p class="quiz-hint" id="q-hint"></p>
@@ -614,7 +624,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 
     <!-- GATEWAY 2 — Life Stage (kondisional, hidden by default) -->
     <div class="gw-block gw-block--hidden" id="gw-block-2">
-      <div class="gw-q-label" id="gw-q2-label">Secara biologis dan energi, di mana kamu berada saat ini?</div>
+      <div class="gw-q-label" id="gw-q2-label">Berapa kisaran usiamu saat ini?</div>
       <div class="gw-cards" id="gw-cards-2">
         <!-- Populated dynamically by showLifeStage() -->
       </div>
@@ -652,11 +662,11 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 
 <!-- RESULT -->
 <div id="s-result" class="screen">
-  <div class="r-eyebrow">Laporan Balance-mu · V14</div>
+  <div class="r-eyebrow">Laporan Balance-mu · V14.1</div>
   <div class="r-score-block">
     <div class="r-score-top">
       <div>
-        <div class="r-score-label">Metabolic Balance Score</div>
+        <div class="r-score-label">Balance Score-mu</div>
         <div style="display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap;">
           <span class="r-score-num" id="r-score">0</span>
           <div class="r-zone-val" id="r-zone" style="font-size:1rem;font-weight:800;margin-left:.25rem;"></div>
@@ -1694,16 +1704,16 @@ let segment=null;   // 'F40-' | 'F40+' | 'M40-' | 'M40+' | 'N'
 
 const LIFE_STAGE_OPTIONS={
   F:[
-    {val:'young', icon:'🌱', name:'Masih merasa di fase membangun',
-     sub:'Tubuh terasa konsisten — energi dan siklus relatif stabil'},
-    {val:'next',  icon:'🦋', name:'Sudah mulai merasakan pergeseran',
-     sub:'Ada yang berbeda dari sebelumnya — energi, tidur, atau ritme tubuh'},
+    {val:'young', icon:'🌱', name:'Di bawah 40 tahun',
+     sub:'Tubuhku masih di fase membangun — energi dan siklus relatif konsisten'},
+    {val:'next',  icon:'🦋', name:'40 tahun ke atas',
+     sub:'Aku sudah atau mendekati 40 — ada pergeseran yang mulai terasa'},
   ],
   M:[
-    {val:'young', icon:'🌱', name:'Masih merasa di fase membangun',
-     sub:'Tubuh terasa konsisten — stamina dan energi relatif stabil'},
-    {val:'next',  icon:'🛡️', name:'Sudah mulai merasakan pergeseran',
-     sub:'Ada yang berbeda dari sebelumnya — energi, pemulihan, atau ritme tubuh'},
+    {val:'young', icon:'🌱', name:'Di bawah 40 tahun',
+     sub:'Tubuhku masih di fase membangun — stamina dan energi relatif konsisten'},
+    {val:'next',  icon:'🛡️', name:'40 tahun ke atas',
+     sub:'Aku sudah atau mendekati 40 — ada pergeseran yang mulai terasa'},
   ],
 };
 
@@ -2189,12 +2199,11 @@ function renderResult(){
 
   // ── Segment eyebrow + score label ──
   const eyebrowEl=document.querySelector('.r-eyebrow');
-  if(eyebrowEl) eyebrowEl.textContent='Laporan Balance-mu · V14';
+  if(eyebrowEl) eyebrowEl.textContent='Laporan Balance-mu · V14.1';
   const scoreLabelEl=document.querySelector('.r-score-label');
   if(scoreLabelEl){
-    scoreLabelEl.textContent=seg
-      ? 'Wellness Readiness Index · '+segLabel.short
-      : 'Wellness Readiness Index';
+    // F1+F3 V14.1: nama + Balance Score-mu, no segment display
+    scoreLabelEl.textContent=(userName?userName+' — ':'')+'Balance Score-mu';
   }
 
   // Score
@@ -2308,6 +2317,14 @@ function renderResult(){
       const el=document.getElementById('rpf-'+d);
       if(el) el.style.width=pct+'%';
     },500+i*100);
+    // I1B: pulse hint on first pillar row only
+    if(i===0){
+      setTimeout(()=>{
+        const row=document.getElementById('pr-'+d);
+        if(row){row.classList.add('pillar-pulse-hint');
+          row.addEventListener('animationend',()=>row.classList.remove('pillar-pulse-hint'),{once:true});}
+      },900);
+    }
   });
 
   // Ritual slots removed V9 — replaced by dosage-block
@@ -2392,8 +2409,11 @@ function togglePillarDef(id,header){
   if(!def) return;
   const isOpen=def.classList.contains('open');
   document.querySelectorAll('.rp-definition').forEach(d=>d.classList.remove('open'));
-  document.querySelectorAll('.rp-expand').forEach(a=>a.textContent='▾');
-  if(!isOpen){def.classList.add('open');if(arrow)arrow.textContent='▴';}
+  document.querySelectorAll('.rp-expand').forEach(a=>{a.textContent='▾';a.style.transform='rotate(0deg)';});
+  if(!isOpen){
+    def.classList.add('open');
+    if(arrow){arrow.textContent='▾';arrow.style.transform='rotate(180deg)';}
+  }
 }
 
 // ══════════════════════════════════════════════════════
