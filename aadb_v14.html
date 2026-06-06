@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Onesta — Ada Apa Dengan Balance? V14.1</title>
+<title>Onesta — Ada Apa Dengan Balance? V14.2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -133,17 +133,20 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .r-insight-text em{color:var(--gold-l);font-style:normal;}
 .r-pillars{margin-bottom:1.1rem;}
 .r-pillar-title{font-size:.6rem;color:var(--muted);font-family:'Montserrat',sans-serif;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.72rem;}
-.rp-row{margin-bottom:.5rem;}
-.pillar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.22rem;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.rp-row{margin-bottom:.55rem;background:var(--card);border:1.5px solid rgba(204,85,0,.10);border-radius:12px;overflow:hidden;transition:border-color .2s,box-shadow .2s;}
+.pillar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0;cursor:pointer;-webkit-tap-highlight-color:transparent;padding:.72rem .85rem .5rem;}
 .rp-name-wrap{display:flex;align-items:center;gap:.45rem;}
 .rp-name{font-size:.76rem;color:var(--sub);}
 .rp-status{font-size:.58rem;padding:.1rem .38rem;border-radius:4px;font-weight:700;font-family:'Montserrat',sans-serif;flex-shrink:0;}
 .rp-val{font-size:.7rem;color:var(--gold);font-family:'Montserrat',sans-serif;}
 .rp-expand{font-size:.78rem;color:var(--gold);margin-left:.3rem;transition:transform .25s;font-weight:700;}
-.rp-track{height:3px;background:rgba(204,85,0,.08);border-radius:99px;overflow:hidden;}
+.rp-track{height:3px;background:rgba(204,85,0,.08);border-radius:99px;overflow:hidden;margin:.35rem .85rem .65rem;}
 .rp-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold-d),var(--gold-l));transition:width .9s ease .2s;}
-.rp-definition{display:none;font-size:.75rem;color:var(--sub);line-height:1.6;padding:.55rem .65rem;background:rgba(204,85,0,.04);border-radius:8px;margin-top:.3rem;border-left:2px solid rgba(204,85,0,.22);}
+.rp-definition{display:none;font-size:.75rem;color:var(--sub);line-height:1.6;padding:.65rem .85rem .75rem;background:rgba(204,85,0,.05);border-top:1px solid rgba(204,85,0,.10);}
 .rp-definition.open{display:block;animation:sIn .25s ease;}
+.rp-row:hover{border-color:rgba(204,85,0,.28);}
+.rp-row:active{border-color:var(--gold);box-shadow:0 0 0 3px rgba(204,85,0,.08);}
+.rp-row.open-row{border-color:rgba(204,85,0,.30);background:var(--ink-2);}
 .rp-definition b{color:var(--cream);}
 .pillar-legend{margin-bottom:.75rem;padding:.75rem .7rem 1.2rem;background:rgba(204,85,0,.04);border-radius:8px;border:1px solid rgba(204,85,0,.05);}
 .zone-scale{display:flex;flex-direction:column;width:100%;gap:0;position:relative;}
@@ -662,7 +665,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 
 <!-- RESULT -->
 <div id="s-result" class="screen">
-  <div class="r-eyebrow">Laporan Balance-mu · V14.1</div>
+  <div class="r-eyebrow">Laporan Balance-mu · V14.2</div>
   <div class="r-score-block">
     <div class="r-score-top">
       <div>
@@ -757,7 +760,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
         </div>
       </div>
     </div>
-    <div style="font-size:.72rem;color:var(--muted);font-style:italic;margin-bottom:.75rem;">💡 <b style="color:var(--sub);font-style:normal;">% lebih tinggi = lebih seimbang.</b> Tap setiap pillar untuk memahami artinya.</div>
+    <div style="font-size:.72rem;color:var(--muted);font-style:italic;margin-bottom:.75rem;">💡 <b style="color:var(--sub);font-style:normal;">% lebih tinggi = lebih stabil.</b> Tap kartu pillar untuk penjelasan lengkap.</div>
     <div id="r-pillars-content"></div>
   </div>
   <div class="r-ritual-block">
@@ -2199,7 +2202,7 @@ function renderResult(){
 
   // ── Segment eyebrow + score label ──
   const eyebrowEl=document.querySelector('.r-eyebrow');
-  if(eyebrowEl) eyebrowEl.textContent='Laporan Balance-mu · V14.1';
+  if(eyebrowEl) eyebrowEl.textContent='Laporan Balance-mu · V14.2';
   const scoreLabelEl=document.querySelector('.r-score-label');
   if(scoreLabelEl){
     // F1+F3 V14.1: nama + Balance Score-mu, no segment display
@@ -2408,11 +2411,16 @@ function togglePillarDef(id,header){
   const arrow=header.querySelector('.rp-expand');
   if(!def) return;
   const isOpen=def.classList.contains('open');
+  // Close all rows
   document.querySelectorAll('.rp-definition').forEach(d=>d.classList.remove('open'));
   document.querySelectorAll('.rp-expand').forEach(a=>{a.textContent='▾';a.style.transform='rotate(0deg)';});
+  document.querySelectorAll('.rp-row').forEach(r=>r.classList.remove('open-row'));
   if(!isOpen){
     def.classList.add('open');
     if(arrow){arrow.textContent='▾';arrow.style.transform='rotate(180deg)';}
+    // Mark parent row as open
+    const row=header.closest('.rp-row');
+    if(row) row.classList.add('open-row');
   }
 }
 
