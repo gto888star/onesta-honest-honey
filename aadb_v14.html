@@ -2495,77 +2495,59 @@ function renderOptionalFlow(){
   if(!grid) return;
 
   const plusPoints={
-    Daily:  'Fondasi stabilitas metabolik harian — energi lebih stabil dari dalam.',
-    Myrta:  'Proteksi seluler jangka panjang + profil rasa botanical yang unik.',
-    Imunisi:'Perkuat ketahanan tubuh — respons imun dan pencernaan lebih optimal.',
-    DiaBee: 'Stabilkan ritme glukosa — kurangi craving dan crash setelah makan.',
+    Daily:   'Fondasi stabilitas metabolik harian — energi lebih stabil dari dalam.',
+    Myrta:   'Proteksi seluler jangka panjang + profil rasa botanical yang unik.',
+    Imunisi: 'Perkuat ketahanan tubuh — respons imun dan pencernaan lebih optimal.',
+    DiaBee:  'Stabilkan ritme glukosa — kurangi craving dan crash setelah makan.',
     Signature:'Eksplorasi rasa botanical premium — manfaat alami sebagai bonus.',
   };
 
-  grid.innerHTML='';
-
-  // PRIMARY CARD
-  const priDiv=document.createElement('div');
-  priDiv.className='opt-card-primary';
-  const priImgWrap=document.createElement('div');
-  priImgWrap.className='opt-card-img';
-  if(pri&&pri.img){
-    const img=document.createElement('img');
-    img.src=pri.img;img.alt=pri.name;
-    img.style.cssText='width:100%;height:100%;object-fit:contain;padding:6px;';
-    img.loading='eager';
-    priImgWrap.appendChild(img);
-  } else {
-    priImgWrap.innerHTML='<div style="font-size:2rem;text-align:center">'+(pri?pri.emoji:'')+'</div>';
+  // Build HTML strings — full innerHTML, no mixing with DOM API
+  function makeImg(p){
+    if(!p||!p.img) return '<div style="font-size:2rem;text-align:center;padding:1rem">'+(p?p.emoji:'🍯')+'</div>';
+    return '<img src="'+p.img+'" alt="'+p.name+'" style="width:100%;height:100%;object-fit:contain;padding:6px;" loading="eager">';
   }
-  priDiv.appendChild(priImgWrap);
-  priDiv.innerHTML+=''
+
+  var priHTML='<div class="opt-card-primary">'
+    +'<div class="opt-card-img">'+makeImg(pri)+'</div>'
     +'<div class="opt-card-body">'
     +'<div class="opt-card-label ocl-primary">✦ Fondasi Utama</div>'
     +'<div class="opt-card-name">'+(pri?pri.name:'')+'</div>'
     +'<div class="opt-card-tagline">'+(pri?pri.tagline:'')+'</div>'
     +'<span class="opt-primary-badge">✅ Fondasi utama</span>'
-    +'</div>';
-  grid.appendChild(priDiv);
+    +'</div></div>';
 
-  // SECONDARY CARD
+  var secHTML='';
   if(sec){
-    const secDiv=document.createElement('div');
-    secDiv.className='opt-card-secondary';
-    secDiv.id='opt-sec-card';
-    const secImgWrap=document.createElement('div');
-    secImgWrap.className='opt-card-img';
-    if(sec.img){
-      const img2=document.createElement('img');
-      img2.src=sec.img;img2.alt=sec.name;
-      img2.style.cssText='width:100%;height:100%;object-fit:contain;padding:6px;';
-      img2.loading='eager';
-      secImgWrap.appendChild(img2);
-    } else {
-      secImgWrap.innerHTML='<div style="font-size:2rem;text-align:center">'+sec.emoji+'</div>';
-    }
-    secDiv.appendChild(secImgWrap);
-    const plus=sk&&plusPoints[sk]
-      ?'<div class="opt-plus"><span class="opt-plus-icon">+</span><span class="opt-plus-text">'+plusPoints[sk]+'</span></div>'
+    var plus=plusPoints[sk]
+      ?'<div class="opt-plus"><span class="opt-plus-icon">+</span>'
+        +'<span class="opt-plus-text">'+plusPoints[sk]+'</span></div>'
       :'';
-    secDiv.innerHTML+=''
+    secHTML='<div class="opt-card-secondary" id="opt-sec-card">'
+      +'<div class="opt-card-img">'+makeImg(sec)+'</div>'
       +'<div class="opt-card-body">'
       +'<div class="opt-card-label ocl-secondary">✦ Pilihan Tambahanmu</div>'
       +'<div class="opt-card-name">'+sec.name+'</div>'
       +'<div class="opt-card-tagline">'+sec.tagline+'</div>'
       +plus
       +'<div class="yn-row">'
-      +'<button class="btn-yn btn-yes" id="btn-yes-sec" data-yn="yes">YES</button>'
-      +'<button class="btn-yn btn-no" id="btn-no-sec" data-yn="no">NO</button>'
-      +'</div></div>';
-    grid.appendChild(secDiv);
-    // Attach click via addEventListener — avoids quote issues
-    const btnY=document.getElementById('btn-yes-sec');
-    const btnN=document.getElementById('btn-no-sec');
+      +'<button class="btn-yn btn-yes" id="btn-yes-sec">YES</button>'
+      +'<button class="btn-yn btn-no" id="btn-no-sec">NO</button>'
+      +'</div></div></div>';
+  }
+
+  // Single innerHTML assignment — no DOM mixing
+  grid.innerHTML=priHTML+secHTML;
+
+  // Attach events AFTER innerHTML is set and elements exist in DOM
+  if(sec){
+    var btnY=grid.querySelector('#btn-yes-sec');
+    var btnN=grid.querySelector('#btn-no-sec');
     if(btnY) btnY.addEventListener('click',function(){pickYesNo('yes');});
     if(btnN) btnN.addEventListener('click',function(){pickYesNo('no');});
   }
 }
+
 
 function pickYesNo(val){
   optionalChoice=val==='yes'?'B':'A';
