@@ -443,7 +443,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 /* ══ V14.9 OPTIONAL FLOW ══ */
 .r-optional-copy{font-size:.84rem;color:var(--sub);line-height:1.65;margin-bottom:1rem;}
 .r-optional-copy b{color:var(--cream);}
-.opt-prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:.75rem;}
+.opt-prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:.75rem;min-height:200px;overflow:visible;}
 .opt-card-primary{display:flex;flex-direction:column;border-radius:14px;overflow:hidden;background:var(--card);border:2px solid var(--gold);box-shadow:0 2px 10px rgba(204,85,0,.12);}
 .opt-card-secondary{display:flex;flex-direction:column;border-radius:14px;overflow:hidden;background:var(--card2);border:2px dashed rgba(204,85,0,.28);transition:all .22s;}
 .opt-card-secondary.yn-yes{border:2px solid var(--gold);background:var(--gold-bg);}
@@ -524,7 +524,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .aha-acc-arrow{color:var(--gold);font-size:.85rem;}
 .r-aha-body{display:none;padding:0 1rem 1rem;}
 .r-aha-body.open{display:block;animation:sIn .25s ease;}
-.r-optional-block{background:var(--ink-3);border:1px solid var(--border-l);border-radius:18px;padding:1.25rem;margin-bottom:1.1rem;}
+.r-optional-block{background:var(--ink-3);border:1px solid var(--border-l);border-radius:18px;padding:1.25rem;margin-bottom:1.1rem;overflow:visible;}
 .r-optional-copy{font-size:.84rem;color:var(--sub);line-height:1.65;margin-bottom:1rem;}
 .r-optional-copy b{color:var(--cream);}
 .r-optional-choices{display:flex;flex-direction:column;gap:.65rem;}
@@ -2380,7 +2380,8 @@ function renderResult(){
   if(optConf) optConf.style.display='none';
   const optCta=document.getElementById('r-optional-cta');
   if(optCta) optCta.style.display='none';
-  renderOptionalFlow();
+  // V14.10: defer renderOptionalFlow to ensure DOM is ready
+  setTimeout(function(){renderOptionalFlow();},100);
 
   // Share preview
   const scpLines=document.getElementById('scp-lines');
