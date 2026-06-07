@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Onesta — Ada Apa Dengan Balance? V14.7</title>
+<title>Onesta — Ada Apa Dengan Balance? V14.7.1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -704,7 +704,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 
 <!-- RESULT -->
 <div id="s-result" class="screen">
-  <div class="r-eyebrow">Laporan Balance-mu · V14.7</div>
+  <div class="r-eyebrow">Laporan Balance-mu · V14.7.1</div>
   <div class="r-score-block">
     <div class="r-score-top">
       <div>
@@ -810,18 +810,18 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
     <div class="r-optional-trigger">
       <div class="r-optional-copy">
         Tubuhmu sudah menyampaikan bisikannya.<br>
-        <b>Sekarang kamu yang menentukan prioritasnya.</b>
+        <b>Pilih ritual yang ingin kamu mulai:</b>
       </div>
       <div class="r-optional-choices" id="r-optional-choices">
         <button class="opt-choice" id="opt-choice-a" onclick="selectOptionalChoice('A')">
           <div class="opt-choice-icon">🎯</div>
-          <div class="opt-choice-label">Stabilitas Dulu</div>
-          <div class="opt-choice-sub">Mulai dari fondasi · Satu produk, satu fokus</div>
+          <div class="opt-choice-label">Mulai dengan 1 produk</div>
+          <div class="opt-choice-sub">Fondasi dulu · Fokus, tidak overwhelm</div>
         </button>
         <button class="opt-choice" id="opt-choice-b" onclick="selectOptionalChoice('B')">
           <div class="opt-choice-icon">✨</div>
-          <div class="opt-choice-label">Stabilitas + Dukungan</div>
-          <div class="opt-choice-sub">Fondasi + respons sinyal terkuat</div>
+          <div class="opt-choice-label">Tambah produk kedua</div>
+          <div class="opt-choice-sub">Fondasi + respons sinyal terkuat tubuhmu</div>
         </button>
       </div>
     </div>
@@ -2214,7 +2214,7 @@ function renderResult(){
 
   // ── Segment eyebrow + score label ──
   const eyebrowEl=document.querySelector('.r-eyebrow');
-  if(eyebrowEl) eyebrowEl.textContent='Laporan Balance-mu · V14.7';
+  if(eyebrowEl) eyebrowEl.textContent='Laporan Balance-mu · V14.7.1';
   const scoreLabelEl=document.querySelector('.r-score-label');
   if(scoreLabelEl){
     // F1+F3 V14.1: nama + Balance Score-mu, no segment display
