@@ -2485,66 +2485,45 @@ function selectOptionalChoice(choice){
   renderOptionalCTA();
 }
 function renderOptionalFlow(){
-  if(!result) return;
-  const type=result.type;
-  const pk=type.products[0];
-  const sk=type.products.length>1?type.products[1]:null;
-  const pri=PRODUCTS[pk];
-  const sec=sk?PRODUCTS[sk]:null;
-  const grid=document.getElementById('opt-prod-grid');
-  if(!grid) return;
-
-  const plusPoints={
-    Daily:   'Fondasi stabilitas metabolik harian — energi lebih stabil dari dalam.',
-    Myrta:   'Proteksi seluler jangka panjang + profil rasa botanical yang unik.',
-    Imunisi: 'Perkuat ketahanan tubuh — respons imun dan pencernaan lebih optimal.',
-    DiaBee:  'Stabilkan ritme glukosa — kurangi craving dan crash setelah makan.',
-    Signature:'Eksplorasi rasa botanical premium — manfaat alami sebagai bonus.',
-  };
-
-  // Build HTML strings — full innerHTML, no mixing with DOM API
-  function makeImg(p){
-    if(!p||!p.img) return '<div style="font-size:2rem;text-align:center;padding:1rem">'+(p?p.emoji:'🍯')+'</div>';
-    return '<img src="'+p.img+'" alt="'+p.name+'" style="width:100%;height:100%;object-fit:contain;padding:6px;" loading="eager">';
-  }
-
-  var priHTML='<div class="opt-card-primary">'
-    +'<div class="opt-card-img">'+makeImg(pri)+'</div>'
-    +'<div class="opt-card-body">'
-    +'<div class="opt-card-label ocl-primary">✦ Fondasi Utama</div>'
-    +'<div class="opt-card-name">'+(pri?pri.name:'')+'</div>'
-    +'<div class="opt-card-tagline">'+(pri?pri.tagline:'')+'</div>'
-    +'<span class="opt-primary-badge">✅ Fondasi utama</span>'
-    +'</div></div>';
-
-  var secHTML='';
+  var grid=document.getElementById('opt-prod-grid');
+  if(!grid||!result||!result.type||!result.type.products) return;
+  var pk=result.type.products[0];
+  var sk=result.type.products.length>1?result.type.products[1]:null;
+  var pri=PRODUCTS[pk]||{name:'',tagline:'',emoji:'🍯',img:''};
+  var sec=sk?PRODUCTS[sk]:null;
+  var plus={'Daily':'Fondasi stabilitas metabolik harian — energi lebih stabil dari dalam.','Myrta':'Proteksi seluler jangka panjang + profil rasa botanical yang unik.','Imunisi':'Perkuat ketahanan tubuh — respons imun dan pencernaan lebih optimal.','DiaBee':'Stabilkan ritme glukosa — kurangi craving dan crash setelah makan.'};
+  var h='<div class="opt-card-primary">';
+  h+='<div class="opt-card-img">';
+  if(pri.img) h+='<img src="'+pri.img+'" style="width:100%;height:100%;object-fit:contain;padding:6px" loading="eager">';
+  else h+='<div style="font-size:2.5rem;text-align:center;padding:1rem">'+pri.emoji+'</div>';
+  h+='</div><div class="opt-card-body">';
+  h+='<div class="opt-card-label ocl-primary">✦ Fondasi Utama</div>';
+  h+='<div class="opt-card-name">'+pri.name+'</div>';
+  h+='<div class="opt-card-tagline">'+pri.tagline+'</div>';
+  h+='<span class="opt-primary-badge">✅ Fondasi utama</span>';
+  h+='</div></div>';
   if(sec){
-    var plus=plusPoints[sk]
-      ?'<div class="opt-plus"><span class="opt-plus-icon">+</span>'
-        +'<span class="opt-plus-text">'+plusPoints[sk]+'</span></div>'
-      :'';
-    secHTML='<div class="opt-card-secondary" id="opt-sec-card">'
-      +'<div class="opt-card-img">'+makeImg(sec)+'</div>'
-      +'<div class="opt-card-body">'
-      +'<div class="opt-card-label ocl-secondary">✦ Pilihan Tambahanmu</div>'
-      +'<div class="opt-card-name">'+sec.name+'</div>'
-      +'<div class="opt-card-tagline">'+sec.tagline+'</div>'
-      +plus
-      +'<div class="yn-row">'
-      +'<button class="btn-yn btn-yes" id="btn-yes-sec">YES</button>'
-      +'<button class="btn-yn btn-no" id="btn-no-sec">NO</button>'
-      +'</div></div></div>';
+    var p=plus[sk]||'';
+    h+='<div class="opt-card-secondary" id="opt-sec-card">';
+    h+='<div class="opt-card-img">';
+    if(sec.img) h+='<img src="'+sec.img+'" style="width:100%;height:100%;object-fit:contain;padding:6px" loading="eager">';
+    else h+='<div style="font-size:2.5rem;text-align:center;padding:1rem">'+sec.emoji+'</div>';
+    h+='</div><div class="opt-card-body">';
+    h+='<div class="opt-card-label ocl-secondary">✦ Pilihan Tambahanmu</div>';
+    h+='<div class="opt-card-name">'+sec.name+'</div>';
+    h+='<div class="opt-card-tagline">'+sec.tagline+'</div>';
+    if(p) h+='<div class="opt-plus"><span class="opt-plus-icon">+</span><span class="opt-plus-text">'+p+'</span></div>';
+    h+='<div class="yn-row">';
+    h+='<button class="btn-yn btn-yes" id="btn-yes-sec">YES</button>';
+    h+='<button class="btn-yn btn-no" id="btn-no-sec">NO</button>';
+    h+='</div></div></div>';
   }
-
-  // Single innerHTML assignment — no DOM mixing
-  grid.innerHTML=priHTML+secHTML;
-
-  // Attach events AFTER innerHTML is set and elements exist in DOM
+  grid.innerHTML=h;
   if(sec){
-    var btnY=grid.querySelector('#btn-yes-sec');
-    var btnN=grid.querySelector('#btn-no-sec');
-    if(btnY) btnY.addEventListener('click',function(){pickYesNo('yes');});
-    if(btnN) btnN.addEventListener('click',function(){pickYesNo('no');});
+    var by=grid.querySelector('#btn-yes-sec');
+    var bn=grid.querySelector('#btn-no-sec');
+    if(by) by.onclick=function(){pickYesNo('yes');};
+    if(bn) bn.onclick=function(){pickYesNo('no');};
   }
 }
 
