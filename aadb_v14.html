@@ -552,29 +552,29 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 <div id="s-cover" class="screen active">
   <span class="cover-hex">⬡</span>
   <h1 class="cover-title">Ada Apa Dengan<br><em>Balance?</em></h1>
-  <p class="cover-tagline">Bukan kuis biasa. Cermin metabolik tubuhmu.</p>
+  <p class="cover-tagline">Bukan kuis biasa. Ini cermin metabolik tubuhmu.
   <div class="cover-pills">
     <div class="cpill"><div class="cd"></div><span>Energi</span></div>
-    <div class="cpill"><div class="cd"></div><span>Gula Darah</span></div>
+    <div class="cpill"><div class="cd"></div><span>Glukosa Darah</span></div>
     <div class="cpill"><div class="cd"></div><span>Pencernaan</span></div>
     <div class="cpill"><div class="cd"></div><span>Imunitas</span></div>
     <div class="cpill"><div class="cd"></div><span>Recovery</span></div>
-    <div class="cpill"><div class="cd"></div><span>Malam &amp; Stres</span></div>
+    <div class="cpill"><div class="cd"></div><span>Ritme Malam</span></div>
   </div>
   <div class="user-form">
     <div class="form-field">
-      <label class="form-label">Nama Kamu</label>
+      <label class="form-label">Nama kamu
       <input class="form-input" id="user-name" type="text" placeholder="cth. Budi" autocomplete="given-name" maxlength="40">
-      <div class="form-error" id="err-name">Mohon masukkan namamu</div>
+      <div class="form-error" id="err-name">Nama panggilanmu
     </div>
   </div>
-  <button class="btn-start" onclick="validateAndStart()">Cek Balance Saya</button>
-  <p class="cover-note">10 pertanyaan · 3-5 menit · Gratis</p>
-  <p style="font-size:.62rem;color:var(--muted);text-align:center;margin-top:.5rem;line-height:1.5;font-style:italic;max-width:300px;">Hasil kuis ini bersifat edukatif dan bukan merupakan diagnosis medis. Konsultasikan kondisi kesehatanmu dengan profesional untuk keputusan medis.</p>
+  <button class="btn-start" onclick="validateAndStart()">Mulai cek balance-ku
+  <p class="cover-note">10 pertanyaan · 3 menit
+  <p style="font-size:.62rem;color:var(--muted);text-align:center;margin-top:.5rem;line-height:1.5;font-style:italic;max-width:300px;">Hasil kuis ini bersifat edukatif, bukan diagnosis medis.
   <div class="brand-bottom">
     <img class="brand-logo" src="https://gto888star.github.io/onesta-honest-honey/onesta_logo_light.jpg" alt="Onesta" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
     <div style="display:none"><div class="brand-name">Onesta</div></div>
-    <div class="brand-tag">Honest Honey · Natural Metabolic Stabilizer</div>
+    <div class="brand-tag">Honest Honey · Living Honey · Natural Metabolic Stabilizer
   </div>
 </div>
 
@@ -632,20 +632,20 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 
     <!-- Header -->
     <div class="gw-header">
-      <h2 class="gw-title">Satu langkah terakhir untuk hasil yang lebih akurat</h2>
-      <p class="gw-sub">Tubuh setiap orang berbeda. Dua pertanyaan ini membantu kami menyesuaikan interpretasi khusus untukmu.</p>
+      <h2 class="gw-title">(hapus)
+      <p class="gw-sub">Tubuh setiap orang berbeda. Ini membantu menyesuaikan hasil yang lebih personal untukmu.
     </div>
 
     <!-- GATEWAY 1 — Ritme Biologis -->
     <div class="gw-block" id="gw-block-1">
-      <div class="gw-q-label">Untuk kalibrasi yang lebih akurat, pilih profil metabolik yang paling sesuai:</div>
+      <div class="gw-q-label">Pilih profil yang paling sesuai denganmu:
       <div class="gw-cards" id="gw-cards-1">
 
         <button class="gw-card" data-gw="1" data-val="F" onclick="selectGw(this)">
           <div class="gw-card-icon">🌸</div>
           <div>
             <div class="gw-card-name">Perempuan</div>
-            <div class="gw-card-sub">Siklus hormonal dan keseimbangan yang unik</div>
+            <div class="gw-card-sub">Ritme dan keseimbangan yang unik</div>
           </div>
           <div class="gw-check"></div>
         </button>
@@ -684,10 +684,10 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 
     <!-- CTA -->
     <button class="gw-btn" id="gw-btn" onclick="submitGateway()" disabled>
-      💌 Ungkap Profil Balance-ku →
+      💌 Lihat Profil Balance-ku →
     </button>
 
-    <p class="gw-privacy">🔒 Informasi ini hanya digunakan untuk menyesuaikan interpretasi hasil. Tidak disimpan secara terpisah.</p>
+    <p class="gw-privacy">🔒 Informasi ini hanya untuk menyesuaikan hasil personalmu. Tidak akan dibagikan ke pihak lain.
 
   </div>
 </div>
@@ -696,7 +696,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 <div id="s-calc" class="screen">
   <div class="calc-bee">🐝</div>
   <h2 class="calc-title">Membaca sinyal tubuhmu...</h2>
-  <p class="calc-sub">Menganalisis 6 balance pillars</p>
+  <p class="calc-sub">Menyusun profil lengkap tubuhmu...
   <div class="calc-list" id="calc-list"></div>
 </div>
 
@@ -721,7 +721,6 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
           </div>
           <div class="score-pos-ends">
             <span>40</span>
-            <span class="score-pos-mid-label">70</span>
             <span>100</span>
           </div>
 
@@ -745,11 +744,11 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
   <!-- ══ AHA ACCORDION — V14 (was: mandatory screen) ══ -->
   <div class="r-aha-accordion">
     <div class="r-aha-toggle" onclick="toggleAhaAccordion()" id="aha-toggle-btn">
-      <span>🔍 Mengapa tubuhmu dapat hasil ini?</span>
+      <span>🔍 Bagaimana tubuhmu mendapat hasil ini?
       <span class="aha-acc-arrow" id="aha-acc-arrow">▾</span>
     </div>
     <div class="r-aha-body" id="r-aha-body">
-      <div style="font-size:.73rem;color:var(--muted);line-height:1.55;margin-bottom:.75rem;font-style:italic;">Berikut sinyal-sinyal yang kamu laporkan tadi — inilah yang membentuk profil metabolikmu.</div>
+      <div style="font-size:.73rem;color:var(--muted);line-height:1.55;margin-bottom:.75rem;font-style:italic;">Ini sinyal-sinyal yang kamu ceritakan tadi — dan inilah artinya.
       <div class="aha-answers" id="aha-answers"></div>
       <div class="aha-therefore">
         <div class="aha-therefore-label">Kesimpulan →</div>
@@ -761,7 +760,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
   </div>
 
   <div class="r-pillars">
-    <div class="r-pillar-title">6 Balance Pillars</div>
+    <div class="r-pillar-title">6 Pilar 'Balance' Tubuhmu</div>
     <div class="pillar-legend">
       <div class="zone-scale">
         <div class="zone-bar-wrap">
@@ -778,7 +777,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
         </div>
       </div>
     </div>
-    <div style="font-size:.72rem;color:var(--muted);font-style:italic;margin-bottom:.75rem;">💡 <b style="color:var(--sub);font-style:normal;">% lebih tinggi = lebih stabil.</b> Tap kartu pillar untuk penjelasan lengkap.</div>
+    <div style="font-size:.72rem;color:var(--muted);font-style:italic;margin-bottom:.75rem;">💡 <b style="color:var(--sub);font-style:normal;">Semakin tinggi persentasenya, semakin balance. Klik pilar untuk penjelasan lengkap.
     <div id="r-pillars-content"></div>
   </div>
   <div class="r-ritual-block">
@@ -809,19 +808,18 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
   <div class="r-optional-block" id="r-optional-block">
     <div class="r-optional-trigger">
       <div class="r-optional-copy">
-        Tubuhmu sudah menyampaikan bisikannya.<br>
-        <b>Pilih ritual yang ingin kamu mulai:</b>
+        Sekarang giliranmu. Ritual mana yang ingin kamu mulai?
       </div>
       <div class="r-optional-choices" id="r-optional-choices">
         <button class="opt-choice" id="opt-choice-a" onclick="selectOptionalChoice('A')">
           <div class="opt-choice-icon">🎯</div>
           <div class="opt-choice-label">Mulai dengan 1 produk</div>
-          <div class="opt-choice-sub">Fondasi dulu · Fokus, tidak overwhelm</div>
+          <div class="opt-choice-sub">Fondasi dulu · Satu fokus, tidak bingung
         </button>
         <button class="opt-choice" id="opt-choice-b" onclick="selectOptionalChoice('B')">
           <div class="opt-choice-icon">✨</div>
           <div class="opt-choice-label">Tambah produk kedua</div>
-          <div class="opt-choice-sub">Fondasi + respons sinyal terkuat tubuhmu</div>
+          <div class="opt-choice-sub">Fondasi + dukungan terkuat untuk kondisimu
         </button>
       </div>
     </div>
@@ -863,9 +861,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
           <span class="faq-icon">＋</span>
         </div>
         <div class="faq-a">
-          Kondisimu hari ini adalah data — bukan diagnosis.<br><br>
-          Tubuh yang didengar lebih awal lebih mudah dijaga seimbang. Bukan karena ada yang salah — tapi karena merespons lebih awal selalu lebih mudah dari merespons lebih lambat.<br><br>
-          <b>Semakin awal direspons, semakin mudah tubuh diajak kembali ke kondisi terbaiknya.</b>
+          Kondisimu hari ini adalah data — bukan diagnosis. Tubuh yang didengar lebih awal lebih mudah dijaga seimbang. Merespons sekarang selalu lebih mudah dari merespons nanti.
         </div>
       </div>
 
@@ -875,9 +871,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
           <span class="faq-icon">＋</span>
         </div>
         <div class="faq-a">
-          Lebah biasa menghasilkan madu manis yang kita kenal.<br><br>
-          Lebah tanpa sengat (<em>stingless bee</em>) menghasilkan sesuatu yang berbeda secara biologis — lebih asam, lebih kaya enzim aktif, dan mengandung profil asam organik yang tidak ditemukan di madu biasa. Inilah yang membuatnya bekerja sebagai metabolic stabilizer, bukan sekadar pemanis.<br><br>
-          Kandungan <b>trehalulose</b> yang tinggi menjadikannya unik — gula alami dengan <b>Glycemic Index sangat rendah</b> yang memberikan energi stabil tanpa lonjakan insulin. Tubuh mendapat bahan bakar yang tepat, pada ritme yang tepat.
+          Lebah biasa menghasilkan madu yang kita kenal. Lebah tanpa sengat menghasilkan sesuatu yang berbeda secara biologis — lebih asam, lebih kaya enzim aktif, dan memiliki kandungan yang tidak ditemukan di madu biasa. Yang membuatnya spesial: ia memberi energi yang terasa lebih stabil, tanpa naik lalu jatuh terlalu cepat. Bukan sekadar madu — tapi penstabil ritme tubuh. Tubuh mendapat bahan bakar yang tepat, pada ritme yang tepat.
         </div>
       </div>
 
@@ -887,13 +881,11 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
           <span class="faq-icon">＋</span>
         </div>
         <div class="faq-a">
-          Banyak produk madu klaim alami.<br>
-          Kami bisa tunjukkan prosesnya.<br><br>
-          🟠 <b>Ripe</b> — dipanen hanya saat lebah sudah menutup sel madu<br>
-          🟠 <b>Raw</b> — tidak dipanaskan, enzim aktif terjaga<br>
-          🟠 <b>Natural</b> — tanpa tambahan apapun, persis seperti dari sarang<br>
-          🟠 <b>Pure</b> — 100% madu, tidak ada tambahan apapun<br>
-          🟠 <b>Honest</b> — traceability penuh, dapat ditelusuri dari sarang ke botol
+          Onesta adalah daily natural metabolic stabilizer — membantu tubuh kamu stay in balance, setiap hari.<br><br>
+          <b>Honest Honey™</b><br>
+          Ripe · Raw · Natural · Pure · Honest — digitally traceability, dari sarang hingga ke botol.<br><br>
+          <b>Living Honey™</b><br>
+          Trehalulose (low GI) dan bioaktif alami (prebiotic, propolis, antioxidants, anti-inflammatory, antimicrobial)
         </div>
       </div>
 
@@ -903,10 +895,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
           <span class="faq-icon">＋</span>
         </div>
         <div class="faq-a">
-          Tidak ada yang instan — dan kami tidak akan mengklaim sebaliknya.<br><br>
-          Kebanyakan orang mulai merasakan perbedaan dalam <b>14–30 hari pertama</b> ritual yang konsisten.<br><br>
-          Bukan karena produknya bekerja cepat — tapi karena tubuh yang mulai distabilkan dari dalam punya ritme pemulihannya sendiri.<br><br>
-          <em>Coba 14 hari dulu. Biarkan tubuhmu yang menjawab.</em>
+          Tidak ada yang instan — dan kami tidak akan mengklaim sebaliknya. Kebanyakan orang mulai merasakan perbedaan dalam 14–30 hari pertama ritual yang konsisten. Bukan karena produknya bekerja cepat — tapi karena tubuh yang distabilkan dari dalam punya ritme pemulihannya sendiri. Coba 14 hari dulu. Biarkan tubuhmu yang menjawab.
         </div>
       </div>
 
@@ -916,10 +905,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
           <span class="faq-icon">＋</span>
         </div>
         <div class="faq-a">
-          Pertanyaan yang jujur — dan layak dijawab dengan jujur.<br><br>
-          Bukan soal harganya. Soal apa yang kamu berikan setiap hari kepada tubuhmu.<br><br>
-          Tubuh yang stabil hari ini adalah fondasi dari semua hal lain yang ingin kamu lakukan.<br><br>
-          <em>Mulai dari 14 hari. Rasakan sendiri perbedaannya.</em>
+          Pertanyaan yang jujur — dan layak dijawab dengan jujur. Sebelum tubuh bisa menyerap, memanfaatkan, memperbaiki, beradaptasi, dan berkinerja dengan baik, tubuh pertama-tama membutuhkan stabilitas. Balance adalah fondasi dari semua hal yang ingin kamu lakukan. Onesta adalah daily metabolic stabilizer — membantu tubuh kamu stay in balance, setiap hari. Mulai dari 14 hari. Rasakan sendiri perbedaannya.
         </div>
       </div>
 
@@ -929,8 +915,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
           <span class="faq-icon">＋</span>
         </div>
         <div class="faq-a">
-          Onesta adalah produk wellness alami. Untuk kondisi spesifik, tim kami siap menjawab langsung dan personal.<br><br>
-          <a href="https://wa.me/62818843682" target="_blank" style="color:var(--gold);font-weight:700;text-decoration:none;">→ Chat dengan CS Onesta</a>
+          Onesta adalah stingless bee wellness alami. Untuk kondisi spesifik, tim kami siap menjawab langsung dan personal. → Chat dengan CS Onesta
         </div>
       </div>
 
@@ -955,12 +940,12 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
     <button class="btn-primary" onclick="orderRitual()">🍯 Mulai Ritual Saya Sekarang</button>
 
     <div class="share-lang-row">
-      <button class="btn-share-lang" onclick="shareWA('id')">📤 Bagikan dalam Bahasa Indonesia</button>
+      <button class="btn-share-lang" onclick="shareWA('id')">📤 Bagikan ke Temanmu
       <button class="btn-share-lang" onclick="shareWA('en')">📤 Share in English</button>
     </div>
     <button class="btn-ghost" onclick="restart()">↺ Cek Ulang Minggu Depan</button>
   </div>
-  <p class="r-footnote">Hasil ini edukatif, bukan diagnosis medis · Berdasarkan 1.100+ referensi ilmiah · Onesta™</p>
+  <p class="r-footnote">Hasil ini edukatif, bukan diagnosis medis. Diadaptasi dari modern wellness science: PSQI, FAS, GSRS. Onesta™
 </div>
 
 <script>
@@ -1019,39 +1004,39 @@ const QS = [
   // ── CHAPTER 1 ── ENERGI & GULA DARAH ──
   {
     p:"⚡ Energi",d:"energy",ch:1,
-    q:"Bagaimana energimu sepanjang hari dalam sebulan terakhir?",
-    h:"Dalam sebulan ini, pola energimu adalah cermin paling jujur dari ritme metabolikmu.",
+    q:"Dalam sebulan terakhir, bagaimana energimu sepanjang hari?",
+    h:"Energimu adalah tanda paling jujur tentang kondisi tubuhmu.",
     opts:[
       {k:"A",l:"Bangun langsung segar — dan stabil sepanjang hari",s:"Energi bukan sesuatu yang perlu dipikirkan — ia hadir begitu saja",sc:0},
-      {k:"B",l:"Butuh waktu untuk mulai, atau ada penurunan di sore hari",s:"Pagi terasa agak berat sebelum akhirnya oke — atau sore mulai terasa drop",sc:2},
+      {k:"B",l:"Butuh waktu untuk mulai — atau energi turun di sore hari",s:"Pagi terasa agak berat sebelum akhirnya oke — atau sore mulai terasa drop",sc:2},
       {k:"C",l:"Sering lelah tanpa sebab yang jelas",s:"Tubuh seolah tidak mendapat manfaat dari istirahat yang sudah dilakukan",sc:5},
-      {k:"D",l:"Sangat mudah kelelahan",s:"Aktivitas ringan pun sudah menguras tenaga — tubuh terasa seperti berjalan dengan baterai yang hampir habis",sc:8},
+      {k:"D",l:"Sangat mudah kelelahan — bahkan untuk aktivitas kecil/sedikit",s:"Aktivitas ringan pun sudah menguras tenaga — tubuh terasa seperti berjalan dengan baterai yang hampir habis",sc:8},
     ],
-    ins:"Energy crash tanpa sebab adalah tanda <b>stres oksidatif</b> — radikal bebas yang melampaui kapasitas antioksidan tubuh. Ini bukan soal kemauan, ini masalah <em>seluler</em>."
+    ins:"Energy crash tanpa sebab bukan soal kemauan — ini sinyal bahwa tubuhmu sedang bekerja keras. Dan ritme ini masih bisa kembali lebih stabil."
   },
   {
-    p:"🩸 Gula Darah",d:"glucose",ch:1,
+    p:"🩸 Glukosa Darah",d:"glucose",ch:1,
     q:"Setelah makan, apa yang biasanya terjadi?",
-    h:"Ngantuk setelah makan adalah hal yang tidak normal — itu sinyal gula darah naik lalu jatuh terlalu cepat.",
+    h:"Ngantuk setelah makan lebih sering terjadi dari yang disadari — dan tubuh sedang bicara sesuatu.",
     opts:[
-      {k:"A",l:"Normal dan nyaman",s:"Tubuh merespons makanan dengan tenang — energi tetap stabil setelahnya",sc:0},
-      {k:"B",l:"Sedikit ngantuk atau berat",s:"Masih bisa produktif — tapi ada jeda yang dibutuhkan setelah makan",sc:2},
+      {k:"A",l:"Kenyang, nyaman, dan tetap berenergi",s:"Tubuh merespons makanan dengan tenang — energi tetap stabil setelahnya",sc:0},
+      {k:"B",l:"Sedikit ngantuk atau terasa berat",s:"Masih bisa produktif — tapi ada jeda yang dibutuhkan setelah makan",sc:2},
       {k:"C",l:"Habis makan ngantuk berat — tapi anehnya masih ingin makan lagi",s:"Badan minta istirahat, tapi perut masih minta tambah",sc:5},
-      {k:"D",l:"Dalam 1-2 jam crash total — lapar lagi, lemas, sulit fokus",s:"Rasanya seperti tubuh mengkhianati dirinya sendiri",sc:8},
+      {k:"D",l:"Dalam 1–2 jam energi drop habis — lapar lagi, lemas, sulit fokus",s:"Rasanya seperti tubuh mengkhianati dirinya sendiri",sc:8},
     ],
-    ins:"<b>Ngantuk setelah makan dan cepat lapar lagi</b> adalah tanda fluktuasi glukosa — insulin naik lalu turun mendadak. Inilah yang menciptakan siklus makan-crash-craving yang berulang."
+    ins:"<b>Ngantuk setelah makan dan cepat lapar lagi bukan soal porsi. Ini siklus yang berulang karena ritme energi tubuhmu belum stabil — dan siklus ini bisa diubah."
   },
   {
-    p:"🩸 Gula Darah",d:"glucose",ch:1,
-    q:"Dalam sebulan terakhir, seberapa sering kamu mengalami craving kuat terhadap gula atau karbohidrat?",
-    h:"Craving yang muncul berulang dalam sebulan ini bukan soal lemahnya kemauan — ini sinyal pola gula darah yang perlu dikenali.",
+    p:"🩸 Glukosa Darah",d:"glucose",ch:1,
+    q:"Dalam sebulan terakhir, seberapa sering kamu craving kuat terhadap karbohidrat atau makanan manis?",
+    h:"Craving yang muncul berulang dalam sebulan ini bukan soal lemahnya kemauan — ini sinyal pola glukosa darah yang perlu dikenali.",
     opts:[
       {k:"A",l:"Jarang — nafsu makan stabil",s:"Tubuh tidak mengirim sinyal lapar yang berlebihan",sc:0},
-      {k:"B",l:"Sesekali, masih bisa dikontrol",s:"Muncul sesekali — tapi tidak sampai mengganggu aktivitas",sc:2},
+      {k:"B",l:"Sesekali muncul, tapi masih ringan",s:"Muncul sesekali — tapi tidak sampai mengganggu aktivitas",sc:2},
       {k:"C",l:"Sering, terutama siang dan sore",s:"Terutama saat skip makan atau jam makan telat — tubuh langsung minta sesuatu",sc:5},
       {k:"D",l:"Hampir setiap hari, sangat intens",s:"Terasa seperti kebutuhan fisik yang tidak bisa ditunda",sc:8},
     ],
-    ins:"<b>Craving gula yang kuat</b> adalah sinyal otak yang sedang kekurangan bahan bakar — bukan tanda lemahnya kemauan. Glukosa yang tidak stabil menciptakan siklus craving yang berulang dan semakin kuat. Bukan salahmu — ini ritme yang bisa diatur ulang."
+    ins:"<b>Craving yang kuat adalah sinyal otak yang sedang kekurangan bahan bakar — bukan tanda lemahnya kemauan. Saat ritme glukosa darah naik-turun terlalu cepat, craving bisa terus muncul berulang. Bukan salahmu — ini ritme yang bisa diatur ulang."
   },
 
   // ── CHAPTER 2 ── GUT · IMMUNE · RECOVERY · DECLINE ──
@@ -1063,45 +1048,45 @@ const QS = [
       {k:"A",l:"Nyaman sepanjang hari",s:"Pencernaan berjalan normal — tidak ada yang mengganggu",sc:0},
       {k:"B",l:"Sesekali perut berasa penuh, begah, atau kembung",s:"Ada tapi tidak sering — biasanya hilang sendiri",sc:2},
       {k:"C",l:"Sering kembung, tidak nyaman, atau pencernaan tidak lancar",s:"Ketidaknyamanan yang cukup mengganggu aktivitas dan konsentrasi harianmu",sc:5},
-      {k:"D",l:"Pencernaan yang tidak pernah benar-benar nyaman",s:"Sudah jadi bagian keseharian — selalu ada saja yang tidak beres",sc:7},
+      {k:"D",l:"Pencernaan hampir tidak pernah terasa benar-benar nyaman",s:"Sudah jadi bagian keseharian — selalu ada saja yang tidak beres",sc:7},
     ],
-    ins:"Pencernaan yang tidak nyaman adalah tanda <b>ekosistem bakteri di pencernaanmu tidak seimbang</b> — ketika bakteri baik dan jahat tidak lagi berada di proporsi yang tepat, dampaknya terasa langsung pada produksi serotonin (90% diproduksi di area pencernaan), mood, dan imunitas."
+    ins:"Pencernaan yang tidak nyaman bukan cuma soal perut. Ia terhubung langsung ke mood, energi, dan imunitas — karena pencernaanmu adalah salah satu sistem terpenting yang tubuh miliki."
   },
   {
     p:"🛡️ Imunitas",d:"immune",ch:2,
-    q:"Dalam sebulan terakhir, seberapa sering tubuhmu bereaksi lebih sensitif dibanding orang di sekitarmu — lebih mudah lelah, lebih cepat sakit, atau butuh waktu lebih lama untuk pulih?",
+    q:"Dalam sebulan terakhir, seberapa sering tubuhmu terasa lebih rentan — lebih cepat lelah, lebih mudah sakit, atau lebih lama pulih?",
     h:"Bukan soal kuat atau lemah — ini sinyal seberapa stabil sistem imun dan metabolikmu merespons tekanan sehari-hari.",
     opts:[
       {k:"A",l:"Sangat jarang — tubuh merespons dengan baik",s:"Ketika orang lain kena, tubuhku tetap bisa bertahan",sc:0},
-      {k:"B",l:"Sesekali 1-2x sebulan",s:"Ada reaksi — tapi cepat kembali normal",sc:2},
-      {k:"C",l:"Hampir setiap minggu",s:"Tubuh terasa lebih rentan dari orang-orang di sekitarku",sc:5},
-      {k:"D",l:"Hampir selalu",s:"Belum selesai satu — sudah datang yang lain",sc:7},
+      {k:"B",l:"Sesekali, satu sampai dua kali dalam sebulan",s:"Ada reaksi — tapi cepat kembali normal",sc:2},
+      {k:"C",l:"Hampir setiap minggu tubuh terasa lebih mudah terganggu",s:"Tubuh terasa lebih rentan dari orang-orang di sekitarku",sc:5},
+      {k:"D",l:"Hampir selalu — tubuh jarang terasa benar-benar tahan",s:"Belum selesai satu — sudah datang yang lain",sc:7},
     ],
-    ins:"Ketika tubuh lebih sering bereaksi dari orang di sekitarmu, ini bukan kebetulan — ini tanda <b>inflammatory load</b> yang tinggi. Sistem imunmu terus-menerus dalam mode repair, sehingga kapasitasnya terkuras sebelum sempat bertahan. Ini sinyal yang bisa distabilkan dari dalam."
+    ins:"Ketika tubuh lebih sering bereaksi dibandingkan orang di sekitarmu, itu bukan tanda tubuhmu lemah — tapi sinyal bahwa sistem pertahananmu sedang bekerja lebih keras. Dan itu bisa distabilkan dari dalam."
   },
   {
     p:"💪 Recovery",d:"recovery",ch:2,
     q:"Seberapa cepat tubuhmu pulih setelah aktivitas berat, stres tinggi, atau kurang tidur?",
-    h:"Recovery bukan soal usia — ini tentang seberapa efisien sel-selmu memperbaiki diri setelah setiap tantangan.",
+    h:"Recovery bukan soal usia — ini tentang seberapa cepat tubuhmu mengisi ulang dirinya sendiri.",
     opts:[
       {k:"A",l:"Cepat — segar lagi keesokan harinya",s:"Bangun keesokan harinya sudah segar — tubuh benar-benar pulih saat tidur",sc:0},
       {k:"B",l:"Butuh beberapa hari — tapi akhirnya pulih juga",s:"Dengan istirahat yang cukup, tubuh kembali normal",sc:2},
-      {k:"C",l:"Butuh waktu lebih lama dari yang seharusnya",s:"Sudah istirahat cukup — tapi tubuh belum benar-benar fresh",sc:4},
+      {k:"C",l:"Pemulihannya lebih lama dari yang wajar",s:"Sudah istirahat cukup — tapi tubuh belum benar-benar fresh",sc:4},
       {k:"D",l:"Tubuh jarang terasa benar-benar pulih",s:"Bahkan setelah istirahat panjang — tubuh masih terasa lelah saat bangun tidur",sc:7},
     ],
-    ins:"Recovery lambat adalah tanda bahwa <b>sel-sel energimu tidak bekerja optimal</b> — pabrik energi di dalam setiap sel terbebani oleh kerusakan kumulatif yang terus menumpuk. Bukan soal kurang istirahat — ini soal seberapa efisien sel-selmu memperbaiki diri. Dan efisiensi itu bisa ditingkatkan dari dalam."
+    ins:"Recovery yang lambat bukan soal kurang istirahat. Ada sesuatu yang sedang terjadi di dalam yang membuat tubuh perlu lebih banyak waktu. Dan itu bisa direspons dengan dukungan yang tepat."
   },
   {
-    p:"🔬 Proteksi Seluler",d:"decline",ch:2,
+    p:"🔬 Perlindungan Sel",d:"decline",ch:2,
     q:"Dibandingkan saat kamu merasa di kondisi terbaikmu — bagaimana energi, fokus, dan stamina fisikmu sekarang?",
-    h:"Pergeseran yang terjadi perlahan sering tidak disadari — sampai kamu melihatnya dari jarak yang jujur.",
+    h:"Pergeseran yang terjadi perlahan, sering tidak disadari.",
     opts:[
       {k:"A",l:"Masih di kondisi terbaik",s:"Konsisten — tidak ada pergeseran yang berarti",sc:0},
-      {k:"B",l:"Sedikit di bawah",s:"Ada yang bergeser — tapi masih bisa dikompensasi dengan baik",sc:2},
-      {k:"C",l:"Cukup jauh — butuh lebih banyak effort",s:"Yang dulu datang natural, sekarang perlu dipaksakan",sc:5},
+      {k:"B",l:"Sedikit berbeda — tapi masih terasa dalam jangkauan normal",s:"Ada yang bergeser — tapi masih bisa dikompensasi dengan baik",sc:2},
+      {k:"C",l:"Cukup berbeda — hal yang dulu mudah sekarang terasa perlu lebih banyak energi",s:"Yang dulu datang natural, sekarang perlu dipaksakan",sc:5},
       {k:"D",l:"Sangat jauh — kondisi terbaik itu terasa seperti orang lain",s:"Kondisi itu sekarang terasa seperti milik orang yang berbeda",sc:7},
     ],
-    ins:"Jarak antara kondisi terbaikmu dan hari ini adalah tanda <b>cellular drift</b> — pergeseran kumulatif yang terjadi diam-diam di level seluler. Ini bukan soal usia atau kemauan. Ini tentang berapa banyak tekanan oksidatif yang belum direspons — dan tubuhmu sedang menghitungnya."
+    ins:"Jarak antara kondisi terbaikmu dan hari ini bukan soal usia atau kemauan. Ini pergeseran yang terjadi perlahan, diam-diam — dan tubuhmu sudah mencatatnya. Yang penting: ini bisa direspons."
   },
 
   // ── CHAPTER 3 ── SLEEP · NIGHT METABOLIC · STRESS SOMATIC ──
@@ -1115,31 +1100,31 @@ const QS = [
       {k:"C",l:"Sering sulit tidur — atau bangun pagi tapi masih tetap lelah",s:"Tidur terasa tidak menyelesaikan kelelahan",sc:5},
       {k:"D",l:"Tidur sangat buruk — hampir tidak pernah merasa benar-benar istirahat",s:"Bangun pagi sama lelahnya dengan saat mau tidur",sc:8},
     ],
-    ins:"Tidur buruk meningkatkan <b>kortisol dan inflamasi sistemik</b> — yang kemudian merusak ritme glukosa, imun, dan kemampuan fokus. Ini lingkaran yang saling memperkuat."
+    ins:"Tidur yang tidak berkualitas bukan hanya soal istirahat. Ia memengaruhi energi, mood, dan daya tahan tubuh keesokan harinya — semuanya saling terhubung, dan semuanya bisa diperbaiki."
   },
   {
     p:"🌙 Malam & Metabolisme",d:"night_stress",ch:3,
     q:"Bagaimana pola tubuhmu antara selesai makan malam hingga waktu tidur?",
-    h:"Apa yang terjadi setelah makan malam adalah sinyal metabolik yang sering diabaikan — padahal tubuh sedang berbicara dengan sangat jelas.",
+    h:"Apa yang terjadi setelah makan malam sering jadi sinyal yang diabaikan — padahal tubuhmu sedang berbicara dengan sangat jelas.",
     opts:[
       {k:"A",l:"Nyaman — kenyang dan mudah rileks",s:"Tidak ada yang mengganggu setelah makan malam",sc:0},
-      {k:"B",l:"Sesekali ada dorongan ngemil — tapi bisa diatasi",s:"Muncul tapi tidak kuat — masih bisa diabaikan",sc:2},
+      {k:"B",l:"Sesekali ada dorongan ngemil — tapi tidak terlalu kuat",s:"Muncul tapi tidak kuat — masih bisa diabaikan",sc:2},
       {k:"C",l:"Sering lapar atau craving manis/asin menjelang tidur",s:"Sulit tidur kalau belum makan sesuatu",sc:5},
       {k:"D",l:"Hampir setiap malam — terasa lapar padahal sudah cukup makan",s:"Badan kirim sinyal lapar — padahal yang dibutuhkan sebenarnya adalah istirahat",sc:7},
     ],
-    ins:"Lapar atau craving menjelang tidur bukan selalu soal kurang makan. Bisa jadi ini <b>false hunger</b> — sinyal lapar yang ngaco, di mana badan mengirim kode lapar padahal yang dibutuhkan adalah tidur, air, atau ketenangan. Bukan salahmu — ini ritme yang bisa distabilkan."
+    ins:"Lapar atau craving menjelang tidur bukan soal kurang makan. Kadang tubuh mengirim sinyal lapar padahal yang sebenarnya ia butuhkan adalah tidur, air, atau ketenangan. Bukan salahmu — ini ritme yang bisa diatur ulang."
   },
   {
     p:"🌙 Malam & Stres",d:"night_stress",ch:3,
     q:"Menjelang tidur, setelah hari yang penuh tekanan — apa yang biasanya tubuhmu rasakan?",
-    h:"Tekanan yang kamu rasakan hari ini — tubuhmu menyimpannya jauh setelah pikiran melepaskannya.",
+    h:"Tekanan yang dirasakan tubuhmu setelah mengalami hari yang penuh tekanan.",
     opts:[
       {k:"A",l:"Tubuh tetap rileks — tidak ada ketegangan yang tersisa di malam hari",s:"Tidur datang dengan sendirinya",sc:0},
       {k:"B",l:"Ada sedikit ketegangan — tapi tubuh bisa rileks setelah beristirahat sejenak",s:"Tidak langsung — tapi akhirnya tubuh bisa kembali tenang",sc:2},
       {k:"C",l:"Tubuh masih tegang padahal sudah rebahan",s:"Seharusnya sudah waktunya beristirahat — tapi otot belum bisa relaks",sc:5},
-      {k:"D",l:"Tubuh tidak bisa benar-benar rehat",s:"Sudah rebahan, sudah lelah — tapi tubuh masih terasa tegang dan waspada",sc:7},
+      {k:"D",l:"Tubuh tidak bisa benar-benar istirahat",s:"Sudah rebahan, sudah lelah — tapi tubuh masih terasa tegang dan waspada",sc:7},
     ],
-    ins:"Ketika tubuh sulit rileks setelah hari yang penuh tekanan — ini bukan soal kurang istirahat. Ini adalah <b>ketegangan fisik yang tersimpan</b> — tekanan yang tidak selesai di pikiran, akhirnya tersimpan sebagai tegangan di otot dan sistem saraf. Tubuh masih dalam mode melindungi diri, padahal ancamannya sudah tidak ada. Ini sinyal yang bisa direspons — dan dilatih untuk dilepaskan."
+    ins:"Ketika tubuh sulit rileks setelah hari yang penuh tekanan — ini bukan soal kurang istirahat. Ini adalah ketegangan fisik yang tersimpan — tekanan yang tidak selesai di pikiran, akhirnya tersimpan sebagai tegangan di otot dan sistem saraf. Tubuh masih dalam mode melindungi diri, padahal ancamannya sudah tidak ada. Ini sinyal yang bisa direspons dan distabilkan agar menjadi lebih rileks."
   },
 ];
 
@@ -1150,9 +1135,9 @@ const TYPES = {
   "rollercoaster_rider":{
     id:"rollercoaster_rider",emoji:"🎢",
     name:"Rollercoaster Rider",nameEN:"The Crash & Crave Cycler",
-    tagline:'"Habis makan ngantuk, terus lapar lagi. Energi naik sebentar, langsung jatuh."',
+    tagline:'"Habis makan ngantuk, terus lapar lagi. Energi naik sebentar, langsung drop."',
     science:"Glucose instability + insulin spike-drop pattern",
-    insight:"Tubuhmu tidak lemah dan kamu tidak kekurangan kemauan. Siklus ini adalah respons biologis yang sangat normal terhadap fluktuasi glukosa. Yang dibutuhkan bukan 'lebih kuat menahan' — tapi <b>menstabilkan ritme glukosa dari dalam</b>, sebelum spike dan crash terjadi.",
+    insight:"Tubuhmu tidak lemah dan kamu tidak kekurangan kemauan. Siklus ini adalah respons yang sangat nyata dari tubuh yang ritme energinya belum stabil. Yang dibutuhkan bukan lebih keras menahan — tapi membantu tubuh menemukan ritmenya kembali, dari dalam.",
     segInsight:{
       'F40-':"Siklus crash-craving yang kamu rasakan berkaitan dengan <b>pergeseran biologis yang memengaruhi ritme glukosa</b> — khas di fase hidupmu ini. Ini bukan soal makan berlebihan. Ini adalah respons biologis yang sangat nyata dan bisa distabilkan.",
       'F40+':"Setelah pergeseran hormonal, <b>sensitivitas insulin berubah secara signifikan</b> — pola crash dan craving yang terasa lebih intens dari sebelumnya adalah respons nyata tubuhmu terhadap perubahan ini. Menstabilkan ritme glukosa adalah salah satu langkah paling efektif di fase ini.",
@@ -1162,7 +1147,7 @@ const TYPES = {
     therefore:"Tubuhmu menunjukkan sinyal energi tidak stabil + craving kuat + respons buruk setelah makan. Ritme gula darah yang naik-turun terlalu tajam.",
     products:["DiaBee","Daily"],stack:"DiaBee + Daily",
     typeColor:"rgba(232,160,48,.15)",typeBorder:"rgba(232,160,48,.35)",
-    why:"Trehalulose dalam Onesta adalah satu-satunya gula alami dengan GI sangat rendah yang tidak menyebabkan spike insulin. Berbeda dari madu biasa — ia memperlambat penyerapan glukosa secara signifikan.",
+    why:"Tubuhmu butuh ritme yang lebih stabil setelah makan — bukan menahan lebih keras, tapi menyediakan bahan bakar yang tepat. DiaBee diformulasikan khusus untuk ini: mendukung ritme glukosa yang lebih tenang, dari dalam.",
     slots:[
       {t:"🌅 PAGI (sebelum makan)",action:"1 sdt Onesta Daily + air hangat",detail:"Minum 20-30 menit sebelum sarapan.",why:"Menyiapkan respons glukosa sebelum makan"},
       {t:"🍽️ SEBELUM MAKAN BESAR",action:"½ sdt Onesta DiaBee + sedikit air",detail:"Terutama sebelum makan siang atau makanan karbohidrat tinggi.",why:"Menekan lonjakan insulin setelah makan"},
@@ -1174,7 +1159,7 @@ const TYPES = {
     name:"Energy Reviver",nameEN:"The Low-Battery Drifter",
     tagline:'"Sudah tidur 8 jam, tapi bangun masih capek juga."',
     science:"Suboptimal cellular energy production (mitochondrial stress)",
-    insight:"Tubuhmu tidak malas. <b>Mitokondria</b> — pabrik energi dalam setiap sel — sedang overwhelmed oleh stres oksidatif yang menumpuk. Ini bisa terjadi pada siapa saja di usia berapapun, dan bisa dipulihkan dengan konsistensi yang tepat.",
+    insight:"Tubuhmu tidak malas. Ada sesuatu yang sedang terjadi di dalam — di level terdalam tubuh — yang membuat energi tidak bisa diproduksi dengan optimal. Ini bisa terjadi pada siapa saja, dan bisa dipulihkan dengan dukungan yang tepat.",
     segInsight:{
       'F40-':"Ritme biologis di fase ini secara alami <b>mendukung produksi energi seluler</b> — namun fluktuasi yang terjadi dalam siklus dapat melemahkan kapasitas ini secara temporer. Kelelahan yang kamu rasakan sering kali memuncak di fase tertentu siklus, dan ini bukan kebetulan. Ini sinyal biologis nyata yang bisa distabilkan dari dalam.",
       'F40+':"Setelah pergeseran hormonal, <b>kapasitas produksi energi seluler berubah secara signifikan</b> — sel-sel energimu membutuhkan dukungan antioksidan yang lebih aktif dari sebelumnya. Kelelahan yang terasa berbeda dari dulu adalah respons nyata terhadap perubahan ini, bukan tanda kelemahan.",
@@ -1184,7 +1169,7 @@ const TYPES = {
     therefore:"Tubuhmu menunjukkan pola kelelahan kronis yang konsisten — bahkan setelah istirahat cukup.",
     products:["Daily","Imunisi"],stack:"Daily + Imunisi",
     typeColor:"rgba(26,111,181,.15)",typeBorder:"rgba(26,111,181,.35)",
-    why:"Antioksidan dalam Onesta — flavonoid dan polyphenol — melindungi mitokondria dari kerusakan oksidatif. Ini bukan pengganti kafein, ini restorasi energi seluler yang sesungguhnya.",
+    why:"Onesta Daily mendukung kemampuan tubuhmu memproduksi energi yang lebih stabil — bukan dengan stimulasi dari luar, tapi dengan memperkuat kemampuan tubuh dari dalam. Bukan pengganti kafein. Ini yang sebenarnya.",
     slots:[
       {t:"🌅 PAGI (perut kosong)",action:"1 sdm Onesta Daily + air hangat + perasan lemon",detail:"Protokol 'morning activation' — diminum 30 menit sebelum makan.",why:"Mengaktifkan energi alami sebelum hari dimulai"},
       {t:"🕙 MID-MORNING (jam 10)",action:"½ sdt Onesta Imunisi langsung",detail:"Saat gelombang kelelahan pertama biasa datang.",why:"Menjaga energi tetap stabil di pagi hari"},
@@ -1196,7 +1181,7 @@ const TYPES = {
     name:"Clarity Seeker",nameEN:"The Foggy Thinker",
     tagline:'"Ada di meeting, tapi pikiran entah ke mana. Fokus hilang di tengah hari."',
     science:"Neuroinflammation + disrupted brain glucose metabolism",
-    insight:"Fokus yang tiba-tiba hilang di tengah hari bukan tanda kelemahan. Ia adalah sinyal nyata bahwa sistem neuroprotektif otakmu sedang membutuhkan dukungan. <b>Neuron butuh lingkungan yang stabil</b> untuk bekerja optimal — dan ini bisa dipulihkan dengan konsistensi yang tepat.",
+    insight:"Fokus yang tiba-tiba hilang di tengah hari bukan tanda kelemahan. Itu sinyal bahwa otakmu sedang bekerja keras di balik layar — dan butuh lingkungan yang lebih stabil untuk bisa optimal. Ini bisa dipulihkan dengan dukungan yang konsisten.",
     segInsight:{
       'F40-':"Ritme biologis di fase ini <b>mendukung kejernihan kognitif secara alami</b> — ia mendukung neurotransmitter yang menjaga fokus dan melindungi fungsi saraf. Ketika ritme ini berfluktuasi, brain fog dan penurunan fokus adalah respons biologis yang nyata. Ini bisa distabilkan dari fondasi metabolik.",
       'F40+':"Pergeseran biologis di fase ini secara langsung memengaruhi <b>metabolisme glukosa otak dan sistem neurotransmitter</b> — kejernihan kognitif sangat sensitif terhadap perubahan ini. Kabut kognitif yang kamu rasakan bukan imajinasimu. Ini adalah sinyal biologis nyata dari transisi yang sedang terjadi.",
@@ -1206,7 +1191,7 @@ const TYPES = {
     therefore:"Tubuhmu menunjukkan pola brain fog dan penurunan kognitif yang konsisten.",
     products:["Daily","Imunisi"],stack:"Daily + Imunisi",
     typeColor:"rgba(155,155,200,.15)",typeBorder:"rgba(155,155,200,.35)",
-    why:"Lecy MF01 berasal dari Geniotrigona Thoracica — spesies lebah tanpa sengat dari hutan primer yang menghasilkan madu dengan profil rasa paling unik dalam koleksi Onesta. Yang menarik: mereka yang memilih Lecy sering merasakan kejernihan pikiran yang lebih baik sebagai bonus alami dari konsistensi ritual harian mereka.",
+    why:"Onesta Daily membantu menstabilkan fondasi tubuh agar fokus terasa lebih terjaga sepanjang hari. Imunisi mendukung ketahanan tubuh dari dalam — fondasi yang ikut berperan dalam kejernihan pikiran jangka panjang.",
     slots:[
       {t:"🌅 PAGI (perut kosong)",action:"1 sdm Onesta Daily + air hangat",detail:"Fondasi stabilitas kognitif sepanjang hari.",why:"Menyiapkan fondasi energi kognitif sejak pagi"},
       {t:"☕ MID-MORNING",action:"½ sdt Onesta Lecy langsung",detail:"Rasakan Forest Gold-nya — dan biarkan kejernihan datang secara alami.",why:"Taste journey + natural clarity bonus"},
@@ -1218,7 +1203,7 @@ const TYPES = {
     name:"Gut Whisperer",nameEN:"The Gut-Sensitive System",
     tagline:'"Perut tidak pernah benar-benar nyaman. Kembung, tidak teratur, atau mudah bereaksi."',
     science:"Gut microbiome imbalance + intestinal permeability",
-    insight:"Pencernaanmu bukan sekadar soal perut. Ia adalah jembatan langsung ke otak via <b>gut-brain axis</b>. Ketika ekosistem pencernaan tidak seimbang, mood, energi, dan imunitas semuanya ikut terdampak.",
+    insight:"Pencernaanmu bukan sekadar soal perut. Ia terhubung langsung ke otak, ke mood, ke energi, dan ke daya tahan tubuh. Ketika pencernaan tidak seimbang, semuanya ikut merasakannya — karena semuanya saling terhubung.",
     segInsight:{
       'F40-':"Gut microbiome-mu <b>sangat sensitif terhadap fluktuasi hormon</b> — ketidaknyamanan yang kamu rasakan sering memburuk di periode tertentu dalam siklus. Ini bukan sekadar masalah makan, ini gut-hormone axis yang butuh stabilisasi dari dalam.",
       'F40+':"Setelah pergeseran biologis di fase ini, <b>komposisi microbiome berubah secara signifikan</b> — bakteri baik yang sebelumnya menjaga kenyamanan ususmu perlu lingkungan baru untuk berkembang. Ketidaknyamanan yang kamu rasakan adalah sinyal nyata dari transisi ini.",
@@ -1228,7 +1213,7 @@ const TYPES = {
     therefore:"Tubuhmu menunjukkan pola ketidaknyamanan pencernaan yang konsisten dan signifikan.",
     products:["Daily","Imunisi"],stack:"Daily + Imunisi",
     typeColor:"rgba(74,174,160,.15)",typeBorder:"rgba(74,174,160,.35)",
-    why:"Asam organik alami Onesta menciptakan lingkungan pH yang menghambat patogen sambil mendukung bakteri baik. Ini prebiotik alami yang tidak ada di madu biasa.",
+    why:"Onesta Daily mengandung senyawa alami yang mendukung keseimbangan ekosistem pencernaan — membantu bakteri baik, mengurangi ketidaknyamanan, dan menciptakan lingkungan yang lebih harmonis di dalam. Sesuai namanya: dari dalam.",
     slots:[
       {t:"🌅 PAGI (perut kosong)",action:"1 sdm Onesta Daily + air hangat",detail:"Asam organik Onesta menyiapkan lingkungan pH usus sebelum makan.",why:"Menyiapkan pH usus"},
       {t:"🍽️ 15 MENIT SEBELUM MAKAN",action:"½ sdt Onesta Imunisi + sedikit air",detail:"Prebiotik alami mempersiapkan enzim pencernaan.",why:"Mengaktifkan enzim pencernaan"},
@@ -1240,7 +1225,7 @@ const TYPES = {
     name:"Recovery Seeker",nameEN:"The Slow-Recovery Body",
     tagline:'"Semua orang sudah segar, aku masih dalam proses recovery."',
     science:"Elevated oxidative damage + impaired cellular repair",
-    insight:"Recovery lambat bukan tanda usia atau kelemahan. Ini tanda bahwa <b>antioksidan alami tubuh tidak cukup melindungi sel</b> dari kerusakan — dan kerusakan itu menumpuk. Tapi ini bisa dibalik dengan dukungan yang konsisten.",
+    insight:"Recovery yang lambat bukan tanda usia atau kelemahan. Ini sinyal bahwa tubuhmu butuh lebih banyak dukungan dari dalam untuk bisa memperbaiki diri setelah setiap tantangan. Dan itu bisa direspons — secara konsisten, dari dalam.",
     segInsight:{
       'F40-':"Ritme biologis di fase ini memiliki <b>kapasitas antioksidan alami</b> yang mendukung cellular repair — namun fluktuasi dalam siklus dapat melemahkan kemampuan ini secara periodik. Recovery yang lambat setelah aktivitas atau stres sering mencerminkan momen di mana perlindungan ini sedang di titik terendah.",
       'F40+':"Setelah pergeseran hormonal, <b>kapasitas antioksidan tubuh berubah signifikan</b> — sel-selmu membutuhkan waktu lebih lama untuk memperbaiki diri bukan karena kamu lemah, tapi karena sistem repair-mu bekerja dengan kapasitas yang berbeda. Dukungan dari luar kini menjadi lebih penting dari sebelumnya.",
@@ -1250,7 +1235,7 @@ const TYPES = {
     therefore:"Tubuhmu menunjukkan pola recovery yang melambat secara konsisten.",
     products:["Daily","Imunisi"],stack:"Daily + Imunisi",
     typeColor:"rgba(91,175,106,.15)",typeBorder:"rgba(91,175,106,.35)",
-    why:"Flavonoid dan polyphenol dalam Onesta Daily dan Imunisi bekerja sebagai antioksidan yang melindungi sel dari kerusakan kumulatif — mendukung proses perbaikan sel yang terjadi secara alami, terutama selama tidur.",
+    why:"Onesta Daily dan Imunisi bekerja bersama untuk mendukung kemampuan tubuh memperbaiki diri — terutama selama istirahat. Semakin baik dukungan dari dalam, semakin efisien tubuh memulihkan diri setelah setiap tantangan.",
     slots:[
       {t:"🌅 PAGI (sebelum aktivitas)",action:"1 sdm Onesta Daily + air hangat",detail:"Mempersiapkan pertahanan sel sebelum hari dimulai.",why:"Mempersiapkan perlindungan sel"},
       {t:"🌙 MALAM (setelah aktivitas)",action:"1 sdt Onesta Imunisi + air hangat",detail:"Dukung proses pemulihan alami yang terjadi selama tidur.",why:"Mendukung repair malam"},
@@ -1272,7 +1257,7 @@ const TYPES = {
     therefore:"Tubuhmu menunjukkan pola ketidakstabilan energi yang khas selama periode puasa.",
     products:["DiaBee","Daily"],stack:"DiaBee + Daily",
     typeColor:"rgba(123,108,240,.15)",typeBorder:"rgba(123,108,240,.35)",
-    why:"Onesta Daily mengandung trehalulose — gula alami dengan GI sangat rendah yang mendukung energi stabil sepanjang periode puasa tanpa memicu lonjakan insulin. Fondasi yang tepat untuk ritme puasamu.",
+    why:"Onesta Daily memberikan energi yang stabil tanpa membuat tubuh merespons berlebihan — mendukung ritme puasamu dari dalam, sehingga transisi antar waktu makan terasa lebih lancar dan terkontrol. Fondasi yang tepat untuk ritme puasamu.",
     slots:[
       
       {t:"🍽️ SEBELUM BUKA — 5 MENIT DULU",action:"1 sdt Onesta Daily + air hangat",detail:"Jangan langsung makan besar. Ini 'membuka' sistem pencernaan dengan lembut.",why:"Mencegah spike saat buka"},
@@ -1291,11 +1276,11 @@ const TYPES = {
     name:"Graceful Guardian",nameEN:"The Transition Protector",
     tagline:'"Tubuhmu sedang dalam transisi yang nyata. Bukan melemah — sedang berubah. Dan perubahan butuh perlindungan."',
     science:"Perimenopause/menopause transition + multi-domain metabolic shift + estrogen-driven oxidative stress",
-    insight:"Apa yang kamu rasakan bukan imajinasimu. Ketika ritme biologis mulai bergeser, <b>beberapa sistem tubuh merespons sekaligus</b> — energi, tidur, mood, pencernaan, dan pemulihan semuanya saling terhubung. Ini bukan melemah. Ini transisi biologis nyata yang butuh dukungan yang tepat, bukan yang generik.",
+    insight:"Apa yang kamu rasakan bukan imajinasimu. Ketika tubuh mulai berubah, beberapa sistem merespons sekaligus — energi, tidur, mood, pencernaan, semuanya saling terhubung. Ini bukan kelemahan. Ini perubahan yang nyata, yang butuh dukungan yang tepat.",
     therefore:"Profil biologismu menunjukkan sinyal multi-sistem yang khas pada fase transisi hormonal — setiap sinyal terhubung satu sama lain.",
     products:["Daily","Imunisi"],stack:"Daily + Imunisi",
     typeColor:"rgba(46,125,87,.12)",typeBorder:"rgba(46,125,87,.30)",
-    why:"Untuk fase transisi hormonal, Daily menstabilkan ritme metabolik dasar sementara Imunisi mengurangi beban yang meningkat seiring pergeseran hormonal. Kombinasi ini bekerja pada level seluler — bukan sekadar gejala. Imunisi bekerja langsung pada gut-immune axis dan ketahanan seluler yang sangat relevan di fase transisi hormonal ini.",
+    why:"Daily membantu menjaga fondasi metabolik tetap stabil di fase perubahan ini. Imunisi memperkuat ketahanan tubuh dari dalam — di lapisan yang paling relevan saat tubuh sedang bertransisi. Keduanya bekerja bersama, bukan sekadar di permukaan.",
     slots:[
       {t:"🌅 PAGI (sebelum sarapan)",action:"1 sdm Onesta Daily + air hangat",detail:"Stabilisasi metabolik sebelum aktivitas dimulai.",why:"Menyiapkan ritme metabolik sejak pagi hari"},
       {t:"🍽️ SETELAH MAKAN SIANG",action:"1 sdt Onesta Imunisi",detail:"Window terbaik untuk dukungan di tengah hari.",why:"Dukungan optimal di tengah hari"},
@@ -1310,11 +1295,11 @@ const TYPES = {
     name:"Prime Guardian",nameEN:"The Edge Protector",
     tagline:'"Yang sudah dibangun perlu dijaga. Bukan soal mundur — soal mempertahankan yang terbaik dari dirimu."',
     science:"Andropause onset + testosterone decline + multi-domain metabolic stress + cardiovascular risk window",
-    insight:"Perubahan yang kamu rasakan bukan sekadar 'penuaan normal'. Ketika ritme biologis mulai bergeser, <b>beberapa sistem merespons sekaligus</b> — energi, recovery, fokus, dan stamina semuanya saling terhubung via hormon yang sama. Yang dibutuhkan bukan lebih keras bekerja — tapi fondasi yang lebih cerdas.",
+    insight:"Perubahan yang kamu rasakan bukan sekadar penuaan normal. Ketika kondisi tubuh mulai bergeser, beberapa hal terasa sekaligus — energi, pemulihan, fokus, stamina semuanya saling terhubung. Yang dibutuhkan bukan kerja lebih keras — tapi fondasi yang lebih cerdas.",
     therefore:"Profil biologismu menunjukkan sinyal multi-sistem yang khas pada fase pergeseran biologis laki-laki — setiap domain saling terhubung.",
     products:["Daily","Imunisi"],stack:"Daily + Imunisi",
     typeColor:"rgba(26,74,138,.12)",typeBorder:"rgba(26,74,138,.30)",
-    why:"Onesta Daily menstabilkan metabolik baseline dan mendukung pemulihan yang melambat seiring pergeseran biologis — bekerja dari fondasi, bukan hanya di permukaan. Imunisi memperkuat ketahanan seluler secara langsung — mendukung pemulihan optimal di fase pergeseran biologis ini.",
+    why:"Daily membantu menjaga fondasi energi dan pemulihan tetap optimal — bekerja dari dalam, bukan hanya di permukaan. Imunisi memperkuat ketahanan tubuh di level yang paling relevan untuk fase ini. Keduanya adalah fondasi yang cerdas.",
     slots:[
       {t:"🌅 PAGI (sebelum aktivitas)",action:"1 sdm Onesta Daily + air putih",detail:"Activate cellular energy production sebelum hari dimulai.",why:"Ritme biologis pagi hari"},
       {t:"🌙 MALAM",action:"1 sdm Onesta Daily",detail:"Mendukung pemulihan dan produksi energi overnight.",why:"Mendukung perbaikan tubuh selama tidur"},
@@ -1325,7 +1310,7 @@ const TYPES = {
     name:"Night Restorer",nameEN:"The Night Craver",
     tagline:'"Jam 10 malam tiba-tiba lapar berat. Tidur pun jadi susah kalau belum ngemil."',
     science:"Circadian rhythm misalignment + late-night cortisol demand",
-    insight:"Night craving bukan kelemahan. Cortisol yang tinggi malam hari secara biologis <b>meningkatkan nafsu makan</b> dan craving terhadap makanan tinggi gula. Ini adalah sinyal bahwa ritme sirkadian tubuhmu butuh di-reset.",
+    insight:"Lapar atau craving di malam hari bukan kelemahan. Ini adalah respons biologis nyata — tubuh yang ritme malamnya belum stabil akan mengirim sinyal seperti ini. Bukan salahmu. Dan ritme ini bisa diatur ulang.",
     segInsight:{
       'F40-':"Pola lapar malam yang kamu rasakan sering <b>berkaitan dengan siklus hormonal</b> — cortisol yang naik di malam hari berinteraksi dengan ritme biologis di fase ini, menciptakan craving nokturnal yang terasa sangat nyata. Reset ritme sirkadian adalah kunci.",
       'F40+':"Di fase transisi, <b>gangguan tidur dan craving malam adalah dua gejala yang saling terhubung</b> — pergeseran biologis mengganggu arsitektur tidur, dan cortisol yang kompensasi memicu nafsu makan malam. Keduanya bisa dikelola dari satu titik yang sama.",
@@ -1347,7 +1332,7 @@ const TYPES = {
     name:"Stress Snacker",nameEN:"The Stress Feeder",
     tagline:'"Deadline datang, tangan langsung cari snack. Bukan lapar, tapi butuh sesuatu."',
     science:"Cortisol-driven eating behavior + HPA axis dysregulation",
-    insight:"Emotional eating bukan kelemahan karakter. Cortisol yang tinggi secara biologis <b>meningkatkan nafsu makan</b> dan craving terhadap makanan tinggi gula dan lemak — ini adalah respons survival yang terprogramkan. Bukan salahmu.",
+    insight:"Mencari makanan saat stres bukan kelemahan karakter. Itu respons yang sangat nyata dari tubuh yang sedang berusaha menstabilkan dirinya sendiri. Bukan salahmu — dan siklus ini bisa diubah.",
     segInsight:{
       'F40-':"Cortisol yang reaktif berinteraksi langsung dengan siklus hormonalmu — craving yang kamu rasakan bukan soal kontrol diri. <b>Ritme biologis di fase ini membuat kortisol lebih sensitif</b>, menciptakan pola stress-eating yang terasa di luar kendali. Ini biologi yang bisa distabilkan.",
       'F40+':"Di fase transisi hormonal, <b>kortisol dan ritme biologis saling memengaruhi</b> dengan cara yang sangat nyata. Craving saat stres bukan kelemahan — ini sinyal bahwa HPA axis-mu menanggung beban ganda: tekanan eksternal dan pergeseran hormonal. Keduanya bisa dikelola bersama.",
@@ -1357,7 +1342,7 @@ const TYPES = {
     therefore:"Tubuhmu menunjukkan pola stress-eating dan cortisol reaktif yang konsisten.",
     products:["DiaBee","Daily"],stack:"DiaBee + Daily",
     typeColor:"rgba(232,93,93,.15)",typeBorder:"rgba(232,93,93,.35)",
-    why:"Pola stress-eating sering kali diperkuat oleh fluktuasi glukosa — cortisol yang naik memicu craving, craving memicu spike glukosa, dan siklus berulang. DiaBee membantu menstabilkan ritme glukosa dari sisi biologis — memutus siklus ini dari dalam, bukan dengan kemauan.",
+    why:"Siklus mencari makanan saat stres sering kali diperkuat dari dalam — tekanan memicu dorongan, dorongan diperkuat oleh ritme energi yang tidak stabil. DiaBee membantu menstabilkan sisi biologis dari siklus ini — memutusnya dari dalam, bukan dengan menahan lebih keras.",
     slots:[
       {t:"🌅 PAGI",action:"1 sdm Onesta Daily + air hangat",detail:"Fondasi harian yang membangun ketahanan dari dalam.",why:"Membangun fondasi metabolik"},
       {t:"😰 SAAT STRES MUNCUL",action:"1 sdt Onesta Daily langsung + tarik napas dalam",detail:"Intervensi sebelum stress-eating terjadi.",why:"Memutus pemicu craving"},
@@ -1379,7 +1364,7 @@ const TYPES = {
     therefore:"Tubuhmu menunjukkan kondisi yang relatif stabil di semua area. Fokus pada mempertahankan stabilitas ini.",
     products:["Daily","Myrta"],stack:"Daily + Myrta",
     typeColor:"rgba(91,175,106,.15)",typeBorder:"rgba(91,175,106,.35)",
-    why:"Untuk Balance Master, Onesta Daily adalah perawatan harian yang menjaga baseline metabolik tetap optimal. Mencegah penurunan lebih mudah dari memulihkan kondisi yang sudah drop.",
+    why:"Untuk Balance Master, Onesta Daily adalah ritual harian yang menjaga kondisi ini tetap terjaga. Mencegah pergeseran jauh lebih mudah dari memulihkan kondisi yang sudah berubah — dan kamu sudah tahu itu.",
     slots:[
       {t:"🌅 PAGI (setiap hari)",action:"1 sdt Onesta Daily + air hangat",detail:"Ritual harian yang tidak boleh diskip — bahkan saat merasa baik-baik saja.",why:"Mempertahankan baseline metabolik"},
       {t:"🌙 MALAM",action:"½ sdt Onesta Daily",detail:"Melindungi overnight repair process.",why:"Mempertahankan kondisi stabil"},
@@ -1390,7 +1375,7 @@ const TYPES = {
     name:"Zest Builder",nameEN:"The High-Potential Overloader",
     tagline:'"Semangatku penuh — tapi beberapa sistem mulai minta perhatian sekaligus."',
     science:"Multi-system overload + early oxidative stress (under 40)",
-    insight:"Ini bukan tanda kelemahan. Ini tanda bahwa <b>tubuhmu yang penuh potensi sedang menanggung lebih dari yang disadari</b>. Semangat tinggi tidak selalu berarti fondasi sudah kuat — dan justru di usia ini, membangun fondasi yang benar adalah fondasi jangka panjang yang paling bernilai.",
+    insight:"Ini bukan tanda kelemahan. Ini sinyal bahwa tubuhmu sedang menanggung lebih dari yang disadari. Semangat tinggi tidak selalu berarti semua sistem sudah siap — dan justru di usia ini, membangun fondasi yang tepat adalah investasi terbaik yang bisa kamu lakukan untuk dirimu sendiri.",
     segInsight:{
       'F40-':"Ritme biologismu masih aktif melindungi tubuh — namun ketika terlalu banyak sistem bersamaan memberikan sinyal, <b>ritme biologis tidak bisa mengimbangi semua beban yang datang dari segala arah</b>. Ini bukan kelemahan. Ini tubuh yang sangat responsif, sedang berbicara dengan jelas. Mendengarnya sekarang jauh lebih mudah dari memulihkan setelah terlambat.",
       'M40-':"Ritme biologis di fase ini mendukung output yang tinggi — namun ketika beberapa sistem bersamaan terbebani, <b>efisiensi seluler mulai tergerus sebelum kamu menyadarinya</b>. Bukan soal kurang kuat. Ini soal sistem yang belum dioptimalkan untuk jangka panjang. Membangun fondasi di usia ini adalah keputusan terbaik yang bisa kamu buat untuk dirimu sendiri.",
@@ -1400,7 +1385,7 @@ const TYPES = {
     therefore:"Tubuhmu menunjukkan sinyal dari beberapa sistem sekaligus — tanda bahwa fondasi metabolikmu perlu diperkuat sebelum terlambat.",
     products:["Daily","Imunisi"],stack:"Daily + Imunisi",
     typeColor:"rgba(76,175,82,.15)",typeBorder:"rgba(76,175,82,.35)",
-    why:"Di usia produktif dengan beban multi-sistem, Onesta Daily membangun fondasi metabolik yang stabil dari dalam. Imunisi memperkuat ketahanan seluler agar semua sistem bisa berjalan optimal secara bersamaan.",
+    why:"Di usia produktif dengan banyak hal berjalan sekaligus, Onesta Daily membangun fondasi yang stabil dari dalam. Imunisi memperkuat ketahanan tubuh — agar semua sistem bisa berjalan optimal, bukan hanya satu per satu.",
     slots:[
       {t:"🌅 PAGI (sebelum aktivitas)",action:"1 sdm Onesta Daily + air hangat",detail:"Siapkan fondasi energi sebelum hari dimulai — sebelum tuntutan datang dari segala arah.",why:"Membangun fondasi metabolik harian"},
       {t:"🍽️ SETELAH MAKAN SIANG",action:"1 sdt Onesta Imunisi",detail:"Saat tubuh sedang dalam mode recovery pasca-makan — ini waktu optimal untuk memperkuat sistem.",why:"Penguatan seluler di tengah hari"},
@@ -1412,7 +1397,7 @@ const TYPES = {
     name:"Gut Harmonizer",nameEN:"The Inner Ecosystem Conductor",
     tagline:'"Pencernaanku sudah semakin kompleks — butuh pendekatan yang lebih dari sekadar sensitif."',
     science:"Gut microbiome imbalance + hormonal influence on gut axis (40+)",
-    insight:"Sistem pencernaanmu tidak hanya sensitif — ia bekerja dalam ekosistem yang jauh lebih kompleks dari yang disadari. <b>Keseimbangan tubuh, inflamasi, dan ekosistem usus saling memengaruhi</b> dengan cara yang unik di fase hidupmu ini. Bukan sekadar menjaga perut — ini tentang mengharmonisasi seluruh ekosistem dari dalam.",
+    insight:"Pencernaanmu tidak hanya sensitif — ia bekerja dalam sistem yang jauh lebih dalam dari yang disadari. Di usia ini, keseimbangan pencernaan terhubung langsung ke mood, energi, dan daya tahan tubuh. Ini bukan sekadar soal perut — ini tentang keseimbangan dari dalam.",
     segInsight:{
       'F40-':"Sinyal pencernaan dan imunitas yang muncul di usia ini sering diabaikan karena terasa 'belum serius' — padahal <b>keseimbangan pencernaan yang terganggu di fase membangun ini berdampak langsung pada energi, fokus, dan imunitas harianmu</b>. Lebih mudah dijaga sekarang dari dipulihkan nanti.",
       'M40-':"Ritme kerja dan aktivitas yang tinggi di fase ini memberi tekanan nyata pada sistem pencernaan dan imunitas — <b>pencernaan yang terus-menerus dalam tekanan tidak bisa menyerap nutrisi dan membangun pertahanan secara optimal</b>. Sinyal yang kamu rasakan sekarang adalah waktu yang tepat untuk merespons.",
@@ -1422,7 +1407,7 @@ const TYPES = {
     therefore:"Tubuhmu menunjukkan sinyal kuat pada sistem pencernaan dan imunitas — terutama dalam konteks perubahan hormonal yang sedang berlangsung.",
     products:["Daily","Imunisi"],stack:"Daily + Imunisi",
     typeColor:"rgba(91,143,175,.15)",typeBorder:"rgba(91,143,175,.35)",
-    why:"Onesta Daily menstabilkan ekosistem metabolik yang mendukung microbiome. Imunisi secara langsung mendukung gut-immune axis yang sangat aktif di usia 40+.",
+    why:"Onesta Daily membantu menjaga keseimbangan dari dalam — mendukung pencernaan yang lebih harmonis dan stabil. Imunisi memperkuat hubungan antara pencernaan dan ketahanan tubuh yang semakin penting di usia ini.",
     slots:[
       {t:"🌅 PAGI (sebelum sarapan)",action:"1 sdm Onesta Daily + air hangat",detail:"Siapkan ekosistem pencernaan sebelum makanan masuk — fondasi harian yang kritis.",why:"Pre-load gut ecosystem"},
       {t:"🍽️ SETELAH MAKAN SIANG",action:"1 sdt Onesta Imunisi",detail:"Dukung gut-immune axis saat sistem pencernaan sedang aktif.",why:"Gut-immune support"},
@@ -1434,7 +1419,7 @@ const TYPES = {
     name:"Zona Prioritas",nameEN:"Your Body Needs Consistent Support",
     tagline:'"Tubuhmu sedang memberi sinyal kuat. Ini bukan akhir — ini titik awal yang paling jelas. Setiap langkah kecil yang konsisten menggeser kondisi ini."',
     science:"Multi-system metabolic stress",
-    insight:"Ini bukan kelemahan. Mulai dari satu langkah kecil — konsisten lebih penting dari sempurna. Tubuhmu butuh dukungan yang konsisten, bukan yang sempurna.",
+    insight:"Ini bukan kelemahan. Satu langkah kecil yang konsisten lebih berarti dari sepuluh langkah yang terburu-buru. Tubuhmu hanya butuh dukungan yang tepat — dimulai sekarang.",
     segInsight:{
       'F40-':"Ketika hampir semua sistem memberikan sinyal bersamaan, ini sering bermula dari <b>satu ketidakseimbangan yang memicu efek domino</b> — tubuhmu sudah lama beradaptasi dan berkompensasi. Yang dibutuhkan bukan perubahan drastis, tapi satu fondasi yang stabil yang memberi semua sistem kesempatan untuk pulih bersama.",
       'F40+':"Dalam fase transisi hormonal, <b>beberapa sistem bisa bersamaan merespons perubahan yang sedang terjadi</b> — ini bukan kondisi yang terkunci. Tubuhmu sedang membutuhkan dukungan yang konsisten, bukan yang sempurna. Satu langkah kecil hari ini lebih berharga dari rencana besar yang tidak dimulai.",
@@ -1444,7 +1429,7 @@ const TYPES = {
     therefore:"Tubuhmu menunjukkan sinyal kuat di hampir semua sistem. Ini momen yang tepat untuk mulai membangun fondasi dari dalam.",
     products:["Daily","Imunisi"],stack:"Daily + Imunisi",
     typeColor:"rgba(176,48,48,.1)",typeBorder:"rgba(176,48,48,.25)",
-    why:"Onesta Daily membantu menstabilkan ritme metabolik dasar sehingga semua sistem bisa bekerja lebih efisien. Imunisi mendukung ketahanan tubuh secara menyeluruh.",
+    why:"Onesta Daily adalah langkah pertama yang paling masuk akal — membantu tubuh menemukan ritme dasarnya kembali, satu hari satu hari. Imunisi hadir sebagai dukungan tambahan untuk tubuh yang sedang bekerja lebih keras dari biasanya. Kamu tidak harus langsung sempurna. Mulai dari sini.",
     slots:[
       {t:"🌅 PAGI (sebelum makan)",action:"1 sdt Onesta Daily + air hangat",detail:"Mulai hari dengan fondasi metabolik yang stabil.",why:"Fondasi metabolik harian"},
       {t:"🍽️ SETELAH MAKAN SIANG",action:"1 sdt Onesta Daily",detail:"Bantu tubuh merespons makanan dengan lebih tenang.",why:"Menstabilkan respons tubuh"},
@@ -1858,7 +1843,7 @@ function submitGateway(){
 // ══════════════════════════════════════════════════════
 function showCalc(){
   show('s-calc');prog(85);
-  const pillars=['⚡ Stabilitas Energi','🩸 Ritme Gula Darah','🌿 Keseimbangan Pencernaan','🛡️ Kesiapan Imunitas','💪 Recovery & Performa','🔬 Proteksi Seluler'];
+  const pillars=['⚡ Stabilitas Energi','🩸 Ritme Glukosa Darah','🌿 Keseimbangan Pencernaan','🛡️ Kesiapan Imunitas','💪 Pemulihan & Stamina','🔬 Perlindungan Sel'];
   const list=document.getElementById('calc-list');
   list.innerHTML='';
   pillars.forEach((p,i)=>{
@@ -1908,10 +1893,10 @@ function showAha(){
   const dmxGap={energy:16,glucose:16,gut:7,immune:7,recovery:7,decline:7,night_stress:14};
   const pillarNames={
     energy:  'Stabilitas Energi',
-    glucose: 'Ritme Gula Darah',
+    glucose: 'Ritme Glukosa Darah',
     gut:     'Keseimbangan Pencernaan',
     immune:  'Kesiapan Imunitas',
-    recovery:'Recovery & Performa',
+    recovery:'Pemulihan & Stamina',
     decline: 'Proteksi Jangka Panjang',
     night_stress:'Kualitas Malam & Stres',
   };
@@ -2008,11 +1993,11 @@ const SEGMENT_WEIGHTS={
 // Segment-specific score band thresholds
 // F40+ and M40+ have lower thresholds — biological baseline is harder
 const SEGMENT_ZONES={
-  'F40-':[{min:90,max:100,z:'✨ In Full Flow',label:'Sangat Jarang Tercapai',c:'#2E8B57'},{min:80,max:89,z:'🟢 Consistently Aligned',label:'Stabil & Terjaga',c:'#3FAD72'},{min:70,max:79,z:'🟢 In Your Stride',label:'Momentum yang Baik',c:'#4CAF82'},{min:60,max:69,z:'🟡 Finding Your Rhythm',label:'Sedang Bergerak',c:'#C8A020'},{min:50,max:59,z:'🟠 Building Foundations',label:'Perlu Perhatian',c:'#E87A20'},{min:40,max:49,z:'🔴 Body Seeking Balance',label:'Prioritas Utama',c:'#C84040'}],
-  'F40+':[{min:90,max:100,z:'✨ In Full Flow',label:'Sangat Jarang Tercapai',c:'#2E8B57'},{min:80,max:89,z:'🟢 Consistently Aligned',label:'Stabil & Terjaga',c:'#3FAD72'},{min:70,max:79,z:'🟢 In Your Stride',label:'Momentum yang Baik',c:'#4CAF82'},{min:60,max:69,z:'🟡 Finding Your Rhythm',label:'Sedang Bergerak',c:'#C8A020'},{min:50,max:59,z:'🟠 Building Foundations',label:'Perlu Perhatian',c:'#E87A20'},{min:40,max:49,z:'🔴 Body Seeking Balance',label:'Prioritas Utama',c:'#C84040'}],
-  'M40-':[{min:90,max:100,z:'✨ In Full Flow',label:'Sangat Jarang Tercapai',c:'#2E8B57'},{min:80,max:89,z:'🟢 Consistently Aligned',label:'Stabil & Terjaga',c:'#3FAD72'},{min:70,max:79,z:'🟢 In Your Stride',label:'Momentum yang Baik',c:'#4CAF82'},{min:60,max:69,z:'🟡 Finding Your Rhythm',label:'Sedang Bergerak',c:'#C8A020'},{min:50,max:59,z:'🟠 Building Foundations',label:'Perlu Perhatian',c:'#E87A20'},{min:40,max:49,z:'🔴 Body Seeking Balance',label:'Prioritas Utama',c:'#C84040'}],
-  'M40+':[{min:90,max:100,z:'✨ In Full Flow',label:'Sangat Jarang Tercapai',c:'#2E8B57'},{min:80,max:89,z:'🟢 Consistently Aligned',label:'Stabil & Terjaga',c:'#3FAD72'},{min:70,max:79,z:'🟢 In Your Stride',label:'Momentum yang Baik',c:'#4CAF82'},{min:60,max:69,z:'🟡 Finding Your Rhythm',label:'Sedang Bergerak',c:'#C8A020'},{min:50,max:59,z:'🟠 Building Foundations',label:'Perlu Perhatian',c:'#E87A20'},{min:40,max:49,z:'🔴 Body Seeking Balance',label:'Prioritas Utama',c:'#C84040'}],
-  'N':[{min:90,max:100,z:'✨ In Full Flow',label:'Sangat Jarang Tercapai',c:'#2E8B57'},{min:80,max:89,z:'🟢 Consistently Aligned',label:'Stabil & Terjaga',c:'#3FAD72'},{min:70,max:79,z:'🟢 In Your Stride',label:'Momentum yang Baik',c:'#4CAF82'},{min:60,max:69,z:'🟡 Finding Your Rhythm',label:'Sedang Bergerak',c:'#C8A020'},{min:50,max:59,z:'🟠 Building Foundations',label:'Perlu Perhatian',c:'#E87A20'},{min:40,max:49,z:'🔴 Body Seeking Balance',label:'Prioritas Utama',c:'#C84040'}],
+  'F40-':[{min:90,max:100,z:'✨ In Full Flow',label:'Sangat Jarang Tercapai',c:'#2E8B57'},{min:80,max:89,z:'🟢 Consistently Aligned',label:'Stabil & Terjaga',c:'#3FAD72'},{min:70,max:79,z:'🟢 In Your Stride',label:'Momentum yang Baik',c:'#4CAF82'},{min:60,max:69,z:'🟡 Finding Your Rhythm',label:'Sedang Bergerak',c:'#C8A020'},{min:50,max:59,z:'Building Foundations',label:'Masih Bisa Ditingkatkan',c:'#E87A20'},{min:40,max:49,z:'🔴 Body Seeking Balance',label:'Tubuh Butuh Dukungan',c:'#C84040'}],
+  'F40+':[{min:90,max:100,z:'✨ In Full Flow',label:'Sangat Jarang Tercapai',c:'#2E8B57'},{min:80,max:89,z:'🟢 Consistently Aligned',label:'Stabil & Terjaga',c:'#3FAD72'},{min:70,max:79,z:'🟢 In Your Stride',label:'Momentum yang Baik',c:'#4CAF82'},{min:60,max:69,z:'🟡 Finding Your Rhythm',label:'Sedang Bergerak',c:'#C8A020'},{min:50,max:59,z:'Building Foundations',label:'Masih Bisa Ditingkatkan',c:'#E87A20'},{min:40,max:49,z:'🔴 Body Seeking Balance',label:'Tubuh Butuh Dukungan',c:'#C84040'}],
+  'M40-':[{min:90,max:100,z:'✨ In Full Flow',label:'Sangat Jarang Tercapai',c:'#2E8B57'},{min:80,max:89,z:'🟢 Consistently Aligned',label:'Stabil & Terjaga',c:'#3FAD72'},{min:70,max:79,z:'🟢 In Your Stride',label:'Momentum yang Baik',c:'#4CAF82'},{min:60,max:69,z:'🟡 Finding Your Rhythm',label:'Sedang Bergerak',c:'#C8A020'},{min:50,max:59,z:'Building Foundations',label:'Masih Bisa Ditingkatkan',c:'#E87A20'},{min:40,max:49,z:'🔴 Body Seeking Balance',label:'Tubuh Butuh Dukungan',c:'#C84040'}],
+  'M40+':[{min:90,max:100,z:'✨ In Full Flow',label:'Sangat Jarang Tercapai',c:'#2E8B57'},{min:80,max:89,z:'🟢 Consistently Aligned',label:'Stabil & Terjaga',c:'#3FAD72'},{min:70,max:79,z:'🟢 In Your Stride',label:'Momentum yang Baik',c:'#4CAF82'},{min:60,max:69,z:'🟡 Finding Your Rhythm',label:'Sedang Bergerak',c:'#C8A020'},{min:50,max:59,z:'Building Foundations',label:'Masih Bisa Ditingkatkan',c:'#E87A20'},{min:40,max:49,z:'🔴 Body Seeking Balance',label:'Tubuh Butuh Dukungan',c:'#C84040'}],
+  'N':[{min:90,max:100,z:'✨ In Full Flow',label:'Sangat Jarang Tercapai',c:'#2E8B57'},{min:80,max:89,z:'🟢 Consistently Aligned',label:'Stabil & Terjaga',c:'#3FAD72'},{min:70,max:79,z:'🟢 In Your Stride',label:'Momentum yang Baik',c:'#4CAF82'},{min:60,max:69,z:'🟡 Finding Your Rhythm',label:'Sedang Bergerak',c:'#C8A020'},{min:50,max:59,z:'Building Foundations',label:'Masih Bisa Ditingkatkan',c:'#E87A20'},{min:40,max:49,z:'🔴 Body Seeking Balance',label:'Tubuh Butuh Dukungan',c:'#C84040'}],
 };
 
 // Segment display labels for result screen
@@ -2189,7 +2174,7 @@ function detectType(){
 function getRitualBridge(typeId,ans){
   const op='Dari jawabanmu, pola tubuhmu terbaca —';
   const b={
-    rollercoaster_rider:`${op} pola setelah makan dan craving yang kamu ceritakan membentuk satu gambaran: glucose rhythm yang tidak stabil. DiaBee Itama dirancang untuk memutus siklus ini dari dalam.`,
+    rollercoaster_rider:`${op} pola setelah makan dan craving yang kamu ceritakan membentuk satu gambaran yang jelas. DiaBee hadir untuk memutus siklus ini — dari dalam, bukan dengan menahan.`,
     energy_reviver:`${op} pola energi dan respons imunitas yang kamu ceritakan adalah dua sinyal yang saling terhubung. Imunisi mendukung kapasitas seluler di balik keduanya.`,
     clarity_seeker:`${op} jarak dari kondisi terbaikmu dan pola tidur yang kamu ceritakan saling memperkuat. Daily membangun fondasi stabilitas seluler yang paling relevan untuk kondisi ini.`,
     gut_whisperer:`${op} sinyal pencernaan dan imunitas yang kamu ceritakan muncul bersamaan, menunjukkan ekosistem yang butuh keseimbangan. Imunisi bekerja di lapisan ini.`,
@@ -2199,7 +2184,7 @@ function getRitualBridge(typeId,ans){
     prime_guardian:`${op} sinyal yang kamu ceritakan tentang kondisi vs terbaikmu dan recovery konsisten dengan pergeseran kondisi di fase ini — terhubung ke ritme biologis. Daily menyasar fondasi ini secara langsung.`,
     night_restorer:`${op} pola malam dan ritme setelah makan yang kamu ceritakan saling terhubung — menciptakan false hunger nokturnal yang bisa distabilkan. DiaBee Itama bekerja di malam hari untuk ini.`,
     stress_snacker:`${op} respons tubuhmu setelah hari penuh tekanan dan pola craving yang kamu ceritakan saling memperkuat secara biologis. DiaBee Itama memutus rantai ini dari sisinya.`,
-    balance_master:`Dari jawabanmu, pola tubuhmu terbaca — dan kondisi ini bukan kebetulan.<br><br>Kondisi ini tidak bisa menjaga dirinya sendiri. Tubuh yang dinamis berubah setiap siklus — tidak dijaga dengan konsisten, dapat diam-diam bergeser. Daily + Signature Botanical adalah cara paling elegan untuk menjaga apa yang sudah kamu bangun.`,
+    balance_master:`Dari jawabanmu, pola tubuhmu terbaca — kondisi ini bukan kebetulan.<br><br>Dan kondisi ini tidak bisa menjaga dirinya sendiri. Daily + Myrta adalah cara yang tepat untuk menjaga apa yang sudah kamu bangun — secara konsisten, setiap hari.`,
     zest_builder:`${op} sinyal yang kamu ceritakan tentang kondisi vs terbaikmu dan energi harian adalah early signal — justru yang paling mudah direspons sebelum menguat lebih jauh. Daily + Imunisi adalah fondasi yang paling efektif sekarang.`,
     gut_harmonizer:`${op} di fase hidupmu ini, sinyal pencernaan dan imunitas yang kamu ceritakan saling memperkuat satu sama lain. Imunisi mendukung keseimbangan ekosistem ini dari dalam.`,
     zona_kritis:`Dari jawabanmu, pola tubuhmu terbaca dengan jelas — dan pola yang terbaca, bisa direspons.<br><br>Satu langkah pertama yang konsisten lebih berarti dari sepuluh langkah yang terburu-buru. Daily adalah fondasi itu — mulai dari sini, dan biarkan tubuhmu menunjukkan jalannya.`
@@ -2267,12 +2252,12 @@ function renderResult(){
   // Pillars
   const dmxDisplay={energy:16,glucose:16,gut:7,immune:7,recovery:7,decline:7};
   const pillarDefs={
-    energy:{label:"⚡ Stabilitas Energi",def:"<b>Energi Seluler</b> — seberapa efisien mitokondriamu memproduksi ATP. Skor tinggi = energi stabil sepanjang hari tanpa crash."},
-    glucose:{label:"🩸 Ritme Gula Darah",def:"<b>Glukosa Ritme</b> — seberapa stabil gula darahmu setelah makan. Skor tinggi = tidak ada spike-crash, tidak ada craving intens."},
-    gut:{label:"🌿 Keseimbangan Pencernaan",def:"<b>Gut Balance</b> — keseimbangan mikrobioma dan kenyamanan pencernaan. Skor tinggi = perut nyaman, pencernaan lancar, tidak kembung."},
-    immune:{label:"🛡️ Kesiapan Imunitas",def:"<b>Immune Readiness</b> — seberapa responsif sistem imunmu. Skor tinggi = jarang sakit, recovery cepat dari penyakit ringan."},
-    recovery:{label:"💪 Recovery & Performa",def:"<b>Cellular Recovery</b> — kecepatan tubuh memperbaiki diri setelah stres, aktivitas, atau kurang tidur. Skor tinggi = pulih cepat."},
-    decline:{label:"🔬 Proteksi Seluler",def:"<b>Proteksi Seluler</b> — seberapa baik tubuhmu melawan kerusakan oksidatif. Skor tinggi = fokus, stamina, dan performa terjaga dalam jangka panjang."}
+    energy:{label:"⚡ Stabilitas Energi",def:"<b>Seberapa stabil energimu sepanjang hari — dari pagi hingga malam, tanpa drop yang tiba-tiba."},
+    glucose:{label:"🩸 Ritme Glukosa Darah",def:"<b>Seberapa stabil glukosa darahmu setelah makan — tidak ngantuk tiba-tiba, tidak muncul craving kuat."},
+    gut:{label:"🌿 Keseimbangan Pencernaan",def:"<b>Seberapa nyaman pencernaanmu sehari-hari — perut tidak kembung, pencernaan lancar, tidak mudah bereaksi."},
+    immune:{label:"🛡️ Kesiapan Imunitas",def:"<b>Seberapa kuat ketahanan tubuhmu — jarang sakit, dan cepat pulih saat tubuh terganggu."},
+    recovery:{label:"💪 Pemulihan & Stamina",def:"<b>Seberapa cepat tubuhmu pulih — setelah aktivitas berat, hari yang melelahkan, atau tidur yang kurang."},
+    decline:{label:"🔬 Perlindungan Sel",def:"<b>Seberapa baik tubuhmu melindungi diri dari tekanan sehari-hari — menjaga fokus, stamina, dan kondisi optimal dalam jangka panjang."}
   };
   const statusColor=(p)=>p>=75?'#4CAF82':p>=50?'#E8C030':p>=25?'#E87A20':'#C84040';
   const statusLabel=(p)=>p>=75?'Terjaga':p>=50?'Perhatian':p>=25?'Dukungan':'Prioritas';
@@ -2508,7 +2493,7 @@ function renderAhaAccordion(){
     cont.innerHTML+=`<div class="aha-row"><div class="aha-q">${a.q}</div><div class="aha-a">${lbl}</div></div>`;
   });
   const dG={energy:16,glucose:16,gut:7,immune:7,recovery:7,decline:7,night_stress:14};
-  const pN={energy:'Stabilitas Energi',glucose:'Ritme Gula Darah',gut:'Keseimbangan Pencernaan',immune:'Kesiapan Imunitas',recovery:'Recovery & Performa',decline:'Proteksi Jangka Panjang',night_stress:'Kualitas Malam & Stres'};
+  const pN={energy:'Stabilitas Energi',glucose:'Ritme Glukosa Darah',gut:'Keseimbangan Pencernaan',immune:'Kesiapan Imunitas',recovery:'Pemulihan & Stamina',decline:'Proteksi Jangka Panjang',night_stress:'Kualitas Malam & Stres'};
   const pI={energy:'menguras fokus dan produktivitasmu setiap hari',glucose:'memicu siklus craving dan crash yang sulit diputus',gut:'berdampak langsung pada mood, imunitas, dan kejernihan pikiran',immune:'membuat tubuhmu terus-menerus dalam mode repair',recovery:'memperlambat kemampuan tubuh kembali ke kondisi terbaik',decline:'mempercepat perubahan dalam fokus dan stamina',night_stress:'mengganggu kualitas pemulihan malam'};
   const dE=Object.entries(dG).map(([d,mx])=>({d,pct:mx>0?((scores[d]||0)/mx)*100:0}));
   const act=dE.filter(e=>e.pct>0);
