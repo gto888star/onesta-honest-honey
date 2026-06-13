@@ -1416,7 +1416,7 @@ const TYPES = {
   },
   "zona_kritis":{
     id:"zona_kritis",emoji:"🆘",
-    name:"Zona Prioritas",nameEN:"Your Body Needs Consistent Support",
+    name:"Balance Explorer",nameEN:"Your Body Needs Consistent Support",
     tagline:'"Tubuhmu sedang memberi sinyal kuat. Ini bukan akhir — ini titik awal yang paling jelas. Setiap langkah kecil yang konsisten menggeser kondisi ini."',
     science:"Multi-system metabolic stress",
     insight:"Ini bukan kelemahan. Satu langkah kecil yang konsisten lebih berarti dari sepuluh langkah yang terburu-buru. Tubuhmu hanya butuh dukungan yang tepat — dimulai sekarang.",
@@ -2579,31 +2579,9 @@ function orderRitualOptional(){
   window.open(`https://wa.me/${waNum}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 // ══════════════════════════════════════════════════════
-// CLOUDFLARE WORKER — Security Gateway (Opsi Tengah)
-// Scoring tetap di frontend; logging ke Sheets divalidasi Worker
+// GOOGLE SHEETS — V6 URL
 // ══════════════════════════════════════════════════════
-const WORKER_URL = 'https://holy-silence-54e1.gatot-onesta.workers.dev';
-let currentSession = null;
-
-async function initSession(){
-  const channelMap = {
-    'aderai':'ade-rai', 'ade-rai':'ade-rai',
-    'vertex8':'vertex8', 'bca':'bca', 'internal':'internal'
-  };
-  const ref = (buddyRef || '').toLowerCase();
-  const channel = channelMap[ref] || 'direct';
-  try {
-    const res = await fetch(WORKER_URL + '/session', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ channel })
-    });
-    const data = await res.json();
-    if (data.sessionToken) currentSession = data;
-  } catch (err) {
-    console.warn('Session init failed (non-critical):', err);
-  }
-}
+const SHEETS_URL='https://script.google.com/macros/s/AKfycbzl2NqaNQ-s66lgkf8EUucdWL7QDQrrSTIgVbmv80cfXgJkyDZzd8AmPqOQeNYEM3txAw/exec';
 
 function logToSheets(converted){
   if(!result) return;
@@ -2656,14 +2634,7 @@ function logToSheets(converted){
       segment_label:result.segLabel?result.segLabel.short:'Universal',
       pilihan_opsional:optionalChoice||'',
     };
-    fetch(WORKER_URL+'/log',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        sessionToken: currentSession ? currentSession.sessionToken : '',
-        payload: payload
-      })
-    });
+    fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
   } catch(err){
     console.log('Logging error (non-critical):',err);
   }
@@ -2755,40 +2726,11 @@ function toast(msg){
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
-  initSession();
-  showVersionBadge();
   const nameEl=document.getElementById('user-name');
   if(nameEl) nameEl.addEventListener('keydown',e=>{if(e.key==='Enter')validateAndStart();});
   const gwWaEl=document.getElementById('gw-wa');
   if(gwWaEl) gwWaEl.addEventListener('keydown',e=>{if(e.key==='Enter')submitGateway();});
 });
-
-// ══════════════════════════════════════════════════════
-// VERSION / SECURITY BADGE — kecil di pojok kiri bawah
-// Tap untuk lihat detail. Hilang otomatis tidak — selalu ada
-// agar mudah verifikasi versi mana yang live.
-// ══════════════════════════════════════════════════════
-function showVersionBadge(){
-  const badge=document.createElement('div');
-  badge.id='version-badge';
-  badge.style.cssText='position:fixed;bottom:6px;left:6px;z-index:99999;'
-    +'font-family:monospace;font-size:10px;color:#fff;'
-    +'background:rgba(0,0,0,0.55);padding:3px 7px;border-radius:6px;'
-    +'opacity:0.55;pointer-events:auto;';
-  badge.textContent='V14.7.2 · checking security...';
-  document.body.appendChild(badge);
-
-  fetch(WORKER_URL+'/health')
-    .then(r=>r.json())
-    .then(d=>{
-      badge.textContent='V14.7.2 · 🔒 secure ('+(d.version||'ok')+')';
-      badge.style.color='#9effa0';
-    })
-    .catch(()=>{
-      badge.textContent='V14.7.2 · ⚠️ worker unreachable';
-      badge.style.color='#ffb3b3';
-    });
-}
 
 </script>
 </body>
