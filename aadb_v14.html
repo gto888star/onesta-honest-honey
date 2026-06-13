@@ -49,7 +49,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .brand-bottom{display:flex;flex-direction:column;align-items:center;gap:.35rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border);}
 .brand-logo{width:80px;height:auto;opacity:.85;}
 .brand-name{font-family:'Montserrat',sans-serif;font-size:1.15rem;font-weight:700;color:var(--gold-l);letter-spacing:.2em;text-transform:uppercase;}
-.brand-tag{font-size:.62rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;font-family:'Montserrat',sans-serif;}
+.brand-tag{font-size:.78rem;color:rgba(45,19,0,.65);letter-spacing:.08em;text-transform:uppercase;font-family:'Montserrat',sans-serif;}
 #s-intro{align-items:center;justify-content:center;padding:2.5rem 1.5rem;text-align:center;}
 .intro-icon{font-size:2.8rem;margin-bottom:1.25rem;animation:gPulse 3s ease infinite;}
 @keyframes gPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
@@ -572,9 +572,9 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
   <p class="cover-note">10 pertanyaan · 3 menit</p>
   <p style="font-size:.62rem;color:var(--muted);text-align:center;margin-top:.5rem;line-height:1.5;font-style:italic;max-width:300px;">Hasil kuis ini bersifat edukatif, bukan diagnosis medis.</p>
   <div class="brand-bottom">
-    <img class="brand-logo" src="https://gto888star.github.io/onesta-honest-honey/onesta_logo_light.jpg" alt="Onesta" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-    <div style="display:none"><div class="brand-name">Onesta</div></div>
-    <div class="brand-tag">Honest Honey · Living Honey · Natural Metabolic Stabilizer</div>
+    <div class="brand-name">Onesta</div>
+    <div class="brand-tag">Honest Honey · Living Honey</div>
+    <div class="brand-tag">Natural Metabolic Stabilizer</div>
   </div>
 </div>
 
@@ -1134,7 +1134,7 @@ const QS = [
 const TYPES = {
   "rollercoaster_rider":{
     id:"rollercoaster_rider",emoji:"🎢",
-    name:"Rollercoaster Rider",nameEN:"The Crash & Crave Cycler",
+    name:"The Rollercoaster Rider",nameEN:"Crash & Crave Cycler",
     tagline:'"Habis makan ngantuk, terus lapar lagi. Energi naik sebentar, langsung drop."',
     science:"Glucose instability + insulin spike-drop pattern",
     insight:"Tubuhmu tidak lemah dan kamu tidak kekurangan kemauan. Siklus ini adalah respons yang sangat nyata dari tubuh yang ritme energinya belum stabil. Yang dibutuhkan bukan lebih keras menahan — tapi membantu tubuh menemukan ritmenya kembali, dari dalam.",
@@ -1156,7 +1156,7 @@ const TYPES = {
   },
   "energy_reviver":{
     id:"energy_reviver",emoji:"🔋",
-    name:"Energy Reviver",nameEN:"The Low-Battery Drifter",
+    name:"The Energy Reviver",nameEN:"Low-Battery Drifter",
     tagline:'"Sudah tidur 8 jam, tapi bangun masih capek juga."',
     science:"Suboptimal cellular energy production (mitochondrial stress)",
     insight:"Tubuhmu tidak malas. Ada sesuatu yang sedang terjadi di dalam — di level terdalam tubuh — yang membuat energi tidak bisa diproduksi dengan optimal. Ini bisa terjadi pada siapa saja, dan bisa dipulihkan dengan dukungan yang tepat.",
@@ -1178,7 +1178,7 @@ const TYPES = {
   },
   "clarity_seeker":{
     id:"clarity_seeker",emoji:"🌫️",
-    name:"Clarity Seeker",nameEN:"The Foggy Thinker",
+    name:"The Clarity Seeker",nameEN:"Foggy Thinker",
     tagline:'"Ada di meeting, tapi pikiran entah ke mana. Fokus hilang di tengah hari."',
     science:"Neuroinflammation + disrupted brain glucose metabolism",
     insight:"Fokus yang tiba-tiba hilang di tengah hari bukan tanda kelemahan. Itu sinyal bahwa otakmu sedang bekerja keras di balik layar — dan butuh lingkungan yang lebih stabil untuk bisa optimal. Ini bisa dipulihkan dengan dukungan yang konsisten.",
@@ -1200,7 +1200,7 @@ const TYPES = {
   },
   "gut_whisperer":{
     id:"gut_whisperer",emoji:"🫧",
-    name:"Gut Whisperer",nameEN:"The Gut-Sensitive System",
+    name:"The Gut Whisperer",nameEN:"Gut-Sensitive System",
     tagline:'"Perut tidak pernah benar-benar nyaman. Kembung, tidak teratur, atau mudah bereaksi."',
     science:"Gut microbiome imbalance + intestinal permeability",
     insight:"Pencernaanmu bukan sekadar soal perut. Ia terhubung langsung ke otak, ke mood, ke energi, dan ke daya tahan tubuh. Ketika pencernaan tidak seimbang, semuanya ikut merasakannya — karena semuanya saling terhubung.",
@@ -1222,7 +1222,7 @@ const TYPES = {
   },
   "recovery_seeker":{
     id:"recovery_seeker",emoji:"🐢",
-    name:"Recovery Seeker",nameEN:"The Slow-Recovery Body",
+    name:"The Recovery Seeker",nameEN:"Slow-Recovery Body",
     tagline:'"Semua orang sudah segar, aku masih dalam proses recovery."',
     science:"Elevated oxidative damage + impaired cellular repair",
     insight:"Recovery yang lambat bukan tanda usia atau kelemahan. Ini sinyal bahwa tubuhmu butuh lebih banyak dukungan dari dalam untuk bisa memperbaiki diri setelah setiap tantangan. Dan itu bisa direspons — secara konsisten, dari dalam.",
@@ -1244,7 +1244,7 @@ const TYPES = {
   },
   "fasting_refiner":{
     id:"fasting_refiner",emoji:"⚡",
-    name:"Fasting Refiner",nameEN:"The Fasting-Crash Pattern",
+    name:"The Energy Navigator",nameEN:"Finding the way through energy gaps",
     tagline:'"Puasa semangat, tapi drop di tengah jalan. Buka puasa langsung balas dendam."',
     science:"Circadian glucose dysregulation + fasting stress response",
     insight:"Masalahmu bukan kemauan saat puasa. Tubuhmu belum punya 'jembatan energi' yang stabil antara periode puasa dan makan. <b>Transisi yang tepat</b> — bukan menahan lebih keras — adalah kuncinya.",
@@ -1273,7 +1273,7 @@ const TYPES = {
   // ── Q11 SPLIT: Graceful Guardian (F40+) ──
   "graceful_guardian":{
     id:"graceful_guardian",emoji:"🌿",
-    name:"Graceful Guardian",nameEN:"The Transition Protector",
+    name:"The Graceful Guardian",nameEN:"Transition Protector",
     tagline:'"Tubuhmu sedang dalam transisi yang nyata. Bukan melemah — sedang berubah. Dan perubahan butuh perlindungan."',
     science:"Perimenopause/menopause transition + multi-domain metabolic shift + estrogen-driven oxidative stress",
     insight:"Apa yang kamu rasakan bukan imajinasimu. Ketika tubuh mulai berubah, beberapa sistem merespons sekaligus — energi, tidur, mood, pencernaan, semuanya saling terhubung. Ini bukan kelemahan. Ini perubahan yang nyata, yang butuh dukungan yang tepat.",
@@ -1292,7 +1292,7 @@ const TYPES = {
   // ── Q11 SPLIT: Prime Guardian (M40+) ──
   "prime_guardian":{
     id:"prime_guardian",emoji:"🏔️",
-    name:"Prime Guardian",nameEN:"The Edge Protector",
+    name:"The Prime Guardian",nameEN:"Edge Protector",
     tagline:'"Yang sudah dibangun perlu dijaga. Bukan soal mundur — soal mempertahankan yang terbaik dari dirimu."',
     science:"Andropause onset + testosterone decline + multi-domain metabolic stress + cardiovascular risk window",
     insight:"Perubahan yang kamu rasakan bukan sekadar penuaan normal. Ketika kondisi tubuh mulai bergeser, beberapa hal terasa sekaligus — energi, pemulihan, fokus, stamina semuanya saling terhubung. Yang dibutuhkan bukan kerja lebih keras — tapi fondasi yang lebih cerdas.",
@@ -1307,7 +1307,7 @@ const TYPES = {
   },
   "night_restorer":{
     id:"night_restorer",emoji:"🌙",
-    name:"Night Restorer",nameEN:"The Night Craver",
+    name:"The Night Restorer",nameEN:"Night Craver",
     tagline:'"Jam 10 malam tiba-tiba lapar berat. Tidur pun jadi susah kalau belum ngemil."',
     science:"Circadian rhythm misalignment + late-night cortisol demand",
     insight:"Lapar atau craving di malam hari bukan kelemahan. Ini adalah respons biologis nyata — tubuh yang ritme malamnya belum stabil akan mengirim sinyal seperti ini. Bukan salahmu. Dan ritme ini bisa diatur ulang.",
@@ -1329,7 +1329,7 @@ const TYPES = {
   },
   "stress_snacker":{
     id:"stress_snacker",emoji:"😤",
-    name:"Stress Snacker",nameEN:"The Stress Feeder",
+    name:"The Comfort Seeker",nameEN:"The body's quiet way of asking for peace",
     tagline:'"Deadline datang, tangan langsung cari snack. Bukan lapar, tapi butuh sesuatu."',
     science:"Cortisol-driven eating behavior + HPA axis dysregulation",
     insight:"Mencari makanan saat stres bukan kelemahan karakter. Itu respons yang sangat nyata dari tubuh yang sedang berusaha menstabilkan dirinya sendiri. Bukan salahmu — dan siklus ini bisa diubah.",
@@ -1351,7 +1351,7 @@ const TYPES = {
   },
   "balance_master":{
     id:"balance_master",emoji:"🏆",
-    name:"Balance Master",nameEN:"The Stable Performer",
+    name:"The Balance Master",nameEN:"Stable Performer",
     tagline:'"Energi stabil, jarang craving, fokus baik. Ini adalah kondisi yang ingin dicapai semua orang."',
     science:"Balanced metabolic function across all pillars",
     insight:"Kondisi ini bukan kebetulan — ini mencerminkan pola dan kebiasaan yang sudah kamu bangun. Tapi tubuh yang dinamis tidak bisa menjaga dirinya sendiri. Tidak dijaga dengan konsisten, kondisi ini dapat diam-diam bergeser — lebih cepat dari yang disadari. Justru saat kondisi baik adalah momen paling tepat untuk memperkuat fondasinya.",
@@ -1372,7 +1372,7 @@ const TYPES = {
   },
   "zest_builder":{
     id:"zest_builder",emoji:"🌱",
-    name:"Zest Builder",nameEN:"The High-Potential Overloader",
+    name:"The Zest Builder",nameEN:"High-Potential Overloader",
     tagline:'"Semangatku penuh — tapi beberapa sistem mulai minta perhatian sekaligus."',
     science:"Multi-system overload + early oxidative stress (under 40)",
     insight:"Ini bukan tanda kelemahan. Ini sinyal bahwa tubuhmu sedang menanggung lebih dari yang disadari. Semangat tinggi tidak selalu berarti semua sistem sudah siap — dan justru di usia ini, membangun fondasi yang tepat adalah investasi terbaik yang bisa kamu lakukan untuk dirimu sendiri.",
@@ -1394,7 +1394,7 @@ const TYPES = {
   },
   "gut_harmonizer":{
     id:"gut_harmonizer",emoji:"🛡️",
-    name:"Gut Harmonizer",nameEN:"The Inner Ecosystem Conductor",
+    name:"The Gut Harmonizer",nameEN:"Inner Ecosystem Conductor",
     tagline:'"Pencernaanku sudah semakin kompleks — butuh pendekatan yang lebih dari sekadar sensitif."',
     science:"Gut microbiome imbalance + hormonal influence on gut axis (40+)",
     insight:"Pencernaanmu tidak hanya sensitif — ia bekerja dalam sistem yang jauh lebih dalam dari yang disadari. Di usia ini, keseimbangan pencernaan terhubung langsung ke mood, energi, dan daya tahan tubuh. Ini bukan sekadar soal perut — ini tentang keseimbangan dari dalam.",
@@ -1416,7 +1416,7 @@ const TYPES = {
   },
   "zona_kritis":{
     id:"zona_kritis",emoji:"🆘",
-    name:"Balance Explorer",nameEN:"Your Body Needs Consistent Support",
+    name:"The Balance Explorer",nameEN:"Your Body Needs Consistent Support",
     tagline:'"Tubuhmu sedang memberi sinyal kuat. Ini bukan akhir — ini titik awal yang paling jelas. Setiap langkah kecil yang konsisten menggeser kondisi ini."',
     science:"Multi-system metabolic stress",
     insight:"Ini bukan kelemahan. Satu langkah kecil yang konsisten lebih berarti dari sepuluh langkah yang terburu-buru. Tubuhmu hanya butuh dukungan yang tepat — dimulai sekarang.",
@@ -2670,7 +2670,7 @@ I'd been wondering about my own body for a while — finally got some answers.
 Turns out my body had been whispering all along...
 I just wasn't listening.
 
-My score: *${result.bal}* ${result.type.emoji} *${result.type.name}*
+My type: ${result.type.emoji} *${result.type.name}*
 
 Curious about yours?
 Free, 3-5 mins, personal results:
@@ -2683,7 +2683,7 @@ Lama penasaran sama kondisi tubuhku sendiri — akhirnya ada jawabannya.
 Ternyata banyak sinyal tubuh yang selama ini berbisik...
 tapi aku tak mendengarnya.
 
-Score-ku: *${result.bal}* ${result.type.emoji} *${result.type.name}*
+Tipeku: ${result.type.emoji} *${result.type.name}*
 
 Kamu juga penasaran?
 Gratis, 3-5 menit, hasil personal:
