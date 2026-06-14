@@ -744,7 +744,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
     <div class="r-type-name" id="r-type-name"></div>
     <div class="r-type-en" id="r-type-en"></div>
     <div class="r-type-tagline" id="r-type-tagline"></div>
-    <div class="r-type-science" id="r-type-science"></div>
+    <div class="r-type-science" id="r-type-science" style="display:none"></div>
   </div>
   <div class="r-insight-block">
     <div class="r-insight-label">💡 Apa Artinya Ini</div>
@@ -1503,6 +1503,8 @@ const TYPES = {
 // STATE
 // ══════════════════════════════════════════════════════
 let qIdx=0, scores={}, totalScore=0, selOpt=null, answers=[], result=null;
+let lastChapter=0; // track chapter transitions
+let answerHistory=[]; // V14: D6 — back button history
 let optionalChoice=null; // V14: 'A' or 'B' from optional flow
 let userName='', userWA='', buddyRef='';
 let resultViewedAt=null, shareClicked=false;
@@ -1511,14 +1513,16 @@ let resultViewedAt=null, shareClicked=false;
 // BUDDY REF
 // ══════════════════════════════════════════════════════
 function initBuddyRef(){
-  const params=new URLSearchParams(window.location.search);
-  const ref=params.get('ref')||params.get('buddy')||'';
-  if(ref&&ref.length>=2&&ref.length<=20){
-    buddyRef=ref.toUpperCase().trim();
-    sessionStorage.setItem('onesta_ref',buddyRef);
-  } else {
-    buddyRef=sessionStorage.getItem('onesta_ref')||'';
-  }
+  try {
+    const params=new URLSearchParams(window.location.search);
+    const ref=params.get('ref')||params.get('buddy')||'';
+    if(ref&&ref.length>=2&&ref.length<=20){
+      buddyRef=ref.toUpperCase().trim();
+      try { sessionStorage.setItem('onesta_ref',buddyRef); } catch(e){}
+    } else {
+      try { buddyRef=sessionStorage.getItem('onesta_ref')||''; } catch(e){}
+    }
+  } catch(e) { buddyRef=''; }
 }
 initBuddyRef();
 
@@ -1599,8 +1603,6 @@ function restart(){
 // ══════════════════════════════════════════════════════
 // QUIZ RENDER — V8 (Chapter UI)
 // ══════════════════════════════════════════════════════
-let lastChapter=0; // track chapter transitions
-let answerHistory=[]; // V14: D6 — back button history
 
 function renderQ(){
   const q=QS[qIdx];
@@ -1673,7 +1675,7 @@ function pickOpt(el,opt,q){
   const btn=document.getElementById('btn-next');
   btn.textContent='Lanjut →';
   btn.classList.add('show');
-  setTimeout(()=>btn.scrollIntoView({behavior:'smooth',block:'nearest'}),350);
+  setTimeout(()=>btn?.scrollIntoView?.({behavior:'smooth',block:'nearest'}),350);
 }
 
 function nextQ(){
@@ -2112,7 +2114,15 @@ function buildResult(){
   // ── Graceful/Prime Guardian path flag (A = multi-system, B = decline+energy) ──
   const gracefulPath = type.id === 'graceful_guardian' ? (type.__gracefulPath||'A') : null;
   const primePath = type.id === 'prime_guardian' ? (type.__primePath||'A') : null;
-  return{bal:finalBal,tmpBal,weightedBal,type,zone,seg,segLabel,topPct,balancePath,zestPath,gracefulPath,primePath};
+
+  // ── Pillar percentages for report ──
+  const dmxPillar={energy:16,glucose:16,gut:7,immune:7,recovery:7,decline:7,night_stress:14};
+  const pillarPct={};
+  Object.entries(dmxPillar).forEach(([d,mx])=>{
+    pillarPct[d]=Math.min(Math.round(100-((scores[d]||0)/mx)*100),100);
+  });
+
+  return{bal:finalBal,tmpBal,weightedBal,type,zone,seg,segLabel,topPct,balancePath,zestPath,gracefulPath,primePath,pillarPct};
 }
 
 // ══════════════════════════════════════════════════════
@@ -2672,7 +2682,7 @@ function renderOptionalFlow(){
   }
   resEl.style.display='block';
   if(ctaEl) ctaEl.style.display='block';
-  setTimeout(()=>resEl.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+  setTimeout(()=>resEl?.scrollIntoView?.({behavior:'smooth',block:'nearest'}),100);
 }
 function buildOptCard(key,p,isPri,isOpt){
   const card=document.createElement('div');
@@ -2900,17 +2910,17 @@ function showVersionBadge(){
     +'font-family:monospace;font-size:10px;color:#fff;'
     +'background:rgba(0,0,0,0.55);padding:3px 7px;border-radius:6px;'
     +'opacity:0.55;pointer-events:auto;';
-  badge.textContent='V14.7.2 · checking security...';
+  badge.textContent='V14.8.0 · checking security...';
   document.body.appendChild(badge);
 
   fetch(WORKER_URL+'/health')
     .then(r=>r.json())
     .then(d=>{
-      badge.textContent='V14.7.2 · 🔒 secure ('+(d.version||'ok')+')';
+      badge.textContent='V14.8.0 · 🔒 secure ('+(d.version||'ok')+')';
       badge.style.color='#9effa0';
     })
     .catch(()=>{
-      badge.textContent='V14.7.2 · ⚠️ worker unreachable';
+      badge.textContent='V14.8.0 · ⚠️ worker unreachable';
       badge.style.color='#ffb3b3';
     });
 }
@@ -2931,269 +2941,198 @@ async function drawReport(ctx, data) {
   const { result, userName } = data;
   const type = result.type;
   const seg = result.seg;
+  const bal = result.bal;
 
-  // ── COLORS ──
   const C = {
-    cream:    '#FDF9F5',
-    gold:     '#B8A988',
-    orange:   '#C1532E',
-    brown:    '#2D1300',
-    footerBg: '#F5EEE4',
-    ritualBg: '#8B5A2B',
-    white:    '#FFFFFF',
-    muted:    '#888888',
-    zoneKritis:    '#C0392B',
-    zoneDeveloping:'#E67E22',
-    zoneSolid:     '#27AE60',
-    zoneMaster:    '#1A4A8A',
+    cream:'#FDF9F5', gold:'#B8A988', orange:'#C1532E', brown:'#2D1300',
+    footerBg:'#F5EEE4', ritualBg:'#8B5A2B', white:'#FFFFFF', muted:'#999999',
+    zoneKritis:'#C0392B', zoneDeveloping:'#E67E22', zoneSolid:'#27AE60', zoneMaster:'#1A4A8A',
   };
 
-  // ── ZONE COLOR ──
-  const zoneColor = {
-    kritis: C.zoneKritis,
-    developing: C.zoneDeveloping,
-    solid: C.zoneSolid,
-    master: C.zoneMaster,
-  }[result.zone] || C.orange;
+  const zoneId = (result.zone && result.zone.id) ? result.zone.id : (result.zone||'developing');
+  const zoneColor = {kritis:C.zoneKritis,developing:C.zoneDeveloping,solid:C.zoneSolid,master:C.zoneMaster}[zoneId]||C.zoneDeveloping;
 
-  // ── FONTS ──
   const F = {
-    bold:    (s) => `700 ${s}px Montserrat, Arial, sans-serif`,
-    semi:    (s) => `600 ${s}px Montserrat, Arial, sans-serif`,
-    regular: (s) => `400 ${s}px Montserrat, Arial, sans-serif`,
-    light:   (s) => `300 ${s}px Montserrat, Arial, sans-serif`,
+    bold:(s)=>`700 ${s}px Montserrat,Arial,sans-serif`,
+    semi:(s)=>`600 ${s}px Montserrat,Arial,sans-serif`,
+    regular:(s)=>`400 ${s}px Montserrat,Arial,sans-serif`,
+    light:(s)=>`300 ${s}px Montserrat,Arial,sans-serif`,
   };
 
-  // ── HELPER: wrap text ──
-  function wrapText(ctx, text, x, y, maxW, lineH) {
+  function wrapText(text, x, y, maxW, lineH, maxL=20) {
     const words = text.replace(/<[^>]*>/g,'').split(' ');
-    let line = '', lines = [];
-    for (let w of words) {
-      const test = line ? line + ' ' + w : w;
-      if (ctx.measureText(test).width > maxW && line) {
-        lines.push(line); line = w;
-      } else { line = test; }
+    let line='',count=0;
+    for(let w of words){
+      const test=line?line+' '+w:w;
+      if(ctx.measureText(test).width>maxW&&line){
+        if(count<maxL) ctx.fillText(line,x,y+count*lineH);
+        count++;line=w;
+      } else {line=test;}
     }
-    if (line) lines.push(line);
-    lines.forEach((l, i) => ctx.fillText(l, x, y + i * lineH));
-    return lines.length;
+    if(line&&count<maxL) ctx.fillText(line,x,y+count*lineH);
+    return count+1;
   }
 
-  // ── BACKGROUND ──
-  ctx.fillStyle = C.cream;
-  ctx.fillRect(0, 0, W, H);
+  function countLines(text, maxW) {
+    const words = text.replace(/<[^>]*>/g,'').split(' ');
+    let line='',count=1;
+    for(let w of words){
+      const test=line?line+' '+w:w;
+      if(ctx.measureText(test).width>maxW&&line){count++;line=w;}
+      else{line=test;}
+    }
+    return count;
+  }
 
-  let y = 0;
+  // BG
+  ctx.fillStyle=C.cream; ctx.fillRect(0,0,W,H);
+  let y=0;
 
-  // ── 1. HEADER ──
-  ctx.fillStyle = C.footerBg;
-  ctx.fillRect(0, 0, W, 140);
-  ctx.font = F.bold(22);
-  ctx.fillStyle = C.orange;
-  ctx.textAlign = 'center';
-  ctx.fillText('PERSONAL METABOLIC REPORT', W/2, 52);
-  ctx.font = F.regular(18);
-  ctx.fillStyle = C.muted;
-  const today = new Date();
-  const tgl = today.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
-  ctx.fillText(tgl, W/2, 82);
-  ctx.font = F.light(16);
-  ctx.fillStyle = C.gold;
-  ctx.fillText('Ada Apa Dengan Balance.  ·  Onesta Balance Check', W/2, 115);
-  y = 140;
+  // 1. HEADER
+  ctx.fillStyle=C.footerBg; ctx.fillRect(0,0,W,148);
+  ctx.textAlign='center';
+  ctx.font=F.bold(24); ctx.fillStyle=C.orange;
+  ctx.fillText('PERSONAL METABOLIC REPORT',W/2,50);
+  ctx.font=F.regular(19); ctx.fillStyle=C.muted;
+  const tgl=new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
+  ctx.fillText(tgl,W/2,84);
+  ctx.font=F.light(17); ctx.fillStyle=C.gold;
+  ctx.fillText('Ada Apa Dengan Balance.  ·  Onesta Balance Check',W/2,118);
+  y=148;
 
-  // ── 2. GREETING ──
-  ctx.textAlign = 'left';
-  y += 52;
-  ctx.font = F.bold(38);
-  ctx.fillStyle = C.brown;
-  ctx.fillText(`Halo, ${userName || 'Kamu'} 👋`, 72, y);
-  y += 20;
-  ctx.font = F.regular(22);
-  ctx.fillStyle = C.muted;
-  ctx.fillText('Ini adalah profil metabolik personalmu.', 72, y + 28);
-  y += 72;
+  // 2. GREETING
+  y+=48; ctx.textAlign='left';
+  ctx.font=F.bold(40); ctx.fillStyle=C.brown;
+  ctx.fillText(`Halo, ${userName||'Kamu'} 👋`,72,y);
+  y+=36; ctx.font=F.regular(21); ctx.fillStyle=C.muted;
+  ctx.fillText('Ini adalah profil metabolik personalmu.',72,y);
+  y+=52;
 
-  // ── 3. TYPE CARD ──
-  const cardH = 220;
-  // card bg gradient
-  const grad = ctx.createLinearGradient(0, y, W, y + cardH);
-  grad.addColorStop(0, '#3A1A00');
-  grad.addColorStop(1, '#1A0800');
-  ctx.fillStyle = grad;
-  roundRect(ctx, 52, y, W - 104, cardH, 22);
-  ctx.fill();
+  // 3. TYPE CARD
+  const taglineClean=(type.tagline||'').replace(/["""]/g,'');
+  ctx.font=F.regular(21);
+  const tagLines=countLines(taglineClean,W-280);
+  const cardH=80+56+36+tagLines*30+32;
 
-  // zone badge
-  ctx.fillStyle = zoneColor;
-  roundRect(ctx, W - 52 - 160, y + 24, 160, 52, 10);
-  ctx.fill();
-  ctx.font = F.bold(20);
-  ctx.fillStyle = C.white;
-  ctx.textAlign = 'center';
-  ctx.fillText(`${result.bal}/100`, W - 52 - 80, y + 55);
+  const grad=ctx.createLinearGradient(0,y,W,y+cardH);
+  grad.addColorStop(0,'#3A1A00'); grad.addColorStop(1,'#1A0800');
+  ctx.fillStyle=grad; roundRect(ctx,52,y,W-104,cardH,22); ctx.fill();
 
-  // emoji + name
-  ctx.textAlign = 'left';
-  ctx.font = `60px Arial`;
-  ctx.fillText(type.emoji, 80, y + 78);
-  ctx.font = F.bold(34);
-  ctx.fillStyle = C.gold;
-  ctx.fillText(type.name, 80, y + 118);
-  ctx.font = F.regular(20);
-  ctx.fillStyle = '#C8B99A';
-  wrapText(ctx, type.tagline.replace(/"/g,''), 80, y + 148, W - 200, 28);
-  y += cardH + 36;
+  ctx.fillStyle=zoneColor; roundRect(ctx,W-222,y+22,170,54,10); ctx.fill();
+  ctx.font=F.bold(26); ctx.fillStyle=C.white; ctx.textAlign='center';
+  ctx.fillText(`${bal}/100`,W-137,y+56);
 
-  // ── 4. ZONE BAR ──
-  const barW = W - 104;
-  const barH = 22;
-  ctx.fillStyle = '#E8DDD0';
-  roundRect(ctx, 52, y, barW, barH, 11);
-  ctx.fill();
-  const fillW = Math.round((result.bal / 100) * barW);
-  ctx.fillStyle = zoneColor;
-  roundRect(ctx, 52, y, fillW, barH, 11);
-  ctx.fill();
-  // zone labels
-  const zoneLabels = [
-    {label:'Kritis', pos:.12, color:C.zoneKritis},
-    {label:'Developing', pos:.37, color:C.zoneDeveloping},
-    {label:'Solid', pos:.62, color:C.zoneSolid},
-    {label:'Master', pos:.87, color:C.zoneMaster},
+  ctx.textAlign='left';
+  ctx.font=`56px Arial`; ctx.fillText(type.emoji,80,y+68);
+  ctx.font=F.bold(32); ctx.fillStyle=C.gold; ctx.fillText(type.name,80,y+114);
+  ctx.font=F.regular(21); ctx.fillStyle='#C8B99A';
+  wrapText(taglineClean,80,y+148,W-200,30);
+  y+=cardH+32;
+
+  // 4. ZONE BAR
+  const barW=W-104, barH=20;
+  const zoneSegs=[
+    {id:'kritis',color:C.zoneKritis,min:0,max:0.35},
+    {id:'developing',color:C.zoneDeveloping,min:0.35,max:0.60},
+    {id:'solid',color:C.zoneSolid,min:0.60,max:0.80},
+    {id:'master',color:C.zoneMaster,min:0.80,max:1.0},
   ];
-  ctx.font = F.semi(16);
-  zoneLabels.forEach(z => {
-    ctx.fillStyle = z.color;
-    ctx.textAlign = 'center';
-    ctx.fillText(z.label, 52 + barW * z.pos, y + barH + 24);
+  // Draw bg bar
+  ctx.fillStyle='#E8DDD0'; roundRect(ctx,52,y,barW,barH,10); ctx.fill();
+  // Draw colored segments
+  zoneSegs.forEach(z=>{
+    const x1=52+barW*z.min, w1=barW*(z.max-z.min);
+    ctx.fillStyle=z.color+'66';
+    ctx.fillRect(x1,y,w1,barH);
   });
-  y += barH + 52;
-
-  // ── 5. PILAR BARS ──
-  ctx.textAlign = 'left';
-  ctx.font = F.bold(24);
-  ctx.fillStyle = C.brown;
-  ctx.fillText('Profil 7 Pilar Balance', 72, y);
-  y += 36;
-
-  const pilarLabels = {
-    energy:'Energi', glucose:'Glukosa', gut:'Pencernaan',
-    immune:'Imunitas', recovery:'Pemulihan', decline:'Vitalitas', night_stress:'Tidur & Stres'
-  };
-  const pilarPct = result.topPct || {};
-  const pilarOrder = ['energy','glucose','gut','immune','recovery','decline','night_stress'];
-
-  pilarOrder.forEach(p => {
-    const pct = Math.round((1 - (pilarPct[p]||0)/100) * 100);
-    const label = pilarLabels[p] || p;
-    ctx.font = F.regular(19);
-    ctx.fillStyle = C.brown;
-    ctx.fillText(label, 72, y + 20);
-    ctx.font = F.semi(19);
-    ctx.fillStyle = C.orange;
-    ctx.textAlign = 'right';
-    ctx.fillText(`${pct}%`, W - 72, y + 20);
-    ctx.textAlign = 'left';
-    // bar bg
-    ctx.fillStyle = '#E8DDD0';
-    roundRect(ctx, 72, y + 28, W - 144, 12, 6);
-    ctx.fill();
-    // bar fill
-    ctx.fillStyle = pct >= 70 ? C.zoneSolid : pct >= 45 ? C.zoneDeveloping : C.zoneKritis;
-    roundRect(ctx, 72, y + 28, Math.round((pct/100)*(W-144)), 12, 6);
-    ctx.fill();
-    y += 62;
+  // Score marker dot
+  const markerX=52+Math.round((bal/100)*barW);
+  ctx.fillStyle=zoneColor;
+  ctx.beginPath(); ctx.arc(markerX,y+barH/2,13,0,Math.PI*2); ctx.fill();
+  ctx.font=F.bold(13); ctx.fillStyle=C.white; ctx.textAlign='center';
+  ctx.fillText(bal,markerX,y+barH/2+5);
+  // Labels
+  ctx.font=F.semi(17);
+  zoneSegs.forEach(z=>{
+    ctx.fillStyle=z.color;
+    ctx.textAlign='center';
+    ctx.fillText(z.id.charAt(0).toUpperCase()+z.id.slice(1),52+barW*(z.min+z.max)/2,y+barH+28);
   });
-  y += 8;
+  y+=barH+52;
 
-  // ── 6. SINYAL UTAMA ──
-  ctx.fillStyle = '#FFF5EE';
-  ctx.strokeStyle = C.orange;
-  ctx.lineWidth = 3;
-  roundRect(ctx, 52, y, W - 104, 8); // will extend
-  // draw insight box
-  const insightRaw = (type.segInsight && type.segInsight[seg])
-    ? type.segInsight[seg] : (type.insightA || type.insight || '');
-  const insightClean = insightRaw.replace(/<[^>]*>/g,'');
-  ctx.font = F.regular(21);
-  const insightLines = measureWrapLines(ctx, insightClean, W - 200, 200);
-  const insightBoxH = 80 + insightLines * 32;
+  // 5. PILAR
+  ctx.textAlign='left'; ctx.font=F.bold(26); ctx.fillStyle=C.brown;
+  ctx.fillText('Profil 7 Pilar Balance',72,y); y+=40;
+  const pilarLabels={energy:'Energi',glucose:'Glukosa',gut:'Pencernaan',immune:'Imunitas',recovery:'Pemulihan',decline:'Vitalitas',night_stress:'Tidur & Stres'};
+  const pillarData=result.pillarPct||{};
+  ['energy','glucose','gut','immune','recovery','decline','night_stress'].forEach(p=>{
+    const pct=pillarData[p]!==undefined?pillarData[p]:50;
+    ctx.font=F.regular(20); ctx.fillStyle=C.brown; ctx.textAlign='left';
+    ctx.fillText(pilarLabels[p],72,y+22);
+    const col=pct>=70?C.zoneSolid:pct>=45?C.zoneDeveloping:C.zoneKritis;
+    ctx.font=F.semi(20); ctx.fillStyle=col; ctx.textAlign='right';
+    ctx.fillText(`${pct}%`,W-72,y+22);
+    ctx.textAlign='left';
+    ctx.fillStyle='#E8DDD0'; roundRect(ctx,72,y+30,W-144,14,7); ctx.fill();
+    const fw=Math.max(14,Math.round((pct/100)*(W-144)));
+    ctx.fillStyle=col; roundRect(ctx,72,y+30,fw,14,7); ctx.fill();
+    y+=64;
+  });
+  y+=12;
 
-  ctx.fillStyle = '#FFF8F3';
-  roundRect(ctx, 52, y, W - 104, insightBoxH, 16);
-  ctx.fill();
-  ctx.strokeStyle = C.orange;
-  ctx.lineWidth = 4;
-  ctx.beginPath();
-  ctx.moveTo(52, y + 16);
-  ctx.lineTo(52, y + insightBoxH - 16);
-  ctx.stroke();
+  // 6. SINYAL UTAMA
+  const insightRaw=(()=>{
+    if(type.id==='graceful_guardian') return result.gracefulPath==='B'?(type.segInsightB?.[seg]||type.insightB||type.insightA||type.insight||''):(type.segInsight?.[seg]||type.insightA||type.insight||'');
+    if(type.id==='prime_guardian') return result.primePath==='B'?(type.segInsightB?.[seg]||type.insightB||type.insightA||type.insight||''):(type.segInsight?.[seg]||type.insightA||type.insight||'');
+    if(type.id==='balance_master') return result.balancePath==='A'?(type.segInsight?.[seg]||type.insightA||type.insight||''):(type.segInsightB?.[seg]||type.insightB||type.insight||'');
+    return type.segInsight?.[seg]||type.insightA||type.insight||'';
+  })();
+  const insightClean=insightRaw.replace(/<[^>]*>/g,'');
+  ctx.font=F.regular(21);
+  const iLines=countLines(insightClean,W-200);
+  const insightBoxH=72+iLines*32+24;
+  ctx.fillStyle='#FFF8F3'; roundRect(ctx,52,y,W-104,insightBoxH,16); ctx.fill();
+  ctx.fillStyle=C.orange; ctx.fillRect(52,y+16,5,insightBoxH-32);
+  ctx.font=F.bold(20); ctx.fillStyle=C.orange; ctx.textAlign='left';
+  ctx.fillText('💡 Sinyal Utamamu',80,y+42);
+  ctx.font=F.regular(21); ctx.fillStyle=C.brown;
+  wrapText(insightClean,80,y+74,W-200,32);
+  y+=insightBoxH+32;
 
-  ctx.font = F.bold(20);
-  ctx.fillStyle = C.orange;
-  ctx.fillText('💡 Sinyal Utamamu', 80, y + 40);
-  ctx.font = F.regular(21);
-  ctx.fillStyle = C.brown;
-  wrapText(ctx, insightClean, 80, y + 72, W - 200, 32);
-  y += insightBoxH + 36;
+  // 7. REKOMENDASI
+  ctx.font=F.bold(26); ctx.fillStyle=C.brown; ctx.textAlign='left';
+  ctx.fillText('Rekomendasi Untukmu',72,y); y+=36;
+  ctx.font=F.semi(19); ctx.fillStyle=C.orange;
+  ctx.fillText(type.stack||(type.products||[]).join(' + '),72,y); y+=32;
+  ctx.font=F.regular(19); ctx.fillStyle=C.brown;
+  const wLines=wrapText((type.why||'').replace(/<[^>]*>/g,''),72,y,W-144,30);
+  y+=wLines*30+32;
 
-  // ── 7. REKOMENDASI ──
-  ctx.font = F.bold(24);
-  ctx.fillStyle = C.brown;
-  ctx.fillText('Rekomendasi Untukmu', 72, y);
-  y += 36;
-  ctx.font = F.regular(20);
-  ctx.fillStyle = C.muted;
-  ctx.fillText(`Stack: ${type.stack || type.products?.join(' + ')}`, 72, y);
-  y += 36;
-  ctx.font = F.light(19);
-  ctx.fillStyle = C.brown;
-  const whyLines = wrapText(ctx, type.why || '', 72, y, W - 144, 30);
-  y += whyLines * 30 + 36;
+  // 8. RITUAL CARD
+  const ritualH=148;
+  ctx.fillStyle=C.ritualBg; roundRect(ctx,52,y,W-104,ritualH,18); ctx.fill();
+  ctx.textAlign='center';
+  ctx.font=F.bold(28); ctx.fillStyle=C.gold;
+  ctx.fillText('🍯  2 Sendok Teh Sehari',W/2,y+54);
+  ctx.font=F.semi(21); ctx.fillStyle='#E8D5B7';
+  ctx.fillText('Ritual kecil untuk membangun dan',W/2,y+90);
+  ctx.fillText('mempertahankan Balance.',W/2,y+118);
+  y+=ritualH+32;
 
-  // ── 8. RITUAL CARD ──
-  const ritualH = 140;
-  ctx.fillStyle = C.ritualBg;
-  roundRect(ctx, 52, y, W - 104, ritualH, 18);
-  ctx.fill();
-  ctx.textAlign = 'center';
-  ctx.font = F.bold(26);
-  ctx.fillStyle = C.gold;
-  ctx.fillText('🍯  2 Sendok Teh Sehari', W/2, y + 52);
-  ctx.font = F.semi(20);
-  ctx.fillStyle = '#E8D5B7';
-  ctx.fillText('Ritual kecil untuk membangun dan', W/2, y + 86);
-  ctx.fillText('mempertahankan Balance.', W/2, y + 112);
-  y += ritualH + 36;
+  // 9. CTA
+  ctx.textAlign='center';
+  ctx.font=F.bold(23); ctx.fillStyle=C.brown; ctx.fillText('Kamu tipe metabolik apa?',W/2,y+30);
+  ctx.font=F.semi(21); ctx.fillStyle=C.orange; ctx.fillText('Ada Apa Dengan Balance.',W/2,y+62);
+  ctx.font=F.regular(19); ctx.fillStyle=C.muted; ctx.fillText('bit.ly/3SF1nIg',W/2,y+92);
+  y+=116;
 
-  // ── 9. CTA + QR ──
-  ctx.textAlign = 'center';
-  ctx.font = F.bold(22);
-  ctx.fillStyle = C.brown;
-  ctx.fillText('Kamu tipe metabolik apa?', W/2, y + 28);
-  ctx.font = F.semi(20);
-  ctx.fillStyle = C.orange;
-  ctx.fillText('Ada Apa Dengan Balance.', W/2, y + 58);
-  ctx.font = F.regular(18);
-  ctx.fillStyle = C.muted;
-  ctx.fillText('bit.ly/3SF1nIg', W/2, y + 86);
-  y += 110;
-
-  // ── 10. FOOTER ──
-  const footerY = H - 100;
-  ctx.fillStyle = C.footerBg;
-  ctx.fillRect(0, footerY, W, 100);
-  ctx.font = F.semi(20);
-  ctx.fillStyle = C.gold;
-  ctx.textAlign = 'center';
-  ctx.fillText('Balance is a new normal.', W/2, footerY + 38);
-  ctx.font = F.regular(17);
-  ctx.fillStyle = C.muted;
-  ctx.fillText('Quiz ulang dalam 30 hari untuk lihat progressmu 🐝', W/2, footerY + 66);
-  ctx.font = F.light(15);
-  ctx.fillStyle = '#B8A988';
-  ctx.fillText('ONESTA · Balance Check', W/2, footerY + 88);
+  // 10. FOOTER
+  const footerY=H-108;
+  ctx.fillStyle=C.footerBg; ctx.fillRect(0,footerY,W,108);
+  ctx.textAlign='center';
+  ctx.font=F.semi(21); ctx.fillStyle=C.gold; ctx.fillText('Balance is a new normal.',W/2,footerY+36);
+  ctx.font=F.regular(18); ctx.fillStyle=C.muted; ctx.fillText('Quiz ulang dalam 30 hari untuk lihat progressmu 🐝',W/2,footerY+64);
+  ctx.font=F.semi(16); ctx.fillStyle=C.gold; ctx.fillText('ONESTA · Balance Check',W/2,footerY+90);
 }
 
 function measureWrapLines(ctx, text, maxW, maxLines) {
@@ -3272,3 +3211,6 @@ async function downloadReport(format) {
   }
 }
 
+</script>
+</body>
+</html>
