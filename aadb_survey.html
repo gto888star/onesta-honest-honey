@@ -1012,8 +1012,8 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
   </div>
 
   <!-- ══ DOWNLOAD REPORT BLOCK REMOVED — redundant dgn auto-download di Download Block, copy "doktermu" juga dihapus sekalian ══ -->
-  <!-- hidden canvas — 2400px tall to fit all content -->
-  <canvas id="report-canvas" width="1080" height="2900"></canvas>
+  <!-- hidden canvas — 3400px tall to fit all content -->
+  <canvas id="report-canvas" width="1080" height="3400"></canvas>
   <canvas id="share-card-canvas" width="1080" height="1080"></canvas>
 </div>
 
@@ -3098,7 +3098,7 @@ function showVersionBadge(){
   // Health-check ping ke Worker DINONAKTIFKAN sementara (fase frontend-only iteration)
   // supaya badge tidak menampilkan sinyal "secure/connected" yang menyesatkan
   // saat backend integration sengaja belum di-exercise. Re-enable sebelum soft launch.
-  badge.textContent='v14.9.0 · b105';
+  badge.textContent='v14.9.0 · b107';
   document.body.appendChild(badge);
 }
 
@@ -3114,7 +3114,7 @@ function setReportData(result, userName) {
 }
 
 async function drawReport(ctx, data) {
-  const W = 1080, H = 2900;
+  const W = 1080, H = 3400;
   const { result, userName } = data;
   const type = result.type;
   const seg = result.seg;
@@ -3474,8 +3474,13 @@ async function drawReport(ctx, data) {
   const jX=leftX-iconSize/2, jY=iconTop;
   if(jarImg){
     ctx.save();
+    ctx.fillStyle='#FFFFFF';
+    roundRect(ctx,jX,jY,iconSize,iconSize,10); ctx.fill();
     roundRect(ctx,jX,jY,iconSize,iconSize,10); ctx.clip();
-    ctx.drawImage(jarImg,jX,jY,iconSize,iconSize);
+    // contain fit
+    const jR=Math.min(iconSize/jarImg.width, iconSize/jarImg.height);
+    const jW=jarImg.width*jR, jH=jarImg.height*jR;
+    ctx.drawImage(jarImg,jX+(iconSize-jW)/2,jY+(iconSize-jH)/2,jW,jH);
     ctx.restore();
     ctx.strokeStyle='rgba(184,169,136,0.6)'; ctx.lineWidth=1.5;
     roundRect(ctx,jX,jY,iconSize,iconSize,10); ctx.stroke();
@@ -3489,8 +3494,13 @@ async function drawReport(ctx, data) {
   const vX=rightX-iconSize/2, vY=iconTop;
   if(vialImg){
     ctx.save();
+    ctx.fillStyle='#FFFFFF';
+    roundRect(ctx,vX,vY,iconSize,iconSize,10); ctx.fill();
     roundRect(ctx,vX,vY,iconSize,iconSize,10); ctx.clip();
-    ctx.drawImage(vialImg,vX,vY,iconSize,iconSize);
+    // contain fit
+    const vR=Math.min(iconSize/vialImg.width, iconSize/vialImg.height);
+    const vW=vialImg.width*vR, vH=vialImg.height*vR;
+    ctx.drawImage(vialImg,vX+(iconSize-vW)/2,vY+(iconSize-vH)/2,vW,vH);
     ctx.restore();
     ctx.strokeStyle='rgba(184,169,136,0.6)'; ctx.lineWidth=1.5;
     roundRect(ctx,vX,vY,iconSize,iconSize,10); ctx.stroke();
@@ -3508,6 +3518,7 @@ async function drawReport(ctx, data) {
   ctx.fillText('atau',midX,iconTop+38);
 
   // Label dosis
+  ctx.textAlign='center';
   ctx.font=F.bold(21); ctx.fillStyle=C.orange;
   ctx.fillText('2 Sendok Teh',leftX,y+158);
   ctx.fillText('2 Vial',rightX,y+158);
@@ -3836,7 +3847,7 @@ async function downloadReport(format) {
   try {
     const canvas = document.getElementById('report-canvas');
     const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, 1080, 2900);
+    ctx.clearRect(0, 0, 1080, 3400);
 
     await drawReport(ctx, _reportData);
 
