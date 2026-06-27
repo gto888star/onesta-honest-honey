@@ -91,6 +91,8 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .btn-next{flex:1;padding:1rem;background:#E66000;color:#111111;font-weight:900;font-style:italic;font-size:.92rem;border:none;border-radius:10px;cursor:pointer;font-family:'Montserrat',sans-serif;letter-spacing:.01em;visibility:hidden;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s,visibility 0s linear .3s;}
 .btn-next.show{visibility:visible;opacity:1;transform:translateY(0);transition:opacity .3s,transform .3s,visibility 0s;}
 .btn-next:active{transform:scale(.98);}
+.nav-row-quiz{display:flex;gap:.75rem;align-items:center;padding:1rem 1.5rem 1.5rem;}
+.btn-back-quiz{display:flex;align-items:center;gap:.3rem;background:none;border:1.5px solid #DDDDDD;color:#888888;font-size:.88rem;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;padding:.85rem 1.2rem;border-radius:10px;flex-shrink:0;white-space:nowrap;-webkit-tap-highlight-color:transparent;}
 #s-calc{align-items:center;justify-content:center;padding:2rem 1.5rem;text-align:center;}
 .calc-bee{font-size:3rem;margin-bottom:1.25rem;animation:mirrorShimmer 1.5s ease infinite;}
 .calc-title{font-family:'Montserrat',sans-serif;font-size:1.4rem;font-weight:700;color:var(--cream);margin-bottom:.35rem;}
@@ -702,7 +704,8 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
     <p class="cv2-tagline">Bukan kuis biasa. Ini cermin sinyal tubuhmu.</p>
   </div>
   <div class="cv2-body">
-    <input class="cv2-input" id="user-name-v2" type="text" placeholder="Isi nama-mu" autocomplete="given-name" maxlength="40">
+    <input class="cv2-input" id="user-name-v2" type="text" placeholder="Isi nama-mu" autocomplete="given-name" maxlength="40" oninput="this.style.borderColor='#EEEEEE';document.getElementById('cv2-name-err').style.display='none';">
+    <p id="cv2-name-err" style="display:none;font-size:.7rem;color:#C84040;margin-top:-.8rem;margin-bottom:.5rem;">Nama minimal 2 karakter ya 🙏</p>
     <button class="cv2-btn" id="btn-start-v2" onclick="validateAndStartV2()" disabled>Mulai Check Balance-mu</button>
     <p class="cv2-note">10 pertanyaan &nbsp;·&nbsp; 3 menit<br>
     <span style="font-size:.58rem;">Hasil kuis ini bersifat edukatif, bukan diagnosis medis.</span></p>
@@ -786,11 +789,8 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
     <div class="opts" id="q-opts"></div>
   </div>
   <div class="nav-row-quiz">
-    <button id="btn-back" onclick="goBack()" class="btn-back-quiz" style="display:none;">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-      Kembali
-    </button>
-    <button class="btn-next" id="btn-next" onclick="nextQ()">Lanjut</button>
+    <button id="btn-back" onclick="goBack()" class="btn-back-quiz" style="display:none;">‹ Kembali</button>
+    <button class="btn-next" id="btn-next" onclick="nextQ()">Lanjut ›</button>
   </div>
   <div class="insight-card" id="insight-card">
     <div class="ins-label">💡 Yang Tubuhmu Sampaikan</div>
@@ -1754,6 +1754,8 @@ function validateAndStartV2(){
   if(!name||name.length<2){
     nameEl.style.borderColor='#C84040';
     nameEl.focus();
+    const errEl=document.getElementById('cv2-name-err');
+    if(errEl) errEl.style.display='block';
     return;
   }
   nameEl.style.borderColor='#EEEEEE';
@@ -1887,8 +1889,8 @@ function renderQ(){
   }
 
   // V14: show back button from Q2 onwards
-  const backWrap=document.getElementById('back-btn-wrap');
-  if(backWrap) backWrap.style.display=qIdx>0?'block':'none';
+  const backBtn=document.getElementById('btn-back');
+  if(backBtn) backBtn.style.display=qIdx>0?'flex':'none';
   document.getElementById('q-pillar').textContent=q.p;
   document.getElementById('q-text').textContent=q.q;
   document.getElementById('q-hint').textContent=q.h;
@@ -3199,7 +3201,7 @@ function showVersionBadge(){
   // Health-check ping ke Worker DINONAKTIFKAN sementara (fase frontend-only iteration)
   // supaya badge tidak menampilkan sinyal "secure/connected" yang menyesatkan
   // saat backend integration sengaja belum di-exercise. Re-enable sebelum soft launch.
-  badge.textContent='survey.v123';
+  badge.textContent='survey.v129';
   document.body.appendChild(badge);
 }
 
