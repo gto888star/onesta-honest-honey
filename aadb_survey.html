@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Onesta AADB — survey.v132</title>
+<title>Onesta AADB — survey.v137</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -77,16 +77,16 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .okey{width:26px;height:26px;border-radius:6px;border:1.5px solid #DDDDDD;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;color:#BBBBBB;flex-shrink:0;transition:all .15s;font-family:'Montserrat',sans-serif;}
 .olabel{font-size:.9rem;font-weight:500;color:var(--text);line-height:1.3;}
 .osub{font-size:.78rem;color:var(--sub);margin-top:.18rem;line-height:1.45;}
-.insight-card{background:#FFF9F0;border:1px solid var(--border-l);border-left:3px solid var(--gold);border-radius:0 12px 12px 0;padding:.9rem 1rem;margin-top:.5rem;display:none;animation:sIn .3s ease;}
+.insight-card{background:#FAFAFA;border:1.5px solid #EEEEEE;border-left:3px solid #E66000;border-radius:0 10px 10px 0;padding:.9rem 1rem;margin-top:.5rem;display:none;animation:sIn .3s ease;}
 .insight-card.show{display:block;}
-.ins-label{font-size:.6rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;font-weight:700;}
-.ins-text{font-size:.82rem;color:var(--sub);line-height:1.65;}
-.ins-text b{color:var(--cream);}
-.ins-text em{color:var(--gold-l);font-style:normal;}
-.ins-why-toggle{display:flex;align-items:center;justify-content:space-between;gap:.6rem;cursor:pointer;font-size:.74rem;font-weight:600;color:var(--gold);line-height:1.4;-webkit-tap-highlight-color:transparent;margin-top:.6rem;padding-top:.55rem;border-top:1px dashed var(--border-l);}
-.ins-why-icon{font-size:.9rem;color:var(--gold);font-weight:300;flex-shrink:0;transition:transform .25s ease;line-height:1;}
+.ins-label{font-size:.6rem;color:#E66000;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;font-weight:700;}
+.ins-text{font-size:.82rem;color:#444444;line-height:1.65;}
+.ins-text b{color:#111111;}
+.ins-text em{color:#E66000;font-style:normal;}
+.ins-why-toggle{display:flex;align-items:center;justify-content:space-between;gap:.6rem;cursor:pointer;font-size:.74rem;font-weight:600;color:#E66000;line-height:1.4;-webkit-tap-highlight-color:transparent;margin-top:.6rem;padding-top:.55rem;border-top:1px solid #EEEEEE;}
+.ins-why-icon{font-size:.9rem;color:#E66000;font-weight:300;flex-shrink:0;transition:transform .25s ease;line-height:1;}
 .ins-why-icon.open{transform:rotate(45deg);}
-.ins-why-content{display:none;font-size:.78rem;color:var(--sub);line-height:1.7;padding-top:.55rem;}
+.ins-why-content{display:none;font-size:.78rem;color:#555555;line-height:1.7;padding-top:.55rem;}
 .ins-why-content.open{display:block;}
 .btn-next{flex:1;width:100%;padding:1rem;background:#E66000;color:#111111;font-weight:900;font-style:italic;font-size:.92rem;border:none;border-radius:10px !important;box-shadow:none !important;cursor:pointer;font-family:'Montserrat',sans-serif;letter-spacing:.01em;visibility:hidden;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s,visibility 0s linear .3s;}
 .btn-next.show{visibility:visible;opacity:1;transform:translateY(0);transition:opacity .3s,transform .3s,visibility 0s;}
@@ -181,15 +181,15 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .r-wa-input::placeholder{color:#BBBBBB;}
 .r-wa-error{font-size:.74rem;color:#E0654A;text-align:left;margin:-.1rem 0 .6rem .2rem;}
 /* ── DOWNLOAD BLOCK — generic Report+ShareCard download, independent from WA ── */
-.r-download-block{background:var(--ink-4);border:1px solid var(--border-l);border-radius:18px;padding:1.1rem 1.2rem;margin-bottom:1.1rem;}
-.r-download-eyebrow{font-size:.6rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:.85rem;}
-.r-download-row{display:flex;align-items:center;gap:.85rem;margin-bottom:.9rem;}
+.r-download-block{background:#FAFAFA;border:1.5px solid #EEEEEE;border-radius:10px;padding:1.1rem 1.2rem;margin-bottom:1rem;}
+.r-download-eyebrow{font-size:.6rem;color:#AAAAAA;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:.85rem;}
+.r-download-row{display:flex;align-items:center;gap:.85rem;margin-bottom:.75rem;}
 .r-download-row:last-child{margin-bottom:0;}
-.btn-download-report{flex-shrink:0;width:118px;padding:.65rem .3rem;text-align:center;white-space:normal;line-height:1.25;background:linear-gradient(135deg,#C1532E,#A8441F);color:#fff;font-family:'Montserrat',sans-serif;font-size:.74rem;font-weight:700;border:none;border-radius:12px;cursor:pointer;letter-spacing:.01em;transition:opacity .2s;}
+.btn-download-report{flex-shrink:0;width:118px;padding:.75rem .3rem;text-align:center;white-space:normal;line-height:1.3;background:#111111;color:#FFFFFF;font-family:'Montserrat',sans-serif;font-size:.74rem;font-weight:900;font-style:italic;border:none;border-radius:10px;cursor:pointer;transition:opacity .2s;}
 .btn-download-report:active{opacity:.85;}
-.btn-download-share{flex-shrink:0;width:118px;padding:.62rem .35rem;text-align:center;white-space:nowrap;background:transparent;color:var(--gold);font-family:'Montserrat',sans-serif;font-size:.74rem;font-weight:700;border:1.5px solid var(--gold);border-radius:12px;cursor:pointer;letter-spacing:.01em;transition:opacity .2s;}
+.btn-download-share{flex-shrink:0;width:118px;padding:.72rem .35rem;text-align:center;white-space:nowrap;background:transparent;color:#888888;font-family:'Montserrat',sans-serif;font-size:.74rem;font-weight:700;border:1.5px solid #DDDDDD;border-radius:10px;cursor:pointer;transition:opacity .2s;}
 .btn-download-share:active{opacity:.7;}
-.r-download-caption{flex:1;font-size:.72rem;color:var(--sub);line-height:1.4;}
+.r-download-caption{flex:1;font-size:.72rem;color:#666666;line-height:1.4;}
 .r-download-status{font-size:.7rem;color:var(--muted);margin-top:.5rem;text-align:center;}
 /* ── FULL-SCREEN PREVIEW — Report/Share Card, isolated screen, no other blocks visible ── */
 #s-preview{padding:0 0 6rem;background:#FFFBF9;position:relative;}
@@ -276,7 +276,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .r-why-text{font-size:.82rem;color:var(--sub);line-height:1.65;}
 .r-why-text b{color:var(--cream);}
 /* .r-share-block removed V14.8 — HTML element no longer exists */
-.r-share-label{font-size:.86rem;color:var(--muted);text-align:center;margin-bottom:.85rem;font-style:italic;font-family:'Montserrat',sans-serif;}
+.r-share-label{font-size:.86rem;color:#444444;text-align:center;margin-bottom:.85rem;font-style:italic;font-family:'Montserrat',sans-serif;line-height:1.5;}
 .share-preview{background:var(--ink-3);border:1px solid var(--border-l);border-radius:14px;padding:1.1rem;margin-bottom:.85rem;}
 .sp-head{display:flex;align-items:center;gap:.6rem;margin-bottom:.85rem;}
 .sp-bee{width:30px;height:30px;background:linear-gradient(135deg,var(--gold-l),var(--gold-d));border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.9rem;}
@@ -297,11 +297,11 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 #toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--ink-3);color:var(--gold-l);padding:.6rem 1.2rem;border-radius:99px;font-size:.75rem;font-weight:600;border:1px solid var(--border-ll);box-shadow:0 4px 20px rgba(0,0,0,.4);opacity:0;transition:opacity .3s;z-index:999;white-space:nowrap;pointer-events:none;}
 #toast.show{opacity:1;}
 .r-share-card{
-  border:1.5px solid var(--border-l);
-  border-radius:18px;
+  background:#FAFAFA;
+  border:1.5px solid #EEEEEE;
+  border-radius:10px;
   padding:1.1rem 1.1rem .9rem;
   margin:.5rem 0;
-  background:linear-gradient(135deg, var(--card2), var(--card3));
 }
 .r-share-card .r-share-label{ margin-bottom:.9rem; }
 .share-lang-row{
@@ -312,13 +312,14 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 }
 .btn-share-lang{
   width:100%;
-  padding:.75rem .5rem;
-  background:transparent;
-  color:var(--gold-l);
-  font-size:.72rem;
-  font-weight:600;
-  border:1px solid var(--gold-d);
-  border-radius:99px;
+  padding:.85rem .5rem;
+  background:#E66000;
+  color:#111111;
+  font-size:.82rem;
+  font-weight:900;
+  font-style:italic;
+  border:none;
+  border-radius:10px;
   cursor:pointer;
   font-family:'Montserrat',sans-serif;
   transition:all .2s;
@@ -326,7 +327,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
   text-align:center;
 }
 .btn-share-lang:active{
-  background:rgba(204,85,0,.1);
+  opacity:.85;
   transform:scale(.97);
 }
 
@@ -644,17 +645,32 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .pct-marker{position:absolute;top:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:var(--cream);border:2.5px solid var(--gold);box-shadow:0 0 0 3px rgba(204,85,0,.2);transition:left 1.2s cubic-bezier(.22,1,.36,1);}
 .pct-ends{display:flex;justify-content:space-between;font-size:.6rem;color:var(--muted);font-family:'Montserrat',sans-serif;}
 
-/* ── Product card tier borders ── */
-.prod-card-fondasi{border-left:3px solid #E66000 !important;}
-.prod-card-optional{border-left:3px solid #27AE60 !important;}
-.prod-card-signature{border-left:3px solid #C8982A !important;}
-.prod-badge-fondasi{background:#111111 !important;color:#FFFFFF !important;border:none !important;}
-.prod-badge-optional{background:rgba(39,174,96,.12) !important;color:#27AE60 !important;border:none !important;}
-.prod-badge-signature{background:#C8982A !important;color:#FFFFFF !important;border:none !important;}
-/* Section divider centered */
-.prod-section-divider{display:flex;align-items:center;gap:.6rem;margin:1rem 0 .75rem;}
-.prod-section-divider-line{flex:1;height:1px;background:#EEEEEE;}
-.prod-section-divider-label{font-size:.6rem;font-weight:700;color:#AAAAAA;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;}
+/* ── Result Product Section ── */
+.r-prod-section{margin-bottom:1rem;}
+.r-prod-eyebrow{font-size:.6rem;font-weight:700;color:#E66000;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;}
+.r-prod-title{font-size:1rem;font-weight:900;color:#111111;margin-bottom:.85rem;line-height:1.3;}
+.r-prod-bm-note{background:#FFF8F0;border:1px solid rgba(230,96,0,.15);border-left:3px solid #E66000;border-radius:0 10px 10px 0;padding:.85rem 1rem;margin-bottom:.85rem;font-size:.75rem;color:#555555;line-height:1.6;}
+.r-prod-bm-note b{color:#111111;}
+.r-prod-divider{display:flex;align-items:center;gap:.6rem;margin:.85rem 0 .65rem;}
+.r-prod-divider-line{flex:1;height:1px;background:#EEEEEE;}
+.r-prod-divider-label{font-size:.6rem;font-weight:700;color:#AAAAAA;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;}
+.r-prod-card{display:flex;align-items:stretch;background:#FFFFFF;border:1.5px solid #EEEEEE;border-radius:10px;overflow:hidden;margin-bottom:.5rem;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.r-prod-card.fondasi{border-left:3px solid #E66000;}
+.r-prod-card.optional{border-left:3px solid #27AE60;}
+.r-prod-card.signature{border-left:3px solid #C8982A;}
+.r-prod-img{width:76px;flex-shrink:0;background:#F8F8F8;display:flex;align-items:center;justify-content:center;font-size:2rem;border-right:1px solid #F0F0F0;min-height:90px;}
+.r-prod-img img{width:64px;height:64px;object-fit:contain;}
+.r-prod-body{padding:.8rem .85rem;flex:1;}
+.r-prod-name{font-size:.82rem;font-weight:800;color:#111111;margin-bottom:.08rem;}
+.r-prod-tagline{font-size:.7rem;font-weight:600;color:#E66000;margin-bottom:.18rem;line-height:1.3;}
+.r-prod-tagline.green{color:#27AE60;}
+.r-prod-tagline.gold{color:#C8982A;}
+.r-prod-desc{font-size:.67rem;color:#777777;line-height:1.5;}
+.r-prod-badge{display:inline-flex;align-items:center;gap:.25rem;margin-top:.4rem;font-size:.58rem;padding:.18rem .5rem;border-radius:4px;font-weight:700;}
+.r-badge-fondasi{background:#111111;color:#FFFFFF;}
+.r-badge-optional{background:rgba(39,174,96,.12);color:#27AE60;}
+.r-badge-signature{background:#C8982A;color:#FFFFFF;}
+.r-prod-cta{font-size:.72rem;color:#E66000;text-align:center;margin-top:.65rem;font-weight:600;text-decoration:underline;text-underline-offset:2px;display:block;cursor:pointer;}
 </style>
 <style>
 /* ══ COVER SCREEN V2 — Clean Premium ══ */
@@ -973,6 +989,9 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
     <div style="font-size:.72rem;color:var(--muted);font-style:italic;margin-bottom:.75rem;">💡 <b style="color:var(--sub);font-style:normal;">Semakin tinggi persentasenya, semakin balance. Klik pilar untuk penjelasan lengkap.</div>
     <div id="r-pillars-content"></div>
   </div>
+
+  <!-- ══ PRODUCT SECTION — setelah pilar ══ -->
+  <div class="r-prod-section" id="r-prod-section" style="display:none;"></div>
 
   <!-- ══ DOWNLOAD BLOCK — Report + Share Card, independen dari WA ══ -->
   <div class="r-download-block">
@@ -2509,6 +2528,60 @@ function getRitualBridge(typeId,ans){
   return b[typeId]||op;
 }
 
+function renderProdSection(result){
+  const el=document.getElementById('r-prod-section');
+  if(!el) return;
+  const type=result.type;
+  const entry=(typeof RB_MATRIX!=='undefined'&&RB_MATRIX[type.id])?RB_MATRIX[type.id]:{stabilize:['Daily','Daily_OTG'],optional:['Imunisi']};
+  const isBM=!!entry.balanceMaster;
+
+  let html=`<div class="r-prod-eyebrow">Rekomendasi Untukmu</div>`;
+  html+=`<div class="r-prod-title">${isBM?'Pertahankan ritme terbaikmu':'Ritual yang sesuai sinyal tubuhmu'}</div>`;
+
+  if(isBM){
+    html+=`<div class="r-prod-bm-note"><b>Tubuhmu sudah dalam kondisi terbaik.</b> Fondasi harianmu cukup untuk menjaga ritme ini. Signature Botanical hadir untuk kamu yang ingin <em>mengeksplorasi lebih</em> — bukan karena butuh, tapi karena ingin merasakan yang terbaik dari alam.</div>`;
+  }
+
+  // Fondasi
+  html+=`<div class="r-prod-divider"><div class="r-prod-divider-line"></div><div class="r-prod-divider-label">Fondasi Utamamu</div><div class="r-prod-divider-line"></div></div>`;
+  for(const pk of (entry.stabilize||[])){
+    const p=PRODUCTS[pk]; if(!p) continue;
+    const imgH=p.img?`<img src="${p.img}" alt="${p.name}" onerror="this.style.display='none'">`:`<span style="font-size:1.8rem">${p.emoji||'🍯'}</span>`;
+    html+=`<div class="r-prod-card fondasi" onclick="window.open('${p.url||'https://onesta.co.id'}','_blank')">
+      <div class="r-prod-img">${imgH}</div>
+      <div class="r-prod-body">
+        <div class="r-prod-name">${p.name}</div>
+        <div class="r-prod-tagline">${p.tagline||''}</div>
+        <div class="r-prod-desc">${p.desc||''}</div>
+        <div class="r-prod-badge r-badge-fondasi">✅ Fondasi utamamu</div>
+      </div></div>`;
+  }
+
+  // Optional / Signature
+  if(entry.optional&&entry.optional.length){
+    const divLabel=isBM?'Rasakan Signature Botanical':'Tambah Dukungan';
+    html+=`<div class="r-prod-divider"><div class="r-prod-divider-line"></div><div class="r-prod-divider-label">${divLabel}</div><div class="r-prod-divider-line"></div></div>`;
+    for(const pk of entry.optional){
+      const p=PRODUCTS[pk]; if(!p) continue;
+      const imgH=p.img?`<img src="${p.img}" alt="${p.name}" onerror="this.style.display='none'">`:`<span style="font-size:1.8rem">${p.emoji||'🌿'}</span>`;
+      const tierClass=isBM?'signature':'optional';
+      const taglineClass=isBM?'gold':'green';
+      const badge=isBM?`<div class="r-prod-badge r-badge-signature">✦ Signature</div>`:`<div class="r-prod-badge r-badge-optional">+ Pilihan tambahan</div>`;
+      html+=`<div class="r-prod-card ${tierClass}" onclick="window.open('${p.url||'https://onesta.co.id'}','_blank')">
+        <div class="r-prod-img">${imgH}</div>
+        <div class="r-prod-body">
+          <div class="r-prod-name">${p.name}</div>
+          <div class="r-prod-tagline ${taglineClass}">${p.tagline||''}</div>
+          <div class="r-prod-desc">${p.desc||''}</div>
+          ${badge}
+        </div></div>`;
+    }
+  }
+
+  el.innerHTML=html;
+  el.style.display='block';
+}
+
 function renderResult(){
   if(!result) result=buildResult();
   prog(100);
@@ -2715,6 +2788,7 @@ function renderResult(){
   // Ritual block (eyebrow/title/why/dosage/prod-cards) dihapus V14.9 — sudah digantikan layar Ritual Builder
   // V14: AHA accordion + optional flow reset
   renderAhaAccordion();
+  renderProdSection(result);
   const optRes=document.getElementById('r-optional-result');
   if(optRes) optRes.style.display='none';
   const bOA=document.getElementById('opt-choice-a');
@@ -3213,7 +3287,7 @@ function showVersionBadge(){
   // saat backend integration sengaja belum di-exercise. Re-enable sebelum soft launch.
   const isGithub = location.hostname.includes('github.io') || location.hostname.includes('secure-balance');
   const src = isGithub ? '· github' : '· local';
-  badge.textContent='survey.v132 ' + src;
+  badge.textContent='survey.v137 ' + src;
   document.body.appendChild(badge);
 }
 
