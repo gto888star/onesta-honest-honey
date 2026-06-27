@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Onesta AADB — survey.v139</title>
+<title>Onesta AADB — survey.v141</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -3291,7 +3291,7 @@ function showVersionBadge(){
   // saat backend integration sengaja belum di-exercise. Re-enable sebelum soft launch.
   const isGithub = location.hostname.includes('github.io') || location.hostname.includes('secure-balance');
   const src = isGithub ? '· github' : '· local';
-  badge.textContent='survey.v139 ' + src;
+  badge.textContent='survey.v141 ' + src;
   document.body.appendChild(badge);
 }
 
@@ -3307,7 +3307,9 @@ function setReportData(result, userName) {
 }
 
 async function drawReport(ctx, data) {
-  const W = 1080, H = 3400;
+  const rbEntry = (typeof RB_MATRIX!=='undefined' && RB_MATRIX[data.result.type.id]) ? RB_MATRIX[data.result.type.id] : {};
+  const isBalanceMaster = !!rbEntry.balanceMaster;
+  const W = 1080, H = isBalanceMaster ? 3400 : 2600;
   const { result, userName } = data;
   const type = result.type;
   const seg = result.seg;
@@ -4016,13 +4018,15 @@ async function downloadReport(format) {
   const genEl = document.getElementById('r-download-generating');
   if (genEl) { genEl.style.display = 'block'; genEl.textContent = 'Sedang menyiapkan laporanmu...'; }
 
-  // Small delay to show the message
   await new Promise(r => setTimeout(r, 80));
 
   try {
     const canvas = document.getElementById('report-canvas');
+    // Resize canvas SEBELUM getContext agar tidak reset drawing
+    const rbEntry = (typeof RB_MATRIX!=='undefined' && RB_MATRIX[_reportData.result.type.id]) ? RB_MATRIX[_reportData.result.type.id] : {};
+    canvas.height = rbEntry.balanceMaster ? 3400 : 2600;
     const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, 1080, 3400);
+    ctx.clearRect(0, 0, 1080, canvas.height);
 
     await drawReport(ctx, _reportData);
 
