@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Onesta AADB — survey.v130</title>
+<title>Onesta AADB — survey.v131</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -88,7 +88,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .ins-why-icon.open{transform:rotate(45deg);}
 .ins-why-content{display:none;font-size:.78rem;color:var(--sub);line-height:1.7;padding-top:.55rem;}
 .ins-why-content.open{display:block;}
-.btn-next{flex:1;width:100%;padding:1rem;background:#E66000;color:#111111;font-weight:900;font-style:italic;font-size:.92rem;border:none;border-radius:10px;cursor:pointer;font-family:'Montserrat',sans-serif;letter-spacing:.01em;visibility:hidden;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s,visibility 0s linear .3s;}
+.btn-next{flex:1;width:100%;padding:1rem;background:#E66000;color:#111111;font-weight:900;font-style:italic;font-size:.92rem;border:none;border-radius:10px !important;box-shadow:none !important;cursor:pointer;font-family:'Montserrat',sans-serif;letter-spacing:.01em;visibility:hidden;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s,visibility 0s linear .3s;}
 .btn-next.show{visibility:visible;opacity:1;transform:translateY(0);transition:opacity .3s,transform .3s,visibility 0s;}
 .btn-next:active{transform:scale(.98);}
 .nav-row-quiz{display:flex;gap:.75rem;align-items:center;padding:1rem 1.5rem 1.5rem;}
@@ -1956,7 +1956,7 @@ function pickOpt(el,opt,q){
     insCard.classList.remove('show');
   }
   const btn=document.getElementById('btn-next');
-  btn.textContent='Lanjut →';
+  btn.textContent='Lanjut ›';
   btn.classList.add('show');
   // scroll removed — handled by renderQ scrollTo top on question change
 }
@@ -2008,7 +2008,7 @@ function goBack(){
             document.getElementById('insight-card').classList.add('show');
           }
           const btn=document.getElementById('btn-next');
-          btn.textContent='Lanjut →';
+          btn.textContent='Lanjut ›';
           btn.classList.add('show');
         }
       }
@@ -3203,7 +3203,7 @@ function showVersionBadge(){
   // saat backend integration sengaja belum di-exercise. Re-enable sebelum soft launch.
   const isGithub = location.hostname.includes('github.io') || location.hostname.includes('secure-balance');
   const src = isGithub ? '· github' : '· local';
-  badge.textContent='survey.v130 ' + src;
+  badge.textContent='survey.v131 ' + src;
   document.body.appendChild(badge);
 }
 
