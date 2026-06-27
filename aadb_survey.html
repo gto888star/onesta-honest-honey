@@ -654,7 +654,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 #s-cover > p,
 #s-cover > .consent-block,
 #s-cover > .brand-bottom { display:none !important; }
-#s-cover{background:#FFFFFF !important;}
+#s-cover{background:#FFFFFF !important;text-align:left !important;align-items:flex-start !important;}
 #s-cover .cover-hex{display:none;}
 #s-cover .cover-title{display:none;}
 #s-cover .cover-tagline{display:none;}
@@ -666,12 +666,12 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 #s-cover .brand-bottom{display:none;}
 
 /* New hero */
-.cv2-hero{padding:3rem 1.6rem 1.6rem;background:#FFFFFF;}
-.cv2-ada{font-size:1.45rem;font-weight:900;color:#111111;letter-spacing:-.02em;line-height:1;display:block;}
-.cv2-dengan{font-size:.95rem;font-weight:400;color:#666666;letter-spacing:.01em;line-height:1;display:block;margin-top:.2rem;margin-bottom:.15rem;}
-.cv2-balance{font-size:4.2rem;font-weight:900;font-style:italic;color:#E66000;letter-spacing:-.03em;line-height:.92;display:block;}
+.cv2-hero{padding:3rem 1.6rem 1.6rem;background:#FFFFFF;text-align:left;width:100%;}
+.cv2-ada{font-size:1.45rem;font-weight:900;color:#111111;letter-spacing:-.02em;line-height:1;display:block;text-align:left;}
+.cv2-dengan{font-size:.95rem;font-weight:400;color:#666666;letter-spacing:.01em;line-height:1;display:block;margin-top:.2rem;margin-bottom:.15rem;text-align:left;}
+.cv2-balance{font-size:4.2rem;font-weight:900;font-style:italic;color:#E66000;letter-spacing:-.03em;line-height:.92;display:block;text-align:left;}
 .cv2-divider{width:36px;height:2px;background:#E66000;margin:1.2rem 0;border-radius:99px;}
-.cv2-tagline{font-size:.88rem;font-weight:400;color:#555555;line-height:1.6;font-style:italic;max-width:260px;}
+.cv2-tagline{font-size:.88rem;font-weight:400;color:#555555;line-height:1.6;font-style:italic;max-width:260px;text-align:left;}
 .cv2-body{padding:1.5rem 1.6rem 2rem;background:#FFFFFF;border-top:1px solid #f0f0f0;}
 .cv2-input{width:100%;background:#FAFAFA;border:1.5px solid #EEEEEE;border-radius:10px;padding:.8rem 1rem;font-size:.95rem;color:#111;font-family:'Montserrat',sans-serif;outline:none;margin-bottom:1.25rem;transition:border-color .2s;}
 .cv2-input::placeholder{color:#777777;}
@@ -3193,7 +3193,7 @@ function showVersionBadge(){
   // Health-check ping ke Worker DINONAKTIFKAN sementara (fase frontend-only iteration)
   // supaya badge tidak menampilkan sinyal "secure/connected" yang menyesatkan
   // saat backend integration sengaja belum di-exercise. Re-enable sebelum soft launch.
-  badge.textContent='v14.9.0 · b118';
+  badge.textContent='survey.v119';
   document.body.appendChild(badge);
 }
 
