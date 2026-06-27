@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Onesta — Ada Apa Dengan Balance? V14.8.0</title>
+<title>Onesta AADB — survey.v129</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -3201,7 +3201,9 @@ function showVersionBadge(){
   // Health-check ping ke Worker DINONAKTIFKAN sementara (fase frontend-only iteration)
   // supaya badge tidak menampilkan sinyal "secure/connected" yang menyesatkan
   // saat backend integration sengaja belum di-exercise. Re-enable sebelum soft launch.
-  badge.textContent='survey.v129';
+  const isGithub = location.hostname.includes('github.io') || location.hostname.includes('secure-balance');
+  const src = isGithub ? '· github' : '· local';
+  badge.textContent='survey.v129 ' + src;
   document.body.appendChild(badge);
 }
 
