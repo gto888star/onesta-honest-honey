@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Onesta AADB — survey.v137</title>
+<title>Onesta AADB — survey.v139</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -31,8 +31,8 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .cover-title em{font-style:italic;color:var(--gold-l);display:block;}
 .cover-tagline{font-family:'Montserrat',sans-serif;font-size:clamp(.95rem,2.8vw,1.1rem);font-style:italic;color:var(--sub);line-height:1.6;margin-bottom:1.5rem;}
 .cover-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem;margin-bottom:2rem;}
-.cpill{display:flex;align-items:center;gap:.35rem;padding:.32rem .75rem;background:rgba(204,85,0,.04);border:1px solid rgba(204,85,0,.06);border-radius:99px;font-size:.7rem;color:var(--muted);}
-.cpill .cd{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+.cpill{display:flex;align-items:center;gap:.35rem;padding:.5rem 1rem;background:#FAFAFA;border:1.5px solid #EEEEEE;border-radius:10px;font-size:.7rem;color:#888888;}
+.cpill .cd{width:5px;height:5px;border-radius:50%;background:#E66000;flex-shrink:0;}
 .btn-start{width:100%;max-width:340px;padding:1.15rem;background:linear-gradient(135deg,var(--gold-l),var(--gold-d));color:var(--ink);font-weight:800;font-size:.95rem;border:none;border-radius:99px;cursor:pointer;font-family:'Montserrat',sans-serif;letter-spacing:.03em;box-shadow:0 4px 28px rgba(204,85,0,.30);transition:all .22s;position:relative;}
 .btn-start::after{content:'→';position:absolute;right:1.25rem;top:50%;transform:translateY(-50%);font-size:1rem;}
 .btn-start:active{transform:scale(.98);}
@@ -472,54 +472,54 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
 .ch-pip-dot{
   width:8px;height:8px;
   border-radius:50%;
-  background:var(--border);
-  border:1.5px solid var(--border);
+  background:#DDDDDD;
+  border:1.5px solid #DDDDDD;
   transition:all .3s ease;
 }
 .ch-pip.active .ch-pip-dot{
-  background:var(--gold);
-  border-color:var(--gold);
-  box-shadow:0 0 0 3px rgba(204,85,0,.2);
+  background:#E66000;
+  border-color:#E66000;
+  box-shadow:0 0 0 3px rgba(230,96,0,.15);
   transform:scale(1.2);
 }
 .ch-pip.done .ch-pip-dot{
-  background:var(--gold-d);
-  border-color:var(--gold-d);
+  background:#111111;
+  border-color:#111111;
 }
 .ch-pip-label{
   font-size:.58rem;
-  color:var(--muted);
+  color:#BBBBBB;
   font-family:'Montserrat',sans-serif;
   letter-spacing:.04em;
   white-space:nowrap;
   transition:color .3s ease;
 }
 .ch-pip.active .ch-pip-label{
-  color:var(--gold-l);
+  color:#E66000;
   font-weight:700;
 }
 .ch-pip.done .ch-pip-label{
-  color:var(--sub);
+  color:#888888;
 }
 .ch-pip-line{
   width:32px;
   height:1px;
-  background:var(--border);
+  background:#EEEEEE;
   margin:0 .3rem;
   margin-bottom:.9rem;
   transition:background .3s ease;
 }
 .ch-pip.done + .ch-pip-line{
-  background:var(--gold-d);
+  background:#111111;
 }
 
 /* ══════════════════════════════════════════════
    CHAPTER HEADER (intro card) — V8
    ══════════════════════════════════════════════ */
 #chapter-header{
-  border:1px solid var(--border-l);
-  border-left:3px solid var(--gold);
-  border-radius:0 12px 12px 0;
+  border:1.5px solid #EEEEEE;
+  border-left:3px solid #E66000;
+  border-radius:0 10px 10px 0;
   padding:1rem 1.1rem;
   margin-bottom:1rem;
   opacity:0;
@@ -527,6 +527,7 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
   transition:opacity .4s ease,transform .4s ease;
   pointer-events:none;
   display:none;
+  background:#FAFAFA;
 }
 #chapter-header.show{
   display:block;
@@ -1130,6 +1131,9 @@ body{font-family:'Montserrat',-apple-system,sans-serif;background:#FFFBF9;color:
   </div>
   <div class="pv-cap" id="pv-cap"></div>
   <img class="pv-img" id="pv-img" src="" alt="Preview" />
+  <div style="padding:1rem 1.4rem 2rem;text-align:center;">
+    <button onclick="closePreviewScreen()" style="width:100%;padding:1rem;background:#E66000;color:#111111;font-weight:900;font-style:italic;font-size:.92rem;border:none;border-radius:10px;cursor:pointer;font-family:'Montserrat',sans-serif;">‹ Kembali ke Hasil</button>
+  </div>
   <button class="pv-back-float" onclick="closePreviewScreen()">‹ Kembali</button>
 </div>
 
@@ -3287,7 +3291,7 @@ function showVersionBadge(){
   // saat backend integration sengaja belum di-exercise. Re-enable sebelum soft launch.
   const isGithub = location.hostname.includes('github.io') || location.hostname.includes('secure-balance');
   const src = isGithub ? '· github' : '· local';
-  badge.textContent='survey.v137 ' + src;
+  badge.textContent='survey.v139 ' + src;
   document.body.appendChild(badge);
 }
 
